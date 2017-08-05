@@ -1,2 +1,2 @@
 # points-app
-Android app for a point system
+Android app for a point system test
