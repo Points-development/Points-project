@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi/ic_launcher.png",
+        "source": "/Users/xzgan/git/Points-project/App/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/xzgan/git/points-app/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi/ic_launcher.png",
+        "source": "/Users/xzgan/git/points-app/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    }
+]
