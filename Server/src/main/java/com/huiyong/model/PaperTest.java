@@ -3,20 +3,21 @@
  */
 package com.huiyong.model;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author gangpu
  *
  */
 public class PaperTest {
-	private String id;
+	private Integer id;
 	private String name;
-	private Set<PaperQuestion> questions;
-	public String getId() {
+	private List<PaperQuestion> questions;
+	private List<PaperOption> options;
+	public Integer getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -25,10 +26,19 @@ public class PaperTest {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Set<PaperQuestion> getQuestions() {
+	public List<PaperQuestion> getQuestions() {
 		return questions;
 	}
-	public void setSections(Set<PaperQuestion> questions) {
+	public void setSections(List<PaperQuestion> questions) {
+		this.questions = questions;
+	}
+	public List<PaperOption> getOptions() {
+		return options;
+	}
+	public void setOptions(List<PaperOption> options) {
+		this.options = options;
+	}
+	public void setQuestions(List<PaperQuestion> questions) {
 		this.questions = questions;
 	} 
 }

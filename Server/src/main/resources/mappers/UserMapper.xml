@@ -13,4 +13,26 @@
     select id, name, password, branch, isAdmin from User
     	where name=#{name}
   </select>
+    <select id="getUsersInBranch" parameterType="String" resultMap="BaseResultMap">
+    select id, name, password, branch, isAdmin from User
+    	where branch=#{branchname}
+  </select>
+  <insert id="addUser" parameterType="User" useGeneratedKeys="true">  
+        INSERT INTO User (name,  
+                          <if test="password != null" >
+        					password,
+      					  </if> 
+                          <if test="branch != null" >
+        					branch,
+      					  </if>  
+                          isAdmin)  
+              VALUES   (#{name},
+                          <if test="password != null" >
+        					#{password},
+      					  </if> 
+                          <if test="branch != null" >
+        					#{branch},
+      					  </if> 
+                        #{isAdmin})      
+  </insert>  
  </mapper>

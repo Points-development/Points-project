@@ -8,12 +8,12 @@ package com.huiyong.model;
  *
  */
 public class PaperOption {
-	private String id;
+	private Integer id;
 	private String description;
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getDescription() {
