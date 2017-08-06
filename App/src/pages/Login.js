@@ -154,10 +154,10 @@ const styles = StyleSheet.create({
 		elevation:2,
 		shadowOpacity:0.3,
 		shadowRadius:2,
+		marginHorizontal:40,
 	},
 	textStyle:{
 		color:'#000',
 		fontSize:20,
-		
 	}
 })

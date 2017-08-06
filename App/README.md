@@ -33,3 +33,30 @@ react-native unlink react-native-video
 
 #then remove npm module
 npm uninstall --save react-native-video
+
+
+
+
+
+
+#android key add below to build.gradle
+
+signingConfigs {
+        release {
+            storeFile file("/Users/xzgan/git/Points-project/App/android/keystores/my-release-key.keystore")
+            storePassword "Letmein123"
+            keyAlias "point"
+            keyPassword "Letmein123"
+        }
+}
+
+buildTypes {
+        release {
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
+        }
+}
+
+#generate key 
+keytool -genkey -v -keystore my-release-key.keystore  -alias point -keyalg RSA -keysize 2048 -validity 20000

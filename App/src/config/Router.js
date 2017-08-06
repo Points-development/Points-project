@@ -9,14 +9,35 @@ import {
 	TouchableOpacity
 } from 'react-native';
 
-import Home from '../pages/Home'
 import Login from '../pages/Login'
+import Home from '../pages/Home'
+import Assessment from '../pages/Assessment'
+import Query from '../pages/Query'
+import System from '../pages/System'
+
+
 
 const App = StackNavigator({
-	Login: { screen: Login },
-    Home: {screen: Home}
-}, {
-    headerMode: 'none',
+	Login: { 
+		screen: Login,
+		navigationOptions:{header:null}
+	},
+	Home: {
+		screen: Home,
+		navigationOptions:{header:null}
+	},
+	Assessment: {
+		screen: Assessment,
+		navigationOptions:{title:'评测'}
+	},
+    Query: {
+    	screen: Query,
+    	navigationOptions:{title:'查询'}
+    },
+    System: {
+    	screen: System,
+    	navigationOptions:{title:'系统'}
+    }
 });
 
 

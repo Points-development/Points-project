@@ -15,7 +15,7 @@ export default class Button extends Component {
 		}
 		return (
 	            <TouchableOpacity
-	            	activeOpacity={0.75}
+	            	activeOpacity={0.55}
 	            	style={[styles.container,style]}
 	            	onPress={_pressButton}>
 	                <View>
