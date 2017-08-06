@@ -26,5 +26,5 @@ global.gColors = {
 }
 
 global.gServer = {
-	host:'http://117.122.252.54:8080/'
+	host:'http://117.122.252.54:8080'
 }

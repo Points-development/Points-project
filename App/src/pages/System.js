@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import Button from '../components/Button'
+import UserDefaults from '../common/UserDefaults'
 
 
 export default class System extends React.Component {
@@ -20,6 +21,13 @@ export default class System extends React.Component {
     
     constructor (props) {
     	super (props)
+    	this.state={
+    		currentUser:''
+    	}
+    	UserDefaults.getObject('user').then(user=>{
+    		this.setState({currentUser:user.name})
+    	})
+    	
     }
     
     _logout = ()=>{
@@ -30,7 +38,7 @@ export default class System extends React.Component {
         return (
         	<View style={styles.container}>
         		<View style={styles.userInfo}>
-        			<Text>当前用户:甘祥真</Text>
+        			<Text>当前用户:{gUser.name}</Text>
         			<Text>版本信息:1.0.0.0</Text>
         		</View>
         		<View style={styles.rowGroup}>
