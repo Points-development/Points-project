@@ -3,7 +3,6 @@
  */
 package com.huiyong.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.huiyong.model.Score;
-import com.huiyong.model.ScoreItemResult;
 import com.huiyong.service.ScoreService;
 import com.huiyong.service.UserService;
 
