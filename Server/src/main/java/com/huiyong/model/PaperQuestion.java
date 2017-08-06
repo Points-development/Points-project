@@ -3,20 +3,17 @@
  */
 package com.huiyong.model;
 
-import java.util.List;
-
 /**
  * @author gangpu
  *
  */
 public class PaperQuestion {
-	private String id;
+	private Integer id;
 	private String description;
-	private List<PaperOption> options;
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getDescription() {
@@ -24,11 +21,5 @@ public class PaperQuestion {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public List<PaperOption> getOptions() {
-		return options;
-	}
-	public void setOptions(List<PaperOption> options) {
-		this.options = options;
 	}
 }

@@ -4,47 +4,56 @@
 package com.huiyong.model;
 
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 /**
  * @author gangpu
  *
  */
 public class Score {
-	private String id;
-	private User scorer;
-	private User scoree;
+	private Integer id;
+	private Integer paperId;
+	private String scorer;
+	private String scoree;
 	private Date lastModifiedTime;	
-	private Map<PaperQuestion, PaperOption> scores;
+	private List<ScoreItemResult> scores;
 	
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public User getScorer() {
-		return scorer;
-	}
-	public void setScorer(User scorer) {
-		this.scorer = scorer;
-	}
-	public User getScoree() {
-		return scoree;
-	}
-	public void setScoree(User scoree) {
-		this.scoree = scoree;
-	}
-	public Map<PaperQuestion, PaperOption> getScores() {
-		return scores;
-	}
-	public void setScores(Map<PaperQuestion, PaperOption> scores) {
-		this.scores = scores;
-	}
+
 	public Date getLastModifiedTime() {
 		return lastModifiedTime;
 	}
 	public void setLastModifiedTime(Date lastModifiedTime) {
 		this.lastModifiedTime = lastModifiedTime;
+	}
+
+	public String getScorer() {
+		return scorer;
+	}
+	public void setScorer(String scorer) {
+		this.scorer = scorer;
+	}
+	public String getScoree() {
+		return scoree;
+	}
+	public void setScoree(String scoree) {
+		this.scoree = scoree;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Integer getPaperId() {
+		return paperId;
+	}
+	public void setPaperId(Integer paperId) {
+		this.paperId = paperId;
+	}
+	public List<ScoreItemResult> getScores() {
+		return scores;
+	}
+	public void setScores(List<ScoreItemResult> scores) {
+		this.scores = scores;
 	}
 }
