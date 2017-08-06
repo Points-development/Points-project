@@ -35,4 +35,12 @@
       					  </if> 
                         #{isAdmin})      
   </insert>  
+    <update id="updateUser" parameterType="User" useGeneratedKeys="true">  
+        UPDATE User SET  User.password=#{password},
+                          <if test="branch != null" >
+        				 User.branch=#{branch},
+      					  </if> 
+                        User.isAdmin=#{isAdmin}
+                        where User.name=#{name};
+  </update>  
  </mapper>
