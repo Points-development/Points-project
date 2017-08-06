@@ -11,8 +11,10 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.huiyong.dao.ScoreItemResultMapper;
 import com.huiyong.dao.ScoreMapper;
 import com.huiyong.model.Score;
+import com.huiyong.model.ScoreItemResult;
 import com.huiyong.service.ScoreService;
 
 /**
@@ -24,6 +26,9 @@ public class ScoreServiceImpl implements ScoreService {
 	
 	@Autowired
 	private ScoreMapper scoreDao;
+	
+	@Autowired
+	private ScoreItemResultMapper scoreItemResultDao;
 
 	/* (non-Javadoc)
 	 * @see com.huiyong.service.ScoreService#getScoreByUser(java.lang.String, boolean)
@@ -54,8 +59,13 @@ public class ScoreServiceImpl implements ScoreService {
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
-	public void addScore(Score score) {
+	public void addScore(Score score) {	
 		scoreDao.addScore(score);
+		int scoreId=score.getId();
+		for(ScoreItemResult sir : score.getScores()){
+			sir.setScoreId(scoreId);
+		}
+		scoreItemResultDao.addBatchItemResult(score.getScores());
 	}
 
 }

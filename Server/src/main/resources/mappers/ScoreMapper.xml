@@ -7,65 +7,41 @@
     <result column="scorer" property="scorer" jdbcType="VARCHAR" />
     <result column="scoree" property="scoree" jdbcType="VARCHAR" />
     <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
-    <collection column="id" property="questions" javaType="ArrayList" ofType="ScoreItemResult" select="getItemResults" />
-  </resultMap>
-   <resultMap id="ItemResultMap" type="com.huiyong.model.ScoreItemResult" >
-    <result column="score_id" property="scoreId" jdbcType="INTEGER" />
-    <result column="question_id" property="questionId" jdbcType="INTEGER" />
-    <result column="option_id" property="optionsId" jdbcType="INTEGER" />
+    <collection property="scores" column="id" javaType="ArrayList" ofType="ScoreItemResult" select="com.huiyong.dao.ScoreItemResultMapper.getItemResultByScoreId" />
   </resultMap>
   <select id="getScoreByUser" resultMap="ScoreResultMap">
-        SELECT id,
-               paper_id, 
-               scorer,  
-               scoree,  
-               lastModifiedTime  
-        FROM PaperScore 
-    	where scoree=#{username}  
+        SELECT *
+        FROM PaperScore PS
+    	where PS.scoree=#{username}  
         order by lastModifiedTime
-        <if test="recent=true ">  
+        <if test="recent==true ">  
         LIMIT 1
         </if>  
         ;
   </select>
   <select id="getScoreByScorer" resultMap="ScoreResultMap">
-        SELECT id,
-               paper_id, 
-               scorer,  
-               scoree,  
-               lastModifiedTime  
-        FROM PaperScore 
-    	where scoree=#{username} and scorer=#{socrername}
+        SELECT *
+        FROM PaperScore PS
+    	where PS.scoree=#{username} and PS.scorer=#{socrername}
         order by lastModifiedTime
-        <if test="recent=true ">  
+        <if test="recent==true ">  
         LIMIT 1
         </if>  
         ;
   </select>
     <select id="getScoreByOther" resultMap="ScoreResultMap">
-        SELECT id,
-               paper_id, 
-               scorer,  
-               scoree,  
-               lastModifiedTime  
-        FROM PaperScore 
-    	where scoree=#{username} and scorer != #{username}
+        SELECT *
+        FROM PaperScore PS
+    	where PS.scoree=#{username} and PS.scorer != #{username}
             order by lastModifiedTime
-        <if test="recent=true ">  
+        <if test="recent==true ">  
         LIMIT 1
         </if>  
         ;
-  </select>
-      <select id="getItemResults" resultMap="ItemResultMap">
-        SELECT score_id
-               question_id, 
-               option_id 
-        FROM PaperItemScore 
-    	where score_id = #{id};
-  </select>
-    <insert id="addScore" parameterType="Score" useGeneratedKeys="true">  
+    </select>
+    <insert id="addScore" parameterType="Score" useGeneratedKeys="true" keyProperty="id">  
 		INSERT INTO PaperScore (scorer, scoree, lastModifiedTime, paper_id)
         VALUES
-		(#{scorer}, #{scoree}, #{lastModifiedTime}, #{paper_id} )
-  </insert>  
+		(#{scorer}, #{scoree}, #{lastModifiedTime}, #{paperId} )
+   </insert>  
  </mapper>

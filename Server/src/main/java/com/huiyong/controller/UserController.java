@@ -67,6 +67,9 @@ public class UserController {
     	if(null != userFromDB){
     		return new ResponseEntity<String>("User already exists.", HttpStatus.BAD_REQUEST);
     	}
+    	if(null == user.getPassword()){
+    		user.setPassword("123456");
+    	}
     	user.setPassword(MD5Util.getPwd(user.getPassword()));
     	userService.addUser(user);
     	return new ResponseEntity<String>("user is added.", HttpStatus.OK);

@@ -3,11 +3,14 @@
  */
 package com.huiyong.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author gangpu
  *
  */
 public class ScoreItemResult {
+	@JsonIgnore
 	private int scoreId;
 	private int questionId;
 	private int optionsId;
