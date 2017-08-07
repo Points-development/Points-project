@@ -14,21 +14,23 @@ import {
 
 class NetUtil extends React.Component {
 	
-	static get(url,params,callback){
+	static get(url,callback){
         //fetch请求
         fetch(url,{
             method: 'Get',
             headers:{
             	'Accept': 'application/json',
             	'Content-type': 'application/json'
-            },
-            body:JSON.stringify(params)
+            }
         })
         .then((response) => {
         	if(response.status==200){
         		response.json().then(function(data){
         			callback({status:200,data:data});
-        		})
+        		}).catch((error) => {
+        			//for this case, the return data is not a json
+                	callback({status:200})
+                })
         	}else{
         		callback(response);
         	}
@@ -52,7 +54,10 @@ class NetUtil extends React.Component {
         	if(response.status==200){
         		response.json().then(function(data){
         			callback({status:200,data:data});
-        		})
+        		}).catch((error) => {
+        			//for this case, the return data is not a json
+                	callback({status:200})
+                })
         	}else{
         		callback(response);
         	}

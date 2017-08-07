@@ -9,7 +9,8 @@ import {
 	BackHandler,
 	ToastAndroid,
 	Text,
-	Platform
+	Platform,
+	Image
 } from 'react-native';
 
 import Button from '../components/Button'
@@ -61,20 +62,76 @@ export default class Home extends React.Component {
     }
 
     render() {
-    	
+    	const shadowOpt = {
+			color:"#000",
+			border:2,
+			radius:3,
+			opacity:0.2,
+			x:0,
+			y:3,
+			style:{marginVertical:5}
+    	}
         return (
         		<View style={styles.container}>
+	        		<Image 
+		    			source={require('../assets/image/home_bg.jpg')}
+		            	style={styles.backgroundImage}
+		            />
+	        		<View style={styles.homeBackground}> 
+		    	    </View>
+		    	    <View style={styles.homeContainer}>
         			<View style={styles.btgroup}>
-	        			<Button label="自评" textStyle={styles.textStyle} style={styles.button} pressAction={()=>this._goAssessment('self')}>
-	        			</Button>
-	        			<Button label="互评" textStyle={styles.textStyle} style={styles.button} pressAction={()=>this._goAssessment('others')}>
-	        			</Button>
+	        			<TouchableOpacity
+			            	activeOpacity={0.55}
+			            	style={[styles.buttonContainer,styles.button]}
+			            	onPress={()=>this._goAssessment('self')}>
+			                <View style={{flexDirection:'row'}}>
+			                	<Text style={styles.textStyle}>自评</Text>
+			                	<Image 
+					    			source={require('../assets/image/pingjia.png')}
+					            	style={styles.buttonImage}
+					            />
+			                </View>
+			            </TouchableOpacity>
+		        		<TouchableOpacity
+			            	activeOpacity={0.55}
+			            	style={[styles.buttonContainer,styles.button]}
+			            	onPress={()=>this._goAssessment('others')}>
+			                <View style={{flexDirection:'row'}}>
+			                	<Text style={styles.textStyle}>互评</Text>
+			                	<Image 
+					    			source={require('../assets/image/huping.png')}
+					            	style={styles.buttonImage}
+					            />
+			                </View>
+			            </TouchableOpacity>
         			</View>
         			<View style={styles.btgroup}>
-	        			<Button label="查询" textStyle={styles.textStyle} style={styles.button} pressAction={this._goQuery}>
-	        			</Button>
-	        			<Button label="系统" textStyle={styles.textStyle} style={styles.button} pressAction={this._goSystem}>
-	        			</Button>
+	        			<TouchableOpacity
+			            	activeOpacity={0.55}
+			            	style={[styles.buttonContainer,styles.button]}
+			            	onPress={()=>this._goQuery}>
+			                <View style={{flexDirection:'row'}}>
+			                	<Text style={styles.textStyle}>查询</Text>
+			                	<Image 
+					    			source={require('../assets/image/query.png')}
+					            	style={styles.buttonImage}
+					            />
+			                </View>
+			            </TouchableOpacity>
+		        		<TouchableOpacity
+			            	activeOpacity={0.55}
+			            	style={[styles.buttonContainer,styles.button]}
+			            	onPress={()=>this._goSystem}>
+			                <View style={{flexDirection:'row'}}>
+			                	<Text style={styles.textStyle}>系统</Text>
+			                	<Image 
+					    			source={require('../assets/image/system.png')}
+					            	style={styles.buttonImage}
+					            />
+			                </View>
+			            </TouchableOpacity>
+        			</View>
         			</View>
 	        	</View>
         );
@@ -92,18 +149,58 @@ const styles = StyleSheet.create({
 	btgroup:{
 		flexDirection:'row'
 	},
+	buttonContainer:{
+		marginHorizontal:20,
+		height:40,
+		backgroundColor:gColors.submitColor,
+		marginVertical:10,
+		borderRadius:20,
+		borderColor:'#D5D5D5',
+		borderWidth:0.5,
+		alignItems:'center',
+		justifyContent: 'center'
+	},
 	button:{
-		backgroundColor:'rgba(255,92,73,0.5)',
+		backgroundColor:'rgba(2216, 216, 216,0.3)',
 		shadowColor:'#000',
 		shadowOffset:{width:1,height:8},
-		elevation:2,
 		shadowOpacity:0.3,
 		shadowRadius:2,
-		width:(gScreen.width-100)/2,
-		height:(gScreen.width-100)/2 >(gScreen.height-100)/2?(gScreen.height-100)/2:(gScreen.width-100)/2,
+		width:(gScreen.width-100)/3,
+		height:(gScreen.width-100)/3 >(gScreen.height-100)/3?(gScreen.height-100)/3:(gScreen.width-100)/3,
+	},
+	buttonImage:{
+		width:40,
+		height:40
 	},
 	textStyle:{
-		color:'#000',
+		color:'#fff',
 		fontSize:30,
-	}
+	},
+	homeBackground: {
+		position: 'absolute',
+	    top: 0,
+	    left: 0,
+	    bottom: 0,
+	    right: 0,
+	    zIndex:2,
+	    backgroundColor: 'rgba(0,43,54,0.2)',
+	},
+	backgroundImage: {
+	    position: 'absolute',
+	    top: 0,
+	    left: 0,
+	    bottom: 0,
+	    right: 0,
+	    zIndex:1,
+	    width:null,
+	    height:null,
+	    
+	},
+	homeContainer: {
+	    zIndex:3,
+	    position: 'relative',
+	    flex: 0,
+	    backgroundColor: 'transparent',
+	},
 })

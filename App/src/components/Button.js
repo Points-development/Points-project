@@ -9,13 +9,20 @@ import {
 export default class Button extends Component {
 	
 	render() {
-		const {style,textStyle,label,pressAction} = this.props
+		const {style,textStyle,label,pressAction,disable} = this.props
+		let opacity = 0.55;
+		if(disable){
+			opacity = 1;
+		}
 		_pressButton = ()=>{
+			if(disable){
+				return;
+			}
 			pressAction && pressAction();
 		}
 		return (
 	            <TouchableOpacity
-	            	activeOpacity={0.55}
+	            	activeOpacity={opacity}
 	            	style={[styles.container,style]}
 	            	onPress={_pressButton}>
 	                <View>
