@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huiyong.dao.ScoreItemResultMapper" >
+   <resultMap id="ItemResultMap" type="com.huiyong.model.ScoreItemResult" >
+    <result column="question_id" property="questionId" jdbcType="INTEGER" />
+    <result column="option_id" property="optionsId" jdbcType="INTEGER" />
+  </resultMap>
+   <select id="getItemResultByScoreId" resultMap="ItemResultMap">
+        SELECT score_id,
+               question_id, 
+               option_id 
+        FROM PaperItemScore 
+    	where score_id = #{id};
+  </select>
+  <insert id="addBatchItemResult" parameterType="java.util.List">  
+	Insert into PaperItemScore (score_id, question_id, option_id) values  
+		<foreach collection="list" item="item" separator=",">  
+			(#{item.scoreId},#{item.questionId},#{item.optionsId})  
+			</foreach>  
+	</insert>
+ </mapper>

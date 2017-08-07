@@ -12,6 +12,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -67,8 +68,30 @@ public class UserController {
     	if(null != userFromDB){
     		return new ResponseEntity<String>("User already exists.", HttpStatus.BAD_REQUEST);
     	}
+    	if(null == user.getPassword()){
+    		user.setPassword("123456");
+    	}
     	user.setPassword(MD5Util.getPwd(user.getPassword()));
     	userService.addUser(user);
     	return new ResponseEntity<String>("user is added.", HttpStatus.OK);
+    }
+    @RequestMapping(value = "/user/{username}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateUser(@PathVariable String username, @RequestBody User user) {
+    	if(null==user.getName() || username == null){
+    		return new ResponseEntity<String>("User name cannot be null.", HttpStatus.BAD_REQUEST);
+    	}
+    	if(!username.equals(user.getName())){
+    		return new ResponseEntity<String>("User name in body is not the same as username in url.", HttpStatus.BAD_REQUEST);
+    	}
+    	User userFromDB = userService.getUserByName(username);
+    	if(null == userFromDB){
+    		return new ResponseEntity<String>("User to update does not exists.", HttpStatus.NOT_FOUND);
+    	}
+    	if(null == user.getPassword()){
+    		user.setPassword("123456");
+    	}
+    	user.setPassword(MD5Util.getPwd(user.getPassword()));
+    	userService.updateUser(user);
+    	return new ResponseEntity<String>("user updated successfully.", HttpStatus.OK);
     }
 }

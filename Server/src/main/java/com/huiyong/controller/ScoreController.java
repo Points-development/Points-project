@@ -3,7 +3,6 @@
  */
 package com.huiyong.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.huiyong.model.Score;
-import com.huiyong.model.ScoreItemResult;
 import com.huiyong.service.ScoreService;
 import com.huiyong.service.UserService;
 
@@ -32,28 +31,7 @@ public class ScoreController {
 	private ScoreService scoreService;
 	@Autowired
 	private UserService userService;
-	@RequestMapping(value = "/test/test", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
-	public ResponseEntity<?> testScore(){
-		Score score = new Score();
-		score.setId(1);
-		score.setLastModifiedTime(new Date());
-		score.setPaperId(2);
-		score.setScoree("gangpu");
-		score.setScorer("ganxiangzhen");
-		List<ScoreItemResult> aList = new ArrayList<ScoreItemResult>();
-		ScoreItemResult testItem1 = new ScoreItemResult();
-		testItem1.setOptionsId(1);
-		testItem1.setQuestionId(2);
-		testItem1.setScoreId(1);
-		ScoreItemResult testItem2 = new ScoreItemResult();
-		testItem2.setOptionsId(1);
-		testItem2.setQuestionId(2);
-		testItem2.setScoreId(1);
-		aList.add(testItem1);
-		aList.add(testItem2);
-		score.setScores(aList);
-		return new ResponseEntity<Score>(score, HttpStatus.OK);
-	}
+	
 	//By default will return all the results for the user
 	//If scorer is self, will only return self evaluation results
 	//If scorer is other, will return all other's score for the user
@@ -81,7 +59,7 @@ public class ScoreController {
     }
     
     @RequestMapping(value = "/{username}", method = RequestMethod.POST)
-    public ResponseEntity<String> addScore(@PathVariable String username, Score score) {
+    public ResponseEntity<String> addScore(@PathVariable String username, @RequestBody Score score) {
     	if(null == score){
         	return new ResponseEntity<String>("Score is null.", HttpStatus.BAD_REQUEST);
     	}

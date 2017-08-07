@@ -49,4 +49,12 @@ public class UserServiceImpl implements UserService {;
 		userDao.addUser(user);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.huiyong.service.UserService#updateUser(com.huiyong.model.User)
+	 */
+	@Override
+	public void updateUser(User user) {
+		userDao.updateUser(user);
+	}
+
 }

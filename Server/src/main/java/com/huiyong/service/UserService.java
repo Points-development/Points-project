@@ -16,5 +16,6 @@ import com.huiyong.model.User;
 public interface UserService {
 	public User getUserByName(String name);
 	public List<User> getUsersInBranch(@Param("branchname") String branchname);
-	void addUser(User user);
+	public void addUser(User user);
+	public void updateUser(User user);
 }

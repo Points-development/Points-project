@@ -17,15 +17,18 @@ public class Score {
 	private String scoree;
 	private Date lastModifiedTime;	
 	private List<ScoreItemResult> scores;
-	
-
-	public Date getLastModifiedTime() {
-		return lastModifiedTime;
+	public Integer getId() {
+		return id;
 	}
-	public void setLastModifiedTime(Date lastModifiedTime) {
-		this.lastModifiedTime = lastModifiedTime;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-
+	public Integer getPaperId() {
+		return paperId;
+	}
+	public void setPaperId(Integer paperId) {
+		this.paperId = paperId;
+	}
 	public String getScorer() {
 		return scorer;
 	}
@@ -38,17 +41,11 @@ public class Score {
 	public void setScoree(String scoree) {
 		this.scoree = scoree;
 	}
-	public Integer getId() {
-		return id;
+	public Date getLastModifiedTime() {
+		return lastModifiedTime;
 	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public Integer getPaperId() {
-		return paperId;
-	}
-	public void setPaperId(Integer paperId) {
-		this.paperId = paperId;
+	public void setLastModifiedTime(Date lastModifiedTime) {
+		this.lastModifiedTime = lastModifiedTime;
 	}
 	public List<ScoreItemResult> getScores() {
 		return scores;
