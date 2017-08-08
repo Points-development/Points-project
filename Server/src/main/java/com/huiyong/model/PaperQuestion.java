@@ -10,6 +10,7 @@ package com.huiyong.model;
 public class PaperQuestion {
 	private Integer id;
 	private String description;
+	private String property;
 	public Integer getId() {
 		return id;
 	}
@@ -21,5 +22,11 @@ public class PaperQuestion {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getProperty() {
+		return property;
+	}
+	public void setProperty(String property) {
+		this.property = property;
 	}
 }

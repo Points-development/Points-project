@@ -8,8 +8,15 @@
     <collection column="id" property="questions" javaType="ArrayList" ofType="PaperQuestion" select="getQuestions" />
     <collection column="id" property="options" javaType="ArrayList" ofType="PaperOption" select="getOptions" />
   </resultMap>
+  <resultMap id="PaperResultMapByIdAndProperty" type="com.huiyong.model.PaperTest" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="property" jdbcType="VARCHAR" />
+    <collection column="id" property="options" javaType="ArrayList" ofType="PaperOption" select="getOptions" />
+  </resultMap>
    <resultMap id="QuestionResultMap" type="com.huiyong.model.PaperQuestion" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="property" property="property" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="OptionResultMap" type="com.huiyong.model.PaperOption" >
@@ -24,5 +31,11 @@
   </select> 
     <select id="getOptions" parameterType="int" resultMap="OptionResultMap">
 	select * from PaperOption where test_id=#{id};
+  </select> 
+    <select id="getPaperByIdAndUserProperty" resultMap="PaperResultMapByIdAndProperty">
+	select * from PaperTest where id=#{id};
+  </select> 
+   <select id="getQuestionsByIdAndProperty" resultMap="QuestionResultMap">
+	select PQ.id, UP.name property, PQ.description from PaperQuestion PQ join UserProperty UP on PQ.user_property_id=UP.id where PQ.test_id=#{id} and UP.name=#{property};
   </select> 
  </mapper>

@@ -3,6 +3,7 @@
  */
 package com.huiyong.controller;
 
+import com.huiyong.model.Branch;
 import com.huiyong.model.User;
 import com.huiyong.service.UserService;
 import com.huiyong.util.MD5Util;
@@ -71,8 +72,15 @@ public class UserController {
     	if(null == user.getPassword()){
     		user.setPassword("123456");
     	}
+    	if(null == user.getBranch()|| "".equals( user.getBranch())){
+    		user.setBranch("NULL");
+    	}
+    	Integer propertyId = userService.getPropertyId(user.getProperty());
+    	if(null == propertyId){
+    		return new ResponseEntity<String>("User property does not exist.", HttpStatus.BAD_REQUEST);
+    	}
     	user.setPassword(MD5Util.getPwd(user.getPassword()));
-    	userService.addUser(user);
+    	userService.addUser(user, propertyId);
     	return new ResponseEntity<String>("user is added.", HttpStatus.OK);
     }
     @RequestMapping(value = "/user/{username}", method = RequestMethod.PUT)
@@ -90,8 +98,27 @@ public class UserController {
     	if(null == user.getPassword()){
     		user.setPassword("123456");
     	}
+    	if(null == user.getBranch()|| "".equals( user.getBranch())){
+    		user.setBranch("NULL");
+    	}
+    	Integer propertyId = userService.getPropertyId(user.getProperty());
+    	if(null == propertyId){
+    		return new ResponseEntity<String>("User property does not exist.", HttpStatus.BAD_REQUEST);
+    	}
     	user.setPassword(MD5Util.getPwd(user.getPassword()));
-    	userService.updateUser(user);
+    	userService.updateUser(user, propertyId);
     	return new ResponseEntity<String>("user updated successfully.", HttpStatus.OK);
     }
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public List<Branch> getUsers() {
+    	return userService.getAllUsers();
+    }
+    @RequestMapping(value = "/user/property", method = RequestMethod.GET)
+    public List<String> getProperties() {
+    	return userService.getAllProperties();
+    }
+//    @RequestMapping(value = "/user/property/{propertyName}", method = RequestMethod.POST)
+//    public ResponseEntity<?> addProperty(@PathVariable String propertyName) {
+//    	return userService.addProperty(propertyName);
+//    }
 }

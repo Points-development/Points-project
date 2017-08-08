@@ -7,40 +7,54 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="branch" property="branch" jdbcType="VARCHAR" />
+    <result column="property" property="property" jdbcType="VARCHAR" />
     <result column="isAdmin" property="isAdmin" jdbcType="TINYINT" />
   </resultMap>
   <select id="getUserByName" parameterType="String" resultMap="BaseResultMap">
-    select id, name, password, branch, isAdmin from User
+    select User.id, User.name, User.password, User.branch, UserProperty.name property, User.isAdmin from User join UserProperty on User.user_property_id=UserProperty.id
+    	where User.name=#{name}
+  </select>
+   <select id="getPropertyId" parameterType="String" resultType="Integer">
+    select id from UserProperty
     	where name=#{name}
   </select>
+  <select id="getAllBranches" resultType="string">
+    select distinct branch from User
+  </select>
     <select id="getUsersInBranch" parameterType="String" resultMap="BaseResultMap">
-    select id, name, password, branch, isAdmin from User
+    select User.id, User.name, User.password, User.branch, UserProperty.name property, User.isAdmin from User join UserProperty on User.user_property_id=UserProperty.id
     	where branch=#{branchname}
   </select>
-  <insert id="addUser" parameterType="User" useGeneratedKeys="true">  
+  <select id="getAllProperties" resultType="String">
+    select name from UserProperty
+  </select>
+  <insert id="addUser" useGeneratedKeys="true">  
         INSERT INTO User (name,  
-                          <if test="password != null" >
+                          <if test="user.password != null" >
         					password,
       					  </if> 
-                          <if test="branch != null" >
+                          <if test="user.branch != null" >
         					branch,
       					  </if>  
+      					  user_property_id,
                           isAdmin)  
-              VALUES   (#{name},
-                          <if test="password != null" >
-        					#{password},
+              VALUES   (#{user.name},
+                          <if test="user.password != null" >
+        					#{user.password},
       					  </if> 
-                          <if test="branch != null" >
-        					#{branch},
+                          <if test="user.branch != null" >
+        					#{user.branch},
       					  </if> 
-                        #{isAdmin})      
+      					  #{propertyId},
+                        #{user.isAdmin})      
   </insert>  
-    <update id="updateUser" parameterType="User" useGeneratedKeys="true">  
-        UPDATE User SET  User.password=#{password},
-                          <if test="branch != null" >
-        				 User.branch=#{branch},
+    <update id="updateUser" useGeneratedKeys="true">  
+        UPDATE User SET  User.password=#{user.password},
+                          <if test="user.branch != null" >
+        				 User.branch=#{user.branch},
       					  </if> 
-                        User.isAdmin=#{isAdmin}
-                        where User.name=#{name};
+                        User.isAdmin=#{user.isAdmin},
+                        User.user_property_id=#{propertyId}
+                        where User.name=#{user.name};
   </update>  
  </mapper>

@@ -12,6 +12,7 @@ public class User {
 	private String name;
 	private String password;
 	private String branch;
+	private String property;
 	private boolean isAdmin;
 	public Integer getId() {
 		return id;
@@ -42,5 +43,11 @@ public class User {
 	}
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
-	}	
+	}
+	public String getProperty() {
+		return property;
+	}
+	public void setProperty(String property) {
+		this.property = property;
+	}
 }
