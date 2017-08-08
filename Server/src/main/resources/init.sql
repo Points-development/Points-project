@@ -2,7 +2,7 @@ INSERT INTO `UserProperty`(`name`) values('村干部');
 INSERT INTO `UserProperty`(`name`) values('乡干部');
 INSERT INTO `UserProperty`(`name`) values('镇干部');
 INSERT INTO `User`(`user_property_id`, `name`, `branch`, `isAdmin`) values(1, 'gangpu', 'Shannxi', 1);
-INSERT INTO `User`(`user_property_id`, `name`, `branch`, `isAdmin`) values(1, 'ganxiangzhen', 'henan', 1);
+INSERT INTO `User`(`user_property_id`, `name`, `branch`, `isAdmin`) values(1, 'xzgan', 'henan', 1);
 INSERT INTO `User`(`user_property_id`, `name`, `branch`, `isAdmin`) values(2, 'test', 'test', 0);
 INSERT INTO `PaperTest`(`name`) values('党性体检参考指标');
 INSERT INTO `PaperQuestion`(`user_property_id`, `description`, `test_id`) values(1, '我能不能够做到始终不忘记、不动摇、不怀疑对党的信仰，始终按照党的决策和要求积极提升自己的党性修养？', 1);

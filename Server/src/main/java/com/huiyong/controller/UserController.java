@@ -3,11 +3,6 @@
  */
 package com.huiyong.controller;
 
-import com.huiyong.model.Branch;
-import com.huiyong.model.User;
-import com.huiyong.service.UserService;
-import com.huiyong.util.MD5Util;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.huiyong.model.Branch;
+import com.huiyong.model.Message;
+import com.huiyong.model.User;
+import com.huiyong.service.UserService;
+import com.huiyong.util.MD5Util;
 
 
 
@@ -34,21 +35,26 @@ public class UserController {
     @RequestMapping(value = "/login", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody User user) {
     	//TODO now just verify the password and return valid/invalid, later need return JWT token
+    	Message m = new Message();
     	if(null==user || null == user.getName() || null ==user.getPassword()){
-    		return new ResponseEntity<String>("User name and password must be provided.", HttpStatus.FORBIDDEN);
+    		m.setError("用户名和密码必须提供");
+    		return new ResponseEntity<Message>(m, HttpStatus.FORBIDDEN);
     	}
     	User userFromDB = userService.getUserByName(user.getName());
     	if(null == userFromDB){
-    		return new ResponseEntity<String>("User does not exist.", HttpStatus.FORBIDDEN);
+    		m.setError("用户不存在");
+    		return new ResponseEntity<Message>(m, HttpStatus.FORBIDDEN);
     	}
     	String passwordMD5 = MD5Util.getPwd(user.getPassword());
     	if(null == passwordMD5){
-        	return new ResponseEntity<String>("password is not correct.", HttpStatus.FORBIDDEN);
+    		m.setError("密码不正确");
+        	return new ResponseEntity<Message>(m, HttpStatus.FORBIDDEN);
     	}
     	if(passwordMD5.equals(userFromDB.getPassword())){
         	return new ResponseEntity<User>(userFromDB, HttpStatus.OK);
     	}
-    	return new ResponseEntity<String>("password is not correct.", HttpStatus.FORBIDDEN);
+    	m.setError("密码不正确");
+    	return new ResponseEntity<Message>(m, HttpStatus.FORBIDDEN);
     }
     //Return users in the same branches with the required user
     @RequestMapping(value = "/branch/users", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
@@ -62,12 +68,15 @@ public class UserController {
     }
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public ResponseEntity<?> addUser(@RequestBody User user) {
+    	Message m = new Message();
     	if(null==user.getName()){
-    		return new ResponseEntity<String>("User name cannot be null.", HttpStatus.BAD_REQUEST);
+    		m.setError("用户名不能为空.");
+    		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
     	}
     	User userFromDB = userService.getUserByName(user.getName());
     	if(null != userFromDB){
-    		return new ResponseEntity<String>("User already exists.", HttpStatus.BAD_REQUEST);
+    		m.setError("用户已经存在.");
+    		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
     	}
     	if(null == user.getPassword()){
     		user.setPassword("123456");
@@ -77,23 +86,29 @@ public class UserController {
     	}
     	Integer propertyId = userService.getPropertyId(user.getProperty());
     	if(null == propertyId){
-    		return new ResponseEntity<String>("User property does not exist.", HttpStatus.BAD_REQUEST);
+    		m.setError("用户身份不能为空.");
+    		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
     	}
     	user.setPassword(MD5Util.getPwd(user.getPassword()));
     	userService.addUser(user, propertyId);
-    	return new ResponseEntity<String>("user is added.", HttpStatus.OK);
+    	m.setSuccess("创建成功.");
+    	return new ResponseEntity<Message>(m, HttpStatus.OK);
     }
     @RequestMapping(value = "/user/{username}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateUser(@PathVariable String username, @RequestBody User user) {
+    	Message m = new Message();
     	if(null==user.getName() || username == null){
-    		return new ResponseEntity<String>("User name cannot be null.", HttpStatus.BAD_REQUEST);
+    		m.setError("用户名不能为空.");
+    		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
     	}
     	if(!username.equals(user.getName())){
-    		return new ResponseEntity<String>("User name in body is not the same as username in url.", HttpStatus.BAD_REQUEST);
+    		m.setError("用户名和请求名不一致.");
+    		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
     	}
     	User userFromDB = userService.getUserByName(username);
     	if(null == userFromDB){
-    		return new ResponseEntity<String>("User to update does not exists.", HttpStatus.NOT_FOUND);
+    		m.setError("用户不存在.");
+    		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
     	}
     	if(null == user.getPassword()){
     		user.setPassword("123456");
@@ -103,11 +118,13 @@ public class UserController {
     	}
     	Integer propertyId = userService.getPropertyId(user.getProperty());
     	if(null == propertyId){
-    		return new ResponseEntity<String>("User property does not exist.", HttpStatus.BAD_REQUEST);
+    		m.setError("用户身份不存在.");
+    		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
     	}
     	user.setPassword(MD5Util.getPwd(user.getPassword()));
     	userService.updateUser(user, propertyId);
-    	return new ResponseEntity<String>("user updated successfully.", HttpStatus.OK);
+    	m.setSuccess("更新成功.");
+    	return new ResponseEntity<Message>(m, HttpStatus.OK);
     }
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public List<Branch> getUsers() {
