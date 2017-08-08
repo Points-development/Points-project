@@ -36,6 +36,6 @@
 	select * from PaperTest where id=#{id};
   </select> 
    <select id="getQuestionsByIdAndProperty" resultMap="QuestionResultMap">
-	select PQ.id, UP.name property, PQ.description from PaperQuestion PQ join UserProperty UP on PQ.user_property_id=UP.id where PQ.test_id=#{id} and UP.name=#{property};
+	select PQ.id, UP.name property, PQ.description from PaperQuestion PQ join UserProperty UP on PQ.user_property_id=UP.id where PQ.test_id=#{id} and (UP.name=#{property} or UP.name='共性');
   </select> 
  </mapper>
