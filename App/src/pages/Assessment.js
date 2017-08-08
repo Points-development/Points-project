@@ -9,11 +9,14 @@ import {
 	Text,
 	FlatList,
 	Modal,
-	Image
+	Image,
+	ToastAndroid,
+	ScrollView
 } from 'react-native';
 
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Button from '../components/Button'
+import NetUtil from '../service/NetUtil'
 
 
 export default class Assessment extends React.Component {
@@ -21,97 +24,130 @@ export default class Assessment extends React.Component {
     componentWillUnmount() {
     }
     
+    componentDidMount() {
+    	const {who} = this.props.navigation.state.params
+    	if(who == 'others'){
+    		let url1 = gServer.host+'/branch/users?username='+gUser.name;
+        	NetUtil.get(url1,function (response) {
+        		if(response.status == 200){
+        			this.setState({branchUsers: response.data});
+        		}else{
+        			ToastAndroid.show('网络异常，请稍后重试!', ToastAndroid.SHORT); 
+        		}
+            }.bind(this));
+    	}
+    	
+    	let url2 = gServer.host+'/paper/1';
+    	NetUtil.get(url2,function (response) {
+    		if(response.status == 200){
+    			this.setState({dataSource: response.data});
+    			let options = [];
+    			response.data.options.map(function (item) {
+    				options.push({'label':item.description,'value':item.description,'id':item.id});
+    			});
+    			this.setState({options:options});
+    		}else{
+    			this.setState({errorMsg: '请检查网络或联系管理员'});
+    		}
+        }.bind(this))
+    }
+    
     constructor (props) {
     	super (props)
     	const {who} = props.navigation.state.params
     	this.state = {
     		modalVisible: who=='others',
+    		resultVisible:false,
+    		isSubmitted:false,
     		evaluator:who=='self'?'自己':'其他',
     		dataSource:{
     		    "id": 1,
     		    "name": "党性体检参考指标",
     		    "questions": [
-    		        {
-    		            "id": 1,
-    		            "description": "我能不能够做到始终不忘记、不动摇、不怀疑对党的信仰，始终按照党的决策和要求积极提升自己的党性修养？"
-    		        },
-    		        {
-    		            "id": 2,
-    		            "description": "作为一名共产党员，我能不能关键时刻站得出，危险时刻豁得出，如有危难降临，能否随时准备为党和人民牺牲一切？"
-    		        },
-    		        {
-    		            "id": 3,
-    		            "description": "当我听到周围的党员群众妄议组织的工作决策部署时，我能不能够做到出面制止他们，并加以正确引导？"
-    		        },
-    		        {
-    		            "id": 4,
-    		            "description": "作为一名共产党员，每一次的组织生活能否认真参加？党章诵读一遍做到了没有？能不能按时足额亲自交纳党费？能不能够做到按照《党章》的要求履行党员的义务？"
-    		        },
-    		        {
-    		            "id": 5,
-    		            "description": "在日常生活物质需求上，我能不能够做到勤俭节约、艰苦朴素、量力而行，不跟风攀比、大操大办？"
-    		        },
-    		        {
-    		            "id": 6,
-    		            "description": "在考虑问题的时候，我能不能够做到站在集体的角度、发展的角度来思考和解决问题，并做到言行一致、表里如一？ "
-    		        },
-    		        {
-    		            "id": 7,
-    		            "description": "在日常生产生活过程中，我能不能主动维护党的形象，不说与党员身份不相符的话，在公众场合能不能管住自己的言行举止？"
-    		        },
-    		        {
-    		            "id": 8,
-    		            "description": "我能不能够做到与各种不文明行为作斗争，不参与封建迷信、赌博等?"
-    		        },
-    		        {
-    		            "id": 9,
-    		            "description": "在日常生产生活中与他人产生纠纷时，我能不能够做到按照国家法律法规、社会公德的标准和要求自行妥善处理？"
-    		        }
-    		    ],
-    		    "options": [
-    		        {
-    		            "id": 1,
-    		            "description": "优秀"
-    		        },
-    		        {
-    		            "id": 2,
-    		            "description": "良好"
-    		        },
-    		        {
-    		            "id": 3,
-    		            "description": "一般"
-    		        },
-    		        {
-    		            "id": 4,
-    		            "description": "较差"
-    		        }
     		    ]
-    		}
+    		},
+    		options: [],
+    		branchUsers:[],
+    		selfScore:{}
     	}
     }
+    
+    _checkSubmit = ()=>{
+    	let score = {
+        	paperId:1,
+        	scorer:gUser.name,
+        	scoree:this.state.evaluator=='自己'?gUser.name:this.state.evaluator,
+        	scores1:0,
+        	scores2:0,
+        	scores3:0,
+        	scores4:0,
+    	}
+    	this.state.dataSource.questions.map(function(item){
+    		if(item.selected){
+    			if(item.selected == 1){
+    				score.scores1 +=1;
+    			}
+    			if(item.selected == 2){
+    				score.scores2 +=1;
+    			}
+    			if(item.selected == 3){
+    				score.scores3 +=1;
+    			}
+    			if(item.selected == 4){
+    				score.scores4 +=1;
+    			}
+    		}
+    	});
+    	score.total = score.scores1+score.scores2+score.scores3+score.scores4;
+    	score.totalScore = score.scores1*5+score.scores2*3+score.scores3*1;
+    	this.setState({resultVisible: true,selfScore:score});
+    }
+    
     _submit = ()=>{
+    	let score = {
+    		paperId:1,
+    		scorer:gUser.name,
+    		scoree:this.state.evaluator=='自己'?gUser.name:this.state.evaluator,
+    		scores:[]
+    	}
+    	this.state.dataSource.questions.map(function(item){
+    		if(item.selected){
+    			let question={questionId:item.id,optionsId:item.selected}
+    			score.scores.push(question);
+    		}
+    	});
+    	let url = gServer.host+'/score/'+score.scoree;
+    	NetUtil.post(url,score,function (response) {
+    		if(response.status == 200){
+    			ToastAndroid.show('评价提交成功!', ToastAndroid.SHORT);
+    			this.setState({isSubmitted:true,resultVisible: false});
+    		}else{
+    			ToastAndroid.show('网络异常，请稍后重试!', ToastAndroid.SHORT); 
+    		}
+        }.bind(this));
     	
     }
     _renderItem = (item) => {
-    	const radio_props = [{'label': '优秀', 'value': '优秀' },
-    	                       {'label': '良好', 'value': '良好' },
-    	                       {'label': '一般', 'value': '一般' },
-    	                       {'label': '较差', 'value': '较差' }];
+    	
+    	let defaultSelect = 100;
+    	if(item.item.selected){
+    		defaultSelect = item.item.selected-1;
+    	}	
         return (
         		<View style={styles.question}>
         			<View style={{padding:20,paddingTop:30}}>
-        				<Text style={{color:gColors.defaultFontColor}}>{item.item.description}</Text>
+        				<Text style={{color:gColors.defaultFontColor}}>{item.item.id}. {item.item.description}</Text>
         			</View>
         			<View style={{padding:20}}>
 		        		<RadioForm
-			                radio_props={radio_props}
+			                radio_props={this.state.options}
 		        			buttonColor={gColors.buttonColor}
-		        			initial={10}
+		        			initial={defaultSelect}
 		        			radioStyle={{paddingRight:15}}
 		        			formHorizontal={true}
 		        		  	labelHorizontal={true}
 			                onPress={(value,index) => {
-			                	item.item.selected=value
+			                	item.item.selected=this.state.options[index].id
 			                }}
 			              />
 		            </View>
@@ -127,30 +163,42 @@ export default class Assessment extends React.Component {
     _keyExtractor = (item, index) => item.id;
     
     _onPress = item => {
-    	this.setState({modalVisible: false});
+    	this.setState({modalVisible: false,evaluator:item.name});
     }
     
     _back = ()=>{
     	this.props.navigation.goBack();
     }
     
+    _closeResult = ()=>{
+    	this.setState({resultVisible: false});
+    }
+    
     _renderUserItem = (item, key) => {
-        const isLastItem = key==1
+        let itemName = item.name
         return (
-            <TouchableOpacity
-                key={`${item.name}-${key}`}
-                activeOpacity={0.75}
-                style={[styles.item, isLastItem && {borderBottomWidth: 0}]}
-                onPress={()=>this._onPress(item)}
-            >
-                <Text style={{color: '#000', fontSize: 16}}>{item.name}</Text>
-            </TouchableOpacity>
+        	<View key={`${item.name}-${key}`}>
+	        {itemName != gUser.name && 
+	        	<TouchableOpacity
+	                activeOpacity={0.75}
+	                style={styles.item}
+	                onPress={()=>this._onPress(item)}
+	            >
+	                <Text style={{color: '#000', fontSize: 16}}>{item.name}</Text>
+	            </TouchableOpacity>
+            }
+	        {itemName==gUser.name && 
+	        	<View
+	        		style={styles.item}>
+                	<Text style={{color: '#ddd', fontSize: 16}}>{item.name}(不能评测自己)</Text>
+                </View>
+	        }
+	        </View>
         )
     }
 
     render() {
     	const {isConnected,who} = this.props.navigation.state.params
-    	const items = [{id: 1,title:'用户1', name: '用户1'},{id: 2,title:'用户1',name: '用户1'}]
     	
         return (
         		<View style={styles.container}>
@@ -158,7 +206,7 @@ export default class Assessment extends React.Component {
         				<Text style={{fontSize:20,color:gColors.defaultFontColor}}>
         					{this.state.dataSource.name}
         				</Text>
-        				<Text style={{fontSize:15,color:'#d8d8d8',textAlign:'right'}}>
+        				<Text style={{fontSize:15,color:'#535a5a',textAlign:'right'}}>
 	    					评测对象: {this.state.evaluator}
 	    				</Text>	
         			</View>
@@ -173,7 +221,7 @@ export default class Assessment extends React.Component {
 	                </View>
 	                <View style={{ height: 1, backgroundColor: '#CCCCCC',opacity:0.8 }} />
 	                <View style={{alignItems: 'center'}}>
-		        		<Button label="提交" textStyle={styles.textStyle} style={styles.button} pressAction={this._submit}></Button>
+		        		<Button label="提交" textStyle={styles.textStyle} disable={this.state.isSubmitted} style={[styles.button, this.state.isSubmitted && {backgroundColor:gColors.buttonDisableColor}]} pressAction={this._checkSubmit}></Button>
 	    			</View>
 	    			{who=='others' && 
 	    				<Modal 
@@ -194,13 +242,39 @@ export default class Assessment extends React.Component {
 						                           resizeMode={"contain"}
 						                    />
 						                </TouchableOpacity>
-						                <Text style={{paddingLeft:150}}>选择评测对象</Text>
+						                <Text style={{paddingLeft:50}}>选择评测对象</Text>
 					                </View>
-			              			{items.map(this._renderUserItem)}
+					                <ScrollView>
+			              				{this.state.branchUsers.map(this._renderUserItem)}
+			              			</ScrollView>
 			              		</View>
 			              	</View>
 			             </Modal>
 	    			}
+    				<Modal 
+		              	animationType={"fade"}
+		              	transparent={true}
+		              	visible={this.state.resultVisible}
+		              	onRequestClose={() => {}} 
+		              >
+		              	<View style={styles.spinner}>
+		              		<View style={styles.spinnerContent2}>
+		              			<View style={{padding:10}}>
+					                <Text>评测分数:</Text>
+					                <Text>本次体检问题共{this.state.selfScore.total}个,
+					                其中优秀{this.state.selfScore.scores1}项,
+					                良好{this.state.selfScore.scores2}项,
+					                一般{this.state.selfScore.scores3}项,
+					                较差{this.state.selfScore.scores4}项,
+					                分数为{this.state.selfScore.totalScore}分</Text>
+				                </View>
+				                <View style={{flexDirection: 'row',flex:1,justifyContent: 'center',alignItems: 'center',}}>
+				                <Button label="确定" textStyle={styles.textStyle} style={styles.button2} pressAction={this._submit}></Button>
+				                <Button label="取消" textStyle={styles.textStyle} style={styles.button3} pressAction={this._closeResult}></Button>
+				                </View>
+		              		</View>
+		              	</View>
+		             </Modal>
         		</View>
         );
     }
@@ -213,18 +287,28 @@ const styles = StyleSheet.create({
 	    backgroundColor:gColors.background
 	},
 	list:{
-		width:gScreen.wdith,
+		width:gScreen.width,
 		flex:1,
 		paddingHorizontal:10,
 		paddingBottom:20
 	},
 	question:{
-		width:gScreen.wdith-100,
+		width:gScreen.width-50,
 		height:190
 	},
 	button:{
 		backgroundColor:gColors.buttonColor,
 		width:gScreen.width/2,
+	},
+	button2:{
+		backgroundColor:gColors.buttonColor,
+		width:gScreen.width/6,
+		height:30
+	},
+	button3:{
+		backgroundColor:gColors.buttonCancelColor,
+		width:gScreen.width/6,
+		height:30
 	},
 	textStyle:{
 		fontSize:20,
@@ -239,12 +323,21 @@ const styles = StyleSheet.create({
     spinnerContent: {
     	justifyContent: 'center',
         width: gScreen.width * (7 / 10),
+        height: gScreen.height * (6 / 10),
+        backgroundColor: '#fcfcfc',
+        padding: 20,
+        borderRadius: 5
+    },
+    spinnerContent2: {
+    	justifyContent: 'center',
+        width: gScreen.width * (5 / 10),
+        height: gScreen.height * (4 / 10),
         backgroundColor: '#fcfcfc',
         padding: 20,
         borderRadius: 5
     },
     item: {
-        height: 34,
+        height: 54,
         justifyContent: 'center',
         alignItems: 'center',
         borderBottomColor: '#ddd',

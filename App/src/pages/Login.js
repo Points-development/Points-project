@@ -14,6 +14,8 @@ import {
 } from 'react-native';
 import Constant from '../common/constants';
 import Button from '../components/Button'
+import NetUtil from '../service/NetUtil'
+import UserDefaults from '../common/UserDefaults'
 const dismissKeyboard = require('dismissKeyboard')
 
 export default class Login extends React.Component {
@@ -31,13 +33,30 @@ export default class Login extends React.Component {
     	super (props)
     	this.state = {
     		userName:'',
-    		password:''
+    		password:'',
+    		errorMsg:''
     	}
     }
     
     _submit = ()=>{
     	dismissKeyboard();
-    	this.props.navigation.navigate('Home');
+    	let url = gServer.host+'/login';
+    	let user = {
+    		name:this.state.userName,
+    		password:this.state.password
+    	}
+    	let navigation = this.props.navigation;
+    	NetUtil.post(url,user,function (response) {
+    		if(response.status == 200){
+    			gUser = response.data;
+    			UserDefaults.setObject('user',response.data);
+    			navigation.navigate('Home');
+    		} else if(response.status == 403){
+    			this.setState({errorMsg: '用户名或者密码错误'});
+    		}else{
+    			this.setState({errorMsg: '请检查网络或联系管理员'});
+    		}
+        }.bind(this))
     }
 
     render() {
@@ -51,7 +70,13 @@ export default class Login extends React.Component {
 		    	    </View>
 	        	    <View style={styles.loginContainer}>
 	        	    	<View style={styles.title}><Text style={{fontSize:20,fontWeight:'bold',color:'#fff'}}>彬县党建评测系统</Text></View>
-		        	    <View style={styles.loginInput}>
+		        	    {
+		        	    	this.state.errorMsg !='' && 
+		        	    	<View style={styles.title}>
+		        	    		<Text style={{color:'#ff5c49'}}>{this.state.errorMsg}</Text>
+		        	    	</View>
+		        	    }
+	        	    	<View style={styles.loginInput}>
 		        	    	<TextInput
 		        	    		underlineColorAndroid = {'transparent'}
 		        	    		style={styles.textInput}

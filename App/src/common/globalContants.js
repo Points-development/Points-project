@@ -17,6 +17,8 @@ global.gColors = {
     themeFontColor:'#fff',
     submitColor:'#8ee9d4',
     buttonColor:'#50C900',
+    buttonDisableColor:'rgba(80,201,79,0.2)',
+    buttonCancelColor:'rgba(184, 193, 193,0.8)',
     background: '#fbfcfc',
     defaultFontColor:'#000',
     border: '#d5d5d5',
@@ -26,5 +28,5 @@ global.gColors = {
 }
 
 global.gServer = {
-	host:'http://117.122.252.54:8080/'
+	host:'http://117.122.252.54:8080/pointservice'
 }
