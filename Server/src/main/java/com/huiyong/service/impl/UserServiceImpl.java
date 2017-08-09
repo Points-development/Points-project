@@ -107,6 +107,7 @@ public class UserServiceImpl implements UserService {;
 	 * @see com.huiyong.service.UserService#deleteUser(java.lang.String)
 	 */
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
 	public void deleteUser(String username) {
 		userDao.deleteUser(username);
 	}
