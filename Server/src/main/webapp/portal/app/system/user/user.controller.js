@@ -13,9 +13,8 @@
         
         vm.hasSelected=false;
 		vm.checkAll = false;
-		vm.userlist = [];
-
         vm.init = function(){
+        	vm.userlist = [];
         	systemService.getUsers('test').then(function(response){
         		for(var i=0;i<response.length;i++){
         			vm.userlist.push.apply(vm.userlist, response[i].users)

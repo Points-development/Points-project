@@ -110,7 +110,7 @@ export default class Home extends React.Component {
 	        			<TouchableOpacity
 			            	activeOpacity={0.55}
 			            	style={[styles.buttonContainer,styles.button]}
-			            	onPress={()=>this._goQuery}>
+			            	onPress={()=>this._goQuery()}>
 			                <View style={{flexDirection:'row'}}>
 			                	<Text style={styles.textStyle}>查询</Text>
 			                	<Image 
@@ -122,7 +122,7 @@ export default class Home extends React.Component {
 		        		<TouchableOpacity
 			            	activeOpacity={0.55}
 			            	style={[styles.buttonContainer,styles.button]}
-			            	onPress={()=>this._goSystem}>
+			            	onPress={()=>this._goSystem()}>
 			                <View style={{flexDirection:'row'}}>
 			                	<Text style={styles.textStyle}>系统</Text>
 			                	<Image 

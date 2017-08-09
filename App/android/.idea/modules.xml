@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/assessment.iml" filepath="$PROJECT_DIR$/assessment.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-cardview/android/react-native-cardview.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-cardview/android/react-native-cardview.iml" />
     </modules>
   </component>
 </project>

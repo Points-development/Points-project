@@ -28,5 +28,5 @@ global.gColors = {
 }
 
 global.gServer = {
-	host:'http://117.122.252.54:8080/pointservice'
+	host:'http://123.56.4.5:8080/pointservice'
 }

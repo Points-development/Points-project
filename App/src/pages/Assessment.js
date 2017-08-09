@@ -35,21 +35,21 @@ export default class Assessment extends React.Component {
         			ToastAndroid.show('网络异常，请稍后重试!', ToastAndroid.SHORT); 
         		}
             }.bind(this));
+    	}else{
+    		let url2 = gServer.host+'/paper/1?username='+gUser.name;
+        	NetUtil.get(url2,function (response) {
+        		if(response.status == 200){
+        			this.setState({dataSource: response.data});
+        			let options = [];
+        			response.data.options.map(function (item) {
+        				options.push({'label':item.description,'value':item.description,'id':item.id});
+        			});
+        			this.setState({options:options});
+        		}else{
+        			this.setState({errorMsg: '请检查网络或联系管理员'});
+        		}
+            }.bind(this))
     	}
-    	
-    	let url2 = gServer.host+'/paper/1';
-    	NetUtil.get(url2,function (response) {
-    		if(response.status == 200){
-    			this.setState({dataSource: response.data});
-    			let options = [];
-    			response.data.options.map(function (item) {
-    				options.push({'label':item.description,'value':item.description,'id':item.id});
-    			});
-    			this.setState({options:options});
-    		}else{
-    			this.setState({errorMsg: '请检查网络或联系管理员'});
-    		}
-        }.bind(this))
     }
     
     constructor (props) {
@@ -68,7 +68,7 @@ export default class Assessment extends React.Component {
     		},
     		options: [],
     		branchUsers:[],
-    		selfScore:{}
+    		selfScore:{common:{},self:{}}
     	}
     }
     
@@ -77,29 +77,54 @@ export default class Assessment extends React.Component {
         	paperId:1,
         	scorer:gUser.name,
         	scoree:this.state.evaluator=='自己'?gUser.name:this.state.evaluator,
-        	scores1:0,
-        	scores2:0,
-        	scores3:0,
-        	scores4:0,
+        	common:{
+        		scores1:0,
+            	scores2:0,
+            	scores3:0,
+            	scores4:0
+        	},
+        	self:{
+        		scores1:0,
+            	scores2:0,
+            	scores3:0,
+            	scores4:0
+        	}
     	}
     	this.state.dataSource.questions.map(function(item){
     		if(item.selected){
-    			if(item.selected == 1){
-    				score.scores1 +=1;
-    			}
-    			if(item.selected == 2){
-    				score.scores2 +=1;
-    			}
-    			if(item.selected == 3){
-    				score.scores3 +=1;
-    			}
-    			if(item.selected == 4){
-    				score.scores4 +=1;
+    			if(item.property =='共性'){
+    				if(item.selected == 1){
+        				score.common.scores1 +=1;
+        			}
+        			if(item.selected == 2){
+        				score.common.scores2 +=1;
+        			}
+        			if(item.selected == 3){
+        				score.common.scores3 +=1;
+        			}
+        			if(item.selected == 4){
+        				score.common.scores4 +=1;
+        			}
+    			}else{
+    				if(item.selected == 1){
+        				score.self.scores1 +=1;
+        			}
+        			if(item.selected == 2){
+        				score.self.scores2 +=1;
+        			}
+        			if(item.selected == 3){
+        				score.self.scores3 +=1;
+        			}
+        			if(item.selected == 4){
+        				score.self.scores4 +=1;
+        			}
     			}
     		}
     	});
-    	score.total = score.scores1+score.scores2+score.scores3+score.scores4;
-    	score.totalScore = score.scores1*5+score.scores2*3+score.scores3*1;
+    	score.commonTotal = score.common.scores1+score.common.scores2+score.common.scores3+score.common.scores4;
+    	score.commonTotalScore = score.common.scores1*5+score.common.scores2*3+score.common.scores3*1;
+    	score.selfTotal = score.self.scores1+score.self.scores2+score.self.scores3+score.self.scores4;
+    	score.selfTotalScore = score.self.scores1*5+score.self.scores2*3+score.self.scores3*1;
     	this.setState({resultVisible: true,selfScore:score});
     }
     
@@ -125,7 +150,6 @@ export default class Assessment extends React.Component {
     			ToastAndroid.show('网络异常，请稍后重试!', ToastAndroid.SHORT); 
     		}
         }.bind(this));
-    	
     }
     _renderItem = (item) => {
     	
@@ -164,6 +188,19 @@ export default class Assessment extends React.Component {
     
     _onPress = item => {
     	this.setState({modalVisible: false,evaluator:item.name});
+    	let url2 = gServer.host+'/paper/1?username='+item.name;
+    	NetUtil.get(url2,function (response) {
+    		if(response.status == 200){
+    			this.setState({dataSource: response.data});
+    			let options = [];
+    			response.data.options.map(function (item) {
+    				options.push({'label':item.description,'value':item.description,'id':item.id});
+    			});
+    			this.setState({options:options});
+    		}else{
+    			this.setState({errorMsg: '请检查网络或联系管理员'});
+    		}
+        }.bind(this))
     }
     
     _back = ()=>{
@@ -259,14 +296,24 @@ export default class Assessment extends React.Component {
 		              >
 		              	<View style={styles.spinner}>
 		              		<View style={styles.spinnerContent2}>
+			              		<View style={{padding:10}}>
+			              			<Text style={{fontWeight:'bold'}}>评测分数:</Text>
+			              		</View>
 		              			<View style={{padding:10}}>
-					                <Text>评测分数:</Text>
-					                <Text>本次体检问题共{this.state.selfScore.total}个,
-					                其中优秀{this.state.selfScore.scores1}项,
-					                良好{this.state.selfScore.scores2}项,
-					                一般{this.state.selfScore.scores3}项,
-					                较差{this.state.selfScore.scores4}项,
-					                分数为{this.state.selfScore.totalScore}分</Text>
+					                <Text>本次体检基础问题共{this.state.selfScore.commonTotal}个,
+					                其中优秀{this.state.selfScore.common.scores1}项,
+					                良好{this.state.selfScore.common.scores2}项,
+					                一般{this.state.selfScore.common.scores3}项,
+					                较差{this.state.selfScore.common.scores4}项,
+					                基础问题分数为{this.state.selfScore.commonTotalScore}分</Text>
+				                </View>
+				                <View style={{padding:10}}>
+					                <Text>本次体检专项问题共{this.state.selfScore.selfTotal}个,
+					                其中优秀{this.state.selfScore.self.scores1}项,
+					                良好{this.state.selfScore.self.scores2}项,
+					                一般{this.state.selfScore.self.scores3}项,
+					                较差{this.state.selfScore.self.scores4}项,
+					                专项问题分数为{this.state.selfScore.selfTotalScore}分</Text>
 				                </View>
 				                <View style={{flexDirection: 'row',flex:1,justifyContent: 'center',alignItems: 'center',}}>
 				                <Button label="确定" textStyle={styles.textStyle} style={styles.button2} pressAction={this._submit}></Button>

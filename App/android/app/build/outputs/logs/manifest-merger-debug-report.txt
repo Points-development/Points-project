@@ -26,8 +26,6 @@ MERGED from [com.facebook.react:react-native:0.47.1] /Users/xzgan/git/Points-pro
 		ADDED from /Users/xzgan/git/Points-project/App/android/app/src/main/AndroidManifest.xml:7:22-75
 uses-sdk
 ADDED from /Users/xzgan/git/Points-project/App/android/app/src/main/AndroidManifest.xml:9:5-11:41
-MERGED from [assessment:react-native-cardview:unspecified] /Users/xzgan/git/Points-project/App/android/app/build/intermediates/exploded-aar/assessment/react-native-cardview/unspecified/AndroidManifest.xml:7:5-9:41
-MERGED from [com.android.support:cardview-v7:23.0.1] /Users/xzgan/git/Points-project/App/android/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.0.1/AndroidManifest.xml:20:5-43
 MERGED from [com.facebook.react:react-native:0.47.1] /Users/xzgan/git/Points-project/App/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.47.1/AndroidManifest.xml:7:5-9:41
 MERGED from [com.android.support:appcompat-v7:23.0.1] /Users/xzgan/git/Points-project/App/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:support-v4:23.0.1] /Users/xzgan/git/Points-project/App/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/AndroidManifest.xml:20:5-43
@@ -49,7 +47,6 @@ MERGED from [com.facebook.soloader:soloader:0.1.0] /Users/xzgan/git/Points-proje
 		INJECTED from /Users/xzgan/git/Points-project/App/android/app/src/main/AndroidManifest.xml
 application
 ADDED from /Users/xzgan/git/Points-project/App/android/app/src/main/AndroidManifest.xml:13:5-30:19
-MERGED from [com.android.support:cardview-v7:23.0.1] /Users/xzgan/git/Points-project/App/android/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.0.1/AndroidManifest.xml:22:5-20
 MERGED from [com.facebook.react:react-native:0.47.1] /Users/xzgan/git/Points-project/App/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.47.1/AndroidManifest.xml:13:5-20
 MERGED from [com.android.support:appcompat-v7:23.0.1] /Users/xzgan/git/Points-project/App/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:23.0.1] /Users/xzgan/git/Points-project/App/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/AndroidManifest.xml:22:5-20
