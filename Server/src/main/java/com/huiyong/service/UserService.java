@@ -23,4 +23,5 @@ public interface UserService {
 	public List<Branch> getAllUsers();
 	public List<String> getAllProperties();
 	public List<String> getAllBranches();
+	public void deleteUser(String username);
 }

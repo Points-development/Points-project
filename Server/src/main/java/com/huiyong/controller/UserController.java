@@ -134,8 +134,16 @@ public class UserController {
     public List<String> getProperties() {
     	return userService.getAllProperties();
     }
-//    @RequestMapping(value = "/user/property/{propertyName}", method = RequestMethod.POST)
-//    public ResponseEntity<?> addProperty(@PathVariable String propertyName) {
-//    	return userService.addProperty(propertyName);
-//    }
+    @RequestMapping(value = "/user/{username}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteUser(@PathVariable String username) {
+    	Message m = new Message();
+    	User userFromDB = userService.getUserByName(username);
+    	if(null == userFromDB){
+    		m.setError("用户不存在.");
+    		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
+    	}
+    	userService.deleteUser(username);
+    	m.setSuccess("删除成功.");
+    	return new ResponseEntity<Message>(m, HttpStatus.OK);
+    }
 }

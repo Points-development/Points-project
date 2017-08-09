@@ -26,7 +26,7 @@
     	where branch=#{branchname}
   </select>
   <select id="getAllProperties" resultType="String">
-    select name from UserProperty
+    select name from UserProperty where name !='共性'
   </select>
   <insert id="addUser" useGeneratedKeys="true">  
         INSERT INTO User (name,  
@@ -57,4 +57,7 @@
                         User.user_property_id=#{propertyId}
                         where User.name=#{user.name};
   </update>  
+   <update id="deleteUser" parameterType="String" useGeneratedKeys="true">  
+        DELETE FROM User where name=#{username};
+  </update> 
  </mapper>

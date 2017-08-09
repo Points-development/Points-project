@@ -103,4 +103,12 @@ public class UserServiceImpl implements UserService {;
 		return userDao.getAllBranches();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.huiyong.service.UserService#deleteUser(java.lang.String)
+	 */
+	@Override
+	public void deleteUser(String username) {
+		userDao.deleteUser(username);
+	}
+
 }
