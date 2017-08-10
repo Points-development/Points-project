@@ -1,0 +1,117 @@
+<div>
+    <div style="display:inline-block;height:40px;">查询信息</div>
+</div>
+<div class="btn-group-left">
+    <form class="form-inline">
+	  <div class="form-group">
+	    <input type="text" class="form-control" ng-model="qcCtrl.queryObject">
+	  </div>
+	  <button type="submit" class="btn btn-danger btn-sm" ng-click="qcCtrl.startQuery()">
+        查询用户
+    </button>
+	</form>
+</div>
+<div class="divider"></div>
+<div class="hack-header">
+<div class="custom-table">
+      <div style="height:40px;" class="custom-row custom-table-header-css3">
+         <div class="custom-cell" style="width:25%">
+            <span>ID</span>
+         </div>
+         <div class="custom-cell" style="width:25%">
+            <span>类型</span>
+         </div>
+         <div class="custom-cell" style="width:25%">
+            <span>时间</span>
+         </div>
+         <div class="custom-cell">
+            <span>分数</span>
+         </div>
+      </div>
+</div>
+</div>
+<div ng-style="qcCtrl.scrollTableStyle" ng-if="qcCtrl.resultlist.length >0">
+<div class="custom-table">
+      <div style="height:40px;visibility:hidden;" class="custom-row custom-table-header-css3">
+         <div class="custom-cell" style="width:25%">
+            <span>ID</span>
+         </div>
+         <div class="custom-cell" style="width:25%">
+            <span>类型</span>
+         </div>
+         <div class="custom-cell" style="width:25%">
+            <span>时间</span>
+         </div>
+         <div class="custom-cell">
+            <span>分数</span>
+         </div>
+      </div>
+      <div class="custom-row row-hover-cyan" ng-repeat="obj in qcCtrl.resultlist track by $index">
+         <div class="custom-cell" style="width:25%">
+            <span>{{$index+1}}</span>
+         </div>
+         <div class="custom-cell">
+            <span ng-if="obj.scorer==obj.scoree">自评</span>
+            <span ng-if="obj.scorer!=obj.scoree">他评</span>
+         </div>
+         <div class="custom-cell">
+            <span>{{obj.lastModifiedTime|date:'yyyy-MM-dd'}}</span>
+         </div>
+         <div class="custom-cell" ng-init="score = qcCtrl.getScore(obj)">
+            <span>{{score}}</span>
+         </div>
+      </div>
+</div>
+</div>
+
+<script type="text/ng-template" id="templates/userModel.html">
+    <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">添加用户</h2>
+    </div>
+    <form class="form-horizontal" ng-submit="submit_user()">
+    <div class="modal-body">
+        <div class="alert alert-danger" role="alert" ng-if="error !=''">{{error}}</div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">姓名</label>
+            <div class="col-sm-9">
+                <input type="text" ng-model="name" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">部门</label>
+            <div class="col-sm-9">
+                <input type="text" ng-model="branch" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">身份</label>
+            <div class="col-sm-9">
+                <label class="radio-inline" ng-repeat="p in userPropertys">
+                    <input type="radio" ng-model="user.property" name="property" value="{{p}}"> {{p}}
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">管理员</label>
+            <div class="col-sm-9">
+                <label class="radio-inline">
+                    <input type="radio" ng-model="admin" name="admin" value="true"> 是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" ng-model="admin" name="admin" value="false" checked=""> 否
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">默认密码</label>
+            <div class="col-sm-9">
+                <label class="control-label">123456</label>
+            </div>
+        </div>     
+    </div>
+    <div class="modal-footer">
+            <button class="btn btn-success" type="submit">确认</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+    </div>
+    </form>
+</script>

@@ -10,6 +10,7 @@
         /* Feature modules */
         'portal.login',
         'portal.layout',
-        'portal.system'
+        'portal.system',
+        'portal.query'
     ]);
 })();

@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
     spinnerContent2: {
     	justifyContent: 'center',
         width: gScreen.width * (5 / 10),
-        height: gScreen.height * (4 / 10),
+        height: gScreen.height * (6 / 10),
         backgroundColor: '#fcfcfc',
         padding: 20,
         borderRadius: 5

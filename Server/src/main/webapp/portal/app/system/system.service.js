@@ -69,6 +69,18 @@
              );
             return deferred.promise;
         };
+        factory.getUsersScore = function(username){
+            var deferred = $q.defer();
+            $http.get('/pointservice/score/'+username).then(
+                    function (resp) {
+                        deferred.resolve(resp.data);
+                    },
+                    function (resp) {
+                        deferred.reject(resp.data);
+                    }
+            );
+            return deferred.promise;
+        };
         return factory;
     }
 })();

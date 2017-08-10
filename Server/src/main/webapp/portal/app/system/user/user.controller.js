@@ -15,7 +15,7 @@
 		vm.checkAll = false;
         vm.init = function(){
         	vm.userlist = [];
-        	systemService.getUsers('test').then(function(response){
+        	systemService.getUsers().then(function(response){
         		for(var i=0;i<response.length;i++){
         			vm.userlist.push.apply(vm.userlist, response[i].users)
         		}
