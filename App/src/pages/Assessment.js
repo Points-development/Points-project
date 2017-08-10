@@ -151,7 +151,7 @@ export default class Assessment extends React.Component {
     		}
         }.bind(this));
     }
-    _renderItem = (item) => {
+    _renderItem = (item,index) => {
     	
     	let defaultSelect = 100;
     	if(item.item.selected){
@@ -160,7 +160,7 @@ export default class Assessment extends React.Component {
         return (
         		<View style={styles.question}>
         			<View style={{padding:20,paddingTop:30}}>
-        				<Text style={{color:gColors.defaultFontColor}}>{item.item.id}. {item.item.description}</Text>
+        				<Text style={{color:gColors.defaultFontColor}}>{item.index+1}. {item.item.description}</Text>
         			</View>
         			<View style={{padding:20}}>
 		        		<RadioForm
