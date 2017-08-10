@@ -1,0 +1,96 @@
+<div class="modal-header">
+    <h2 class="modal-title">系统权限管理</h2>
+</div>
+<div class="modal-body" ng-init="pmCtrl.initData()">
+	<form class="form-horizontal" role="form">
+	<div class="form-group">
+	    <label class="control-label register col-sm-4">允许注册新用户</label>
+	    <div class="col-sm-8">
+	    	<switch id="enabled" ng-change="pmCtrl.changeOpenRegister" name="enabled" ng-model="pmCtrl.manageRecord.openRegister" on="on" off="off"></switch>
+	    </div>
+	</div>
+	<div class="divider"></div>
+	</form>
+	
+	<div class="table-title">管理用户权限</div>
+	<div class="divider"></div>	
+	<div class="table-responsive">
+	    <table class="table table-hover">
+	      <thead>
+	        <tr class="headings">
+	          <th>编号</th>
+	          <th>用户名</th>
+	          <th>姓名</th>
+	          <th>权限</th>
+	          <th class="last-column-title">允许登录</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr class="even pointer" ng-repeat="user in pmCtrl.manageRecord.userList">
+	          <td>{{$index}}</td>
+	          <td>{{user.name}}</td>
+	          <td>{{user.fullName}}</td>
+	          <td><a><i class="iconfont green change-permission icon-modify"></i></a></td>
+	          <td class="last">
+	          	<switch id="user_{{$index}}" ng-change="pmCtrl.changeApprove(user)" ng-model="user.approved" on="on" off="off"></switch>
+	          </td>
+	        </tr>
+	      </tbody>
+	    </table>
+	</div>
+	
+	<div class="table-title">管理目标城市:点击城市进行开启和关闭</div>
+	<div class="divider"></div>
+	<div class="row destination">
+		<div class="city col-sm-4 col-md-3 col-lg-2" ng-click="pmCtrl.swicthCityAvailable(city,$event,$index)" ng-class="{'DISABLED':'disable'}[city.available]" ng-repeat="city in pmCtrl.destinations">
+			<i class="iconfont blue icon-destination1"></i>{{city.cityName}}
+			<a class="delete-city"><i class="iconfont icon-close red"></i></a>
+		</div>
+		<div class="city col-sm-4 col-md-3 col-lg-2" popover-is-open="pmCtrl.showPopOver" uib-popover-template="pmCtrl.addDesCityModel">
+			<i class="iconfont green icon-add"></i>
+		</div>	
+	</div>
+</div>
+
+<script type="text/ng-template" id="givePermission.html">
+	<div class="modal-header">
+    	<h2 class="modal-title" id="modal-title">授予用户权限</h2>
+    </div>
+	<form class="form-horizontal" ng-submit="changepwd_ok()">
+	<div class="modal-body" id="modal-body-changepwd" ng-show="change_success ==''">       
+		<div class="alert alert-danger" role="alert" ng-if="change_error !=''">{{change_error}}</div>
+  		<div class="form-group">
+    		<label class="col-sm-3 control-label">旧密码</label>
+    		<div class="col-sm-9">
+      			<input type="password" ng-model="oldpwd" class="form-control" required>
+    		</div>
+  		</div>	   
+	</div>
+	<div class="modal-body" id="modal-body-changepwd" ng-show="change_success !=''">
+		<div class="alert green text-center" role="alert"><i class="iconfont icon-success"></i>{{change_success}}</div>
+	</div>
+	<div class="modal-footer">
+            <button class="btn btn-success" type="submit">确认</button>
+            <button class="btn btn-warning" type="button" ng-click="changepwd_cancel()">取消</button>
+    </div>
+	</form>
+</script>
+
+<script type="text/ng-template" id="addCityPopOver.html">
+	<div>添加城市</div>
+   	<div class="form-group">
+		<div class="alert alert-danger" role="alert" ng-if="!!pmCtrl.errorAddMsg">{{pmCtrl.errorAddMsg}}</div>
+    	<input type="text" ng-model="pmCtrl.newCity" class="form-control">
+    </div>
+	<button class="btn btn-success" type="submit" ng-click="pmCtrl.addCity(pmCtrl.newCity)">确认</button>
+    <button class="btn btn-warning" type="button" ng-click="pmCtrl.cancelAdd()">关闭</button>
+</script>
+<script type="text/ng-template" id="templates/confirmDeleteCity.html">
+	<div class="modal-header">
+    	<h2 class="modal-title" id="modal-title">确认删除目的地{{cityName}}以及相关信息吗？</h2>
+    </div>
+	<div class="modal-footer">
+		<button class="btn btn-success" type="submit" ng-click="delete_ok()">确认</button>
+        <button class="btn btn-warning" type="button" ng-click="delete_cancel()">取消</button>
+    </div>
+</script>
