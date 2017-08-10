@@ -14,6 +14,7 @@
         vm.hasSelected=0;
 		vm.checkAll = false;
         vm.init = function(){
+			vm.hasSelected=0;
         	vm.userlist = [];
         	systemService.getUsers().then(function(response){
         		for(var i=0;i<response.length;i++){
