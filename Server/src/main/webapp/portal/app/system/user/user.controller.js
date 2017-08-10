@@ -11,7 +11,7 @@
     function UserManageController(storage,messageCenterService,systemService,$uibModal) {
         var vm = this;
         
-        vm.hasSelected=false;
+        vm.hasSelected=0;
 		vm.checkAll = false;
         vm.init = function(){
         	vm.userlist = [];
@@ -32,8 +32,9 @@
         vm.selectCheck = function(obj){
     		obj.checked = !obj.checked;
 	      	if(obj.checked){
+				 vm.hasSelected++; 
 	      	}else{
-	      		
+				 vm.hasSelected--; 
 	      	}
 	    };
 	    
@@ -76,22 +77,52 @@
       	      		}
       	      }]
         	});
-	    }
+		}
+			
+	    vm.deleteUser = function(){
+			$uibModal.open({
+      	    	animation: true,
+      	    	size:"cm-user",
+      	    	ariaLabelledBy: 'modal-title-top',
+      	    	ariaDescribedBy: 'modal-body-top',
+				templateUrl: 'templates/confirmModel.html',
+      	        controller:['$scope','$uibModalInstance', function($scope,$uibModalInstance) {
+      	      		$scope.submit = function(){
+	    		    	for(var i=0;i<vm.userlist.length;i++){
+	      					if(vm.userlist[i].checked){
+	      						systemService.deleteUser(vm.userlist[i].name).then(function(response){
+		      	      				messageCenterService.add('success', '删除成功!', {timeout:3000});
+									vm.init();
+									$uibModalInstance.close($scope);
+								},	function(response){
+									messageCenterService.add('danger', response, {timeout:3000});
+								});
+							}
+						}	
+					}
+									  
+      	      		$scope.cancel = function(){
+      	    	  		$uibModalInstance.dismiss('cancel');
+      	      		}
+      	      	}]		
+			})
+		}		
 	    
 	    vm.selectAll = function(){
-	      	vm.checkAll = !vm.checkAll;
-	      	for(var i=0;i<vm.userlist.length;i++){
-	      		vm.userlist[i].checked=vm.checkAll;
-	      	}
+			vm.checkAll = !vm.checkAll;
+			if(vm.checkAll){
+	      		for(var i=0;i<vm.userlist.length;i++){
+					vm.userlist[i].checked=vm.checkAll;
+					vm.hasSelected++; 
+				}
+	      	}else{
+				for(var i=0;i<vm.userlist.length;i++){
+					vm.userlist[i].checked=vm.checkAll;
+				}
+				vm.hasSelected=0; 
+			}
 	    };
 	    
-	    vm.deleteUsers = function(){
-	    	for(var i=0;i<vm.userlist.length;i++){
-	      		if(vm.userlist[i].checked){
-	      			
-	      		}
-	      	}
-	    }
         vm.scrollTableStyle={
         				"width":"100%",
         				"height":(window.innerHeight-270),

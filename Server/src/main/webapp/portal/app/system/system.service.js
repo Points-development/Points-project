@@ -45,9 +45,9 @@
              );
             return deferred.promise;
         };
-        factory.deleteUser = function(desId,routeId){
+        factory.deleteUser = function(username){
             var deferred = $q.defer();
-            $http.delete('/pointservice/').then(
+            $http.delete('/pointservice/user/'+username).then(
                     function (resp) {
                         deferred.resolve(resp.data);
                     },
