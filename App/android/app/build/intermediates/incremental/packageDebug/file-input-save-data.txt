@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Mon Aug 07 13:00:17 CST 2017
+#Thu Aug 10 10:26:33 CST 2017
 175.set=ANDROID_RESOURCE
 122.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/layout/redbox_item_frame.xml
 60.set=NATIVE_RESOURCE
@@ -158,7 +158,7 @@
 81.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/drawable-xhdpi-v4/abc_textfield_search_activated_mtrl_alpha.9.png
 91.base=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_
 7.base=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_
-88.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/drawable-xhdpi-v4/abc_menu_hardkey_panel_mtrl_mult.9.png
+88.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/drawable-xhdpi-v4/abc_list_divider_mtrl_alpha.9.png
 98.base=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main
 120.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/color/switch_thumb_material_dark.xml
 40.set=ANDROID_RESOURCE
@@ -235,10 +235,10 @@
 80.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/drawable-xhdpi-v4/abc_ic_go_search_api_mtrl_alpha.png
 90.base=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_
 6.base=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_
-87.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/drawable-xhdpi-v4/abc_list_divider_mtrl_alpha.9.png
+87.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/drawable-xhdpi-v4/abc_menu_hardkey_panel_mtrl_mult.9.png
 97.base=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_
 30.set=NATIVE_RESOURCE
-126.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/drawable-xhdpi-v4/abc_ic_menu_paste_mtrl_am_alpha.png
+126.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/drawable-xhdpi-v4/abc_btn_radio_to_on_mtrl_000.png
 22.set=ANDROID_RESOURCE
 173.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/anim/fade_out.xml
 141.base=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_
@@ -314,7 +314,7 @@
 86.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/color/abc_primary_text_disable_only_material_dark.xml
 96.base=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/transforms/mergeJniLibs/debug/folders/2000/1f/main
 20.set=NATIVE_RESOURCE
-125.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/drawable-xhdpi-v4/abc_btn_radio_to_on_mtrl_000.png
+125.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/drawable-xhdpi-v4/abc_ic_menu_paste_mtrl_am_alpha.png
 12.set=ANDROID_RESOURCE
 172.file=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_/res/anim/abc_slide_in_top.xml
 140.base=/Users/xzgan/git/Points-project/App/android/app/build/intermediates/res/resources-debug.ap_
