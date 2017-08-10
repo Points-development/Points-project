@@ -82,7 +82,7 @@
 	    vm.deleteUser = function(){
 			$uibModal.open({
       	    	animation: true,
-      	    	size:"cm-user",
+      	    	size:"cm-sm",
       	    	ariaLabelledBy: 'modal-title-top',
       	    	ariaDescribedBy: 'modal-body-top',
 				templateUrl: 'templates/confirmModel.html',
