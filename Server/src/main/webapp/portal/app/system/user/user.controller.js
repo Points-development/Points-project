@@ -82,7 +82,7 @@
 	    vm.deleteUser = function(){
 			$uibModal.open({
       	    	animation: true,
-      	    	size:"cm-user",
+      	    	size:"cm-sm",
       	    	ariaLabelledBy: 'modal-title-top',
       	    	ariaDescribedBy: 'modal-body-top',
 				templateUrl: 'templates/confirmModel.html',
@@ -91,14 +91,14 @@
 	    		    	for(var i=0;i<vm.userlist.length;i++){
 	      					if(vm.userlist[i].checked){
 	      						systemService.deleteUser(vm.userlist[i].name).then(function(response){
-		      	      				messageCenterService.add('success', '删除成功!', {timeout:3000});
-									vm.init();
-									$uibModalInstance.close($scope);
 								},	function(response){
 									messageCenterService.add('danger', response, {timeout:3000});
 								});
 							}
-						}	
+						}
+						vm.init();
+						messageCenterService.add('success', '删除成功!', {timeout:3000});
+						$uibModalInstance.close($scope);	
 					}
 									  
       	      		$scope.cancel = function(){

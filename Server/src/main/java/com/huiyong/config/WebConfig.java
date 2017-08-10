@@ -50,14 +50,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(interceptor);
     }
     
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/portal/**")
-            .addResourceLocations("classpath:/static/portal/")
-            .setCachePeriod(3600*24*7);
-        registry.addResourceHandler("/bower_components/**")
-        	.addResourceLocations("classpath:/static/bower_components/")
-        	.setCachePeriod(3600*24*7);
-    }
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/portal/**")
+//            .addResourceLocations("classpath:/static/portal/")
+//            .setCachePeriod(3600*24*7);
+//        registry.addResourceHandler("/bower_components/**")
+//        	.addResourceLocations("classpath:/static/bower_components/")
+//        	.setCachePeriod(3600*24*7);
+//    }
 
 }
