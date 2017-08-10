@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.huiyong.model.Message;
 import com.huiyong.model.Score;
 import com.huiyong.service.ScoreService;
 import com.huiyong.service.UserService;
@@ -40,6 +41,7 @@ public class ScoreController {
     @RequestMapping(value = "/{username}", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
     public ResponseEntity<?> getScore(@PathVariable String username, @RequestParam(required=false) String scorer, @RequestParam(required=false) Boolean isRecent) {
 		List<Score> scores = null;
+		Message m = new Message();
 		if(null == isRecent){
 			isRecent = false;
 		}
@@ -53,7 +55,8 @@ public class ScoreController {
 			scores = scoreService.getScoreByScorer(username, scorer, isRecent);
 		}
     	if(null == scores || scores.size() == 0){
-    		return new ResponseEntity<String>("score does not exist.", HttpStatus.NOT_FOUND);
+    		m.setError("目前没有分数");
+    		return new ResponseEntity<Message>(m, HttpStatus.NOT_FOUND);
     	}
     	return new ResponseEntity<List<Score>>(scores, HttpStatus.OK);
     }

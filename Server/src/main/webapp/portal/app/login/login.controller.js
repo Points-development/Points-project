@@ -16,7 +16,7 @@
         //vm.getImage = "/unrestricted/verifycode?width=400&height=40";
         
         var successCallback = function () {
-        		$state.go("home.system.user",{},{reload:true});
+        		$state.go("home.system",{},{reload:true});
         };
         
         var failCallback = function (data) {

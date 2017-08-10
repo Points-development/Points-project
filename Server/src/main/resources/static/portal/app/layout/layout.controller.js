@@ -23,8 +23,11 @@
         vm.currentUser = security.getCurrentUser();
         // if refresh keep the highlight node
         vm.systemManage = true;
+        vm.queryNode = false;
         if(vm.activeNode == 'home.system'){
         	vm.systemManage = true;
+        }else if(vm.activeNode == 'home.query'){
+        	vm.queryNode = true;
         }
         vm.viewMode = 'nav-md';
         
@@ -40,7 +43,8 @@
         	vm.activeNode = v;
         	if(v == 'home.system'){
         		vm.systemManage = !vm.systemManage;
-        		return;
+        	}else if(v == 'home.query'){
+        		vm.queryNode = !vm.queryNode;
         	}
         	$state.go(v,{},{reload:true});
         };

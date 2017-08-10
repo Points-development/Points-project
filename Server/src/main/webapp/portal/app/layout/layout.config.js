@@ -11,18 +11,16 @@
     function config($stateProvider, allPermissions) {
         $stateProvider
         	.state('home.system', {
-            abstract: true,
-            url: '/manage',
-            template: '<ui-view/>',
-              permissions: [{
-                  op: allPermissions.operations.all,
-                  res: allPermissions.resources.manageSystem
-              }]
-	        }).state('home.system.user', {
 	            url: '/system_user',
 	            templateUrl: 'app/system/user/user.html',
 	            controller:'UserManageController',
 	      	    controllerAs: 'umCtrl'
+	        })
+	        .state('home.query', {
+	            url: '/query_user',
+	            templateUrl: 'app/query/query.html',
+	            controller:'QueryController',
+	      	    controllerAs: 'qcCtrl'
 	        });
     }
     
