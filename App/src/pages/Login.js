@@ -49,6 +49,7 @@ export default class Login extends React.Component {
     	NetUtil.post(url,user,function (response) {
     		if(response.status == 200){
     			gUser = response.data;
+    			gUser.password = user.password;
     			UserDefaults.setObject('user',response.data);
     			navigation.navigate('Home');
     		} else if(response.status == 403){
@@ -63,7 +64,7 @@ export default class Login extends React.Component {
         return (
         		<View style={styles.container}>
 		        	<Image 
-		    			source={require('../assets/image/dangjian.jpg')}
+		    			source={require('../assets/image/bj.jpg')}
 		            	style={styles.backgroundImage}
 		            />
 		    		<View style={styles.loginBackground}> 

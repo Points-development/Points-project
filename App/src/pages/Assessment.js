@@ -299,21 +299,12 @@ export default class Assessment extends React.Component {
 			              		<View style={{padding:10}}>
 			              			<Text style={{fontWeight:'bold'}}>评测分数:</Text>
 			              		</View>
-		              			<View style={{padding:10}}>
-					                <Text>本次体检基础问题共{this.state.selfScore.commonTotal}个,
-					                其中优秀{this.state.selfScore.common.scores1}项,
-					                良好{this.state.selfScore.common.scores2}项,
-					                一般{this.state.selfScore.common.scores3}项,
-					                较差{this.state.selfScore.common.scores4}项,
-					                基础问题分数为{this.state.selfScore.commonTotalScore}分</Text>
-				                </View>
-				                <View style={{padding:10}}>
-					                <Text>本次体检专项问题共{this.state.selfScore.selfTotal}个,
-					                其中优秀{this.state.selfScore.self.scores1}项,
-					                良好{this.state.selfScore.self.scores2}项,
-					                一般{this.state.selfScore.self.scores3}项,
-					                较差{this.state.selfScore.self.scores4}项,
-					                专项问题分数为{this.state.selfScore.selfTotalScore}分</Text>
+			              		<View style={{paddingLeft:(gScreen.width * (5 / 20)-gScreen.width * (7 / 80)-30)}}>
+			              			<View style={styles.circle}>
+						                <Text style={{fontWeight:'bold',fontSize:24,color:gColors.buttonColor}}>
+						                	{this.state.selfScore.commonTotalScore+this.state.selfScore.selfTotalScore}分
+						                </Text>
+					                </View>
 				                </View>
 				                <View style={{flexDirection: 'row',flex:1,justifyContent: 'center',alignItems: 'center',}}>
 				                <Button label="确定" textStyle={styles.textStyle} style={styles.button2} pressAction={this._submit}></Button>
@@ -333,14 +324,23 @@ const styles = StyleSheet.create({
 	    flex: 1,
 	    backgroundColor:gColors.background
 	},
+	circle:{
+		marginHorizontal:5,
+		marginVertical:5,
+		width:gScreen.width * (7 / 40),
+		height:gScreen.width * (7 / 40),
+		borderRadius:gScreen.width * (7 / 80),
+		borderColor:'#8c9696',
+		borderWidth:3,
+		alignItems:'center',
+		justifyContent: 'center',
+	},
 	list:{
-		width:gScreen.width,
 		flex:1,
 		paddingHorizontal:10,
 		paddingBottom:20
 	},
 	question:{
-		width:gScreen.width-50,
 		height:190
 	},
 	button:{
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
     spinnerContent2: {
     	justifyContent: 'center',
         width: gScreen.width * (5 / 10),
-        height: gScreen.height * (7 / 10),
+        height: gScreen.height * (4 / 10),
         backgroundColor: '#fcfcfc',
         padding: 20,
         borderRadius: 5

@@ -81,7 +81,7 @@ export default class System extends React.Component {
         	<View style={styles.container}>
         		<View style={styles.userInfo}>
         			<Text>当前用户:{gUser.name}</Text>
-        			<Text>版本信息:1.0.0.0</Text>
+        			<Text>版本信息:1.0.0.1</Text>
         		</View>
         		<View style={styles.rowGroup}>
         			<View style={{ height: 1, backgroundColor: '#CCCCCC',opacity:0.5 }} />
@@ -104,7 +104,9 @@ export default class System extends React.Component {
 	              	</TouchableOpacity>
 	              	<View style={{ height: 1, backgroundColor: '#CCCCCC',opacity:0.5 }} />
 	            </View>
-	            <Button label="退出" textStyle={styles.textStyle} style={styles.button} pressAction={this._logout}></Button>
+	            <View style={{alignItems: 'center'}}>
+	            	<Button label="退出" textStyle={styles.textStyle} style={styles.button} pressAction={this._logout}></Button>
+	            </View>
 	            <Modal 
 	              	animationType={"fade"}
 	              	transparent={true}
@@ -169,7 +171,6 @@ export default class System extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 	    flex: 1,
-	    alignItems: 'center',
 	    backgroundColor:gColors.background
 	},
 	userInfo:{
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
     },
 	rowGroup:{
     	marginTop:10,
-    	width:gScreen.width,
+    	flex:1,
     },
     row:{
     	flexDirection:'row',
