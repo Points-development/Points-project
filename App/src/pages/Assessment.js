@@ -160,7 +160,7 @@ export default class Assessment extends React.Component {
         return (
         		<View style={styles.question}>
         			<View style={{padding:20,paddingTop:30}}>
-        				<Text style={{color:gColors.defaultFontColor}}>{item.index+1}. {item.item.description}</Text>
+        				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.index+1}. {item.item.description}</Text>
         			</View>
         			<View style={{padding:20}}>
 		        		<RadioForm
@@ -168,6 +168,7 @@ export default class Assessment extends React.Component {
 		        			buttonColor={gColors.buttonColor}
 		        			initial={defaultSelect}
 		        			radioStyle={{paddingRight:15}}
+		        			labelStyle={{fontSize:gFont.contentSize}}
 		        			formHorizontal={true}
 		        		  	labelHorizontal={true}
 			                onPress={(value,index) => {
@@ -221,13 +222,13 @@ export default class Assessment extends React.Component {
 	                style={styles.item}
 	                onPress={()=>this._onPress(item)}
 	            >
-	                <Text style={{color: '#000', fontSize: 16}}>{item.name}</Text>
+	                <Text style={{color: '#000', fontSize:gFont.headerSize}}>{item.name}</Text>
 	            </TouchableOpacity>
             }
 	        {itemName==gUser.name && 
 	        	<View
 	        		style={styles.item}>
-                	<Text style={{color: '#ddd', fontSize: 16}}>{item.name}(不能评测自己)</Text>
+                	<Text style={{color: '#ddd', fontSize:gFont.headerSize}}>{item.name}(不能评测自己)</Text>
                 </View>
 	        }
 	        </View>
@@ -240,10 +241,10 @@ export default class Assessment extends React.Component {
         return (
         		<View style={styles.container}>
         			<View style={{paddingTop:20,alignItems: 'center'}}>
-        				<Text style={{fontSize:20,color:gColors.defaultFontColor}}>
+        				<Text style={{fontSize:gFont.headerSize,color:gColors.defaultFontColor}}>
         					{this.state.dataSource.name}
         				</Text>
-        				<Text style={{fontSize:15,color:'#535a5a',textAlign:'right'}}>
+        				<Text style={{fontSize:gFont.headerSize2,color:'#535a5a',textAlign:'right'}}>
 	    					评测对象: {this.state.evaluator}
 	    				</Text>	
         			</View>
