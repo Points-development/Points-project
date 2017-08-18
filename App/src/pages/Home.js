@@ -185,7 +185,7 @@ export default class Home extends React.Component {
 			            </TouchableOpacity>
         			</View>
         			</View>
-        			<Modal 
+        			{this.state.pwdmodelVisible && <Modal 
 		              	animationType={"fade"}
 		              	transparent={true}
 		              	visible={this.state.pwdmodelVisible}
@@ -239,6 +239,7 @@ export default class Home extends React.Component {
 		              		</View>
 		              	</View>
 		             </Modal>
+        			}
 	        	</View>
         );
     }

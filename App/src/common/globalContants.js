@@ -30,7 +30,7 @@ global.gColors = {
 global.gFont = {
 	headerSize:22,
 	headerSize2:20,
-	contentSize:18
+	contentSize:20
 }
 
 global.gServer = {
