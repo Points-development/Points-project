@@ -66,6 +66,17 @@ public class UserController {
     	List<User> users = userService.getUsersInBranch(userFromDB.getBranch());
     	return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
+    //Return users in the same branches with the required user
+    @RequestMapping(value = "/branch", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
+    public ResponseEntity<?> getUsersByBranch(@RequestParam String branch) {
+    	Message m = new Message();
+    	if(null == branch){
+    		m.setError("支部不能为空");
+    		return new ResponseEntity<Message>(m, HttpStatus.NOT_FOUND);
+    	}
+    	List<User> users = userService.getUsersInBranch(branch);
+    	return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+    }
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public ResponseEntity<?> addUser(@RequestBody User user) {
     	Message m = new Message();

@@ -9,11 +9,17 @@ import {
 	BackHandler,
 	ToastAndroid,
 	Text,
+	TextInput,
+	Keyboard,
+	Modal,
 	Platform,
-	Image
+	Image,
+	Dimensions
 } from 'react-native';
 
 import Button from '../components/Button'
+import UserDefaults from '../common/UserDefaults'
+import NetUtil from '../service/NetUtil'
 
 export default class Home extends React.Component {
 	
@@ -28,8 +34,13 @@ export default class Home extends React.Component {
 	    ToastAndroid.show('再按返回退出应用', ToastAndroid.SHORT); 
 	    return true;
 	};
+	
+	handle = (dims) =>{
+		console.log(dims);
+	}
 
 	componentDidMount(){ 
+		this.setState({pwdmodelVisible:gUser.password=='123456'})
         // 添加返回键监听 
 		BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
     } 
@@ -47,6 +58,11 @@ export default class Home extends React.Component {
     	if((gScreen.width-100)/2 >(gScreen.height-100)/2){
     		iconHeight = (gScreen.height-100)/2;
     	}
+    	this.state={
+    		password1:'',
+    		password2:'',
+    		errorMsg:''
+    	}
     }
     
     _goAssessment = (para)=>{
@@ -60,6 +76,39 @@ export default class Home extends React.Component {
     _goSystem = ()=>{
     	this.props.navigation.navigate('System');
     }
+    
+    _submit = ()=>{
+    	
+    	if(this.state.password1 == ''){
+    		this.setState({errorMsg:'密码不能为空'})
+    		return;
+    	}
+    	
+    	if(this.state.password1 =='123456'){
+    		this.setState({errorMsg:'密码不能设置为初始密码'})
+    		return;
+    	}
+    	
+    	if(this.state.password1 != this.state.password2){
+    		this.setState({errorMsg:'两次密码必须一致'})
+    		return;
+    	}
+ 
+    	let url = gServer.host+'/user/'+gUser.name;
+    	gUser.password = this.state.password1;
+    	NetUtil.put(url,gUser,function (response) {
+    		if(response.status == 200){
+    			this.setState({pwdmodelVisible: false});
+    			ToastAndroid.show('密码修改成功!', ToastAndroid.SHORT);
+    		}else{
+    			ToastAndroid.show('网络异常，请稍后重试!', ToastAndroid.SHORT); 
+    		}
+        }.bind(this));
+    }
+    
+    _changepwd = ()=>{
+    	this.setState({pwdmodelVisible: true});
+    }
 
     render() {
     	const shadowOpt = {
@@ -71,6 +120,9 @@ export default class Home extends React.Component {
 			y:3,
 			style:{marginVertical:5}
     	}
+    	let {height, width} = Dimensions.get('window')
+    	gScreen.height = height;
+    	gScreen.width = width;
         return (
         		<View style={styles.container}>
 	        		<Image 
@@ -133,6 +185,61 @@ export default class Home extends React.Component {
 			            </TouchableOpacity>
         			</View>
         			</View>
+        			{this.state.pwdmodelVisible && <Modal 
+		              	animationType={"fade"}
+		              	transparent={true}
+		              	visible={this.state.pwdmodelVisible}
+		              	onRequestClose={() => {}} 
+		              >
+		              	<View style={styles.spinner}>
+		              		<View style={styles.spinnerContent2}>
+			              		<View style={styles.title}>
+			        	    		<Text style={{color:'#000',fontSize:16}}>请立即修改初始密码</Text>
+			        	    	</View>
+			        	    	{
+				        	    	this.state.errorMsg !='' && 
+				        	    	<View style={styles.title}>
+				        	    		<Text style={{color:'#ff5c49'}}>{this.state.errorMsg}</Text>
+				        	    	</View>
+				        	    }
+		              			<View style={{padding:10}}>
+			              			<TextInput
+				        	    		style={styles.textInput}
+				        	    		multiline={false}
+				        	    		placeholder='新密码'
+				        	    		placeholderTextColor='#ddd'
+				        	    		onSubmitEditing={Keyboard.dismiss} 
+				        	    		password={true} 
+				        	    		onChangeText={(text) => {
+				        	    			this.setState({
+				        	    				password1: text
+				        	    			})
+				        	    		}}
+				        	    		value={this.state.password1}
+			        	    		/>
+			              			<TextInput
+				        	    		style={styles.textInput}
+				        	    		multiline={false}
+				        	    		placeholder='确认密码'
+				        	    		placeholderTextColor='#ddd'
+				        	    		onSubmitEditing={Keyboard.dismiss} 
+				        	    		password={true} 
+				        	    		onChangeText={(text) => {
+				        	    			this.setState({
+				        	    				password2: text
+				        	    			})
+				        	    		}}
+				        	    		value={this.state.password2}
+			        	    		/>
+				                </View>
+				                <View style={{flexDirection: 'row',flex:1,justifyContent: 'center',alignItems: 'center',}}>
+				                <Button label="确定" textStyle={styles.textStyle} style={styles.button2} pressAction={this._submit}></Button>
+				                </View>
+				                
+		              		</View>
+		              	</View>
+		             </Modal>
+        			}
 	        	</View>
         );
     }
@@ -198,9 +305,54 @@ const styles = StyleSheet.create({
 	    
 	},
 	homeContainer: {
-	    zIndex:3,
+	    zIndex:100,
 	    position: 'relative',
 	    flex: 0,
 	    backgroundColor: 'transparent',
 	},
+	loginInput:{
+		height: 50,
+		flex: 1,
+		borderBottomColor:'#D5D5D5',
+		borderBottomWidth:0.5,
+		marginHorizontal:40,
+		marginVertical:10,
+	},
+	textInput:{
+		height: 50,
+		color:'#000',
+		marginLeft:10,
+	},
+	spinner: {
+    	flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.65)',
+        zIndex:2
+    },
+    spinnerContent2: {
+    	justifyContent: 'center',
+        width: gScreen.width * (6 / 10),
+        height: gScreen.height * (5 / 10),
+        backgroundColor: '#fcfcfc',
+        padding: 20,
+        borderRadius: 5
+    },
+	button2:{
+		backgroundColor:gColors.buttonColor,
+		width:gScreen.width/6,
+		height:30
+	},
+	button3:{
+		backgroundColor:gColors.buttonCancelColor,
+		width:gScreen.width/6,
+		height:30
+	},
+	title:{
+		height: 20,
+		flex: 1,
+		justifyContent: 'center',
+	    alignItems: 'center',
+	}
 })

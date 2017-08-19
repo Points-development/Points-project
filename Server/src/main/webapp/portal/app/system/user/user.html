@@ -1,13 +1,19 @@
 <div ng-init="umCtrl.init()">
     <div style="display:inline-block;height:40px;">用户信息</div>
 </div>
-<div class="btn-group-left">
+<div style="display:inline-block">
     <button type="button" class="btn btn-danger btn-sm" ng-click="umCtrl.addUser()">
-    	<i class="iconfont icon-add"></i>
+    	<i class="iconfont"></i>
         添加用户
     </button>
-    <button type="button" class="btn btn-danger btn-sm"  ng-if="umCtrl.hasSelected>0" ng-click="umCtrl.deleteUser()">
-        <i class="iconfont icon-delete"></i>删除用户
+    <button type="button" class="btn btn-danger btn-sm"  ng-if="!!umCtrl.selectUser" ng-click="umCtrl.updateUser()">
+        <i class="iconfont"></i>更新用户
+    </button>
+</div>
+<div class="btn-group-right">
+    <span><input type="text" ng-model="umCtrl.queryBranch" placeholder="输入支部名称"></span>
+    <button type="button" class="btn btn-danger btn-sm" ng-click="umCtrl.queryUser()">
+        <i class="iconfont"></i>查询
     </button>
 </div>
 <div class="divider"></div>
@@ -16,7 +22,7 @@
 <div class="custom-table">
       <div style="height:40px;" class="custom-row custom-table-header-css3">
         <div class="custom-cell" style="width:30px;height:40px">
-            <span><input type="checkbox" ng-checked="umCtrl.checkAll" ng-click="umCtrl.selectAll()"></span>
+            <span></span>
          </div>
          <div class="custom-cell" style="width:100px">
             <span>ID</span>
@@ -40,7 +46,7 @@
 <div class="custom-table">
       <div style="height:40px;visibility:hidden;" class="custom-row custom-table-header-css3">
          <div class="custom-cell" style="width:30px;height:40px">
-            <span><input type="checkbox" ng-checked="umCtrl.checkAll" ng-click="umCtrl.selectAll()"></span>
+            <span></span>
          </div>
          <div class="custom-cell" style="width:100px">
             <span>ID</span>
@@ -60,7 +66,7 @@
       </div>
       <div class="custom-row row-hover-cyan" ng-repeat="obj in umCtrl.userlist|orderBy:'branch':true">
          <div class="custom-cell" style="width:30px;;height:40px">
-            <span><input type="checkbox" ng-click="umCtrl.selectCheck(obj)" ng-checked="obj.checked"></span>
+            <span><input type="radio" name="selectUser" ng-click="umCtrl.selectCheck(obj)"></span>
          </div>
          <div class="custom-cell" style="width:50px">
             <span>{{obj.id}}</span>
@@ -134,12 +140,53 @@
     </form>
 </script>
 
-<script type="text/ng-template" id="templates/confirmModel.html">
+<script type="text/ng-template" id="templates/userUpdateModel.html">
     <div class="modal-header">
-        <h2 class="modal-title" id="modal-title">确定删除吗？</h2>
+        <h2 class="modal-title" id="modal-title">更新用户</h2>
+    </div>
+    <form class="form-horizontal" ng-submit="submit_user()">
+    <div class="modal-body">
+        <div class="alert alert-danger" role="alert" ng-if="error !=''">{{error}}</div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">姓名</label>
+            <div class="col-sm-9">
+                <label class="control-label">{{user.name}}</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">支部</label>
+            <div class="col-sm-9">
+                <input type="text" ng-model="user.branch" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">身份</label>
+            <div class="col-sm-9">
+                <label class="radio-inline" ng-repeat="p in userPropertys">
+                    <input type="radio" ng-model="user.property" ng-checked="user.property==p" name="property" value="{{p}}"> {{p}}
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">重置密码</label>
+            <div class="col-sm-9">
+                <label class="radio-inline">
+                    <input type="radio" ng-model="resetPwd" name="admin" value="true"> 是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" ng-model="resetPwd" name="admin" value="false" ng-checked="true"> 否
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">默认密码</label>
+            <div class="col-sm-9">
+                <label class="control-label">123456</label>
+            </div>
+        </div>     
     </div>
     <div class="modal-footer">
-            <button class="btn btn-success" type="submit" ng-click="submit()">确认</button>
+            <button class="btn btn-success" type="submit">确认</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
     </div>
     </form>

@@ -160,7 +160,7 @@ export default class Assessment extends React.Component {
         return (
         		<View style={styles.question}>
         			<View style={{padding:20,paddingTop:30}}>
-        				<Text style={{color:gColors.defaultFontColor}}>{item.index+1}. {item.item.description}</Text>
+        				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.index+1}. {item.item.description}</Text>
         			</View>
         			<View style={{padding:20}}>
 		        		<RadioForm
@@ -168,6 +168,7 @@ export default class Assessment extends React.Component {
 		        			buttonColor={gColors.buttonColor}
 		        			initial={defaultSelect}
 		        			radioStyle={{paddingRight:15}}
+		        			labelStyle={{fontSize:gFont.contentSize}}
 		        			formHorizontal={true}
 		        		  	labelHorizontal={true}
 			                onPress={(value,index) => {
@@ -221,13 +222,13 @@ export default class Assessment extends React.Component {
 	                style={styles.item}
 	                onPress={()=>this._onPress(item)}
 	            >
-	                <Text style={{color: '#000', fontSize: 16}}>{item.name}</Text>
+	                <Text style={{color: '#000', fontSize:gFont.headerSize}}>{item.name}</Text>
 	            </TouchableOpacity>
             }
 	        {itemName==gUser.name && 
 	        	<View
 	        		style={styles.item}>
-                	<Text style={{color: '#ddd', fontSize: 16}}>{item.name}(不能评测自己)</Text>
+                	<Text style={{color: '#ddd', fontSize:gFont.headerSize}}>{item.name}(不能评测自己)</Text>
                 </View>
 	        }
 	        </View>
@@ -240,10 +241,10 @@ export default class Assessment extends React.Component {
         return (
         		<View style={styles.container}>
         			<View style={{paddingTop:20,alignItems: 'center'}}>
-        				<Text style={{fontSize:20,color:gColors.defaultFontColor}}>
+        				<Text style={{fontSize:gFont.headerSize,color:gColors.defaultFontColor}}>
         					{this.state.dataSource.name}
         				</Text>
-        				<Text style={{fontSize:15,color:'#535a5a',textAlign:'right'}}>
+        				<Text style={{fontSize:gFont.headerSize2,color:'#535a5a',textAlign:'right'}}>
 	    					评测对象: {this.state.evaluator}
 	    				</Text>	
         			</View>
@@ -299,21 +300,12 @@ export default class Assessment extends React.Component {
 			              		<View style={{padding:10}}>
 			              			<Text style={{fontWeight:'bold'}}>评测分数:</Text>
 			              		</View>
-		              			<View style={{padding:10}}>
-					                <Text>本次体检基础问题共{this.state.selfScore.commonTotal}个,
-					                其中优秀{this.state.selfScore.common.scores1}项,
-					                良好{this.state.selfScore.common.scores2}项,
-					                一般{this.state.selfScore.common.scores3}项,
-					                较差{this.state.selfScore.common.scores4}项,
-					                基础问题分数为{this.state.selfScore.commonTotalScore}分</Text>
-				                </View>
-				                <View style={{padding:10}}>
-					                <Text>本次体检专项问题共{this.state.selfScore.selfTotal}个,
-					                其中优秀{this.state.selfScore.self.scores1}项,
-					                良好{this.state.selfScore.self.scores2}项,
-					                一般{this.state.selfScore.self.scores3}项,
-					                较差{this.state.selfScore.self.scores4}项,
-					                专项问题分数为{this.state.selfScore.selfTotalScore}分</Text>
+			              		<View style={{paddingLeft:(gScreen.width * (5 / 20)-gScreen.width * (7 / 80)-30)}}>
+			              			<View style={styles.circle}>
+						                <Text style={{fontWeight:'bold',fontSize:24,color:gColors.buttonColor}}>
+						                	{this.state.selfScore.commonTotalScore+this.state.selfScore.selfTotalScore}分
+						                </Text>
+					                </View>
 				                </View>
 				                <View style={{flexDirection: 'row',flex:1,justifyContent: 'center',alignItems: 'center',}}>
 				                <Button label="确定" textStyle={styles.textStyle} style={styles.button2} pressAction={this._submit}></Button>
@@ -333,14 +325,23 @@ const styles = StyleSheet.create({
 	    flex: 1,
 	    backgroundColor:gColors.background
 	},
+	circle:{
+		marginHorizontal:5,
+		marginVertical:5,
+		width:gScreen.width * (7 / 40),
+		height:gScreen.width * (7 / 40),
+		borderRadius:gScreen.width * (7 / 80),
+		borderColor:'#8c9696',
+		borderWidth:3,
+		alignItems:'center',
+		justifyContent: 'center',
+	},
 	list:{
-		width:gScreen.width,
 		flex:1,
 		paddingHorizontal:10,
 		paddingBottom:20
 	},
 	question:{
-		width:gScreen.width-50,
 		height:190
 	},
 	button:{
@@ -378,7 +379,7 @@ const styles = StyleSheet.create({
     spinnerContent2: {
     	justifyContent: 'center',
         width: gScreen.width * (5 / 10),
-        height: gScreen.height * (7 / 10),
+        height: gScreen.height * (4 / 10),
         backgroundColor: '#fcfcfc',
         padding: 20,
         borderRadius: 5

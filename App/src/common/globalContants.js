@@ -27,6 +27,12 @@ global.gColors = {
     healthRed: 'rgb(251, 25, 8)'
 }
 
+global.gFont = {
+	headerSize:22,
+	headerSize2:20,
+	contentSize:20
+}
+
 global.gServer = {
 	host:'http://123.56.4.5:8080/pointservice'
 }
