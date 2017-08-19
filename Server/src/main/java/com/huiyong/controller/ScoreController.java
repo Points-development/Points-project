@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.huiyong.model.Message;
 import com.huiyong.model.Score;
+import com.huiyong.model.ScorePoint;
 import com.huiyong.service.ScoreService;
 import com.huiyong.service.UserService;
 
@@ -81,7 +82,19 @@ public class ScoreController {
     	}
     	score.setLastModifiedTime(new Date());
     	scoreService.addScore(score);
-		return new ResponseEntity<String>("Score saved to database.", HttpStatus.OK);
+    	return new ResponseEntity<String>("Score saved to database.", HttpStatus.OK);
     	
+    }
+    
+    @RequestMapping(value = "/points", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
+    public ResponseEntity<?> getScorePoints(@RequestParam String branch) {
+		List<ScorePoint> spList = null;
+		Message m = new Message();
+		spList = scoreService.getScorePointByBranch(branch);
+    	if(null == spList || spList.size() == 0){
+    		m.setError("目前没有分数,请输入正确部门名称");
+    		return new ResponseEntity<Message>(m, HttpStatus.NOT_FOUND);
+    	}
+    	return new ResponseEntity<List<ScorePoint>>(spList, HttpStatus.OK);
     }
 }

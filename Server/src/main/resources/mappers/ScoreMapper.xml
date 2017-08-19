@@ -6,8 +6,14 @@
     <result column="paper_id" property="paperId" jdbcType="INTEGER" />
     <result column="scorer" property="scorer" jdbcType="VARCHAR" />
     <result column="scoree" property="scoree" jdbcType="VARCHAR" />
+    <result column="point" property="point" jdbcType="INTEGER" />
     <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
     <collection property="scores" column="id" javaType="ArrayList" ofType="ScoreItemResult" select="com.huiyong.dao.ScoreItemResultMapper.getItemResultByScoreId" />
+  </resultMap> 
+  <resultMap id="ScorePointResultMap" type="com.huiyong.model.ScorePoint" >
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="selfPoint" property="selfPoint" jdbcType="INTEGER" />
+    <result column="otherPoint" property="otherPoint" jdbcType="INTEGER" />
   </resultMap>
   <select id="getScoreByUser" resultMap="ScoreResultMap">
         SELECT *
@@ -29,6 +35,21 @@
         </if>  
         ;
   </select>
+	<select id="getScorePointByBranch" parameterType="String" resultMap="ScorePointResultMap">
+		select U.name username, OS.selfPoint selfPoint, OP.otherPoint
+		otherPoint
+		from User U LEFT JOIN (
+		select PSOTHER.scoree, avg(PSOTHER.point) otherPoint
+		from PaperScore PSOTHER
+		where PSOTHER.scorer !=PSOTHER.scoree group by
+		PSOTHER.scoree
+		) OP on U.name=OP.scoree LEFT JOIN (
+		select PSSELF.scoree, PSSELF.point selfPoint
+		from PaperScore PSSELF
+		where PSSELF.scoree=PSSELF.scorer
+		) OS on U.name=OS.scoree
+		where U.branch=#{branch};
+	</select>
     <select id="getScoreByOther" resultMap="ScoreResultMap">
         SELECT *
         FROM PaperScore PS
@@ -38,10 +59,16 @@
         LIMIT 1
         </if>  
         ;
-    </select>
+	</select>
     <insert id="addScore" parameterType="Score" useGeneratedKeys="true" keyProperty="id">  
-		INSERT INTO PaperScore (scorer, scoree, lastModifiedTime, paper_id)
+		INSERT INTO PaperScore (scorer, scoree, point, lastModifiedTime, paper_id)
         VALUES
-		(#{scorer}, #{scoree}, #{lastModifiedTime}, #{paperId} )
+		(#{scorer}, #{scoree}, #{point}, #{lastModifiedTime}, #{paperId} )
    </insert>  
+   <update id="updateScore" parameterType="Score">  
+		UPDATE PaperScore PS SET
+		PS.point = #{point},
+		PS.lastModifiedTime=#{lastModifiedTime}
+	    WHERE PS.id=#{id}
+   </update> 
  </mapper>

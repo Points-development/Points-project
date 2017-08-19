@@ -1,7 +1,7 @@
 INSERT INTO `UserProperty`(`name`) values('共性');
-INSERT INTO `UserProperty`(`name`) values('村居干部');
+INSERT INTO `UserProperty`(`name`) values('村居党员');
 INSERT INTO `UserProperty`(`name`) values('“两新”组织党员');
-INSERT INTO `UserProperty`(`name`) values('机关党员');
+INSERT INTO `UserProperty`(`name`) values('机关企事业党员');
 INSERT INTO `UserProperty`(`name`) values('党员领导干部');
 INSERT INTO `User`(`user_property_id`, `name`, `branch`, `isAdmin`) values(3, 'gangpu', 'Shannxi', 1);
 INSERT INTO `User`(`user_property_id`, `name`, `branch`, `isAdmin`) values(4, 'xzgan', 'henan', 1);

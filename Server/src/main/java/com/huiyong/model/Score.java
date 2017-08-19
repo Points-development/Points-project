@@ -15,6 +15,7 @@ public class Score {
 	private Integer paperId;
 	private String scorer;
 	private String scoree;
+	private Integer point;
 	private Date lastModifiedTime;	
 	private List<ScoreItemResult> scores;
 	public Integer getId() {
@@ -52,5 +53,11 @@ public class Score {
 	}
 	public void setScores(List<ScoreItemResult> scores) {
 		this.scores = scores;
+	}
+	public Integer getPoint() {
+		return point;
+	}
+	public void setPoint(Integer point) {
+		this.point = point;
 	}
 }

@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS `PaperScore` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `scorer` varchar(128) NOT NULL,
   `scoree` varchar(128) NOT NULL,
+  `point` int(11) NOT NULL,
   `lastModifiedTime` timestamp NOT NULL,
   `paper_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),

@@ -14,4 +14,5 @@ import com.huiyong.model.ScoreItemResult;
 public interface ScoreItemResultMapper {
 	public void addBatchItemResult(List<ScoreItemResult> aList);
 	public List<ScoreItemResult> getItemResultByScoreId(int id);
+	public void deleteScoreItemResult(int scoreId);
 }

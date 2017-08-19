@@ -18,4 +18,9 @@
 			(#{item.scoreId},#{item.questionId},#{item.optionsId})  
 			</foreach>  
 	</insert>
+	<delete id="deleteScoreItemResult" parameterType="int">
+        DELETE 
+        FROM PaperItemScore 
+    	where score_id = #{scoreId};
+  </delete>
  </mapper>
