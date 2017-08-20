@@ -102,8 +102,10 @@
 			  	    			  $scope.error = '支部选项必填';
 			  	    			  return false;
 		      	      		}
-		      	      		if($scope.resetPwd){
+			      	      	if($scope.resetPwd){
 		      	      			$scope.user.password = '123456';
+		      	      		}else{
+		      	      			delete $scope.user.password;
 		      	      		}
 			      	      	systemService.updateUser($scope.user).then(function(response){
 			      	      		messageCenterService.add('success', '更新成功!', {timeout:3000});
