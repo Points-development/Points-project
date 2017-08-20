@@ -121,9 +121,6 @@ public class UserController {
     		m.setError("用户不存在.");
     		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
     	}
-    	if(null == user.getPassword()){
-    		user.setPassword("123456");
-    	}
     	if(null == user.getBranch()|| "".equals( user.getBranch())){
     		user.setBranch("NULL");
     	}
@@ -132,7 +129,10 @@ public class UserController {
     		m.setError("用户身份不存在.");
     		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
     	}
-    	user.setPassword(MD5Util.getPwd(user.getPassword()));
+    	if(null != user.getPassword()){
+    		user.setPassword(MD5Util.getPwd(user.getPassword()));
+    	}
+    	
     	userService.updateUser(user, propertyId);
     	m.setSuccess("更新成功.");
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
