@@ -59,6 +59,7 @@ gulp.task('concat-libs', [], function() {
           'bower_components/angular-ui-router/release/angular-ui-router.js',
           'bower_components/ngstorage/ngStorage.js',
           'bower_components/angular-loading-bar/build/loading-bar.js',
+          'bower_components/ngPrint/ngPrint.js',
   		  'bower_components/message-center/message-center.js'])
         .pipe(concat('concat-libs.min.js'))
         .pipe(uglify())

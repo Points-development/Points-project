@@ -90,7 +90,8 @@ export default class Assessment extends React.Component {
             	scores4:0
         	}
     	}
-    	this.state.dataSource.questions.map(function(item){
+    	for(let i=0;i<this.state.dataSource.questions.length;i++){
+    		let item = this.state.dataSource.questions[i];
     		if(item.selected){
     			if(item.property =='共性'){
     				if(item.selected == 1){
@@ -119,8 +120,11 @@ export default class Assessment extends React.Component {
         				score.self.scores4 +=1;
         			}
     			}
+    		}else{
+    			ToastAndroid.show('还有题目未作答!', ToastAndroid.SHORT);
+    			return false;
     		}
-    	});
+    	}
     	score.commonTotal = score.common.scores1+score.common.scores2+score.common.scores3+score.common.scores4;
     	score.commonTotalScore = score.common.scores1*5+score.common.scores2*3+score.common.scores3*1;
     	score.selfTotal = score.self.scores1+score.self.scores2+score.self.scores3+score.self.scores4;
@@ -133,7 +137,8 @@ export default class Assessment extends React.Component {
     		paperId:1,
     		scorer:gUser.name,
     		scoree:this.state.evaluator=='自己'?gUser.name:this.state.evaluator,
-    		scores:[]
+    		scores:[],
+    		point:this.state.selfScore.commonTotalScore+this.state.selfScore.selfTotalScore
     	}
     	this.state.dataSource.questions.map(function(item){
     		if(item.selected){
@@ -144,7 +149,7 @@ export default class Assessment extends React.Component {
     	let url = gServer.host+'/score/'+score.scoree;
     	NetUtil.post(url,score,function (response) {
     		if(response.status == 200){
-    			ToastAndroid.show('评价提交成功!', ToastAndroid.SHORT);
+    			ToastAndroid.show('评测提交成功!', ToastAndroid.SHORT);
     			this.setState({isSubmitted:true,resultVisible: false});
     		}else{
     			ToastAndroid.show('网络异常，请稍后重试!', ToastAndroid.SHORT); 

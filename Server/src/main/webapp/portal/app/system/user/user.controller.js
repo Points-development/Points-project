@@ -55,9 +55,10 @@
       	    	  	$scope.user={
       	    	  		property:''
       	    	  	}
+      	    	  	$scope.admin = false;
       	    	  	$scope.userPropertys = vm.userPropertys;
       	      		$scope.submit_user = function(){
-	      	      		if(!$scope.name || !$scope.branch || !$scope.user.property || !$scope.admin){
+	      	      		if(!$scope.name || !$scope.branch || !$scope.user.property){
 		  	    			  $scope.error = '所有选项必填';
 		  	    			  return false;
 		  	    		}
@@ -66,7 +67,7 @@
 	      	      				name:$scope.name,
 	      	      				branch:$scope.branch,
 	      	      				property:$scope.user.property,
-	      	      				admin:$scope.admin=='true'?true:false
+	      	      				admin:$scope.admin
 	      	      		}
 	      	      		
 		      	      	systemService.createUser(user).then(function(response){

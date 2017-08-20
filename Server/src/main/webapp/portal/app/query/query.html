@@ -1,64 +1,56 @@
-<div>
-    <div style="display:inline-block;height:40px;">查询信息</div>
+<div ng-init="qcCtrl.startQuery(qcCtrl.branch)">
+    <div style="display:inline-block;height:40px;">查询成绩</div>
 </div>
-<div class="btn-group-left">
+<div style="display:inline-block">
     <form class="form-inline">
 	  <div class="form-group">
-	    <input type="text" class="form-control" ng-model="qcCtrl.queryObject">
+	    <input type="text" placeholder="输入支部名称" class="form-control" ng-model="qcCtrl.queryObject">
 	  </div>
-	  <button type="submit" class="btn btn-danger btn-sm" ng-click="qcCtrl.startQuery()">
-        查询用户
+	  <button type="submit" class="btn btn-danger btn-sm" ng-click="qcCtrl.startQuery(qcCtrl.queryObject)">
+        查询
     </button>
 	</form>
 </div>
+<div class="btn-group-right">
+    <button type="button" ng-click="qcCtrl.printdiv()" class="btn btn-danger btn-sm">
+        <i class="iconfont"></i>打印成绩
+    </button>
+</div>
 <div class="divider"></div>
-<div class="hack-header">
+<div print-section >
 <div class="custom-table">
       <div style="height:40px;" class="custom-row custom-table-header-css3">
-         <div class="custom-cell" style="width:25%">
+         <div class="custom-cell" style="width:15%">
             <span>ID</span>
          </div>
-         <div class="custom-cell" style="width:25%">
-            <span>类型</span>
+         <div class="custom-cell" style="width:20%">
+            <span>评测人</span>
          </div>
-         <div class="custom-cell" style="width:25%">
+         <div class="custom-cell" style="width:20%">
             <span>时间</span>
          </div>
          <div class="custom-cell">
-            <span>分数</span>
-         </div>
-      </div>
-</div>
-</div>
-<div ng-style="qcCtrl.scrollTableStyle" ng-if="qcCtrl.resultlist.length >0">
-<div class="custom-table">
-      <div style="height:40px;visibility:hidden;" class="custom-row custom-table-header-css3">
-         <div class="custom-cell" style="width:25%">
-            <span>ID</span>
-         </div>
-         <div class="custom-cell" style="width:25%">
-            <span>类型</span>
-         </div>
-         <div class="custom-cell" style="width:25%">
-            <span>时间</span>
+            <span>自评分数</span>
          </div>
          <div class="custom-cell">
-            <span>分数</span>
+            <span>他评分数</span>
          </div>
       </div>
       <div class="custom-row row-hover-cyan" ng-repeat="obj in qcCtrl.resultlist track by $index">
-         <div class="custom-cell" style="width:25%">
+         <div class="custom-cell" style="width:15%">
             <span>{{$index+1}}</span>
          </div>
          <div class="custom-cell">
-            <span ng-if="obj.scorer==obj.scoree">自评</span>
-            <span ng-if="obj.scorer!=obj.scoree">他评</span>
+            <span>{{obj.username}}</span>
          </div>
          <div class="custom-cell">
             <span>{{obj.lastModifiedTime|date:'yyyy-MM-dd'}}</span>
          </div>
-         <div class="custom-cell" ng-init="score = qcCtrl.getScore(obj)">
-            <span>{{score}}</span>
+         <div class="custom-cell">
+            <span>{{obj.selfPoint}}</span>
+         </div>
+         <div class="custom-cell">
+            <span>{{obj.otherPoint}}</span>
          </div>
       </div>
 </div>

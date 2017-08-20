@@ -69,9 +69,9 @@
              );
             return deferred.promise;
         };
-        factory.getUsersScore = function(username){
+        factory.getUsersScore = function(branch){
             var deferred = $q.defer();
-            $http.get('/pointservice/score/'+username).then(
+            $http.get('/pointservice/score/points?branch='+branch).then(
                     function (resp) {
                         deferred.resolve(resp.data);
                     },
