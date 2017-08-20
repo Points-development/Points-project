@@ -8,6 +8,7 @@
         'angular-jwt',
         'angular-loading-bar',
         'MessageCenterModule',
+        'AngularPrint',
         /* Cross-app modules */
         'blocks.listener',
         'blocks.security',

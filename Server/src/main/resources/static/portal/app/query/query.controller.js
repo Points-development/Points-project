@@ -12,11 +12,12 @@
         var vm = this;
         var currentUser = security.getCurrentUser();
         vm.userName = currentUser.name;
+        vm.branch = currentUser.branch;
         vm.queryObject = null;
         vm.resultlist = [];
-        vm.startQuery = function(){
+        vm.startQuery = function(branch){
         	vm.resultlist = [];
-        	systemService.getUsersScore(vm.queryObject).then(function(response){
+        	systemService.getUsersScore(branch).then(function(response){
         		vm.resultlist = response;
         	},function(response){
         		if(response.error){
@@ -36,19 +37,16 @@
         };
         
         vm.getScore = function(obj){
-        	var score = 0;
-        	for(var i=0;i<obj.scores.length;i++){
-        		if(obj.scores[i].optionsId == 1){
-        			score +=5
-        		}
-        		if(obj.scores[i].optionsId == 2){
-        			score +=3
-        		}
-        		if(obj.scores[i].optionsId == 3){
-        			score +=1
-        		}
-        	}
-        	return score;
+        	
+        	return obj.selfPoint+obj.otherPoint;
+        }
+
+        /**
+         * 打印局部div
+         * @param printpage 局部div的ID
+         */
+        vm.printdiv = function () {
+        	window.print()
         }
         
     }

@@ -9,9 +9,9 @@
     function systemService($http,$q) {
         var factory = {};
         
-        factory.getUsers = function(){
+        factory.getUsers = function(branch){
             var deferred = $q.defer();
-            $http.get('/pointservice/user').then(
+            $http.get('/pointservice/branch?branch='+encodeURIComponent(branch)).then(
                     function (resp) {
                         deferred.resolve(resp.data);
                     },
@@ -45,6 +45,18 @@
              );
             return deferred.promise;
         };
+        factory.updateUser = function(user){
+            var deferred = $q.defer();
+            $http.put('/pointservice/user/'+user.name,user).then(
+                    function (resp) {
+                        deferred.resolve(resp.data);
+                    },
+                    function (resp) {
+                        deferred.reject(resp.data);
+                    }
+             );
+            return deferred.promise;
+        };
         factory.deleteUser = function(username){
             var deferred = $q.defer();
             $http.delete('/pointservice/user/'+username).then(
@@ -57,21 +69,9 @@
              );
             return deferred.promise;
         };
-        factory.updateUser = function(user){
+        factory.getUsersScore = function(branch){
             var deferred = $q.defer();
-            $http.put('/pointservice/user',user).then(
-                    function (resp) {
-                        deferred.resolve(resp.data);
-                    },
-                    function (resp) {
-                        deferred.reject(resp.data);
-                    }
-             );
-            return deferred.promise;
-        };
-        factory.getUsersScore = function(username){
-            var deferred = $q.defer();
-            $http.get('/pointservice/score/'+username).then(
+            $http.get('/pointservice/score/points?branch='+branch).then(
                     function (resp) {
                         deferred.resolve(resp.data);
                     },

@@ -6,20 +6,29 @@
     angular.module('system.user')
         .controller('UserManageController', UserManageController);
 
-    UserManageController.$inject = ['storage','messageCenterService','systemService','$uibModal'];
+    UserManageController.$inject = ['storage','messageCenterService','systemService','$uibModal','security'];
 
-    function UserManageController(storage,messageCenterService,systemService,$uibModal) {
+    function UserManageController(storage,messageCenterService,systemService,$uibModal,security) {
         var vm = this;
-        
-        vm.hasSelected=0;
-		vm.checkAll = false;
+		vm.selectUser = null;
+		vm.currentUser = security.getCurrentUser();
         vm.init = function(){
 			vm.hasSelected=0;
-        	vm.userlist = [];
-        	systemService.getUsers().then(function(response){
-        		for(var i=0;i<response.length;i++){
-        			vm.userlist.push.apply(vm.userlist, response[i].users)
-        		}
+        	systemService.getUsers(vm.currentUser.branch).then(function(response){
+        		vm.userlist = response;
+        	},function(response){
+        		messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
+        	});
+        	systemService.getUsersProperty().then(function(response){
+        		vm.userPropertys = response;
+        	},function(response){
+        		messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
+        	});
+        }
+        
+        vm.queryUser = function(){
+        	systemService.getUsers(vm.queryBranch).then(function(response){
+        		vm.userlist = response;
         	},function(response){
         		messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         	});
@@ -31,12 +40,7 @@
         }
         
         vm.selectCheck = function(obj){
-    		obj.checked = !obj.checked;
-	      	if(obj.checked){
-				 vm.hasSelected++; 
-	      	}else{
-				 vm.hasSelected--; 
-	      	}
+        	vm.selectUser = obj;
 	    };
 	    
 	    vm.addUser = function(){
@@ -51,9 +55,10 @@
       	    	  	$scope.user={
       	    	  		property:''
       	    	  	}
+      	    	  	$scope.admin = false;
       	    	  	$scope.userPropertys = vm.userPropertys;
       	      		$scope.submit_user = function(){
-	      	      		if(!$scope.name || !$scope.branch || !$scope.user.property || !$scope.admin){
+	      	      		if(!$scope.name || !$scope.branch || !$scope.user.property){
 		  	    			  $scope.error = '所有选项必填';
 		  	    			  return false;
 		  	    		}
@@ -62,7 +67,7 @@
 	      	      				name:$scope.name,
 	      	      				branch:$scope.branch,
 	      	      				property:$scope.user.property,
-	      	      				admin:$scope.admin=='true'?true:false
+	      	      				admin:$scope.admin
 	      	      		}
 	      	      		
 		      	      	systemService.createUser(user).then(function(response){
@@ -80,49 +85,40 @@
         	});
 		}
 			
-	    vm.deleteUser = function(){
-			$uibModal.open({
-      	    	animation: true,
-      	    	size:"cm-sm",
-      	    	ariaLabelledBy: 'modal-title-top',
-      	    	ariaDescribedBy: 'modal-body-top',
-				templateUrl: 'templates/confirmModel.html',
-      	        controller:['$scope','$uibModalInstance', function($scope,$uibModalInstance) {
-      	      		$scope.submit = function(){
-	    		    	for(var i=0;i<vm.userlist.length;i++){
-	      					if(vm.userlist[i].checked){
-	      						systemService.deleteUser(vm.userlist[i].name).then(function(response){
-								},	function(response){
-									messageCenterService.add('danger', response, {timeout:3000});
-								});
-							}
-						}
-						vm.init();
-						messageCenterService.add('success', '删除成功!', {timeout:3000});
-						$uibModalInstance.close($scope);	
-					}
-									  
-      	      		$scope.cancel = function(){
-      	    	  		$uibModalInstance.dismiss('cancel');
-      	      		}
-      	      	}]		
-			})
-		}		
-	    
-	    vm.selectAll = function(){
-			vm.checkAll = !vm.checkAll;
-			if(vm.checkAll){
-	      		for(var i=0;i<vm.userlist.length;i++){
-					vm.userlist[i].checked=vm.checkAll;
-					vm.hasSelected++; 
-				}
-	      	}else{
-				for(var i=0;i<vm.userlist.length;i++){
-					vm.userlist[i].checked=vm.checkAll;
-				}
-				vm.hasSelected=0; 
-			}
-	    };
+	    vm.updateUser = function(){
+	    	$uibModal.open({
+	      	      animation: true,
+	      	      size:"cm-user",
+	      	      ariaLabelledBy: 'modal-title-top',
+	      	      ariaDescribedBy: 'modal-body-top',
+	      	      templateUrl: 'templates/userUpdateModel.html',
+	      	      controller:['$scope','$uibModalInstance', function($scope,$uibModalInstance) {
+	      	    	  	$scope.error = '';
+	      	    	  	$scope.user=vm.selectUser;
+	      	    	  	$scope.userPropertys = vm.userPropertys;
+	      	    	  	$scope.resetPwd = false;
+	      	      		$scope.submit_user = function(){
+		      	      		if(!$scope.user.branch){
+			  	    			  $scope.error = '支部选项必填';
+			  	    			  return false;
+		      	      		}
+		      	      		if($scope.resetPwd){
+		      	      			$scope.user.password = '123456';
+		      	      		}
+			      	      	systemService.updateUser($scope.user).then(function(response){
+			      	      		messageCenterService.add('success', '更新成功!', {timeout:3000});
+			      	      		vm.init();
+			      	      		$uibModalInstance.dismiss('cancel');
+			            	},function(response){
+			            		messageCenterService.add('danger', response, {timeout:3000});
+			            	});
+	      	      		}
+	      	      		$scope.cancel = function(){
+	      	    	  		$uibModalInstance.dismiss('cancel');
+	      	      		}
+	      	      }]
+	        	});
+		}
 	    
         vm.scrollTableStyle={
         				"width":"100%",

@@ -39,7 +39,8 @@ gulp.task('images',function(){
 gulp.task('css',function(){
     return gulp.src([
              'portal/content/css/layout.css',
-             'portal/content/css/custom.css'
+             'portal/content/css/custom.css',
+             'bower_components/angularPrint/angularPrint.css'
              ])
         .pipe(concat('main.min.css'))
         .pipe(cleanCSS()) 
@@ -59,7 +60,7 @@ gulp.task('concat-libs', [], function() {
           'bower_components/angular-ui-router/release/angular-ui-router.js',
           'bower_components/ngstorage/ngStorage.js',
           'bower_components/angular-loading-bar/build/loading-bar.js',
-          'bower_components/ngPrint/ngPrint.js',
+          'bower_components/angularPrint/angularPrint.js',
   		  'bower_components/message-center/message-center.js'])
         .pipe(concat('concat-libs.min.js'))
         .pipe(uglify())
