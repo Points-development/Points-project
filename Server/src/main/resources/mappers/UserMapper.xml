@@ -49,7 +49,9 @@
                         #{user.isAdmin})      
   </insert>  
     <update id="updateUser" useGeneratedKeys="true">  
-        UPDATE User SET  User.password=#{user.password},
+        UPDATE User SET  <if test="user.password != null" >
+        				 User.password=#{user.password},
+        				  </if> 
                           <if test="user.branch != null" >
         				 User.branch=#{user.branch},
       					  </if> 
