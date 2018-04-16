@@ -68,13 +68,13 @@ public class UserController {
     }
     //Return users in the branch
     @RequestMapping(value = "/branch", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
-    public ResponseEntity<?> getUsersByBranch(@RequestParam String branch, @RequestParam String organziation) {
+    public ResponseEntity<?> getUsersByBranch(@RequestParam String branch, @RequestParam String organization) {
     	Message m = new Message();
     	if(null == branch){
     		m.setError("支部不能为空");
     		return new ResponseEntity<Message>(m, HttpStatus.NOT_FOUND);
     	}
-    	List<User> users = userService.getUsersInBranch(branch, organziation);
+    	List<User> users = userService.getUsersInBranch(branch, organization);
     	return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
     @RequestMapping(value = "/user", method = RequestMethod.POST)
@@ -174,7 +174,7 @@ public class UserController {
     	return new ResponseEntity<List<String>>(branches, HttpStatus.OK);
     }
     
-    //删除branch，同时会删除所有属于该branch的user
+    //添加一个新的branch
     @RequestMapping(value = "/user/branch", method = RequestMethod.POST)
     public ResponseEntity<?> addBranch(@RequestParam String branch, @RequestParam String organization) {
     	Message m = new Message();

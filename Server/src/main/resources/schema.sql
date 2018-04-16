@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (
   `daoDe` int(11) NOT NULL,
   `lvXingYiWu` int(11) NOT NULL,
   `moFan` int(11) NOT NULL,
+  `total` int(11) NOT NULL,
   `problem` varchar(1024) NOT NULL,
   `lastModifiedTime` timestamp NOT NULL,
   PRIMARY KEY (`id`));
@@ -89,6 +90,7 @@ CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (
   `xueXi` int(11) NOT NULL,
   `gongZuo` int(11) NOT NULL,
   `shengHuo` int(11) NOT NULL,
+  `total` int(11) NOT NULL,
   `problem` varchar(1024) NOT NULL,
   `lastModifiedTime` timestamp NOT NULL,
   PRIMARY KEY (`id`));
@@ -97,6 +99,7 @@ CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userName` varchar(128) NOT NULL,
   `realName` varchar(128) NOT NULL,
+  `total` int(11) NOT NULL,
   `problem` varchar(1024) NOT NULL,
   `lastModifiedTime` timestamp NOT NULL,
   PRIMARY KEY (`id`));
@@ -105,6 +108,7 @@ CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userName` varchar(128) NOT NULL,
   `realName` varchar(128) NOT NULL,
+  `total` int(11) NOT NULL,
   `problem` varchar(1024) NOT NULL,
   `lastModifiedTime` timestamp NOT NULL,
   PRIMARY KEY (`id`));

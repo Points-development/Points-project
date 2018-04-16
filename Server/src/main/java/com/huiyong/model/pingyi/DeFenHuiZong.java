@@ -12,6 +12,7 @@ import java.util.Date;
 public class DeFenHuiZong {
 	private Integer id;
 	private String userName;
+	private String realName;
 	private Integer ziPing;
 	private Integer huPing;
 	private Integer qunZhongPing;
@@ -79,5 +80,17 @@ public class DeFenHuiZong {
 	}
 	public void setLastModifiedTime(Date lastModifiedTime) {
 		this.lastModifiedTime = lastModifiedTime;
+	}
+	/**
+	 * @return the realName
+	 */
+	public String getRealName() {
+		return realName;
+	}
+	/**
+	 * @param realName the realName to set
+	 */
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 }

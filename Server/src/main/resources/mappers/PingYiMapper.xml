@@ -31,9 +31,9 @@
   </select>
   
   <insert id="insertZuZhiPingJias" parameterType="java.util.List" useGeneratedKeys="true">  
-	Insert into ZuZhiPingJia (userName, realName, zhengZhi, zuZhi, daoDe, lvXingYiWu, moFan, problem, lastModifiedTime) values
+	Insert into ZuZhiPingJia (userName, realName, zhengZhi, zuZhi, daoDe, lvXingYiWu, moFan, total, problem, lastModifiedTime) values
 		<foreach collection="zuZhiPingJias" item="item" separator=",">  
-			(#{item.userName}, #{item.realName}, #{item.zhengZhi},#{item.zuZhi},#{item.daoDe}, #{item.lvXingYiWu},#{item.moFan},#{item.problem}, #{item.lastModifiedTime})
+			(#{item.userName}, #{item.realName}, #{item.zhengZhi},#{item.zuZhi},#{item.daoDe}, #{item.lvXingYiWu},#{item.moFan}, #{item.total}, #{item.problem}, #{item.lastModifiedTime})
 		</foreach>  
 	</insert>
 	
@@ -71,9 +71,9 @@
   </select>
   
   <insert id="insertQunZhongPingYis" parameterType="java.util.List" useGeneratedKeys="true">  
-	Insert into QunZhongPingYi (userName, realName, siXiang, daoDe, xueXi, gongZuo, shengHuo, problem, lastModifiedTime) values
+	Insert into QunZhongPingYi (userName, realName, siXiang, daoDe, xueXi, gongZuo, shengHuo, total, problem, lastModifiedTime) values
 		<foreach collection="qunZhongPingYis" item="item" separator=",">  
-			(#{item.userName}, #{item.realName}, #{item.siXiang},#{item.daoDe},#{item.xueXi}, #{item.gongZuo},#{item.shengHuo},#{item.problem}, #{item.lastModifiedTime})
+			(#{item.userName}, #{item.realName}, #{item.siXiang},#{item.daoDe},#{item.xueXi}, #{item.gongZuo},#{item.shengHuo}, #{item.total}, #{item.problem}, #{item.lastModifiedTime})
 		</foreach>  
 	</insert>
 	
@@ -141,9 +141,9 @@ where User.branch=#{branch} and User.organization=#{organization}
   </select>
   
   <insert id="insertZiPings" parameterType="java.util.List" useGeneratedKeys="true">  
-	Insert into ZiPing (userName, realName, problem, lastModifiedTime) values
+	Insert into ZiPing (userName, realName, total, problem, lastModifiedTime) values
 		<foreach collection="ziPings" item="item" separator=",">  
-			(#{item.userName}, #{item.realName}, #{item.problem}, #{item.lastModifiedTime})
+			(#{item.userName}, #{item.realName}, #{item.total}, #{item.problem}, #{item.lastModifiedTime})
 		</foreach>  
 	</insert>
 	
@@ -172,13 +172,42 @@ where User.branch=#{branch} and User.organization=#{organization}
   </select>
   
   <insert id="insertHuPings" parameterType="java.util.List" useGeneratedKeys="true">  
-	Insert into HuPing (userName, realName, problem, lastModifiedTime) values
+	Insert into HuPing (userName, realName, total, problem, lastModifiedTime) values
 		<foreach collection="huPings" item="item" separator=",">  
-			(#{item.userName}, #{item.realName}, #{item.problem}, #{item.lastModifiedTime})
+			(#{item.userName}, #{item.realName}, #{item.total}, #{item.problem}, #{item.lastModifiedTime})
 		</foreach>  
 	</insert>
 	
 	<delete id="deleteHuPings">  
        DELETE Z FROM HuPing Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
+	</delete>
+	
+   <resultMap id="DeFenHuiZongResultMap" type="com.huiyong.model.pingyi.DeFenHuiZong" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="userName" jdbcType="VARCHAR" />
+    <result column="realName" property="realName" jdbcType="VARCHAR" />
+    <result column="ziPing" property="ziPing" jdbcType="INTEGER" />
+    <result column="huPing" property="huPing" jdbcType="INTEGER" />
+    <result column="qunZhongPing" property="qunZhongPing" jdbcType="INTEGER" />
+    <result column="zuZhiPing" property="zuZhiPing" jdbcType="INTEGER" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="hongXian" property="hongXian" jdbcType="VARCHAR" />
+    <result column="jianKang" property="jianKang" jdbcType="VARCHAR" />
+    <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <select id="getDeFenHuiZongs" resultMap="DeFenHuiZongResultMap">
+
+  </select>
+  
+  <insert id="insertDeFenHuiZongs" parameterType="java.util.List" useGeneratedKeys="true">  
+	Insert into DeFenHuiZong (userName, realName, hongXian, jianKang, lastModifiedTime) values
+		<foreach collection="deFenHuiZongs" item="item" separator=",">  
+			(#{item.userName}, #{item.realName}, #{item.hongXian}, #{item.jianKang}, #{item.lastModifiedTime})
+		</foreach>  
+	</insert>
+	
+	<delete id="deleteDeFenHuiZongs">  
+       DELETE Z FROM DeFenHuiZong Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
 	</delete>
  </mapper>

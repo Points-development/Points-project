@@ -78,7 +78,7 @@
     select branch from OrganBranch where organization=#{organization}
   </select>
    <update id="deleteBranch" >  
-        DELETE O, U FROM OrganBranch O, User U where O.branch=#{branch} and O.organization=#{organization} and U.branch=#{branch}
+        DELETE O, U FROM OrganBranch O, User U where O.branch=#{branch} and O.organization=#{organization} and U.branch=#{branch} and U.organization=#{organization}
   </update> 
   <insert id="addBranch" useGeneratedKeys="true">  
         INSERT INTO OrganBranch (branch, organization)  
