@@ -23,8 +23,8 @@ public interface PingYiService {
 	public List<ZiPing> getZiPings(String branch, String organization);
 	public void updateZiPings(String branch, String organization, List<ZiPing> ziPings);
 	
-	public List<ZiPing> getHuPings(String branch);
-	public void updateHuPings(List<HuPing> huPings);
+	public List<HuPing> getHuPings(String branch, String organization);
+	public void updateHuPings(String branch, String organization, List<HuPing> huPings);
 	
 	public List<ZuZhiPingJia> getZuZhiPingJias(String branch, String organization);
 	public void updateZuZhiPingJias(String branch, String organization, List<ZuZhiPingJia> zuZhiPingJias);

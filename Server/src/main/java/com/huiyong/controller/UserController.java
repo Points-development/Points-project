@@ -63,18 +63,18 @@ public class UserController {
     	if(null == userFromDB){
     		return new ResponseEntity<String>("User does not exist.", HttpStatus.NOT_FOUND);
     	}
-    	List<User> users = userService.getUsersInBranch(userFromDB.getBranch());
+    	List<User> users = userService.getUsersInBranch(userFromDB.getBranch(), userFromDB.getOrganization());
     	return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
-    //Return users in the same branches with the required user
+    //Return users in the branch
     @RequestMapping(value = "/branch", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
-    public ResponseEntity<?> getUsersByBranch(@RequestParam String branch) {
+    public ResponseEntity<?> getUsersByBranch(@RequestParam String branch, @RequestParam String organziation) {
     	Message m = new Message();
     	if(null == branch){
     		m.setError("支部不能为空");
     		return new ResponseEntity<Message>(m, HttpStatus.NOT_FOUND);
     	}
-    	List<User> users = userService.getUsersInBranch(branch);
+    	List<User> users = userService.getUsersInBranch(branch, organziation);
     	return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
     @RequestMapping(value = "/user", method = RequestMethod.POST)
@@ -138,8 +138,8 @@ public class UserController {
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
     }
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public List<Branch> getUsers() {
-    	return userService.getAllUsers();
+    public List<Branch> getAllUsers(@RequestParam String organziation) {
+    	return userService.getAllUsers(organziation);
     }
     @RequestMapping(value = "/user/property", method = RequestMethod.GET)
     public List<String> getProperties() {
@@ -155,6 +155,31 @@ public class UserController {
     	}
     	userService.deleteUser(username);
     	m.setSuccess("删除成功.");
+    	return new ResponseEntity<Message>(m, HttpStatus.OK);
+    }
+    
+    //删除branch，同时会删除所有属于该branch的user
+    @RequestMapping(value = "/user/branch", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteBranch(@RequestParam String branch, @RequestParam String organization) {
+    	Message m = new Message();
+    	userService.deleteBranch(branch, organization);
+    	m.setSuccess("删除成功.");
+    	return new ResponseEntity<Message>(m, HttpStatus.OK);
+    }
+    
+    //得到该组织内的所有branch的列表
+    @RequestMapping(value = "/user/branches", method = RequestMethod.GET)
+    public ResponseEntity<?> getBranch(@RequestParam String organization) {
+    	List<String> branches = userService.getAllBranches(organization);
+    	return new ResponseEntity<List<String>>(branches, HttpStatus.OK);
+    }
+    
+    //删除branch，同时会删除所有属于该branch的user
+    @RequestMapping(value = "/user/branch", method = RequestMethod.POST)
+    public ResponseEntity<?> addBranch(@RequestParam String branch, @RequestParam String organization) {
+    	Message m = new Message();
+    	userService.addBranch(branch, organization);
+    	m.setSuccess("添加成功.");
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
     }
 }

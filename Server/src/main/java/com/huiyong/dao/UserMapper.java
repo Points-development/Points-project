@@ -15,11 +15,13 @@ import com.huiyong.model.user.User;
  */
 public interface UserMapper {
 	User getUserByName(@Param("name") String name);
-	List<User> getUsersInBranch(@Param("branchname") String branchname);
+	List<User> getUsersInBranch(@Param("branchname") String branchname, @Param("organization")String organization);
 	void addUser(@Param("user") User user, @Param("propertyId") int propertyId);
 	void updateUser(@Param("user") User user, @Param("propertyId") int propertyId);
 	Integer getPropertyId(@Param("name") String property);
 	List<String> getAllProperties();
-	List<String> getAllBranches();
+	List<String> getAllBranches(@Param("organization")String organziation);
 	void deleteUser(String username);
+	void deleteBranch(@Param("branch") String branchname, @Param("organization")String organization);
+	void addBranch(@Param("branch") String branchname, @Param("organization")String organization);
 }

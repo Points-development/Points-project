@@ -12,6 +12,7 @@ import java.util.Date;
 public class HuPing {
 	private Integer id;
 	private String userName;
+	private String realName;
 	private Integer total;
 	private String problem;
 	private Date lastModifiedTime;
@@ -44,6 +45,18 @@ public class HuPing {
 	}
 	public void setLastModifiedTime(Date lastModifiedTime) {
 		this.lastModifiedTime = lastModifiedTime;
+	}
+	/**
+	 * @return the realName
+	 */
+	public String getRealName() {
+		return realName;
+	}
+	/**
+	 * @param realName the realName to set
+	 */
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 
 }

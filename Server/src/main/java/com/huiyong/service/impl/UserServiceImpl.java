@@ -38,8 +38,8 @@ public class UserServiceImpl implements UserService {;
 	 * @see com.huiyong.service.UserService#getUsersInBranch(java.lang.String)
 	 */
 	@Override
-	public List<User> getUsersInBranch(String branchname) {
-		return userDao.getUsersInBranch(branchname);
+	public List<User> getUsersInBranch(String branchname, String organization) {
+		return userDao.getUsersInBranch(branchname, organization);
 	}
 
 	/* (non-Javadoc)
@@ -74,11 +74,11 @@ public class UserServiceImpl implements UserService {;
 	 * @see com.huiyong.service.UserService#getAllUsers()
 	 */
 	@Override
-	public List<Branch> getAllUsers() {
-		List<String> bList = userDao.getAllBranches();
+	public List<Branch> getAllUsers(String organziation) {
+		List<String> bList = userDao.getAllBranches(organziation);
 		List<Branch> buList = new ArrayList<Branch>();
 		for(String branch: bList){
-			List<User> uList = userDao.getUsersInBranch(branch);
+			List<User> uList = userDao.getUsersInBranch(branch, organziation);
 			Branch aBranch = new Branch();
 			aBranch.setbranchName(branch);
 			aBranch.setUsers(uList);
@@ -99,8 +99,8 @@ public class UserServiceImpl implements UserService {;
 	 * @see com.huiyong.service.UserService#getAllBranches()
 	 */
 	@Override
-	public List<String> getAllBranches() {
-		return userDao.getAllBranches();
+	public List<String> getAllBranches(String organziation) {
+		return userDao.getAllBranches(organziation);
 	}
 
 	/* (non-Javadoc)
@@ -110,6 +110,26 @@ public class UserServiceImpl implements UserService {;
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
 	public void deleteUser(String username) {
 		userDao.deleteUser(username);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.huiyong.service.UserService#deleteBranch(java.lang.String, java.lang.String)
+	 */
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
+	public void deleteBranch(String branchname, String organziation) {
+		userDao.deleteBranch(branchname, organziation);
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.huiyong.service.UserService#addBranch(java.lang.String, java.lang.String)
+	 */
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
+	public void addBranch(String branchname, String organziation) {
+		userDao.addBranch( branchname,  organziation);
+		
 	}
 
 }

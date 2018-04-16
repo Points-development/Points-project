@@ -150,4 +150,35 @@ where User.branch=#{branch} and User.organization=#{organization}
 	<delete id="deleteZiPings">  
         DELETE Z FROM ZiPing Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
 	</delete>
+	
+   <resultMap id="HuPingResultMap" type="com.huiyong.model.pingyi.HuPing" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="userName" jdbcType="VARCHAR" />
+    <result column="realName" property="realName" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="problem" property="problem" jdbcType="VARCHAR" />
+    <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="getHuPings" resultMap="HuPingResultMap">
+		select U.name, U.realName, OP.otherPoint total, HuPing.problem, HuPing.lastModifiedTime
+		from User U LEFT JOIN (
+		select PSOTHER.scoree, avg(PSOTHER.point) otherPoint
+		from PaperScore PSOTHER
+		where PSOTHER.scorer !=PSOTHER.scoree group by
+		PSOTHER.scoree
+		) OP on U.name=OP.scoree
+		LEFT Join HuPing on U.name=HuPing.userName
+		where U.branch=#{branch} and U.organization=#{organization}
+  </select>
+  
+  <insert id="insertHuPings" parameterType="java.util.List" useGeneratedKeys="true">  
+	Insert into HuPing (userName, realName, problem, lastModifiedTime) values
+		<foreach collection="huPings" item="item" separator=",">  
+			(#{item.userName}, #{item.realName}, #{item.problem}, #{item.lastModifiedTime})
+		</foreach>  
+	</insert>
+	
+	<delete id="deleteHuPings">  
+       DELETE Z FROM HuPing Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
+	</delete>
  </mapper>

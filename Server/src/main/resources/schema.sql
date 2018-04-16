@@ -19,6 +19,12 @@ CREATE TABLE IF NOT EXISTS `User` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_property_id`) REFERENCES `UserProperty` (`id`));
 
+CREATE TABLE IF NOT EXISTS `OrganBranch` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `branch` varchar(255) NOT NULL,
+  `organization` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`));
+
 CREATE TABLE IF NOT EXISTS `PaperTest` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL UNIQUE,
@@ -88,6 +94,14 @@ CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (
   PRIMARY KEY (`id`));
   
   CREATE TABLE IF NOT EXISTS `ZiPing` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(128) NOT NULL,
+  `realName` varchar(128) NOT NULL,
+  `problem` varchar(1024) NOT NULL,
+  `lastModifiedTime` timestamp NOT NULL,
+  PRIMARY KEY (`id`));
+  
+  CREATE TABLE IF NOT EXISTS `HuPing` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userName` varchar(128) NOT NULL,
   `realName` varchar(128) NOT NULL,

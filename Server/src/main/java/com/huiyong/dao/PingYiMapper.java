@@ -28,8 +28,9 @@ public interface PingYiMapper {
 	public void deleteZiPings(@Param(value = "branch")String branch, @Param(value = "organization")String organization);
 	
 	
-	public List<ZiPing> getHuPings(String branch);
-	public void insertHuPings(List<HuPing> huPings);
+	public List<HuPing> getHuPings(@Param(value = "branch")String branch, @Param(value = "organization")String organization);
+	public void insertHuPings(@Param(value = "huPings")List<HuPing> huPings);
+	public void deleteHuPings(@Param(value = "branch")String branch, @Param(value = "organization")String organization);
 	
 	public List<ZuZhiPingJia> getZuZhiPingJias(@Param(value = "branch")String branch, @Param(value = "organization")String organization);
 	public void insertZuZhiPingJias(@Param(value = "zuZhiPingJias")List<ZuZhiPingJia> zuZhiPingJias);

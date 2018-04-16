@@ -79,8 +79,8 @@ public class PingYiServiceImpl implements PingYiService{
 	 * @see com.huiyong.service.PingYiService#getHuPings(java.lang.String)
 	 */
 	@Override
-	public List<ZiPing> getHuPings(String branch) {
-		return pingYiDao.getHuPings(branch);
+	public List<HuPing> getHuPings(String branch, String organization) {
+		return pingYiDao.getHuPings(branch, organization);
 	}
 
 	/* (non-Javadoc)
@@ -88,8 +88,12 @@ public class PingYiServiceImpl implements PingYiService{
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
-	public void updateHuPings(List<HuPing> huPings) {
-		pingYiDao.insertHuPings(huPings);		
+	public void updateHuPings(String branch, String organization, List<HuPing> huPings) {
+		pingYiDao.deleteHuPings(branch, organization);
+		for(HuPing q : huPings){
+			q.setLastModifiedTime(new Date());
+		}
+		pingYiDao.insertHuPings(huPings);	
 	}
 
 	/* (non-Javadoc)
