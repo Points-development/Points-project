@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huiyong.dao.PingYiMapper" >
+   <resultMap id="ZuZhiPingJiaResultMap" type="com.huiyong.model.pingyi.ZuZhiPingJia" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="userName" jdbcType="VARCHAR" />
+    <result column="realName" property="realName" jdbcType="VARCHAR" />
+    <result column="zhengZhi" property="zhengZhi" jdbcType="INTEGER" />
+    <result column="zuZhi" property="zuZhi" jdbcType="INTEGER" />
+    <result column="daoDe" property="daoDe" jdbcType="INTEGER" />
+    <result column="lvXingYiWu" property="lvXingYiWu" jdbcType="INTEGER" />
+    <result column="moFan" property="moFan" jdbcType="INTEGER" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="problem" property="problem" jdbcType="VARCHAR" />
+    <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+   <select id="getZuZhiPingJias" resultMap="ZuZhiPingJiaResultMap">
+        SELECT Z.id,
+               Z.zhengZhi,
+               Z.zuZhi,
+               Z.daoDe,
+               Z.lvXingYiWu,
+               Z.moFan,
+               Z.zhengZhi + Z.zuZhi + Z.daoDe + Z.lvXingYiWu + Z.moFan as total,
+               Z.problem,
+               Z.lastModifiedTime,
+               U.name,
+               U.realName
+        FROM ZuZhiPingJia Z RIGHT JOIN User U on U.name=Z.userName
+    	where U.organization = #{organization} and U.branch=#{branch};
+  </select>
+  
+  <insert id="insertZuZhiPingJias" parameterType="java.util.List" useGeneratedKeys="true">  
+	Insert into ZuZhiPingJia (userName, realName, zhengZhi, zuZhi, daoDe, lvXingYiWu, moFan, problem, lastModifiedTime) values
+		<foreach collection="zuZhiPingJias" item="item" separator=",">  
+			(#{item.userName}, #{item.realName}, #{item.zhengZhi},#{item.zuZhi},#{item.daoDe}, #{item.lvXingYiWu},#{item.moFan},#{item.problem}, #{item.lastModifiedTime})
+		</foreach>  
+	</insert>
+	
+	<delete id="deleteZuZhiPingJias">  
+        DELETE Z FROM ZuZhiPingJia Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
+	</delete>  
+	
+  <resultMap id="QunZhongPingYiResultMap" type="com.huiyong.model.pingyi.QunZhongPingYi" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="userName" jdbcType="VARCHAR" />
+    <result column="realName" property="realName" jdbcType="VARCHAR" />
+    <result column="siXiang" property="siXiang" jdbcType="INTEGER" />
+    <result column="daoDe" property="daoDe" jdbcType="INTEGER" />
+    <result column="xueXi" property="xueXi" jdbcType="INTEGER" />
+    <result column="gongZuo" property="gongZuo" jdbcType="INTEGER" />
+    <result column="shengHuo" property="shengHuo" jdbcType="INTEGER" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="problem" property="problem" jdbcType="VARCHAR" />
+    <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+   <select id="getQunZhongPingYis" resultMap="QunZhongPingYiResultMap">
+        SELECT Z.id,
+               Z.siXiang,
+               Z.daoDe,
+               Z.xueXi,
+               Z.gongZuo,
+               Z.shengHuo,
+               Z.siXiang + Z.daoDe + Z.xueXi + Z.gongZuo + Z.shengHuo as total,
+               Z.problem,
+               Z.lastModifiedTime,
+               U.name,
+               U.realName
+        FROM QunZhongPingYi Z RIGHT JOIN User U on U.name=Z.userName
+    	where U.organization = #{organization} and U.branch=#{branch};
+  </select>
+  
+  <insert id="insertQunZhongPingYis" parameterType="java.util.List" useGeneratedKeys="true">  
+	Insert into QunZhongPingYi (userName, realName, siXiang, daoDe, xueXi, gongZuo, shengHuo, problem, lastModifiedTime) values
+		<foreach collection="qunZhongPingYis" item="item" separator=",">  
+			(#{item.userName}, #{item.realName}, #{item.siXiang},#{item.daoDe},#{item.xueXi}, #{item.gongZuo},#{item.shengHuo},#{item.problem}, #{item.lastModifiedTime})
+		</foreach>  
+	</insert>
+	
+	<delete id="deleteQunZhongPingYis">  
+        DELETE Z FROM QunZhongPingYi Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
+	</delete>
+	
+	
+  <resultMap id="ZiPingResultMap" type="com.huiyong.model.pingyi.ZiPing" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="userName" jdbcType="VARCHAR" />
+    <result column="realName" property="realName" jdbcType="VARCHAR" />
+    <result column="gongXing" property="gongXing" jdbcType="INTEGER" />
+    <result column="geXing" property="geXing" jdbcType="INTEGER" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="problem" property="problem" jdbcType="VARCHAR" />
+    <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+   <select id="getZiPings" resultMap="ZiPingResultMap">
+select User.name, User.realName, POINT.gongxing, POINT.gexing, POINT.gongxing*0.6+POINT.gexing*0.4 total, ZiPing.problem, ZiPing.lastModifiedTime
+from
+(
+select FINAL_1.name, FINAL_1.realName, SUM(FINAL_1.gongxing) gongxing, SUM(FINAL_1.gexing) gexing from
+(
+select FINAL.name, FINAL.realName, 
+CASE
+	When FINAL.propertyName=0 Then option_point
+	Else 0
+	End as gongxing, 
+CASE
+	When FINAL.propertyName=1 Then option_point
+	Else 0
+	End as gexing
+from
+(
+select UQPI.name, UQPI.realName, 
+CASE
+	When UP.name='共性' Then 0
+	Else 1
+	End as propertyName, 
+UQPI.point * count(UQPI.point) option_point from
+(
+select UQI.name, UQI.realName, PQ.user_property_id, PO.point from
+(
+select PS.name, PS.realName, PI.question_id, PI.option_id from
+(
+select U.name, U.realName, P.id, P.paper_id from
+PaperScore P Join User U on U.name=P.scorer and U.name=P.scoree
+where U.branch=#{branch} and U.organization=#{organization}
+) PS
+Join PaperItemScore PI on PI.score_id=PS.id
+) UQI 
+Join PaperQuestion PQ on UQI.question_id=PQ.id 
+Join PaperOption PO on PO.id=UQI.option_id
+) UQPI 
+Join UserProperty UP on UP.id = UQPI.user_property_id
+group by name, propertyName, point
+) FINAL
+) FINAL_1
+group by FINAL_1.name, FINAL_1.realName
+) POINT 
+RIGHT JOIN User on User.name=POINT.name 
+LEFT JOIN ZiPing on ZiPing.userName=User.name
+where User.branch=#{branch} and User.organization=#{organization}
+  </select>
+  
+  <insert id="insertZiPings" parameterType="java.util.List" useGeneratedKeys="true">  
+	Insert into ZiPing (userName, realName, problem, lastModifiedTime) values
+		<foreach collection="ziPings" item="item" separator=",">  
+			(#{item.userName}, #{item.realName}, #{item.problem}, #{item.lastModifiedTime})
+		</foreach>  
+	</insert>
+	
+	<delete id="deleteZiPings">  
+        DELETE Z FROM ZiPing Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
+	</delete>
+ </mapper>
