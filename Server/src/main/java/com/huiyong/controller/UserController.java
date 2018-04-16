@@ -138,8 +138,8 @@ public class UserController {
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
     }
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public List<Branch> getAllUsers(@RequestParam String organziation) {
-    	return userService.getAllUsers(organziation);
+    public List<Branch> getAllUsers(@RequestParam String organization) {
+    	return userService.getAllUsers(organization);
     }
     @RequestMapping(value = "/user/property", method = RequestMethod.GET)
     public List<String> getProperties() {
