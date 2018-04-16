@@ -5,7 +5,7 @@ package com.huiyong.dao;
 
 import java.util.List;
 
-import com.huiyong.model.ScoreItemResult;
+import com.huiyong.model.score.ScoreItemResult;
 
 /**
  * @author gangpu

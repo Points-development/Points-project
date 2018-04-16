@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.huiyong.dao.UserMapper;
-import com.huiyong.model.Branch;
-import com.huiyong.model.User;
+import com.huiyong.model.user.Branch;
+import com.huiyong.model.user.User;
 import com.huiyong.service.UserService;
 
 /**

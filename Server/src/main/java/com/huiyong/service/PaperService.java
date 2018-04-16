@@ -3,7 +3,7 @@
  */
 package com.huiyong.service;
 
-import com.huiyong.model.PaperTest;
+import com.huiyong.model.paper.PaperTest;
 
 /**
  * @author gangpu

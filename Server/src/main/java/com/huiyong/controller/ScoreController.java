@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.huiyong.model.Message;
-import com.huiyong.model.Score;
-import com.huiyong.model.ScorePoint;
+import com.huiyong.model.score.Score;
+import com.huiyong.model.score.ScorePoint;
 import com.huiyong.service.ScoreService;
 import com.huiyong.service.UserService;
 

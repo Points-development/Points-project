@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.huiyong.model.PaperTest;
-import com.huiyong.model.PaperQuestion;
+import com.huiyong.model.paper.PaperQuestion;
+import com.huiyong.model.paper.PaperTest;
 
 /**
  * @author gangpu

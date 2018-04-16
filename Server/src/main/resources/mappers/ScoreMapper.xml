@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.huiyong.dao.ScoreMapper" >
-  <resultMap id="ScoreResultMap" type="com.huiyong.model.Score" >
+  <resultMap id="ScoreResultMap" type="com.huiyong.model.score.Score" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="paper_id" property="paperId" jdbcType="INTEGER" />
     <result column="scorer" property="scorer" jdbcType="VARCHAR" />
@@ -10,7 +10,7 @@
     <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
     <collection property="scores" column="id" javaType="ArrayList" ofType="ScoreItemResult" select="com.huiyong.dao.ScoreItemResultMapper.getItemResultByScoreId" />
   </resultMap> 
-  <resultMap id="ScorePointResultMap" type="com.huiyong.model.ScorePoint" >
+  <resultMap id="ScorePointResultMap" type="com.huiyong.model.score.ScorePoint" >
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="selfPoint" property="selfPoint" jdbcType="INTEGER" />
     <result column="otherPoint" property="otherPoint" jdbcType="INTEGER" />

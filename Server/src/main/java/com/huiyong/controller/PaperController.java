@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.huiyong.model.PaperTest;
-import com.huiyong.model.User;
+import com.huiyong.model.paper.PaperTest;
+import com.huiyong.model.user.User;
 import com.huiyong.service.PaperService;
 import com.huiyong.service.UserService;
 

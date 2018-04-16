@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.huiyong.model;
+package com.huiyong.model.user;
 
 import java.util.List;
 

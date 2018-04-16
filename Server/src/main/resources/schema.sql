@@ -11,8 +11,10 @@ CREATE TABLE IF NOT EXISTS `User` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_property_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL UNIQUE,
+  `realName` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL DEFAULT 'e10adc3949ba59abbe56e057f20f883e',
   `branch` varchar(255) NOT NULL DEFAULT 'NULL',
+  `organization` varchar(255) NOT NULL,
   `isAdmin` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_property_id`) REFERENCES `UserProperty` (`id`));
@@ -35,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `PaperQuestion` (
 CREATE TABLE IF NOT EXISTS `PaperOption` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(128) NOT NULL,
+  `point` int(11) NOT NULL,
   `test_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`test_id`) REFERENCES `PaperTest` (`id`));
@@ -57,3 +60,37 @@ CREATE TABLE IF NOT EXISTS `PaperItemScore` (
   FOREIGN KEY (`score_id`) REFERENCES `PaperScore` (`id`),
   FOREIGN KEY (`question_id`) REFERENCES `PaperQuestion` (`id`),
   FOREIGN KEY (`option_id`) REFERENCES `PaperOption` (`id`));
+  
+CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(128) NOT NULL,
+  `realName` varchar(128) NOT NULL,
+  `zhengZhi` int(11) NOT NULL,
+  `zuZhi` int(11) NOT NULL,
+  `daoDe` int(11) NOT NULL,
+  `lvXingYiWu` int(11) NOT NULL,
+  `moFan` int(11) NOT NULL,
+  `problem` varchar(1024) NOT NULL,
+  `lastModifiedTime` timestamp NOT NULL,
+  PRIMARY KEY (`id`));
+  
+  CREATE TABLE IF NOT EXISTS `QunZhongPingYi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(128) NOT NULL,
+  `realName` varchar(128) NOT NULL,
+  `siXiang` int(11) NOT NULL,
+  `daoDe` int(11) NOT NULL,
+  `xueXi` int(11) NOT NULL,
+  `gongZuo` int(11) NOT NULL,
+  `shengHuo` int(11) NOT NULL,
+  `problem` varchar(1024) NOT NULL,
+  `lastModifiedTime` timestamp NOT NULL,
+  PRIMARY KEY (`id`));
+  
+  CREATE TABLE IF NOT EXISTS `ZiPing` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(128) NOT NULL,
+  `realName` varchar(128) NOT NULL,
+  `problem` varchar(1024) NOT NULL,
+  `lastModifiedTime` timestamp NOT NULL,
+  PRIMARY KEY (`id`));

@@ -10,8 +10,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.huiyong.model.Score;
-import com.huiyong.model.ScoreItemResult;
+import com.huiyong.model.score.Score;
+import com.huiyong.model.score.ScoreItemResult;
 
 public class TestJackson {
 

@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.huiyong.dao.PaperMapper;
-import com.huiyong.model.PaperQuestion;
-import com.huiyong.model.PaperTest;
+import com.huiyong.model.paper.PaperQuestion;
+import com.huiyong.model.paper.PaperTest;
 import com.huiyong.service.PaperService;
 
 /**

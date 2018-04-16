@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.huiyong.model.Score;
-import com.huiyong.model.ScorePoint;
+import com.huiyong.model.score.Score;
+import com.huiyong.model.score.ScorePoint;
 
 /**
  * @author gangpu

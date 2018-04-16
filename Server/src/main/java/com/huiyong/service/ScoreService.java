@@ -5,8 +5,8 @@ package com.huiyong.service;
 
 import java.util.List;
 
-import com.huiyong.model.Score;
-import com.huiyong.model.ScorePoint;
+import com.huiyong.model.score.Score;
+import com.huiyong.model.score.ScorePoint;
 
 /**
  * @author gangpu

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.huiyong.model;
+package com.huiyong.model.score;
 
 import java.util.Date;
 import java.util.List;

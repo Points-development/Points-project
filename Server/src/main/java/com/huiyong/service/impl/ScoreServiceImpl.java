@@ -13,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.huiyong.dao.ScoreItemResultMapper;
 import com.huiyong.dao.ScoreMapper;
-import com.huiyong.model.Score;
-import com.huiyong.model.ScoreItemResult;
-import com.huiyong.model.ScorePoint;
+import com.huiyong.model.score.Score;
+import com.huiyong.model.score.ScoreItemResult;
+import com.huiyong.model.score.ScorePoint;
 import com.huiyong.service.ScoreService;
 //import com.huiyong.util.DateUtil;
 

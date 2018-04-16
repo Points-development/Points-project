@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.huiyong.model;
+package com.huiyong.model.user;
 
 /**
  * @author gangpu
@@ -10,8 +10,10 @@ package com.huiyong.model;
 public class User {
 	private Integer id;
 	private String name;
+	private String realName;
 	private String password;
 	private String branch;
+	private String organization;
 	private String property;
 	private boolean isAdmin;
 	public Integer getId() {
@@ -49,5 +51,29 @@ public class User {
 	}
 	public void setProperty(String property) {
 		this.property = property;
+	}
+	/**
+	 * @return the realName
+	 */
+	public String getRealName() {
+		return realName;
+	}
+	/**
+	 * @param realName the realName to set
+	 */
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+	/**
+	 * @return the organization
+	 */
+	public String getOrganization() {
+		return organization;
+	}
+	/**
+	 * @param organization the organization to set
+	 */
+	public void setOrganization(String organization) {
+		this.organization = organization;
 	}
 }

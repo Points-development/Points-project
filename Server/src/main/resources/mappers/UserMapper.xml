@@ -2,16 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.huiyong.dao.UserMapper" >
 
-  <resultMap id="BaseResultMap" type="com.huiyong.model.User" >
+  <resultMap id="BaseResultMap" type="com.huiyong.model.user.User" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="realName" property="realName" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="branch" property="branch" jdbcType="VARCHAR" />
+    <result column="organization" property="organization" jdbcType="VARCHAR" />
     <result column="property" property="property" jdbcType="VARCHAR" />
     <result column="isAdmin" property="isAdmin" jdbcType="TINYINT" />
   </resultMap>
   <select id="getUserByName" parameterType="String" resultMap="BaseResultMap">
-    select User.id, User.name, User.password, User.branch, UserProperty.name property, User.isAdmin from User join UserProperty on User.user_property_id=UserProperty.id
+    select User.id, User.name, User.realName, User.password, User.branch, User.organization, UserProperty.name property, User.isAdmin from User join UserProperty on User.user_property_id=UserProperty.id
     	where User.name=#{name}
   </select>
    <select id="getPropertyId" parameterType="String" resultType="Integer">
@@ -22,7 +24,7 @@
     select distinct branch from User
   </select>
     <select id="getUsersInBranch" parameterType="String" resultMap="BaseResultMap">
-    select User.id, User.name, User.password, User.branch, UserProperty.name property, User.isAdmin from User join UserProperty on User.user_property_id=UserProperty.id
+    select User.id, User.name, User.realName, User.password, User.branch, User.organization, UserProperty.name property, User.isAdmin from User join UserProperty on User.user_property_id=UserProperty.id
     	where branch=#{branchname}
   </select>
   <select id="getAllProperties" resultType="String">
@@ -30,20 +32,28 @@
   </select>
   <insert id="addUser" useGeneratedKeys="true">  
         INSERT INTO User (name,  
+        				  realName,
                           <if test="user.password != null" >
         					password,
       					  </if> 
                           <if test="user.branch != null" >
         					branch,
       					  </if>  
+      					  <if test="user.organization != null" >
+        					organization,
+      					  </if>  
       					  user_property_id,
                           isAdmin)  
               VALUES   (#{user.name},
+              			#{user.realName},
                           <if test="user.password != null" >
         					#{user.password},
       					  </if> 
                           <if test="user.branch != null" >
         					#{user.branch},
+      					  </if> 
+      					  <if test="user.organization != null" >
+        					#{user.organization},
       					  </if> 
       					  #{propertyId},
                         #{user.isAdmin})      
@@ -55,6 +65,10 @@
                           <if test="user.branch != null" >
         				 User.branch=#{user.branch},
       					  </if> 
+                          <if test="user.organization != null" >
+        				 User.organization=#{user.organization},
+      					  </if> 
+      					User.realName=#{user.realName},
                         User.isAdmin=#{user.isAdmin},
                         User.user_property_id=#{propertyId}
                         where User.name=#{user.name};

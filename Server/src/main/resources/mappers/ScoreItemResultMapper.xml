@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.huiyong.dao.ScoreItemResultMapper" >
-   <resultMap id="ItemResultMap" type="com.huiyong.model.ScoreItemResult" >
+   <resultMap id="ItemResultMap" type="com.huiyong.model.score.ScoreItemResult" >
     <result column="question_id" property="questionId" jdbcType="INTEGER" />
     <result column="option_id" property="optionsId" jdbcType="INTEGER" />
   </resultMap>

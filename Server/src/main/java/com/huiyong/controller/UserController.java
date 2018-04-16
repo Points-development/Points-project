@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.huiyong.model.Branch;
 import com.huiyong.model.Message;
-import com.huiyong.model.User;
+import com.huiyong.model.user.Branch;
+import com.huiyong.model.user.User;
 import com.huiyong.service.UserService;
 import com.huiyong.util.MD5Util;
 
@@ -80,7 +80,7 @@ public class UserController {
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public ResponseEntity<?> addUser(@RequestBody User user) {
     	Message m = new Message();
-    	if(null==user.getName()){
+    	if(null==user.getName() || null == user.getRealName()){
     		m.setError("用户名不能为空.");
     		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
     	}
@@ -108,7 +108,7 @@ public class UserController {
     @RequestMapping(value = "/user/{username}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateUser(@PathVariable String username, @RequestBody User user) {
     	Message m = new Message();
-    	if(null==user.getName() || username == null){
+    	if(null==user.getName() || username == null || null == user.getRealName()){
     		m.setError("用户名不能为空.");
     		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
     	}
