@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.huiyong.model.Message;
+import com.huiyong.model.pingyi.DeFenHuiZong;
 import com.huiyong.model.pingyi.HuPing;
 import com.huiyong.model.pingyi.QunZhongPingYi;
 import com.huiyong.model.pingyi.ZiPing;
@@ -91,6 +92,22 @@ public class PingyiController {
     @RequestMapping(value = "/huping", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
     public ResponseEntity<?> updateHuPings(@RequestParam String branch, @RequestParam String organization,  @RequestBody List<HuPing> huPings) {
     	pingYiService.updateHuPings(branch, organization, huPings);
+    	Message m = new Message();
+    	m.setSuccess("更新成功.");
+    	return new ResponseEntity<Message>(m, HttpStatus.OK);
+    }
+    
+    //返回branch内的所有党员的得分汇总信息
+    @RequestMapping(value = "/defenhuizong", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
+    public ResponseEntity<?> getDeFenHuiZongs(@RequestParam String branch, @RequestParam String organization) {
+    	List<DeFenHuiZong> deFenHuiZongs = pingYiService.getDeFenHuiZongs(branch, organization);
+    	return new ResponseEntity<List<DeFenHuiZong>>(deFenHuiZongs, HttpStatus.OK);
+    }
+    
+    //更新branch内的党员的得分汇总信息
+    @RequestMapping(value = "/defenhuizong", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
+    public ResponseEntity<?> updateDeFenHuiZongs(@RequestParam String branch, @RequestParam String organization,  @RequestBody List<DeFenHuiZong> deFenHuiZongs) {
+    	pingYiService.updateDeFenHuiZongs(branch, organization, deFenHuiZongs);
     	Message m = new Message();
     	m.setSuccess("更新成功.");
     	return new ResponseEntity<Message>(m, HttpStatus.OK);

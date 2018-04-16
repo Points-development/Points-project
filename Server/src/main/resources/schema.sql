@@ -112,3 +112,12 @@ CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (
   `problem` varchar(1024) NOT NULL,
   `lastModifiedTime` timestamp NOT NULL,
   PRIMARY KEY (`id`));
+  
+  CREATE TABLE IF NOT EXISTS `DeFenHuiZong` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(128) NOT NULL,
+  `realName` varchar(128) NOT NULL,
+  `hongXian` varchar(1024) NOT NULL,
+  `jianKang` varchar(1024) NOT NULL,
+  `lastModifiedTime` timestamp NOT NULL,
+  PRIMARY KEY (`id`));

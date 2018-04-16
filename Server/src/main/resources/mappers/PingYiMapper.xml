@@ -197,7 +197,15 @@ where User.branch=#{branch} and User.organization=#{organization}
   </resultMap>
   
   <select id="getDeFenHuiZongs" resultMap="DeFenHuiZongResultMap">
-
+	select U.name, U.realName, ZiPing.total ziPing, HuPing.total huPing, QunZhongPingYi.total qunZhongPing, ZuZhiPingJia.total zuZhiPing, 
+		ZiPing.total*0.2 + HuPing.total*0.25 + QunZhongPingYi.total*0.25 + ZuZhiPingJia.total*0.3 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastModifiedTime
+	from
+	User U left join ZiPing on U.name = ZiPing.userName
+	left join HuPing on U.name = HuPing.userName
+	left join QunZhongPingYi on U.name = QunZhongPingYi.userName
+	left join ZuZhiPingJia on U.name = ZuZhiPingJia.userName
+	left join DeFenHuiZong on U.name = DeFenHuiZong.userName
+	where U.organization=#{organization} and U.branch=#{branch}
   </select>
   
   <insert id="insertDeFenHuiZongs" parameterType="java.util.List" useGeneratedKeys="true">  

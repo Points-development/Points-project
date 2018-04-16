@@ -122,8 +122,8 @@ public class PingYiServiceImpl implements PingYiService{
 	 * @see com.huiyong.service.PingYiService#getDeFenHuiZongs(java.lang.String)
 	 */
 	@Override
-	public List<DeFenHuiZong> getDeFenHuiZongs(String branch) {
-		return pingYiDao.getDeFenHuiZongs(branch);
+	public List<DeFenHuiZong> getDeFenHuiZongs(String branch, String organization) {
+		return pingYiDao.getDeFenHuiZongs(branch, organization);
 	}
 
 	/* (non-Javadoc)
@@ -131,7 +131,11 @@ public class PingYiServiceImpl implements PingYiService{
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
-	public void updateDeFenHuiZongs(List<DeFenHuiZong> deFenHuiZongs) {
+	public void updateDeFenHuiZongs(String branch, String organization, List<DeFenHuiZong> deFenHuiZongs) {
+		pingYiDao.deleteDeFenHuiZongs(branch, organization);
+		for(DeFenHuiZong z : deFenHuiZongs){
+			z.setLastModifiedTime(new Date());
+		}
 		pingYiDao.insertDeFenHuiZongs(deFenHuiZongs);
 	}
 

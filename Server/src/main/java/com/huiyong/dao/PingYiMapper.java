@@ -36,8 +36,9 @@ public interface PingYiMapper {
 	public void insertZuZhiPingJias(@Param(value = "zuZhiPingJias")List<ZuZhiPingJia> zuZhiPingJias);
 	public void deleteZuZhiPingJias(@Param(value = "branch")String branch, @Param(value = "organization")String organization);
 	
-	public List<DeFenHuiZong> getDeFenHuiZongs(String branch);
-	public void insertDeFenHuiZongs(List<DeFenHuiZong> deFenHuiZongs);
+	public List<DeFenHuiZong> getDeFenHuiZongs(@Param(value = "branch")String branch, @Param(value = "organization")String organization);
+	public void insertDeFenHuiZongs(@Param(value = "deFenHuiZongs")List<DeFenHuiZong> deFenHuiZongs);
+	public void deleteDeFenHuiZongs(@Param(value = "branch")String branch, @Param(value = "organization")String organization);
 	
 	public List<BaoGaoDan> getBaoGaoDans(String branch);
 	public void insertBaoGaoDans(List<BaoGaoDan> baoGaoDans);
