@@ -21,7 +21,7 @@
                Z.daoDe,
                Z.lvXingYiWu,
                Z.moFan,
-               Z.zhengZhi + Z.zuZhi + Z.daoDe + Z.lvXingYiWu + Z.moFan as total,
+               ifnull(Z.zhengZhi, 0) + ifnull(Z.zuZhi,0) + ifnull(Z.daoDe,0) + ifnull(Z.lvXingYiWu,0) + ifnull(Z.moFan, 0) as total,
                Z.problem,
                Z.lastModifiedTime,
                U.name,
@@ -61,7 +61,7 @@
                Z.xueXi,
                Z.gongZuo,
                Z.shengHuo,
-               Z.siXiang + Z.daoDe + Z.xueXi + Z.gongZuo + Z.shengHuo as total,
+               ifnull(Z.siXiang, 0) + ifnull(Z.daoDe, 0) + ifnull(Z.xueXi, 0) + ifnull(Z.gongZuo, 0) + ifnull(Z.shengHuo, 0) as total,
                Z.problem,
                Z.lastModifiedTime,
                U.name,
@@ -93,7 +93,7 @@
     <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
   </resultMap>
    <select id="getZiPings" resultMap="ZiPingResultMap">
-select User.name, User.realName, POINT.gongxing, POINT.gexing, POINT.gongxing*0.6+POINT.gexing*0.4 total, ZiPing.problem, ZiPing.lastModifiedTime
+select User.name, User.realName, POINT.gongxing, POINT.gexing, ifnull(POINT.gongxing, 0)*0.6+ifnull(POINT.gexing, 0)*0.4 total, ZiPing.problem, ZiPing.lastModifiedTime
 from
 (
 select FINAL_1.name, FINAL_1.realName, SUM(FINAL_1.gongxing) gongxing, SUM(FINAL_1.gexing) gexing from
@@ -198,7 +198,7 @@ where User.branch=#{branch} and User.organization=#{organization}
   
   <select id="getDeFenHuiZongs" resultMap="DeFenHuiZongResultMap">
 	select U.name, U.realName, ZiPing.total ziPing, HuPing.total huPing, QunZhongPingYi.total qunZhongPing, ZuZhiPingJia.total zuZhiPing, 
-		ZiPing.total*0.2 + HuPing.total*0.25 + QunZhongPingYi.total*0.25 + ZuZhiPingJia.total*0.3 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastModifiedTime
+		ifnull(ZiPing.total, 0)*0.2 + ifnull(HuPing.total, 0)*0.25 + ifnull(QunZhongPingYi.total, 0)*0.25 + ifnull(ZuZhiPingJia.total, 0)*0.3 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastModifiedTime
 	from
 	User U left join ZiPing on U.name = ZiPing.userName
 	left join HuPing on U.name = HuPing.userName
@@ -219,7 +219,7 @@ where User.branch=#{branch} and User.organization=#{organization}
        DELETE Z FROM DeFenHuiZong Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
 	</delete>
 	
-	<!--resultMap id="BaoGaoDanResultMap" type="com.huiyong.model.pingyi.BaoGaoDan" >
+	<resultMap id="BaoGaoDanResultMap" type="com.huiyong.model.pingyi.BaoGaoDan" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="userName" jdbcType="VARCHAR" />
     <result column="realName" property="realName" jdbcType="VARCHAR" />
@@ -232,26 +232,44 @@ where User.branch=#{branch} and User.organization=#{organization}
   </resultMap>
   
   <select id="getBaoGaoDan" resultMap="BaoGaoDanResultMap">
-	select U.name, U.realName, ZiPing.total ziPing, HuPing.total huPing, QunZhongPingYi.total qunZhongPing, ZuZhiPingJia.total zuZhiPing, 
-		ZiPing.total*0.2 + HuPing.total*0.25 + QunZhongPingYi.total*0.25 + ZuZhiPingJia.total*0.3 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastModifiedTime
-	from
-	User U left join ZiPing on U.name = ZiPing.userName
+	select U.name, U.realName, ifnull(ZiPing.total, 0)*0.2 + ifnull(HuPing.total, 0)*0.25 + ifnull(QunZhongPingYi.total, 0)*0.25 + ifnull(ZuZhiPingJia.total, 0)*0.3 deFen, DeFenHuiZong.hongxian, 
+	DeFenHuiZong.jianKang tiJian, BaoGaoDan.problem, BaoGaoDan.tiGao, BaoGaoDan.lastModifiedTime
+	from User U left Join ZiPing on U.name = ZiPing.userName
 	left join HuPing on U.name = HuPing.userName
 	left join QunZhongPingYi on U.name = QunZhongPingYi.userName
 	left join ZuZhiPingJia on U.name = ZuZhiPingJia.userName
 	left join DeFenHuiZong on U.name = DeFenHuiZong.userName
-	where U.organization=#{organization} and U.branch=#{branch}
+	left join BaoGaoDan on U.name = BaoGaoDan.userName
+	where U.name=#{username}
   </select>
   
-  <insert id="insertBaoGaoDan" parameterType="java.util.List" useGeneratedKeys="true">  
-	Insert into DeFenHuiZong (userName, realName, hongXian, jianKang, lastModifiedTime) values
-		<foreach collection="deFenHuiZongs" item="item" separator=",">  
-			(#{item.userName}, #{item.realName}, #{item.hongXian}, #{item.jianKang}, #{item.lastModifiedTime})
-		</foreach>  
+  <insert id="insertBaoGaoDan" useGeneratedKeys="true">  
+        <selectKey keyProperty="deFen" resultType="int" order="BEFORE">
+            select count(*) from BaoGaoDan where userName = #{username}
+        </selectKey>
+        <if test="deFen > 0">
+            update BaoGaoDan
+            <set>
+               <if test="baoGaoDan.problem != null" >  
+                    problem= #{baoGaoDan.problem},
+               </if>
+               <if test="baoGaoDan.tiGao != null" >  
+                    tiGao= #{baoGaoDan.tiGao},
+               </if>
+               lastModifiedTime=#{baoGaoDan.lastModifiedTime}
+            </set>
+            <where>
+                userName = #{username}
+            </where>
+        </if>
+        <if test="deFen == 0">
+            	Insert into BaoGaoDan (userName, realName, problem, tiGao, lastModifiedTime) values
+				(#{baoGaoDan.userName}, #{baoGaoDan.realName}, #{baoGaoDan.problem}, #{baoGaoDan.tiGao}, #{baoGaoDan.lastModifiedTime} )
+        </if>
 	</insert>
 	
 	<delete id="deleteBaoGaoDan">  
        DELETE FROM BaoGaoDan where userName=#{username};
-	</delete-->
+	</delete>
 	
  </mapper>

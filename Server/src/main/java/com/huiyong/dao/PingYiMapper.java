@@ -42,7 +42,7 @@ public interface PingYiMapper {
 	
 	public BaoGaoDan getBaoGaoDan(@Param(value = "username")String username);
 	public BaoGaoDan deleteBaoGaoDan(@Param(value = "username")String username);
-	public void insertBaoGaoDan(@Param(value = "baoGaoDan")BaoGaoDan baoGaoDan);
+	public void insertBaoGaoDan(@Param(value = "username")String username, @Param(value = "baoGaoDan")BaoGaoDan baoGaoDan);
 
 
 }

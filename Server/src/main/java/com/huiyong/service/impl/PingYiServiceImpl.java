@@ -153,9 +153,9 @@ public class PingYiServiceImpl implements PingYiService{
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
 	public  void updateBaoGaoDan(String username, BaoGaoDan baoGaoDan) {
-		pingYiDao.deleteBaoGaoDan(username);
+//		pingYiDao.deleteBaoGaoDan(username);
 		baoGaoDan.setLastModifiedTime(new Date());
-		pingYiDao.insertBaoGaoDan(baoGaoDan);
+		pingYiDao.insertBaoGaoDan(username, baoGaoDan);
 	}
 
 }

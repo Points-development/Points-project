@@ -5,11 +5,14 @@ package com.huiyong.model.pingyi;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author gangpu
  *
  */
 public class ZiPing {
+	@JsonIgnore
 	private Integer id;
 	private String userName;
 	private String realName;
