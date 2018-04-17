@@ -41,6 +41,6 @@ INSERT INTO `PaperQuestion`(`user_property_id`, `description`, `test_id`) values
 INSERT INTO `PaperQuestion`(`user_property_id`, `description`, `test_id`) values(5, '是否存在不按照有关规定或者工作要求，向组织请示报告重大问题、重要事项的情形？', 1);
 INSERT INTO `PaperQuestion`(`user_property_id`, `description`, `test_id`) values(5, '我是否对群众没感情，不关心群众疾苦，坐等上门多、主动问需少，特别是在联系服务对象、困难党员、群众等方面有差距？', 1);
 INSERT INTO `PaperOption`(`description`,`test_id`, `point`) values('优秀', 1, 5);
-INSERT INTO `PaperOption`(`description`,`test_id`, `point`) values('良好', 1, 4);
-INSERT INTO `PaperOption`(`description`,`test_id`, `point`) values('一般', 1, 3);
-INSERT INTO `PaperOption`(`description`,`test_id`, `point`) values('较差', 1, 2);
+INSERT INTO `PaperOption`(`description`,`test_id`, `point`) values('良好', 1, 3);
+INSERT INTO `PaperOption`(`description`,`test_id`, `point`) values('一般', 1, 1);
+INSERT INTO `PaperOption`(`description`,`test_id`, `point`) values('较差', 1, 0);
