@@ -40,8 +40,9 @@ public interface PingYiMapper {
 	public void insertDeFenHuiZongs(@Param(value = "deFenHuiZongs")List<DeFenHuiZong> deFenHuiZongs);
 	public void deleteDeFenHuiZongs(@Param(value = "branch")String branch, @Param(value = "organization")String organization);
 	
-	public List<BaoGaoDan> getBaoGaoDans(String branch);
-	public void insertBaoGaoDans(List<BaoGaoDan> baoGaoDans);
+	public BaoGaoDan getBaoGaoDan(@Param(value = "username")String username);
+	public BaoGaoDan deleteBaoGaoDan(@Param(value = "username")String username);
+	public void insertBaoGaoDan(@Param(value = "baoGaoDan")BaoGaoDan baoGaoDan);
 
 
 }

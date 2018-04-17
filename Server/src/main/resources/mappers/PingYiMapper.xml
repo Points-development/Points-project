@@ -218,4 +218,40 @@ where User.branch=#{branch} and User.organization=#{organization}
 	<delete id="deleteDeFenHuiZongs">  
        DELETE Z FROM DeFenHuiZong Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
 	</delete>
+	
+	<!--resultMap id="BaoGaoDanResultMap" type="com.huiyong.model.pingyi.BaoGaoDan" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="userName" jdbcType="VARCHAR" />
+    <result column="realName" property="realName" jdbcType="VARCHAR" />
+    <result column="hongXian" property="hongXian" jdbcType="VARCHAR" />
+    <result column="deFen" property="deFen" jdbcType="INTEGER" />
+    <result column="tiJian" property="tiJian" jdbcType="VARCHAR" />
+    <result column="problem" property="problem" jdbcType="VARCHAR" />
+    <result column="tiGao" property="tiGao" jdbcType="VARCHAR" />
+    <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <select id="getBaoGaoDan" resultMap="BaoGaoDanResultMap">
+	select U.name, U.realName, ZiPing.total ziPing, HuPing.total huPing, QunZhongPingYi.total qunZhongPing, ZuZhiPingJia.total zuZhiPing, 
+		ZiPing.total*0.2 + HuPing.total*0.25 + QunZhongPingYi.total*0.25 + ZuZhiPingJia.total*0.3 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastModifiedTime
+	from
+	User U left join ZiPing on U.name = ZiPing.userName
+	left join HuPing on U.name = HuPing.userName
+	left join QunZhongPingYi on U.name = QunZhongPingYi.userName
+	left join ZuZhiPingJia on U.name = ZuZhiPingJia.userName
+	left join DeFenHuiZong on U.name = DeFenHuiZong.userName
+	where U.organization=#{organization} and U.branch=#{branch}
+  </select>
+  
+  <insert id="insertBaoGaoDan" parameterType="java.util.List" useGeneratedKeys="true">  
+	Insert into DeFenHuiZong (userName, realName, hongXian, jianKang, lastModifiedTime) values
+		<foreach collection="deFenHuiZongs" item="item" separator=",">  
+			(#{item.userName}, #{item.realName}, #{item.hongXian}, #{item.jianKang}, #{item.lastModifiedTime})
+		</foreach>  
+	</insert>
+	
+	<delete id="deleteBaoGaoDan">  
+       DELETE FROM BaoGaoDan where userName=#{username};
+	</delete-->
+	
  </mapper>

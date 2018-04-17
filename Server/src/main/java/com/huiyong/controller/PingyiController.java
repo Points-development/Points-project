@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.huiyong.model.Message;
+import com.huiyong.model.pingyi.BaoGaoDan;
 import com.huiyong.model.pingyi.DeFenHuiZong;
 import com.huiyong.model.pingyi.HuPing;
 import com.huiyong.model.pingyi.QunZhongPingYi;
@@ -108,6 +109,22 @@ public class PingyiController {
     @RequestMapping(value = "/defenhuizong", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
     public ResponseEntity<?> updateDeFenHuiZongs(@RequestParam String branch, @RequestParam String organization,  @RequestBody List<DeFenHuiZong> deFenHuiZongs) {
     	pingYiService.updateDeFenHuiZongs(branch, organization, deFenHuiZongs);
+    	Message m = new Message();
+    	m.setSuccess("更新成功.");
+    	return new ResponseEntity<Message>(m, HttpStatus.OK);
+    }
+    
+    //返回该用户的报告单信息
+    @RequestMapping(value = "/baogaodan", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
+    public ResponseEntity<?> getBaoGaoDan(@RequestParam String username) {
+    	BaoGaoDan baoGaoDan = pingYiService.getBaoGaoDan(username);
+    	return new ResponseEntity<BaoGaoDan>(baoGaoDan, HttpStatus.OK);
+    }
+    
+    //更新该用户的报告单信息
+    @RequestMapping(value = "/baogaodan", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
+    public ResponseEntity<?> updateBaoGaoDan(@RequestParam String username, @RequestBody BaoGaoDan baoGaoDan) {
+    	pingYiService.updateBaoGaoDan(username, baoGaoDan);
     	Message m = new Message();
     	m.setSuccess("更新成功.");
     	return new ResponseEntity<Message>(m, HttpStatus.OK);

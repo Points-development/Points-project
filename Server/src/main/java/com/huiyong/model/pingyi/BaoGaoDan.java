@@ -12,9 +12,9 @@ import java.util.Date;
 public class BaoGaoDan {
 	private Integer id;
 	private String userName;
-	private String organization;
-	private String branch;
+	private String realName;
 	private String hongXian;
+	private Integer deFen;
 	private String tiJian;
 	private String problem;
 	private String tiGao;
@@ -30,18 +30,6 @@ public class BaoGaoDan {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-	public String getOrganization() {
-		return organization;
-	}
-	public void setOrganization(String organization) {
-		this.organization = organization;
-	}
-	public String getBranch() {
-		return branch;
-	}
-	public void setBranch(String branch) {
-		this.branch = branch;
 	}
 	public String getHongXian() {
 		return hongXian;
@@ -72,5 +60,29 @@ public class BaoGaoDan {
 	}
 	public void setLastModifiedTime(Date lastModifiedTime) {
 		this.lastModifiedTime = lastModifiedTime;
+	}
+	/**
+	 * @return the realName
+	 */
+	public String getRealName() {
+		return realName;
+	}
+	/**
+	 * @param realName the realName to set
+	 */
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+	/**
+	 * @return the deFen
+	 */
+	public Integer getDeFen() {
+		return deFen;
+	}
+	/**
+	 * @param deFen the deFen to set
+	 */
+	public void setDeFen(Integer deFen) {
+		this.deFen = deFen;
 	}
 }
