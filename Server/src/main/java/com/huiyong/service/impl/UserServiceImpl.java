@@ -127,9 +127,21 @@ public class UserServiceImpl implements UserService {;
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
-	public void addBranch(String branchname, String organziation) {
+	public boolean addBranch(String branchname, String organziation) {
+		if(null != getBranch(branchname, organziation)){
+			return false;
+		}
 		userDao.addBranch( branchname,  organziation);
-		
+		return true;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.huiyong.service.UserService#addBranch(java.lang.String, java.lang.String)
+	 */
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
+	public String getBranch(String branchname, String organziation) {
+		return userDao.getBranch( branchname,  organziation);	
 	}
 
 }
