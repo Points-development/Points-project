@@ -6,7 +6,7 @@
     angular.module('portal.login')
         .controller('LoginController', LoginCtrl);
     
-    LoginCtrl.$inject = ['$state','$uibModal', 'security','loginService','storage',systemService];
+    LoginCtrl.$inject = ['$state','$uibModal', 'security','loginService','storage','systemService'];
     
     function LoginCtrl($state,$uibModal, security,loginService,storage,systemService) {
         var vm = this;

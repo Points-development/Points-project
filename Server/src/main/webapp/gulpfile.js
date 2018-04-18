@@ -94,11 +94,11 @@ gulp.task('minify-app', function () {
       'portal/app/query/query.module.js',
       'portal/app/query/queryuser.module.js',
       'portal/app/query/query.controller.js',
-      'app/organization/organization.module.js',
-      'app/organization/organization.controller.js',
-      'app/examine/examine.module.js',
-      'app/examine/examine.service.js',
-      'app/examine/examine.controller.js'
+      'portal/app/organization/organization.module.js',
+      'portal/app/organization/organization.controller.js',
+      'portal/app/examine/examine.module.js',
+      'portal/app/examine/examine.service.js',
+      'portal/app/examine/examine.controller.js'
          ])
         .pipe(sourcemaps.init())
         .pipe(concat('main.js'))
