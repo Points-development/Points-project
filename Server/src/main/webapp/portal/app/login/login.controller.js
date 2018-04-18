@@ -6,9 +6,9 @@
     angular.module('portal.login')
         .controller('LoginController', LoginCtrl);
     
-    LoginCtrl.$inject = ['$state','$uibModal', 'security','loginService','storage'];
+    LoginCtrl.$inject = ['$state','$uibModal', 'security','loginService','storage',systemService];
     
-    function LoginCtrl($state,$uibModal, security,loginService,storage) {
+    function LoginCtrl($state,$uibModal, security,loginService,storage,systemService) {
         var vm = this;
         
         vm.login = login;
@@ -16,7 +16,21 @@
         //vm.getImage = "/unrestricted/verifycode?width=400&height=40";
         
         var successCallback = function () {
-        		$state.go("home.system",{},{reload:true});
+        	vm.currentUser = security.getCurrentUser();
+        	systemService.getBranches(vm.currentUser.organization).then(function(response){
+        		vm.branchlist = response;
+        		storage.set('branches',vm.branchlist);
+        		if(vm.branchlist && vm.branchlist.length>0){
+        			storage.set('branch',vm.branchlist[0]);
+        			$state.go("home.organization.queryuser",{branchName:vm.branchlist[0]},{reload:true});
+        		}else{
+        			$state.go("home.organization.create",{},{reload:true});
+        		}
+        	},function(response){
+        		messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
+        		$state.go("home.organization.create",{},{reload:true});
+        	});
+        		
         };
         
         var failCallback = function (data) {

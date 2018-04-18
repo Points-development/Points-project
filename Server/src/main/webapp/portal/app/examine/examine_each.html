@@ -1,0 +1,43 @@
+<div class="btn-group-right">
+    <button type="button" ng-click="ecCtrl.update('each')" class="btn btn-danger btn-sm">
+        <i class="iconfont"></i>保存修改
+    </button>
+    <button type="button" ng-click="ecCtrl.printdiv('each')" class="btn btn-danger btn-sm">
+        <i class="iconfont"></i>打印成绩
+    </button>
+</div>
+<div class="divider"></div>
+<div id="each">
+<div class="table_area">
+    <div class="table_title">
+        彬县教育系统党员党性体检互评得分表
+    </div>
+    <form class="form-horizontal">
+    <div class="form-group">
+        <label class="branch_label">党支部名称（盖章）:<span class="branch">{{ecCtrl.branch}}</span></label>
+        <label class="branch_label" style="float:right;text-align:right">
+           {{ecCtrl.now|date:'yyyy 年 MM 月 dd 日'}}
+        </label>
+    </div>
+    </form>
+    <div>
+       <table class="tg">
+          <tr>
+            <th class="tg-yw4l">序号</th>
+            <th class="tg-yw4l">党员姓名</th>
+            <th class="tg-yw4l">总分</th>
+            <th class="tg-yw4l" width="50%">存在问题</th>
+          </tr>
+          <tr ng-repeat="obj in ecCtrl.datalist">
+            <td class="tg-yw4l">{{$index+1}}</td>
+            <td class="tg-yw4l">{{obj.realName}}</td>
+            <td class="tg-yw4l">{{obj.total}}</td>
+            <td class="tg-yw4l">
+                <div class="edit" contenteditable ng-model="obj.problem">
+                </div>
+            </td>
+          </tr>
+        </table>
+    </div>
+</div>
+</div>

@@ -113,6 +113,17 @@ input[type="text"],input[type="password"],input[type="email"]{
   border-width:2px;
 }
 
+.login-form-control2 {
+  border:none;
+  border-bottom:1px solid #000;
+  border-radius:0; 
+  box-shadow:none !important;
+  color:#000;
+}
+.login-form-control2:focus{
+  border-width:2px;
+}
+
 .login-container-footer {
   position:absolute;
   bottom:20px;

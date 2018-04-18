@@ -9,9 +9,9 @@
     function systemService($http,$q) {
         var factory = {};
         
-        factory.getUsers = function(branch){
+        factory.getUsers = function(branch,organization){
             var deferred = $q.defer();
-            $http.get('/pointservice/branch?branch='+encodeURIComponent(branch)).then(
+            $http.get('/pointservice/branch?branch='+encodeURIComponent(branch)+'&organization='+organization).then(
                     function (resp) {
                         deferred.resolve(resp.data);
                     },
@@ -79,6 +79,42 @@
                         deferred.reject(resp.data);
                     }
             );
+            return deferred.promise;
+        };
+        factory.getBranches = function(organization){
+            var deferred = $q.defer();
+            $http.get('/pointservice/user/branches?organization='+organization).then(
+                    function (resp) {
+                        deferred.resolve(resp.data);
+                    },
+                    function (resp) {
+                        deferred.reject(resp.data);
+                    }
+            );
+            return deferred.promise;
+        };
+        factory.deleteBranch = function(branch,organization){
+            var deferred = $q.defer();
+            $http.delete('/pointservice/user/branch?branch='+branch+'&organization='+organization).then(
+                    function (resp) {
+                        deferred.resolve(resp.data);
+                    },
+                    function (resp) {
+                        deferred.reject(resp.data);
+                    }
+             );
+            return deferred.promise;
+        };
+        factory.addBranch = function(branch,organization){
+            var deferred = $q.defer();
+            $http.post('/pointservice/user/branch?branch='+branch+'&organization='+organization).then(
+                    function (resp) {
+                        deferred.resolve(resp.data);
+                    },
+                    function (resp) {
+                        deferred.reject(resp.data);
+                    }
+             );
             return deferred.promise;
         };
         return factory;

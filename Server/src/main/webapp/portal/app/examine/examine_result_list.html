@@ -1,0 +1,54 @@
+<div class="btn-group-right">
+    <span><input type="text" ng-model="ecCtrl.realName" placeholder="输入用户名称搜索"></span>
+</div>
+<div class="divider"></div>
+<div class="hack-header">
+<div class="custom-table">
+      <div style="height:40px;" class="custom-row custom-table-header-css3">
+        <div class="custom-cell" style="width:30px;height:40px">
+            <span></span>
+         </div>
+         <div class="custom-cell" style="width:100px">
+            <span>序号</span>
+         </div>
+         <div class="custom-cell" style="width:200px">
+            <span>党员姓名</span>
+         </div>
+         <div class="custom-cell" style="width:200px">
+            <span>报告单</span>
+         </div>
+      </div>
+</div>
+</div>
+<div ng-style="ecCtrl.scrollTableStyle" ng-if="ecCtrl.userlist.length >0">
+<div class="custom-table">
+      <div style="height:40px;visibility:hidden;" class="custom-row custom-table-header-css3">
+         <div class="custom-cell" style="width:30px;height:40px">
+            <span></span>
+         </div>
+         <div class="custom-cell" style="width:100px">
+            <span>序号</span>
+         </div>
+         <div class="custom-cell" style="width:200px">
+            <span>党员姓名</span>
+         </div>
+         <div class="custom-cell" style="width:200px">
+            <span>报告单</span>
+         </div>
+      </div>
+      <div class="custom-row row-hover-cyan" ng-repeat="obj in ecCtrl.userlist|filter:{realName:ecCtrl.realName}">
+         <div class="custom-cell" style="width:30px;;height:40px">
+            <span><input type="radio" name="selectUser"></span>
+         </div>
+         <div class="custom-cell" style="width:50px">
+            <span>{{$index+1}}</span>
+         </div>
+         <div class="custom-cell">
+            <span>{{obj.realName}}</span>
+         </div>
+         <div class="custom-cell">
+            <a style="color:#008571" ng-click="ecCtrl.generateResult(obj)"><span>报告单</span></a>
+         </div>
+      </div>
+</div>
+</div>

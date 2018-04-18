@@ -1,0 +1,30 @@
+<div>
+    <ul class="nav nav-tabs">
+        <li class="uib-tab nav-item" ng-class="{active:ecCtrl.selectTab=='public'}">
+            <a ng-click="ecCtrl.clickTab('public')" class="nav-link">群众评议得分表</a>
+        </li>
+        <li class="uib-tab nav-item" ng-class="{active:ecCtrl.selectTab=='self'}">
+            <a ng-click="ecCtrl.clickTab('self')" class="nav-link">自评得分表</a>
+        </li>
+        <li class="uib-tab nav-item" ng-class="{active:ecCtrl.selectTab=='each'}">
+            <a ng-click="ecCtrl.clickTab('each')" class="nav-link">互评得分表</a>
+        </li>
+        <li class="uib-tab nav-item" ng-class="{active:ecCtrl.selectTab=='organization'}">
+            <a ng-click="ecCtrl.clickTab('organization')" class="nav-link">组织评价得分表</a>
+        </li>
+        <li class="uib-tab nav-item" ng-class="{active:ecCtrl.selectTab=='summary'}">
+            <a ng-click="ecCtrl.clickTab('summary')" class="nav-link">得分汇总表</a>
+        </li>
+        <li class="uib-tab nav-item" ng-class="{active:ecCtrl.selectTab=='result_list'}">
+            <a ng-click="ecCtrl.clickTab('result_list')" class="nav-link">成绩报告单</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div ng-if="ecCtrl.selectTab=='public'" ng-include="'app/examine/examine_public.html'"></div>
+        <div ng-if="ecCtrl.selectTab=='self'" ng-include="'app/examine/examine_self.html'"></div>
+        <div ng-if="ecCtrl.selectTab=='each'" ng-include="'app/examine/examine_each.html'"></div>
+        <div ng-if="ecCtrl.selectTab=='organization'" ng-include="'app/examine/examine_organization.html'"></div>
+        <div ng-if="ecCtrl.selectTab=='summary'" ng-include="'app/examine/examine_summary.html'"></div>
+        <div ng-if="ecCtrl.selectTab=='result_list'" ng-include="'app/examine/examine_result_list.html'"></div>
+    </div>
+</div>

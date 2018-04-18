@@ -11,6 +11,8 @@
         'portal.login',
         'portal.layout',
         'portal.system',
-        'portal.query'
+        'portal.query',
+        'portal.organization',
+        'portal.examine'
     ]);
 })();

@@ -1,0 +1,56 @@
+<div class="btn-group-right">
+    <button type="button" ng-click="ecCtrl.update('organization')" class="btn btn-danger btn-sm">
+        <i class="iconfont"></i>保存修改
+    </button>
+    <button type="button" ng-click="ecCtrl.printdiv('organization')" class="btn btn-danger btn-sm">
+        <i class="iconfont"></i>打印成绩
+    </button>
+</div>
+<div class="divider"></div>
+<div id="organization">
+<div class="table_area">
+    <div class="table_title">
+        彬县教育系统党员党性体检组织评价得分表
+    </div>
+    <form class="form-horizontal">
+    <div class="form-group">
+        <label class="branch_label">党支部名称（盖章）:<span class="branch">{{ecCtrl.branch}}</span></label>
+        <label class="branch_label" style="float:right;text-align:right">
+           {{ecCtrl.now|date:'yyyy 年 MM 月 dd 日'}}
+        </label>
+    </div>
+    </form>
+    <div>
+       <table class="tg">
+          <tr>
+            <th class="tg-yw4l" rowspan="2">序号</th>
+            <th class="tg-yw4l" rowspan="2">党员姓名</th>
+            <th class="tg-yw4l" width="47%" colspan="5">评议指标</th>
+            <th class="tg-yw4l" rowspan="2">总分</th>
+            <th class="tg-yw4l" width="30%" rowspan="2">存在问题</th>
+          </tr>
+          <tr>
+            <td class="tg-yw4l">政治纪律(20分)</td>
+            <td class="tg-yw4l">组织纪律(20分)</td>
+            <td class="tg-yw4l">道德品行(20分)</td>
+            <td class="tg-yw4l">履行义务(20分)</td>
+            <td class="tg-yw4l">模范带头(20分)</td>
+          </tr>
+          <tr ng-repeat="obj in ecCtrl.datalist">
+            <td class="tg-yw4l">{{$index+1}}</td>
+            <td class="tg-yw4l">{{obj.realName}}</td>
+            <td class="tg-yw4l"><input type="text" value="{{obj.zhengZhi}}" ng-model="obj.zhengZhi"></td>
+            <td class="tg-yw4l"><input type="text" value="{{obj.zuZhi}}" ng-model="obj.zuZhi"></td>
+            <td class="tg-yw4l"><input type="text" value="{{obj.daoDe}}" ng-model="obj.daoDe"></td>
+            <td class="tg-yw4l"><input type="text" value="{{obj.lvXingYiWu}}" ng-model="obj.lvXingYiWu"></td>
+            <td class="tg-yw4l"><input type="text" value="{{obj.moFan}}" ng-model="obj.moFan"></td>
+            <td class="tg-yw4l" ng-bind="ecCtrl.calc(obj.zhengZhi,obj.zuZhi,obj.daoDe,obj.lvXingYiWu,obj.moFan)"></td>
+            <td class="tg-yw4l">
+                <div class="edit" contenteditable ng-model="obj.problem">
+                </div>
+            </td>
+          </tr>
+        </table>
+    </div>
+</div>
+</div>

@@ -24,13 +24,29 @@
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <ul class="nav side-menu">
-                
-                  <li ng-class="{'active':lac.activeNode=='home.system'}" ng-click="lac.activeTreeNode('home.system')">
-                  	<a><i class="iconfont icon-user red"></i>用户列表</a>
+                  <li ng-class="{'active':lac.activeNode=='home.organization'}" ng-click="lac.activeTreeNode('home.organization')">
+                  	<a>
+                  	     <i class="iconfont icon-user red"></i>支部列表
+                  	     <span class="iconfont green" ng-class="{true:'icon-up',false:'icon-16'}[lac.organizationNode]"></span>
+                  	</a>
+                  	<ul class="nav child_menu" ng-if = "lac.organizationNode">
+                  	  <li ng-class="{'current-page':lac.activeSubNode=='home.organization.create'}"><a ng-click="lac.activeSubTreeNode('home.organization.create',$event)">创建支部</a></li>
+                      <li ng-repeat="branch in lac.branchlist" ng-class="{'current-page':lac.activeSubNode=='home.organization.{{branch}}'}"><a ng-click="lac.activeSubTreeNode('home.organization.queryuser',$event,branch)">{{branch}}</a></li>
+                    </ul>
                   </li>
-                  <li ng-class="{'active':lac.activeNode=='home.query'}" ng-click="lac.activeTreeNode('home.query')">
+                  <li ng-class="{'active':lac.activeNode=='home.examine'}" ng-click="lac.activeTreeNode('home.examine')">
+                    <a>
+                         <i class="iconfont icon-user red"></i>体检报告
+                         <span class="iconfont green" ng-class="{true:'icon-up',false:'icon-16'}[lac.examineNode]"></span>
+                    </a>
+                    <ul class="nav child_menu" ng-if = "lac.examineNode">
+                      <li ng-repeat="branch in lac.branchlist" ng-class="{'current-page':lac.activeSubNode=='home.examine.{{branch}}'}"><a ng-click="lac.activeSubTreeNode('home.examine.query',$event,branch)">{{branch}}</a>
+                      </li>
+                    </ul>
+                  </li>
+<!--                   <li ng-class="{'active':lac.activeNode=='home.query'}" ng-click="lac.activeTreeNode('home.query')">
                     <a><i class="iconfont icon-help red"></i>成绩查询</a>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
 				
@@ -103,4 +119,14 @@
             <button class="btn btn-warning" type="button" ng-click="changepwd_cancel()">取消</button>
     </div>
 	</form>
+</script>
+
+<script type="text/ng-template" id="templates/confirmDeleteTemp.html">
+    <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">确认删除{{deleteItem}}吗？</h2>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" type="submit" ng-click="delete_ok()">确认</button>
+        <button class="btn btn-warning" type="button" ng-click="delete_cancel()">取消</button>
+    </div>
 </script>

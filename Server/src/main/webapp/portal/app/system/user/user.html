@@ -9,12 +9,12 @@
     <button type="button" class="btn btn-danger btn-sm"  ng-if="!!umCtrl.selectUser" ng-click="umCtrl.updateUser()">
         <i class="iconfont"></i>更新用户
     </button>
+    <button type="button" class="btn btn-danger btn-sm"  ng-click="umCtrl.deleteBranch()">
+        <i class="iconfont"></i>删除本支部
+    </button>
 </div>
 <div class="btn-group-right">
-    <span><input type="text" ng-model="umCtrl.queryBranch" placeholder="输入支部名称"></span>
-    <button type="button" class="btn btn-danger btn-sm" ng-click="umCtrl.queryUser()">
-        <i class="iconfont"></i>查询
-    </button>
+    <span><input type="text" ng-model="umCtrl.realName" placeholder="输入用户名称搜索"></span>
 </div>
 <div class="divider"></div>
 
@@ -28,7 +28,7 @@
             <span>ID</span>
          </div>
          <div class="custom-cell" style="width:200px">
-            <span>用户名</span>
+            <span>姓名</span>
          </div>
          <div class="custom-cell" style="width:200px">
             <span>部门</span>
@@ -52,7 +52,7 @@
             <span>ID</span>
          </div>
          <div class="custom-cell" style="width:200px">
-            <span>用户名</span>
+            <span>姓名</span>
          </div>
          <div class="custom-cell" style="width:200px">
             <span>部门</span>
@@ -64,7 +64,7 @@
             <span>是否管理员</span>
          </div>
       </div>
-      <div class="custom-row row-hover-cyan" ng-repeat="obj in umCtrl.userlist|orderBy:'branch':true">
+      <div class="custom-row row-hover-cyan" ng-repeat="obj in umCtrl.userlist|filter:{realName:umCtrl.realName}">
          <div class="custom-cell" style="width:30px;;height:40px">
             <span><input type="radio" name="selectUser" ng-click="umCtrl.selectCheck(obj)"></span>
          </div>
@@ -72,7 +72,7 @@
             <span>{{obj.id}}</span>
          </div>
          <div class="custom-cell">
-            <span>{{obj.name}}</span>
+            <span>{{obj.realName}}</span>
          </div>
          <div class="custom-cell">
             <span>{{obj.branch}}</span>
@@ -96,15 +96,27 @@
     <div class="modal-body">
         <div class="alert alert-danger" role="alert" ng-if="error !=''">{{error}}</div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">姓名</label>
+            <label class="col-sm-3 control-label">用户名</label>
             <div class="col-sm-9">
                 <input type="text" ng-model="name" class="form-control" required>
             </div>
         </div>
         <div class="form-group">
+            <label class="col-sm-3 control-label">姓名</label>
+            <div class="col-sm-9">
+                <input type="text" ng-model="realName" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">单位</label>
+            <div class="col-sm-9">
+                <label class="control-label">{{user.organization}}</label>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="col-sm-3 control-label">部门</label>
             <div class="col-sm-9">
-                <input type="text" ng-model="branch" class="form-control" required>
+                <label class="control-label">{{branch}}</label>
             </div>
         </div>
         <div class="form-group">
@@ -148,15 +160,27 @@
     <div class="modal-body">
         <div class="alert alert-danger" role="alert" ng-if="error !=''">{{error}}</div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">姓名</label>
+            <label class="col-sm-3 control-label">用户名</label>
             <div class="col-sm-9">
                 <label class="control-label">{{user.name}}</label>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">支部</label>
+            <label class="col-sm-3 control-label">姓名</label>
             <div class="col-sm-9">
-                <input type="text" ng-model="user.branch" class="form-control" required>
+                <input type="text" ng-model="user.realName" class="form-control" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">单位</label>
+            <div class="col-sm-9">
+                <label class="control-label">{{user.organization}}</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">部门</label>
+            <div class="col-sm-9">
+                <label class="control-label">{{user.branch}}</label>
             </div>
         </div>
         <div class="form-group">

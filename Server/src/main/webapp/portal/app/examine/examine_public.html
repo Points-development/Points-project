@@ -1,0 +1,57 @@
+<div class="btn-group-right">
+    <button type="button" ng-click="ecCtrl.update('public')" class="btn btn-danger btn-sm">
+        <i class="iconfont"></i>保存修改
+    </button>
+    <button type="button" ng-click="ecCtrl.printdiv('public')" class="btn btn-danger btn-sm">
+        <i class="iconfont"></i>打印成绩
+    </button>
+</div>
+<div class="divider"></div>
+<div id="public">
+<div class="table_area">
+	<div class="table_title">
+	    彬县教育系统党员党性体检群众评议得分表
+	</div>
+	<form class="form-horizontal">
+	<div class="form-group">
+	    <label class="branch_label">党支部名称（盖章）:<span class="branch">{{ecCtrl.branch}}</span></label>
+	    <label class="branch_label" style="float:right;text-align:right">
+	       {{ecCtrl.now|date:'yyyy 年 MM 月 dd 日'}}
+	    </label>
+	</div>
+	</form>
+	<div>
+	   <table class="tg">
+		  <tr>
+		    <th class="tg-yw4l" rowspan="2">序号</th>
+		    <th class="tg-yw4l" rowspan="2">党员姓名</th>
+		    <th class="tg-yw4l" width="47%" colspan="5">评议指标</th>
+		    <th class="tg-yw4l" rowspan="2">总分</th>
+		    <th class="tg-yw4l" rowspan="2" width="30%">存在问题</th>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">思想方面(20分)</td>
+		    <td class="tg-yw4l">道德方面(20分)</td>
+		    <td class="tg-yw4l">学习方面(20分)</td>
+		    <td class="tg-yw4l">工作方面(20分)</td>
+		    <td class="tg-yw4l">生活方面(20分)</td>
+		  </tr>
+		  <tr ng-repeat="obj in ecCtrl.datalist">
+		    <td class="tg-yw4l">{{$index+1}}</td>
+		    <td class="tg-yw4l">{{obj.realName}}</td>
+		    <td class="tg-yw4l"><input type="text" value="{{obj.siXiang}}" ng-model="obj.siXiang"></td>
+		    <td class="tg-yw4l"><input type="text" value="{{obj.daoDe}}" ng-model="obj.daoDe"></td>
+		    <td class="tg-yw4l"><input type="text" value="{{obj.xueXi}}" ng-model="obj.xueXi"></td>
+		    <td class="tg-yw4l"><input type="text" value="{{obj.gongZuo}}" ng-model="obj.gongZuo"></td>
+		    <td class="tg-yw4l"><input type="text" value="{{obj.shengHuo}}" ng-model="obj.shengHuo"></td>
+		    <td class="tg-yw4l" ng-bind="ecCtrl.calc(obj.siXiang,obj.daoDe,obj.xueXi,obj.gongZuo,obj.shengHuo)">
+		    </td>
+		    <td class="tg-yw4l">
+		      <div class="edit" contenteditable ng-model="obj.problem">
+		      </div>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+</div>
+</div>

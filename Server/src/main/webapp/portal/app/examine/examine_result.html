@@ -1,0 +1,87 @@
+<div style="margin:20px 10px">
+<div class="btn-group-right">
+    <button type="button" ng-click="ecCtrl.update('result')" class="btn btn-danger btn-sm">
+        <i class="iconfont"></i>保存修改
+    </button>
+    <button type="button" ng-click="ecCtrl.printdiv('result')" class="btn btn-danger btn-sm">
+        <i class="iconfont"></i>打印成绩
+    </button>
+</div>
+<div class="divider"></div>
+<div id="result" ng-init="ecCtrl.initResult()">
+<div class="table_area">
+    <div class="table_title">
+        彬县教育系统党员党性体检结果报告单
+    </div>
+    <div class="table_title">
+        ({{ecCtrl.now|date:'yyyy'}})年度
+    </div>
+    <div>
+        <table class="tg">
+		  <tr>
+		    <th class="tg-yw4l" width="25%">姓名</th>
+		    <th class="tg-yw4l" width="25%">{{ecCtrl.result.realName}}</th>
+		    <th class="tg-yw4l" width="25%">性别</th>
+		    <th class="tg-yw4l" width="25%"></th>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">工作单位</td>
+		    <td class="tg-yw4l" colspan="3">{{ecCtrl.currentUser.organization}}</td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">所在党支部</td>
+		    <td class="tg-yw4l">{{ecCtrl.currentUser.branch}}</td>
+		    <td class="tg-yw4l">体检时间</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.lastModifiedTime|date:'yyyy 年 MM 月 dd 日'}}</td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">党性体检评议情况</td>
+		    <td class="tg-yw4l" colspan="3">
+		      <div class="tdContent">
+		          经评议，你的党性体检得分为<span class="hasBottomline">{{ecCtrl.result.deFen}}</span>分<br/>
+                  红线指标：<input type="checkbox" disabled="true" ng-checked="ecCtrl.checkHongxian(ecCtrl.result.hongXian)">存在
+                  <input type="checkbox" disabled="true" ng-checked="!ecCtrl.checkHongxian(ecCtrl.result.hongXian)">不存在<br/>
+                  红线指标情形:<span class="hasBottomline" ng-bind="ecCtrl.removeHtml(ecCtrl.result.hongXian)"></span>                      
+		      </div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">党性体检结果</td>
+		    <td class="tg-yw4l" colspan="3">
+		      <div class="tdContent">
+		         <input disabled="true" style="margin-left:0px;" type="checkbox" ng-checked="ecCtrl.result.tiJian=='健康'">党性健康
+		         <input disabled="true" type="checkbox" ng-checked="ecCtrl.result.tiJian=='亚健康'">党性亚健康
+		         <input disabled="true" type="checkbox" ng-checked="ecCtrl.result.tiJian=='不健康'">党性不健康
+		      </div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">党性体检意见建议书</td>
+		    <td class="tg-yw4l" colspan="3">
+		      <div class="tdContent">
+		      <div>
+		          <span>通过群众评议、自己测评、党员互评、组织评议，此次党性教育体检，你存在以下问题：
+		          </span><br/>
+		      </div>
+		      <div class="edit hasBottom" contenteditable ng-model="ecCtrl.result.problem">
+              </div>
+              <div>
+                <br/>
+                <span>建议请你从以下方面积极整改提高</span><br/>
+              </div>
+              <div class="edit hasBottom" contenteditable ng-model="ecCtrl.result.tiGao">
+              </div>
+              <div style="text-align:right">
+                <br/>
+                <span>(党组织盖章或书记签名):</span><span style="border-bottom:1px solid #000;padding-right:100px"></span><br>
+                <span>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日</span>
+              </div>
+              </div>
+		    </td>
+		  </tr>
+		</table>
+    </div>
+    <div class="table_bottom">注：此表“一式三份”，一份交党员本人，一份由所属党支部存档，一份交于党员党性体检中心存档</div>
+</div>
+</div>
+</div>
