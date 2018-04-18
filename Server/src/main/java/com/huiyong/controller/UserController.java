@@ -178,7 +178,10 @@ public class UserController {
     @RequestMapping(value = "/user/branch", method = RequestMethod.POST)
     public ResponseEntity<?> addBranch(@RequestParam String branch, @RequestParam String organization) {
     	Message m = new Message();
-    	userService.addBranch(branch, organization);
+    	if(!userService.addBranch(branch, organization)){
+    		m.setError("branch已经存在");
+    		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
+    	}
     	m.setSuccess("添加成功.");
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
     }

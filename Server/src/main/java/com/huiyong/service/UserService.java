@@ -25,5 +25,6 @@ public interface UserService {
 	public void deleteUser(String username);
 	public List<String> getAllBranches(String organziation);
 	public void deleteBranch(String branchname, String organziation);
-	public void addBranch(String branchname, String organziation);
+	public boolean addBranch(String branchname, String organziation);
+	public String getBranch(String branchname, String organziation);
 }
