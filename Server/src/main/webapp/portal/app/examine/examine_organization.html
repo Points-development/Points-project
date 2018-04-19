@@ -39,13 +39,13 @@
           <tr ng-repeat="obj in ecCtrl.datalist">
             <td class="tg-yw4l">{{$index+1}}</td>
             <td class="tg-yw4l">{{obj.realName}}</td>
-            <td class="tg-yw4l"><input type="text" value="{{obj.zhengZhi}}" ng-model="obj.zhengZhi"></td>
-            <td class="tg-yw4l"><input type="text" value="{{obj.zuZhi}}" ng-model="obj.zuZhi"></td>
-            <td class="tg-yw4l"><input type="text" value="{{obj.daoDe}}" ng-model="obj.daoDe"></td>
-            <td class="tg-yw4l"><input type="text" value="{{obj.lvXingYiWu}}" ng-model="obj.lvXingYiWu"></td>
-            <td class="tg-yw4l"><input type="text" value="{{obj.moFan}}" ng-model="obj.moFan"></td>
+            <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.zhengZhi}}" ng-model="obj.zhengZhi"></td>
+            <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.zuZhi}}" ng-model="obj.zuZhi"></td>
+            <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.daoDe}}" ng-model="obj.daoDe"></td>
+            <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.lvXingYiWu}}" ng-model="obj.lvXingYiWu"></td>
+            <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.moFan}}" ng-model="obj.moFan"></td>
             <td class="tg-yw4l" ng-bind="ecCtrl.calc(obj.zhengZhi,obj.zuZhi,obj.daoDe,obj.lvXingYiWu,obj.moFan)"></td>
-            <td class="tg-yw4l">
+            <td class="tg-yw4l tg-edit">
                 <div class="edit" contenteditable ng-model="obj.problem">
                 </div>
             </td>

@@ -5,9 +5,9 @@
 
     angular.module('portal.examine').controller('ExamineController', ExamineController);
 
-    ExamineController.$inject = ['storage','messageCenterService','examineService','systemService','security','$stateParams','$uibModal','transferUser'];
+    ExamineController.$inject = ['storage','messageCenterService','examineService','systemService','security','$stateParams','$uibModal','transferUser','$uibModalStack'];
 
-    function ExamineController(storage,messageCenterService,examineService,systemService,security,$stateParams,$uibModal,transferUser) {
+    function ExamineController(storage,messageCenterService,examineService,systemService,security,$stateParams,$uibModal,transferUser,$uibModalStack) {
         var vm = this;
         var currentUser = security.getCurrentUser();
         if(transferUser){
@@ -129,6 +129,10 @@
 		  	           }
 		  	       }
 	        });
+        }
+        
+        vm.close = function(){
+        	$uibModalStack.dismissAll();
         }
         
         vm.checkHongxian = function(hongxian){

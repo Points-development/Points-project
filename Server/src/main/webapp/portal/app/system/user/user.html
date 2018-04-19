@@ -9,7 +9,10 @@
     <button type="button" class="btn btn-danger btn-sm"  ng-if="!!umCtrl.selectUser" ng-click="umCtrl.updateUser()">
         <i class="iconfont"></i>更新用户
     </button>
-    <button type="button" class="btn btn-danger btn-sm"  ng-click="umCtrl.deleteBranch()">
+    <button type="button" class="btn btn-danger btn-sm"  ng-if="!!umCtrl.selectUser" ng-click="umCtrl.deleteUser()">
+        <i class="iconfont"></i>删除用户
+     </button>
+    <button type="button" ng-if="umCtrl.userlist.length==0" class="btn btn-danger btn-sm"  ng-click="umCtrl.deleteBranch()">
         <i class="iconfont"></i>删除本支部
     </button>
 </div>
