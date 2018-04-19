@@ -8,6 +8,7 @@
         -webkit-appearance:none;
         border:none;
     }
+    .tg {background-color:#ffffff}
 }
 
 body{
@@ -745,10 +746,10 @@ a:hover, a:focus {
 	font-size: 20px;
 	width: 100%;
 	color: #ECF0F1 !important;
-	line-height: 59px;
+	line-height: 35px;
 	display: block;
-	height: 55px;
-	padding-left: 20px;
+	height: 35px;
+	text-align:center;
 }
 
 .site_title:hover, .site_title:focus {
@@ -1517,7 +1518,7 @@ label.branch_label{
 }
 /*table area*/
 
-.tg  {border-collapse:collapse;border-spacing:0;width:100%}
+.tg  {border-collapse:collapse;border-spacing:0;width:100%;background-color:#f3f3f3;}
 .tg td{font-family:Arial, sans-serif;font-size:14px;padding:12px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
 .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:12px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
 .tg .tg-yw4l{vertical-align: middle;text-align: center;color:#000;}
@@ -1525,6 +1526,9 @@ label.branch_label{
 	border: none;
 	width:80px;
 	text-align:center;
+}
+.tg .tg-edit{
+	background-color:#ffffff;
 }
 div.edit{
 	-webkit-user-select:text;

@@ -90,6 +90,33 @@
         	});
 		}
 	    
+	    vm.deleteUser = function(){
+			$uibModal.open({
+      	    	animation: true,
+      	    	size:"csm",
+      	    	ariaLabelledBy: 'modal-title-top',
+      	    	ariaDescribedBy: 'modal-body-top',
+				templateUrl: 'templates/confirmDeleteTemp.html',
+      	        controller:['$scope','$uibModalInstance', function($scope,$uibModalInstance) {
+      	        	$scope.deleteItem = '所选用户';
+      	      		$scope.delete_ok = function(){
+	      	      		systemService.deleteUser(vm.selectUser.name).then(function(response){
+	  	      				messageCenterService.add('success', '删除成功!', {timeout:3000});
+							vm.init();
+							$uibModalInstance.close($scope);
+							vm.selectUser = null;
+						},	function(response){
+							messageCenterService.add('danger', response, {timeout:3000});
+						});	
+					}
+									  
+      	      		$scope.delete_cancel = function(){
+      	    	  		$uibModalInstance.dismiss('cancel');
+      	      		}
+      	      	}]		
+			})
+		}
+	    
 	    vm.deleteBranch = function(){
 	    	$uibModal.open({
                 animation: true,

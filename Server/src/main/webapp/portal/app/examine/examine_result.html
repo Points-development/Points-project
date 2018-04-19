@@ -6,6 +6,9 @@
     <button type="button" ng-click="ecCtrl.printdiv('result')" class="btn btn-danger btn-sm">
         <i class="iconfont"></i>打印成绩
     </button>
+    <button type="button" ng-click="ecCtrl.close('result')" class="btn btn-danger btn-sm">
+        <i class="iconfont"></i>关闭
+    </button>
 </div>
 <div class="divider"></div>
 <div id="result" ng-init="ecCtrl.initResult()">
@@ -57,7 +60,7 @@
 		  </tr>
 		  <tr>
 		    <td class="tg-yw4l">党性体检意见建议书</td>
-		    <td class="tg-yw4l" colspan="3">
+		    <td class="tg-yw4l tg-edit" colspan="3">
 		      <div class="tdContent">
 		      <div>
 		          <span>通过群众评议、自己测评、党员互评、组织评议，此次党性教育体检，你存在以下问题：

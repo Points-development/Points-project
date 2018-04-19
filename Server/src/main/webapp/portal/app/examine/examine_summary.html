@@ -41,14 +41,14 @@
             <td class="tg-yw4l">{{obj.qunZhongPing}}</td>
             <td class="tg-yw4l">{{obj.zuZhiPing}}</td>
             <td class="tg-yw4l">{{obj.total}}</td>
-            <td class="tg-yw4l">
+            <td class="tg-yw4l tg-edit">
                 <!-- <select ng-model="obj.hongXian">
                     <option value="不存在" ng-selected ="obj.hongXian=='不存在' || !obj.hongXian">不存在</option>
                     <option value="存在" ng-selected ="obj.hongXian=='存在'">存在</option>
                 </select> -->
                 <div class="edit" contenteditable ng-model="obj.hongXian"></div>
             </td>
-            <td class="tg-yw4l">
+            <td class="tg-yw4l tg-edit">
                 <select ng-model="obj.jianKang">
                     <option value="健康" ng-selected="obj.jianKang=='健康' || !obj.hongXian">健康</option>
                     <option value="亚健康" ng-selected="obj.jianKang=='亚健康'">亚健康</option>
