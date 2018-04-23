@@ -1,8 +1,12 @@
 INSERT INTO `UserProperty`(`name`) values('共性');
-INSERT INTO `UserProperty`(`name`) values('村居党员');
-INSERT INTO `UserProperty`(`name`) values('“两新”组织党员');
-INSERT INTO `UserProperty`(`name`) values('机关企事业党员');
-INSERT INTO `UserProperty`(`name`) values('党员领导干部');
+INSERT INTO `UserProperty`(`name`) values('领导:村居党员');
+INSERT INTO `UserProperty`(`name`) values('领导:“两新”组织党员');
+INSERT INTO `UserProperty`(`name`) values('领导:机关企事业党员');
+INSERT INTO `UserProperty`(`name`) values('领导:党员领导干部');
+INSERT INTO `UserProperty`(`name`) values('教师:村居党员');
+INSERT INTO `UserProperty`(`name`) values('教师:“两新”组织党员');
+INSERT INTO `UserProperty`(`name`) values('教师:机关企事业党员');
+INSERT INTO `UserProperty`(`name`) values('教师:党员领导干部');
 INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`) values(3, 'gangpu', 'pugang', 'Shannxi', 'ibm', 1);
 INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`) values(4, 'xzgan', 'ganxiangzhen', 'henan', 'google', 1);
 INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`) values(2, 'test', 'test', 'Shannxi', 'ibm', 0);
