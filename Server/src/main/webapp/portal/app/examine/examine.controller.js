@@ -109,6 +109,9 @@
         vm.initResult=function(){
         	examineService.getResultScore(currentUser.name).then(function(response){
   	  			vm.result = response;
+  	  			if(!vm.result.lastModifiedTime){
+  	  				vm.result.lastModifiedTime = vm.now;
+  	  			}
   	  		},function(response){
   	  			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
   	  		})
@@ -186,6 +189,21 @@
             popupWin.document.write('<body onload="window.print()">' + printContents + '</body></html>');
             popupWin.document.close();
         }
+        
+//        vm.pdfMake = function(id){
+//        	html2canvas(document.getElementById(id), {
+//                onrendered: function (canvas) {
+//                    var data = canvas.toDataURL();
+//                    var docDefinition = {
+//                        content: [{
+//                            image: data,
+//                            width: 500,
+//                        }]
+//                    };
+//                    pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
+//                }
+//            });
+//        }
         
         //load data
         vm.initData();

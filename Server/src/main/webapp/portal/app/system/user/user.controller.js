@@ -14,7 +14,7 @@
 		vm.currentUser = security.getCurrentUser();
 		vm.branch = $stateParams.branchName;
         vm.init = function(){
-			vm.hasSelected=0;
+        	vm.selectUser = null;
         	systemService.getUsers(vm.branch,vm.currentUser.organization).then(function(response){
         		vm.userlist = response;
         	},function(response){
@@ -59,7 +59,15 @@
       	    	  	}
       	    	  	$scope.branch = vm.branch;
       	    	  	$scope.admin = false;
-      	    	  	$scope.userPropertys = vm.userPropertys;
+      	    	  	$scope.gender='男';
+      	    	  	$scope.userPropertys = [];
+      	    	  	for(var i=0;i<vm.userPropertys.length;i++){
+      	    	  		var p = vm.userPropertys[i];
+      	    	  		var pr = p.split(':')[1];
+      	    	  		if($scope.userPropertys.indexOf(pr)<0){
+      	    	  			$scope.userPropertys.push(pr);
+      	    	  		}
+      	    	  	}
       	      		$scope.submit_user = function(){
 	      	      		if(!$scope.name || !$scope.realName || !$scope.branch || !$scope.user.property){
 		  	    			  $scope.error = '所有选项必填';
@@ -71,8 +79,9 @@
 	      	      				realName:$scope.realName,
 	      	      				organization:$scope.user.organization,
 	      	      				branch:$scope.branch,
-	      	      				property:$scope.user.property,
-	      	      				admin:$scope.admin
+	      	      				property:$scope.job+':'+$scope.user.property,
+	      	      				admin:$scope.admin,
+	      	      				gender:$scope.gender
 	      	      		}
 	      	      		
 		      	      	systemService.createUser(user).then(function(response){
@@ -153,7 +162,16 @@
 	      	      controller:['$scope','$uibModalInstance','storage', function($scope,$uibModalInstance,storage) {
 	      	    	  	$scope.error = '';
 	      	    	  	$scope.user=vm.selectUser;
-	      	    	  	$scope.userPropertys = vm.userPropertys;
+	      	    	  	$scope.user.job=vm.selectUser.property.split(':')[0];
+	      	    	  	$scope.user.property = vm.selectUser.property.split(':')[1];
+	      	    	  	$scope.userPropertys = [];
+	      	    	  	for(var i=0;i<vm.userPropertys.length;i++){
+	      	    	  		var p = vm.userPropertys[i];
+	      	    	  		var pr = p.split(':')[1];
+	      	    	  		if($scope.userPropertys.indexOf(pr)<0){
+	      	    	  			$scope.userPropertys.push(pr);
+	      	    	  		}
+	      	    	  	}
 	      	    	  	$scope.resetPwd = false;
 	      	    	  	$scope.branch = vm.branch;
 	      	      		$scope.submit_user = function(){
@@ -166,6 +184,7 @@
 		      	      		}else{
 		      	      			delete $scope.user.password;
 		      	      		}
+			      	      	$scope.user.property = $scope.user.job+':'+$scope.user.property,
 			      	      	systemService.updateUser($scope.user).then(function(response){
 			      	      		messageCenterService.add('success', '更新成功!', {timeout:3000});
 			      	      		vm.init();
@@ -175,6 +194,7 @@
 			            	});
 	      	      		}
 	      	      		$scope.cancel = function(){
+	      	      			vm.init();
 	      	    	  		$uibModalInstance.dismiss('cancel');
 	      	      		}
 	      	      }]

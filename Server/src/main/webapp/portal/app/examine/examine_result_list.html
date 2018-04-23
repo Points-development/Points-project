@@ -36,7 +36,7 @@
             <span>报告单</span>
          </div>
       </div>
-      <div class="custom-row row-hover-cyan" ng-repeat="obj in ecCtrl.userlist|filter:{realName:ecCtrl.realName}">
+      <div class="custom-row row-hover-cyan" ng-repeat="obj in ecCtrl.userlist|filter:{realName:ecCtrl.realName}|orderBy:'id':false">
          <div class="custom-cell" style="width:30px;;height:40px">
             <span><input type="radio" name="selectUser"></span>
          </div>
