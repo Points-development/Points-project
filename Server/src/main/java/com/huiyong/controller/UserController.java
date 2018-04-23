@@ -162,6 +162,11 @@ public class UserController {
     @RequestMapping(value = "/user/branch", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteBranch(@RequestParam String branch, @RequestParam String organization) {
     	Message m = new Message();
+    	List<User> users = userService.getUsersInBranch(branch, organization);
+    	if(null!=users && !users.isEmpty()){
+    		m.setError("支部内存在用户,不能删除");
+    		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
+    	}
     	userService.deleteBranch(branch, organization);
     	m.setSuccess("删除成功.");
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
@@ -179,7 +184,7 @@ public class UserController {
     public ResponseEntity<?> addBranch(@RequestParam String branch, @RequestParam String organization) {
     	Message m = new Message();
     	if(!userService.addBranch(branch, organization)){
-    		m.setError("branch已经存在");
+    		m.setError("支部已经存在");
     		return new ResponseEntity<Message>(m, HttpStatus.BAD_REQUEST);
     	}
     	m.setSuccess("添加成功.");
