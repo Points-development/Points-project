@@ -93,7 +93,7 @@
     <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
   </resultMap>
    <select id="getZiPings" resultMap="ZiPingResultMap">
-select User.name, User.realName, ROUND(ifnull(POINT.gongxing, 0)/1.5) gongxing, ROUND(ifnull(POINT.gexing, 0)/1.5) gexing, ROUND(ifnull(POINT.gongxing, 0))/1.5 + ROUND(ifnull(POINT.gexing, 0))/1.5 total, ZiPing.problem, ZiPing.lastModifiedTime
+select User.name, User.realName, ROUND(ifnull(POINT.gongxing, 0)/1.5) gongxing, ROUND(ifnull(POINT.gexing, 0)/1.5) gexing, ROUND(ifnull(POINT.gongxing, 0)/1.5) + ROUND(ifnull(POINT.gexing, 0)/1.5) total, ZiPing.problem, ZiPing.lastModifiedTime
 from
 (
 select FINAL_1.name, FINAL_1.realName, SUM(FINAL_1.gongxing) gongxing, SUM(FINAL_1.gexing) gexing from
