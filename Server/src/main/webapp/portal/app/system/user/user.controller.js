@@ -59,7 +59,6 @@
       	    	  	}
       	    	  	$scope.branch = vm.branch;
       	    	  	$scope.admin = false;
-      	    	  	$scope.gender='男';
       	    	  	$scope.userPropertys = [];
       	    	  	for(var i=0;i<vm.userPropertys.length;i++){
       	    	  		var p = vm.userPropertys[i];
@@ -69,7 +68,7 @@
       	    	  		}
       	    	  	}
       	      		$scope.submit_user = function(){
-	      	      		if(!$scope.name || !$scope.realName || !$scope.branch || !$scope.user.property){
+	      	      		if(!$scope.name || !$scope.realName || !$scope.branch || !$scope.user.property || !$scope.job){
 		  	    			  $scope.error = '所有选项必填';
 		  	    			  return false;
 		  	    		}
@@ -81,7 +80,6 @@
 	      	      				branch:$scope.branch,
 	      	      				property:$scope.job+':'+$scope.user.property,
 	      	      				admin:$scope.admin,
-	      	      				gender:$scope.gender
 	      	      		}
 	      	      		
 		      	      	systemService.createUser(user).then(function(response){

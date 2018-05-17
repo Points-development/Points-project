@@ -24,12 +24,8 @@
 		  <tr>
 		    <th class="tg-yw4l" width="25%">姓名</th>
 		    <th class="tg-yw4l" width="25%">{{ecCtrl.result.realName}}</th>
-		    <th class="tg-yw4l" width="25%">性别</th>
-		    <th class="tg-yw4l" width="25%">{{ecCtrl.result.gender}}</th>
-		  </tr>
-		  <tr>
-		    <td class="tg-yw4l">工作单位</td>
-		    <td class="tg-yw4l" colspan="3">{{ecCtrl.currentUser.organization}}</td>
+		    <th class="tg-yw4l" width="25%">工作单位</th>
+		    <th class="tg-yw4l" width="25%">{{ecCtrl.currentUser.organization}}</th>
 		  </tr>
 		  <tr>
 		    <td class="tg-yw4l">所在党支部</td>
@@ -42,8 +38,8 @@
 		    <td class="tg-yw4l" colspan="3">
 		      <div class="tdContent">
 		          经评议，你的党性体检得分为<span class="hasBottomline">{{ecCtrl.result.deFen}}</span>分<br/>
-                  红线指标：<input type="checkbox" disabled="true" ng-checked="ecCtrl.checkHongxian(ecCtrl.result.hongXian)">存在
-                  <input type="checkbox" disabled="true" ng-checked="!ecCtrl.checkHongxian(ecCtrl.result.hongXian)">不存在<br/>
+                  红线指标：<input type="checkbox" style="zoom:180%;" disabled="true" ng-checked="ecCtrl.checkHongxian(ecCtrl.result.hongXian)">存在
+                  <input type="checkbox" style="zoom:180%;" disabled="true" ng-checked="!ecCtrl.checkHongxian(ecCtrl.result.hongXian)">不存在<br/>
                   红线指标情形:<span class="hasBottomline" ng-bind="ecCtrl.removeHtml(ecCtrl.result.hongXian)"></span>                      
 		      </div>
 		    </td>
@@ -52,9 +48,9 @@
 		    <td class="tg-yw4l">党性体检结果</td>
 		    <td class="tg-yw4l" colspan="3">
 		      <div class="tdContent">
-		         <input disabled="true" style="margin-left:0px;" type="checkbox" ng-checked="ecCtrl.result.tiJian=='健康'">党性健康
-		         <input disabled="true" type="checkbox" ng-checked="ecCtrl.result.tiJian=='亚健康'">党性亚健康
-		         <input disabled="true" type="checkbox" ng-checked="ecCtrl.result.tiJian=='不健康'">党性不健康
+		         <input disabled="true" style="margin-left:0px; zoom:180%;" type="checkbox" ng-checked="ecCtrl.result.tiJian=='健康'">党性健康
+		         <input disabled="true" style="zoom:180%;" type="checkbox" ng-checked="ecCtrl.result.tiJian=='亚健康'">党性亚健康
+		         <input disabled="true" style="zoom:180%;" type="checkbox" ng-checked="ecCtrl.result.tiJian=='不健康'">党性不健康
 		      </div>
 		    </td>
 		  </tr>
