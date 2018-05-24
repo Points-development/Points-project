@@ -48,6 +48,11 @@
         	}else if(vm.selectTab == 'summary'){
         		examineService.getSummaryScore(vm.branch,currentUser.organization).then(function(response){
         			vm.datalist = response;
+      	    	  	for(var i=0;i<vm.datalist.length;i++){
+      	    	  		if(vm.datalist[i].jianKang == null){
+      	    	  		vm.datalist[i].jianKang = '健康';
+      	    	  		}
+      	    	  	}
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
