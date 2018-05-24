@@ -215,5 +215,13 @@
 			"margin-top":"-40px"
         };
         
+        vm.getImg = function(check){
+        	if(check){
+        		return "content/img/checked.png";
+        	}else{
+        		return "content/img/uncheck.png";
+        	}
+        }
+        
     }
 })();

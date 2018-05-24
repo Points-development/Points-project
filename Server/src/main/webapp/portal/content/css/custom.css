@@ -9,6 +9,7 @@
         border:none;
     }
     .tg {background-color:#ffffff}
+    
 }
 
 body{
@@ -1551,6 +1552,12 @@ div.tdContent{
 }
 div.tdContent input[type="checkbox"]{
 	margin-left:15px;
+}
+.imgCheck{
+	width:20px;
+	height:20px;
+	margin-bottom: -5px;
+	vertical-align: top;
 }
 
 
