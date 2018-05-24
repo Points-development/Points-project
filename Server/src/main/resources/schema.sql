@@ -5,8 +5,9 @@ CREATE TABLE IF NOT EXISTS `UserProperty` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL UNIQUE,
   PRIMARY KEY (`id`));
-
---e10adc3949ba59abbe56e057f20f883e 是123456的md5
+/**
+ * e10adc3949ba59abbe56e057f20f883e 是123456的md5
+ */
 CREATE TABLE IF NOT EXISTS `User` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_property_id` int(11) NOT NULL,
@@ -31,7 +32,9 @@ CREATE TABLE IF NOT EXISTS `PaperQuestion` (
   FOREIGN KEY (`test_id`) REFERENCES `PaperTest` (`id`),
   FOREIGN KEY (`user_property_id`) REFERENCES `UserProperty` (`id`));
 
---For now the option is certain and later if needed we can add "FOREIGN KEY (`question_id`) REFERENCES `PaperQuestion` (`id`)";
+/**
+ * For now the option is certain and later if needed we can add "FOREIGN KEY (`question_id`) REFERENCES `PaperQuestion` (`id`)";
+ */
 CREATE TABLE IF NOT EXISTS `PaperOption` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(128) NOT NULL,

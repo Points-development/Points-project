@@ -2,7 +2,7 @@ INSERT INTO `UserProperty`(`name`) values('共性');
 INSERT INTO `UserProperty`(`name`) values('领导');
 INSERT INTO `UserProperty`(`name`) values('教师');
 INSERT INTO `User`(`user_property_id`, `name`, `branch`, `isAdmin`) values(3, 'gangpu', 'Shannxi', 1);
-INSERT INTO `User`(`user_property_id`, `name`, `branch`, `isAdmin`) values(4, 'xzgan', 'henan', 1);
+INSERT INTO `User`(`user_property_id`, `name`, `branch`, `isAdmin`) values(1, 'xzgan', 'henan', 1);
 INSERT INTO `User`(`user_property_id`, `name`, `branch`, `isAdmin`) values(2, 'test', 'test', 0);
 INSERT INTO `PaperTest`(`name`) values('教师师德师风自查');
 INSERT INTO `PaperQuestion`(`user_property_id`, `description`, `test_id`) values(1, '您是否能切实做到上课前面对镜子正衣冠，保持微笑，以良好的精神面貌进入课堂。(10分）', 1);
