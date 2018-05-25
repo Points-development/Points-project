@@ -93,7 +93,8 @@ gulp.task('minify-app', function () {
       'portal/app/system/user/user.controller.js',
       'portal/app/query/query.module.js',
       'portal/app/query/queryuser.module.js',
-      'portal/app/query/query.controller.js'
+      'portal/app/query/query.controller.js',
+      'portal/app/query/query.summary.controller.js'
          ])
         .pipe(sourcemaps.init())
         .pipe(concat('main.js'))

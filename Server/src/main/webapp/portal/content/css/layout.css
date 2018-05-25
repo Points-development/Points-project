@@ -616,5 +616,16 @@ div.departure > div.city.traffic{
 div.route-date .well{
 	margin-bottom: 5px;
 }
-
+div.summary{
+	margin:10px;
+}
+div.summary p{
+	font-size:14px;
+	text-indent:20px;
+}
+div.summary p.summary_tittle{
+    text-align:center;
+    font-size:17px;
+    font-weight:bold;
+}
 

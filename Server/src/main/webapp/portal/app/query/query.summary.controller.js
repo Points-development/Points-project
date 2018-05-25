@@ -11,10 +11,12 @@
     function QuerySummaryController(messageCenterService, systemService) {
     	var vm = this;
         vm.summary = [];
+        vm.now = new Date();
         vm.startQuery = function(){
         	vm.summary = [];
         	systemService.getQuestionSummary().then(function(response){
         		vm.summary = response;
+        		console.log(vm.summary[1]);
         	},function(response){
         		if(response.error){
         			messageCenterService.add('danger', response.error, {timeout:3000});
