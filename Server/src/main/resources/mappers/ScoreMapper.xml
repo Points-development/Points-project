@@ -15,6 +15,23 @@
     <result column="selfPoint" property="selfPoint" jdbcType="INTEGER" />
     <result column="otherPoint" property="otherPoint" jdbcType="INTEGER" />
   </resultMap>
+  <resultMap id="QuestionSummaryResultMap" type="com.huiyong.model.QuestionSummary" >
+    <result column="questionId" property="questionId" jdbcType="INTEGER" />
+    <result column="excellent" property="excellent" jdbcType="INTEGER" />
+    <result column="good" property="good" jdbcType="INTEGER" />
+    <result column="normal" property="normal" jdbcType="INTEGER" />
+    <result column="bad" property="bad" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="getQuestionSummary" resultMap="QuestionSummaryResultMap">
+select question_id questionId,
+sum(option_id = 1) as excellent,
+sum(option_id = 2) as good,
+sum(option_id = 3) as normal,
+sum(option_id = 4) as bad
+from PaperItemScore 
+where score_id in (select id from PaperScore where scorer=scoree) 
+group by question_id
+  </select>
   <select id="getScoreByUser" resultMap="ScoreResultMap">
         SELECT *
         FROM PaperScore PS

@@ -4,7 +4,9 @@
 package com.huiyong.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.huiyong.model.QuestionSummary;
 import com.huiyong.model.Score;
 import com.huiyong.model.ScorePoint;
 
@@ -20,4 +22,5 @@ public interface ScoreService {
 	public Integer getOtherScorePoint(String username);
 	public boolean addScore(Score score);
 	public List<ScorePoint> getScorePointByBranch(String branch);
+	public Map<Integer, QuestionSummary> getQuestionSummary();
 }

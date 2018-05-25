@@ -81,6 +81,18 @@
             );
             return deferred.promise;
         };
+        factory.getQuestionSummary = function(){
+            var deferred = $q.defer();
+            $http.get('/pointservice/score/questionsummary').then(
+                    function (resp) {
+                        deferred.resolve(resp.data);
+                    },
+                    function (resp) {
+                        deferred.reject(resp.data);
+                    }
+            );
+            return deferred.promise;
+        };
         return factory;
     }
 })();

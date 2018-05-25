@@ -4,6 +4,7 @@
 package com.huiyong.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.huiyong.dao.ScoreItemResultMapper;
 import com.huiyong.dao.ScoreMapper;
+import com.huiyong.model.QuestionSummary;
 import com.huiyong.model.Score;
 import com.huiyong.model.ScoreItemResult;
 import com.huiyong.model.ScorePoint;
@@ -107,6 +109,15 @@ public class ScoreServiceImpl implements ScoreService {
 	@Override
 	public List<ScorePoint> getScorePointByBranch(String branch) {
 		return scoreDao.getScorePointByBranch(branch);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.huiyong.service.ScoreService#getQestionSummary()
+	 */
+	@Override
+	public Map<Integer, QuestionSummary> getQuestionSummary() {
+		List<QuestionSummary> qsList = scoreDao.getQuestionSummary();
+		return QuestionSummary.toQuestionSummaryMap(qsList);
 	}
 
 }

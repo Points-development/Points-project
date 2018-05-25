@@ -16,6 +16,12 @@
 	            controller:'UserManageController',
 	      	    controllerAs: 'umCtrl'
 	        })
+	        .state('home.summary', {
+	            url: '/summary_report',
+	            templateUrl: 'app/query/querysummary.html',
+	            controller:'QuerySummaryController',
+	      	    controllerAs: 'qsCtrl'
+	        })
 	        .state('home.query', {
 	            url: '/query_user',
 	            templateUrl: 'app/query/query.html',

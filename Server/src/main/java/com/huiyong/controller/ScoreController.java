@@ -5,6 +5,7 @@ package com.huiyong.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.huiyong.model.Message;
+import com.huiyong.model.QuestionSummary;
 import com.huiyong.model.Score;
 import com.huiyong.model.ScorePoint;
 import com.huiyong.service.ScoreService;
@@ -96,5 +98,12 @@ public class ScoreController {
     		return new ResponseEntity<Message>(m, HttpStatus.NOT_FOUND);
     	}
     	return new ResponseEntity<List<ScorePoint>>(spList, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/questionsummary", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
+    public ResponseEntity<?> getQuestionSummary() {
+    	Map<Integer, QuestionSummary> qsMap = null;
+		qsMap = scoreService.getQuestionSummary();
+    	return new ResponseEntity<Map<Integer, QuestionSummary>>(qsMap, HttpStatus.OK);
     }
 }

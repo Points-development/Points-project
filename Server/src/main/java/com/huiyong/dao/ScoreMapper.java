@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.huiyong.model.QuestionSummary;
 import com.huiyong.model.Score;
 import com.huiyong.model.ScorePoint;
 
@@ -23,4 +24,5 @@ public interface ScoreMapper {
 	public Integer getOtherScorePoint(String username);
 	public void updateScore(Score score);
 	public List<ScorePoint> getScorePointByBranch(String branch);
+	public List<QuestionSummary> getQuestionSummary();
 }
