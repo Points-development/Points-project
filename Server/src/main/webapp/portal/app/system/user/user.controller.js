@@ -99,7 +99,7 @@
 	      	    	  	$scope.resetPwd = false;
 	      	      		$scope.submit_user = function(){
 		      	      		if(!$scope.user.branch){
-			  	    			  $scope.error = '支部选项必填';
+			  	    			  $scope.error = '部门选项必填';
 			  	    			  return false;
 		      	      		}
 			      	      	if($scope.resetPwd){
