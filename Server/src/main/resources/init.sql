@@ -15,7 +15,7 @@ INSERT INTO `PaperQuestion`(`user_property_id`, `description`, `test_id`) values
 INSERT INTO `PaperQuestion`(`user_property_id`, `description`, `test_id`) values(1, '有没有过对特殊孩子进行单独辅导与教育？（一月平均共计20次，每次计0.5分）', 1);
 INSERT INTO `PaperQuestion`(`user_property_id`, `description`, `test_id`) values(1, '有没有过与所带班级的班主任关于孩子（学习、纪律等）进行沟通了解？（一月平均共计20次，每次计0.5分）', 1);
 INSERT INTO `PaperQuestion`(`user_property_id`, `description`, `test_id`) values(1, '有没有利用家长接送孩子的时机与家长进行有效沟通？（一月平均共计20次，每次计0.5分）', 1);
-INSERT INTO `PaperOption`(`description`,`test_id`) values('优秀', 1);
-INSERT INTO `PaperOption`(`description`,`test_id`) values('良好', 1);
-INSERT INTO `PaperOption`(`description`,`test_id`) values('一般', 1);
-INSERT INTO `PaperOption`(`description`,`test_id`) values('较差', 1);
+INSERT INTO `PaperOption`(`description`,`test_id`) values('10分', 1);
+INSERT INTO `PaperOption`(`description`,`test_id`) values('9~8分', 1);
+INSERT INTO `PaperOption`(`description`,`test_id`) values('7~6分', 1);
+INSERT INTO `PaperOption`(`description`,`test_id`) values('5分以下', 1);
