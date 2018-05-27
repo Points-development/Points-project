@@ -172,8 +172,10 @@ export default class Assessment extends React.Component {
 			                radio_props={this.state.options}
 		        			buttonColor={gColors.buttonColor}
 		        			initial={defaultSelect}
-		        			radioStyle={{paddingRight:15}}
-		        			labelStyle={{fontSize:gFont.contentSize}}
+		        			radioStyle={{paddingRight:3}}
+		        		    buttonSize={14}
+		        			buttonOuterSize={28}
+		        			labelStyle={{fontSize:gFont.contentSize,paddingLeft:3}}
 		        			formHorizontal={true}
 		        		  	labelHorizontal={true}
 			                onPress={(value,index) => {
