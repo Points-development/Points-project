@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `pointServiceEducation` default charset utf8 COLLATE utf8_general_ci;
-use pointServiceEducation;
+CREATE DATABASE IF NOT EXISTS `pointServiceWugongXian` default charset utf8 COLLATE utf8_general_ci;
+use pointServiceWugongXian;
 
 CREATE TABLE IF NOT EXISTS `UserProperty` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
