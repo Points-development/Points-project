@@ -230,13 +230,13 @@ export default class Assessment extends React.Component {
 	                style={styles.item}
 	                onPress={()=>this._onPress(item)}
 	            >
-	                <Text style={{color: '#000', fontSize:gFont.headerSize}}>{item.name}</Text>
+	                <Text style={{color: '#000', fontSize:gFont.headerSize}}>{item.realName}</Text>
 	            </TouchableOpacity>
             }
 	        {itemName==gUser.name && 
 	        	<View
 	        		style={styles.item}>
-                	<Text style={{color: '#ddd', fontSize:gFont.headerSize}}>{item.name}(不能评测自己)</Text>
+                	<Text style={{color: '#ddd', fontSize:gFont.headerSize}}>{item.realName}(不能评测自己)</Text>
                 </View>
 	        }
 	        </View>

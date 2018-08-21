@@ -10,7 +10,7 @@
 <div id="summary">
 <div class="table_area">
     <div class="table_title">
-        彬州市教育系统党员党性体检得分汇总表
+        武功县小村镇党员党性体检得分汇总表
     </div>
     <form class="form-horizontal">
     <div class="form-group">
@@ -31,7 +31,7 @@
             <th class="tg-yw4l">组织评价(30%)</th>
             <th class="tg-yw4l">总分</th>
             <th class="tg-yw4l">红线指标情况</th>
-            <th class="tg-yw4l">健康状况评定</th>
+            <th class="tg-yw4l">状况评定</th>
           </tr>
           <tr ng-repeat="obj in ecCtrl.datalist">
             <td class="tg-yw4l">{{$index+1}}</td>
@@ -50,14 +50,14 @@
             </td>
             <td class="tg-yw4l tg-edit">
                 <select ng-model="obj.jianKang">
-                    <option value="健康" ng-selected="obj.jianKang=='健康'">健康</option>
-                    <option value="亚健康" ng-selected="obj.jianKang=='亚健康'">亚健康</option>
-                    <option value="不健康" ng-selected="obj.jianKang=='不健康'">不健康</option>
+                    <option value="合格" ng-selected="obj.jianKang=='合格'">合格</option>
+                    <option value="基本合格" ng-selected="obj.jianKang=='基本合格'">基本合格</option>
+                    <option value="不合格" ng-selected="obj.jianKang=='不合格'">不合格</option>
                 </select>
             </td>
           </tr>
         </table>
     </div>
-    <div class="table_bottom">说明：得分在80分以上且没有红线指标情形的，评定为“党性健康”；60-80分或有1项红线指标情形的，评定为“党性亚健康”；60分以下或有2项及以上红线指标情形的，评定为“党性不健康”。</div>
+    <div class="table_bottom">说明：得分在80分以上且没有红线指标情形的，评定为“党性合格”；60-80分或有1项红线指标情形的，评定为“党性基本合格”；60分以下或有2项及以上红线指标情形的，评定为“党性不合格”。</div>
 </div>
 </div>
