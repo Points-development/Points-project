@@ -23,5 +23,5 @@ cd ../../..
 mvn clean
 #!!!!!!when we package and upload to server, please modify WebConfig.java and WebSecurityConfig!!!!!!!!!!!!!
 #!!!!!!uncomment the method addResourceHandlers!!!!!!!!!!!!!!!
-mvn package
+mvn package -Dmaven.test.skip=true
 #rm -rf src/main/resources/static
