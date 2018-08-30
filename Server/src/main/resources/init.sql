@@ -41,6 +41,6 @@ INSERT INTO `PaperQuestion`(`user_property_id`, `description`, `test_id`) values
 INSERT INTO `PaperQuestion`(`user_property_id`, `description`, `test_id`) values(5, '我是否存在工作方法简单，深入基层和村组调查研究不够，对工作的指导和督查不够深入，致使工作效果不理想？', 1);
 INSERT INTO `PaperQuestion`(`user_property_id`, `description`, `test_id`) values(5, '我是否对群众没感情，不关心群众疾苦，坐等上门多、主动问需少，特别是在联系服务对象、困难党员、群众等方面有差距？', 1);
 INSERT INTO `PaperOption`(`description`,`test_id`, `point`) values('优秀', 1, 5);
-INSERT INTO `PaperOption`(`description`,`test_id`, `point`) values('良好', 1, 3);
-INSERT INTO `PaperOption`(`description`,`test_id`, `point`) values('一般', 1, 1);
-INSERT INTO `PaperOption`(`description`,`test_id`, `point`) values('较差', 1, 0);
+INSERT INTO `PaperOption`(`description`,`test_id`, `point`) values('良好', 1, 4);
+INSERT INTO `PaperOption`(`description`,`test_id`, `point`) values('一般', 1, 2);
+INSERT INTO `PaperOption`(`description`,`test_id`, `point`) values('较差', 1, 1);
