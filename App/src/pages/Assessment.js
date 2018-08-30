@@ -126,9 +126,9 @@ export default class Assessment extends React.Component {
     		}
     	}
     	score.commonTotal = score.common.scores1+score.common.scores2+score.common.scores3+score.common.scores4;
-    	score.commonTotalScore = score.common.scores1*5+score.common.scores2*3+score.common.scores3*1;
+    	score.commonTotalScore = score.common.scores1*5+score.common.scores2*4+score.common.scores3*2+score.common.scores4*1;
     	score.selfTotal = score.self.scores1+score.self.scores2+score.self.scores3+score.self.scores4;
-    	score.selfTotalScore = score.self.scores1*5+score.self.scores2*3+score.self.scores3*1;
+    	score.selfTotalScore = score.self.scores1*5+score.self.scores2*4+score.self.scores3*2+score.self.scores4*1;
     	this.setState({resultVisible: true,selfScore:score});
     }
     

@@ -77,7 +77,7 @@ export default class QuerySelf extends React.Component {
 			}
     	});
     	score.total = score.scores1+score.scores2+score.scores3+score.scores4;
-    	score.totalScore = score.scores1*5+score.scores2*3+score.scores3*1;
+    	score.totalScore = score.scores1*5+score.scores2*4+score.scores3*2+score.scores4;
         return (
         		<View style={styles.question}>
         			<View style={{padding:10,paddingTop:30}}>
