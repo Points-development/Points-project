@@ -10,6 +10,8 @@ package com.huiyong.model.paper;
 public class PaperQuestion {
 	private Integer id;
 	private String description;
+	//目前有选择题, 问答题两种类型，选择题为1， 问答题为2
+	private Integer type;
 	private String property;
 	public Integer getId() {
 		return id;
@@ -28,5 +30,17 @@ public class PaperQuestion {
 	}
 	public void setProperty(String property) {
 		this.property = property;
+	}
+	/**
+	 * @return the type
+	 */
+	public Integer getType() {
+		return type;
+	}
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(Integer type) {
+		this.type = type;
 	}
 }

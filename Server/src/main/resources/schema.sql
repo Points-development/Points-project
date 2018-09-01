@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `PaperQuestion` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_property_id` int(11) NOT NULL,
   `description` varchar(512) NOT NULL,
+  `type` int(11) NOT NULL,
   `test_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`test_id`) REFERENCES `PaperTest` (`id`),
@@ -65,11 +66,11 @@ CREATE TABLE IF NOT EXISTS `PaperScore` (
 CREATE TABLE IF NOT EXISTS `PaperItemScore` (
   `score_id` int(128) NOT NULL,
   `question_id` int(11) NOT NULL,
-  `option_id` int(11) NOT NULL,
-  PRIMARY KEY (`score_id`, `question_id`, `option_id`),
+  `option_id` int(11),
+  `answer` text,
+  PRIMARY KEY (`score_id`, `question_id`),
   FOREIGN KEY (`score_id`) REFERENCES `PaperScore` (`id`),
-  FOREIGN KEY (`question_id`) REFERENCES `PaperQuestion` (`id`),
-  FOREIGN KEY (`option_id`) REFERENCES `PaperOption` (`id`));
+  FOREIGN KEY (`question_id`) REFERENCES `PaperQuestion` (`id`));
   
 CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

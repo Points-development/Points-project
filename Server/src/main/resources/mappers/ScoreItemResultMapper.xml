@@ -4,18 +4,34 @@
    <resultMap id="ItemResultMap" type="com.huiyong.model.score.ScoreItemResult" >
     <result column="question_id" property="questionId" jdbcType="INTEGER" />
     <result column="option_id" property="optionsId" jdbcType="INTEGER" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
   </resultMap>
    <select id="getItemResultByScoreId" resultMap="ItemResultMap">
         SELECT score_id,
                question_id, 
-               option_id 
+               option_id,
+               answer
         FROM PaperItemScore 
     	where score_id = #{id};
   </select>
-  <insert id="addBatchItemResult" parameterType="java.util.List">  
-	Insert into PaperItemScore (score_id, question_id, option_id) values  
-		<foreach collection="list" item="item" separator=",">  
-			(#{item.scoreId},#{item.questionId},#{item.optionsId})  
+  <insert id="addBatchItemResult" parameterType="java.util.List"> 
+  		<foreach collection="list" item="item" separator=";">   
+			Insert into PaperItemScore (score_id, 
+	                          <if test="item.optionsId != null" >
+        							option_id,
+      					  	  </if>
+	                          <if test="item.answer != null" >
+        							answer,
+      					  	  </if> 
+	                           question_id) values  
+			(#{item.scoreId},
+	        <if test="item.optionsId != null" >
+        		#{item.optionsId},
+      		</if>
+	        <if test="item.answer != null" >
+        		#{item.answer},
+      		</if> 
+            #{item.questionId})  
 			</foreach>  
 	</insert>
 	<delete id="deleteScoreItemResult" parameterType="int">

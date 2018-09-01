@@ -13,17 +13,19 @@ public class ScoreItemResult {
 	@JsonIgnore
 	private int scoreId;
 	private int questionId;
-	private int optionsId;
+	private Integer optionsId;
+	//选择题有optionId, 问答题有answer
+	private String answer;
 	public int getQuestionId() {
 		return questionId;
 	}
 	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
 	}
-	public int getOptionsId() {
+	public Integer getOptionsId() {
 		return optionsId;
 	}
-	public void setOptionsId(int optionsId) {
+	public void setOptionsId(Integer optionsId) {
 		this.optionsId = optionsId;
 	}
 	public int getScoreId() {
@@ -31,5 +33,17 @@ public class ScoreItemResult {
 	}
 	public void setScoreId(int scoreId) {
 		this.scoreId = scoreId;
+	}
+	/**
+	 * @return the answer
+	 */
+	public String getAnswer() {
+		return answer;
+	}
+	/**
+	 * @param answer the answer to set
+	 */
+	public void setAnswer(String answer) {
+		this.answer = answer;
 	}
 }
