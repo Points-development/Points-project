@@ -1,0 +1,35 @@
+<div ng-init="qcCtrl.getAnswer()" style="margin:50px">
+    <ul class="nav nav-tabs">
+        <li class="uib-tab nav-item" ng-class="{active:qcCtrl.selectTab=='self'}">
+            <a ng-click="qcCtrl.clickTab('self')" class="nav-link">自评答卷</a>
+        </li>
+        <li class="uib-tab nav-item" ng-class="{active:qcCtrl.selectTab=='other'}">
+            <a ng-click="qcCtrl.clickTab('other')" class="nav-link">他评答卷</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div ng-if="qcCtrl.selectTab=='other'">
+            选择评选人:
+            <select>
+                <option ng-click="qcCtrl.getAnswer(u.name)" value="{{u.realName}}" ng-repeat = "u in qcCtrl.userlist">{{u.realName}}</option>
+            </select>
+            <div class="divider"></div>
+        </div>
+        <div ng-if="qcCtrl.scoreResult" ng-repeat="obj in qcCtrl.questionResult.questions track by $index">
+            <div>{{$index+1}}. {{obj.description}}</div>
+            <div ng-if="obj.type ==1">
+                <label class="radio-inline" ng-repeat="option in qcCtrl.questionResult.options ">
+                    <input disabled ng-checked="qcCtrl.checkAnswer(obj,option)" type="radio"> {{option.description}}
+                </label>
+            </div>
+            <div ng-if="obj.type ==2">
+                <div ng-bind="qcCtrl.getQuestionAnser(obj)"></div>
+            </div>
+            <div class="divider"></div>
+            
+        </div>
+        <div ng-if="!qcCtrl.scoreResult" style="margin:100px;text-align:center">
+            目前暂无评价
+        </div>
+    </div>
+</div>

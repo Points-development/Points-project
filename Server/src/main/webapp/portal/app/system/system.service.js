@@ -117,6 +117,42 @@
              );
             return deferred.promise;
         };
+        factory.getAnswer = function(scoree,scorer){
+            var deferred = $q.defer();
+            $http.get('/pointservice/score/'+scoree+'?scorer='+scorer).then(
+                    function (resp) {
+                        deferred.resolve(resp.data);
+                    },
+                    function (resp) {
+                        deferred.reject(resp.data);
+                    }
+            );
+            return deferred.promise;
+        };
+        factory.getQuestion = function(username){
+            var deferred = $q.defer();
+            $http.get('/pointservice/paper/1?username='+username).then(
+                    function (resp) {
+                        deferred.resolve(resp.data);
+                    },
+                    function (resp) {
+                        deferred.reject(resp.data);
+                    }
+            );
+            return deferred.promise;
+        };
+        factory.getSameBranchUsers = function(username){
+            var deferred = $q.defer();
+            $http.get('/pointservice/branch/users?username='+username).then(
+                    function (resp) {
+                        deferred.resolve(resp.data);
+                    },
+                    function (resp) {
+                        deferred.reject(resp.data);
+                    }
+            );
+            return deferred.promise;
+        };
         return factory;
     }
 })();

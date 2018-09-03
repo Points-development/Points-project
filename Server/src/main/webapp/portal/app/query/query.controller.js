@@ -6,15 +6,17 @@
     angular.module('query.user')
         .controller('QueryController', QueryController);
 
-    QueryController.$inject = ['storage','messageCenterService','systemService','security'];
+    QueryController.$inject = ['storage','messageCenterService','systemService','security','$uibModal','transferUser'];
 
-    function QueryController(storage,messageCenterService,systemService,security) {
+    function QueryController(storage,messageCenterService,systemService,security,$uibModal,transferUser) {
         var vm = this;
         var currentUser = security.getCurrentUser();
         vm.userName = currentUser.name;
         vm.branch = currentUser.branch;
+        vm.organization = currentUser.organization;
         vm.queryObject = null;
         vm.resultlist = [];
+        vm.selectTab ='self';
         vm.startQuery = function(branch){
         	vm.resultlist = [];
         	systemService.getUsersScore(branch).then(function(response){
@@ -40,6 +42,93 @@
         	
         	return obj.selfPoint+obj.otherPoint;
         }
+        
+        vm.getAnswer = function(other){
+        	let scoree = transferUser.self;
+        	let scorer = transferUser.self;
+        	if(other){
+        		scorer = other;
+        	}
+        	
+        	systemService.getQuestion(scoree).then(function(response){
+        		vm.questionResult = response;
+        		systemService.getAnswer(scoree,scorer).then(function(response2){
+            		vm.scoreResult = response2[0];
+            	},function(response2){
+            		vm.scoreResult = null;
+            		if(response2.error){
+            			messageCenterService.add('danger', response2.error, {timeout:3000});
+            		}else{
+            			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
+            		}
+            	});
+        	},function(response){
+        		if(response.error){
+        			messageCenterService.add('danger', response.error, {timeout:3000});
+        		}else{
+        			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
+        		}        		
+        	});
+        }
+        
+        vm.checkAnswer = function(question,option){
+        	for(var i=0;i<vm.scoreResult.scores.length;i++){
+        		if(vm.scoreResult.scores[i].questionId == question.id 
+        				&& vm.scoreResult.scores[i].optionsId == option.id){
+        			return true;
+        		}
+        	}
+        	return false;
+        }
+        
+        vm.getQuestionAnser = function(question){
+        	for(var i=0;i<vm.scoreResult.scores.length;i++){
+        		if(vm.scoreResult.scores[i].questionId == question.id){
+        			return vm.scoreResult.scores[i].answer;
+        		}
+        	}
+        	return null;
+        }
+        
+        vm.clickTab = function(name){
+        	vm.scoreResult = null;
+        	vm.selectTab = name;
+        	if(name == 'self'){
+        		vm.getAnswer();
+        	}else{
+        		systemService.getSameBranchUsers(transferUser.self).then(function(response){
+            		vm.userlist = response;
+            		vm.userlist = vm.userlist.filter(function(u){
+            			return u.name != transferUser.self;
+            		});
+            		if(vm.userlist.length>0){
+            			vm.getAnswer(vm.userlist[0].name);
+            		}
+            		
+            	},function(response){
+            		messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
+            	});
+        	}
+        	
+        }
+        
+        vm.seeDetail = function(obj){
+        	$uibModal.open({
+	      	      animation: true,
+	      	      size:"cm-user",
+	      	      ariaLabelledBy: 'modal-title-top',
+	      	      ariaDescribedBy: 'modal-body-top',
+	      	      templateUrl: 'app/query/paper_details.html',
+		      	  controller:'QueryController',
+	  	          controllerAs: 'qcCtrl',
+		  	      resolve: {
+		  	    	  transferUser:function(){
+		  	        	   return {self:obj.username};
+		  	           }
+		  	       }
+	        });
+        }
+        
 
         /**
          * 打印局部div

@@ -37,7 +37,12 @@
 	            url: '/query_user',
 	            templateUrl: 'app/query/query.html',
 	            controller:'QueryController',
-	      	    controllerAs: 'qcCtrl'
+	      	    controllerAs: 'qcCtrl',
+	      	    resolve: {
+		      		transferUser:function(){
+		      			return null;
+		  	        }
+		  	    }
 	        }).state('home.examine', {
 	            url: '/examine',
 	            abstract: true,

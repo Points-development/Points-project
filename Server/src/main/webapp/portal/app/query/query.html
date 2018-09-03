@@ -35,6 +35,9 @@
          <div class="custom-cell">
             <span>他评分数</span>
          </div>
+         <div class="custom-cell">
+            <span>答卷详情</span>
+         </div>
       </div>
       <div class="custom-row row-hover-cyan" ng-repeat="obj in qcCtrl.resultlist track by $index">
          <div class="custom-cell" style="width:15%">
@@ -51,6 +54,9 @@
          </div>
          <div class="custom-cell">
             <span>{{obj.otherPoint}}</span>
+         </div>
+         <div class="custom-cell" ng-click="qcCtrl.seeDetail(obj)">
+            <a style="color:#008571;cursor: pointer"><span>详情</span></a>
          </div>
       </div>
 </div>

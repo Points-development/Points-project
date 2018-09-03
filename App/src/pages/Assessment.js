@@ -11,7 +11,8 @@ import {
 	Modal,
 	Image,
 	ToastAndroid,
-	ScrollView
+	ScrollView,
+	TextInput
 } from 'react-native';
 
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
@@ -92,7 +93,7 @@ export default class Assessment extends React.Component {
     	}
     	for(let i=0;i<this.state.dataSource.questions.length;i++){
     		let item = this.state.dataSource.questions[i];
-    		if(item.selected){
+    		if(item.selected || item.answer){
     			if(item.property =='共性'){
     				if(item.selected == 1){
         				score.common.scores1 +=1;
@@ -142,7 +143,11 @@ export default class Assessment extends React.Component {
     	}
     	this.state.dataSource.questions.map(function(item){
     		if(item.selected){
-    			let question={questionId:item.id,optionsId:item.selected}
+    			let question={questionId:item.id,optionsId:item.selected};
+    			score.scores.push(question);
+    		}
+    		if(item.type == 2){
+    			let question={questionId:item.id,answer:item.answer};
     			score.scores.push(question);
     		}
     	});
@@ -167,20 +172,33 @@ export default class Assessment extends React.Component {
         			<View style={{padding:20,paddingTop:30}}>
         				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.index+1}. {item.item.description}</Text>
         			</View>
-        			<View style={{padding:20}}>
-		        		<RadioForm
-			                radio_props={this.state.options}
-		        			buttonColor={gColors.buttonColor}
-		        			initial={defaultSelect}
-		        			radioStyle={{paddingRight:15}}
-		        			labelStyle={{fontSize:gFont.contentSize}}
-		        			formHorizontal={true}
-		        		  	labelHorizontal={true}
-			                onPress={(value,index) => {
-			                	item.item.selected=this.state.options[index].id
-			                }}
-			              />
-		            </View>
+        			{
+        				item.item.type==1?
+        					<View style={{padding:20}}>
+				        		<RadioForm
+					                radio_props={this.state.options}
+				        			buttonColor={gColors.buttonColor}
+				        			initial={defaultSelect}
+				        			radioStyle={{paddingRight:15}}
+				        			labelStyle={{fontSize:gFont.contentSize}}
+				        			formHorizontal={true}
+				        		  	labelHorizontal={true}
+					                onPress={(value,index) => {
+					                	item.item.selected=this.state.options[index].id
+					                }}
+					              />
+				            </View>
+				        	:
+				        	<View style={{padding:20}}>
+				        		<TextInput
+					                style={{height: 80, borderColor: '#50C900', borderWidth: 1}}
+					                onChangeText={(text) => item.item.answer=text}
+				        			multiline = {true}
+					             />
+				        	</View>
+        			
+        			}
+        			
 		        	
         		</View>
         	)
