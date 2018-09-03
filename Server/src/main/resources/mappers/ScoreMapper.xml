@@ -12,6 +12,7 @@
   </resultMap> 
   <resultMap id="ScorePointResultMap" type="com.huiyong.model.score.ScorePoint" >
     <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
     <result column="selfPoint" property="selfPoint" jdbcType="INTEGER" />
     <result column="otherPoint" property="otherPoint" jdbcType="INTEGER" />
   </resultMap>
@@ -36,7 +37,7 @@
         ;
   </select>
 	<select id="getScorePointByBranch" parameterType="String" resultMap="ScorePointResultMap">
-		select U.name username, OS.selfPoint selfPoint, OP.otherPoint
+		select U.name username, U.realName realname, OS.selfPoint selfPoint, OP.otherPoint
 		otherPoint,OS.lastModifiedTime 
 		from User U LEFT JOIN (
 		select PSOTHER.scoree, avg(PSOTHER.point) otherPoint

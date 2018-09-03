@@ -11,6 +11,7 @@ import java.util.Date;
  */
 public class ScorePoint {
 	private String username;
+	private String realname;
 	private int selfPoint;
 	private int otherPoint;
 	private Date lastModifiedTime;
@@ -37,6 +38,18 @@ public class ScorePoint {
 	}
 	public void setLastModifiedTime(Date lastModifiedTime) {
 		this.lastModifiedTime = lastModifiedTime;
+	}
+	/**
+	 * @return the realname
+	 */
+	public String getRealname() {
+		return realname;
+	}
+	/**
+	 * @param realname the realname to set
+	 */
+	public void setRealname(String realname) {
+		this.realname = realname;
 	}
 	
 }
