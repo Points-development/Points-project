@@ -44,8 +44,8 @@
         }
         
         vm.getAnswer = function(other){
-        	let scoree = transferUser.self;
-        	let scorer = transferUser.self;
+        	var scoree = transferUser.self;
+        	var scorer = transferUser.self;
         	if(other){
         		scorer = other;
         	}
