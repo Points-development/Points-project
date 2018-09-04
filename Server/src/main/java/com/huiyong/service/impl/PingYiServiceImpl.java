@@ -80,7 +80,13 @@ public class PingYiServiceImpl implements PingYiService{
 	 */
 	@Override
 	public List<HuPing> getHuPings(String branch, String organization) {
-		return pingYiDao.getHuPings(branch, organization);
+		List<HuPing> huPingList = pingYiDao.getHuPings(branch, organization);
+		for(HuPing huPing : huPingList){
+			if(null == huPing.getProblem()){
+				huPing.setProblem(pingYiDao.getHuPingAnswerByUser(huPing.getUserName()));
+			}
+		}
+		return huPingList;
 	}
 
 	/* (non-Javadoc)

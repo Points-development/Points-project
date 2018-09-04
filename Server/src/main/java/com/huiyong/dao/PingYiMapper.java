@@ -29,6 +29,7 @@ public interface PingYiMapper {
 	
 	
 	public List<HuPing> getHuPings(@Param(value = "branch")String branch, @Param(value = "organization")String organization);
+	public String getHuPingAnswerByUser(@Param(value = "username")String username);
 	public void insertHuPings(@Param(value = "huPings")List<HuPing> huPings);
 	public void deleteHuPings(@Param(value = "branch")String branch, @Param(value = "organization")String organization);
 	

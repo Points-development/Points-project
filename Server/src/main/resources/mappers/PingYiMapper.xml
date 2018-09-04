@@ -93,12 +93,14 @@
     <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
   </resultMap>
    <select id="getZiPings" resultMap="ZiPingResultMap">
-select User.name, User.realName, ifnull(POINT.gongxing, 0) gongxing, ifnull(POINT.gexing, 0) gexing, ifnull(POINT.gongxing, 0) + ifnull(POINT.gexing, 0) total, ZiPing.problem, ZiPing.lastModifiedTime
+select User.name, User.realName, ifnull(POINT.gongxing, 0) gongxing, ifnull(POINT.gexing, 0) gexing, ifnull(POINT.gongxing, 0) + ifnull(POINT.gexing, 0) total, ifnull(ZiPing.problem, POINT.answer) problem, ZiPing.lastModifiedTime
 from
 (
-select FINAL_1.name, FINAL_1.realName, SUM(FINAL_1.gongxing) gongxing, SUM(FINAL_1.gexing) gexing from
+select FINAL_2.name, FINAL_2.realName, PaperItemScore.answer, FINAL_2.gongxing, FINAL_2.gexing from
 (
-select FINAL.name, FINAL.realName, 
+select FINAL_1.name, FINAL_1.realName, FINAL_1.score_id, SUM(FINAL_1.gongxing) gongxing, SUM(FINAL_1.gexing) gexing from
+(
+select FINAL.name, FINAL.realName, FINAL.score_id,
 CASE
 	When FINAL.propertyName=0 Then option_point
 	Else 0
@@ -109,16 +111,16 @@ CASE
 	End as gexing
 from
 (
-select UQPI.name, UQPI.realName, 
+select UQPI.name, UQPI.realName, UQPI.score_id,
 CASE
 	When UP.name='共性' Then 0
 	Else 1
 	End as propertyName, 
 UQPI.point * count(UQPI.point) option_point from
 (
-select UQI.name, UQI.realName, PQ.user_property_id, PO.point from
+select UQI.name, UQI.realName, UQI.score_id, PQ.user_property_id, PO.point from
 (
-select PS.name, PS.realName, PI.question_id, PI.option_id from
+select PS.name, PS.realName, PI.question_id, PI.option_id, PI.score_id from
 (
 select U.name, U.realName, P.id, P.paper_id from
 PaperScore P Join User U on U.name=P.scorer and U.name=P.scoree
@@ -130,11 +132,13 @@ Join PaperQuestion PQ on UQI.question_id=PQ.id
 Join PaperOption PO on PO.id=UQI.option_id
 ) UQPI 
 Join UserProperty UP on UP.id = UQPI.user_property_id
-group by name, propertyName, point
+group by name, propertyName, score_id, point
 ) FINAL
 ) FINAL_1
-group by FINAL_1.name, FINAL_1.realName
-) POINT 
+group by FINAL_1.name, FINAL_1.realName, FINAL_1.score_id
+) FINAL_2
+LEFT JOIN PaperItemScore on PaperItemScore.score_id=FINAL_2.score_id and PaperItemScore.answer is not NULL
+) POINT
 RIGHT JOIN User on User.name=POINT.name 
 LEFT JOIN ZiPing on ZiPing.userName=User.name
 where User.branch=#{branch} and User.organization=#{organization}
@@ -169,6 +173,10 @@ where User.branch=#{branch} and User.organization=#{organization}
 		) OP on U.name=OP.scoree
 		LEFT Join HuPing on U.name=HuPing.userName
 		where U.branch=#{branch} and U.organization=#{organization}
+  </select>
+  
+  <select id="getHuPingAnswerByUser" parameterType="String" resultType="String">
+select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemScore.score_id in (select id from PaperScore where scorer != scoree and scoree=#{username}) and answer is not NULL
   </select>
   
   <insert id="insertHuPings" parameterType="java.util.List" useGeneratedKeys="true">  
