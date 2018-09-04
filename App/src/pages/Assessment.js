@@ -93,7 +93,7 @@ export default class Assessment extends React.Component {
     	}
     	for(let i=0;i<this.state.dataSource.questions.length;i++){
     		let item = this.state.dataSource.questions[i];
-    		if(item.selected || item.answer){
+    		if(item.selected || item.type==2){
     			if(item.property =='共性'){
     				if(item.selected == 1){
         				score.common.scores1 +=1;
@@ -143,11 +143,11 @@ export default class Assessment extends React.Component {
     	}
     	this.state.dataSource.questions.map(function(item){
     		if(item.selected){
-    			let question={questionId:item.id,optionsId:item.selected};
+    			let question={questionId:item.id,optionsId:item.selected,answer:null};
     			score.scores.push(question);
     		}
     		if(item.type == 2){
-    			let question={questionId:item.id,answer:item.answer};
+    			let question={questionId:item.id,answer:item.answer,optionsId:null};
     			score.scores.push(question);
     		}
     	});
@@ -169,12 +169,12 @@ export default class Assessment extends React.Component {
     	}	
         return (
         		<View style={styles.question}>
-        			<View style={{padding:20,paddingTop:30}}>
+        			<View style={{padding:20}}>
         				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.index+1}. {item.item.description}</Text>
         			</View>
         			{
         				item.item.type==1?
-        					<View style={{padding:20}}>
+        					<View style={{padding:10,paddingLeft:20}}>
 				        		<RadioForm
 					                radio_props={this.state.options}
 				        			buttonColor={gColors.buttonColor}
@@ -189,10 +189,11 @@ export default class Assessment extends React.Component {
 					              />
 				            </View>
 				        	:
-				        	<View style={{padding:20}}>
+				        	<View style={{padding:10,paddingLeft:20}}>
 				        		<TextInput
-					                style={{height: 80, borderColor: '#50C900', borderWidth: 1}}
+					                style={{height: 80,textAlignVertical:'top',borderColor:'#50C900',borderWidth: 1}}
 					                onChangeText={(text) => item.item.answer=text}
+				        			underlineColorAndroid='transparent'
 				        			multiline = {true}
 					             />
 				        	</View>
@@ -365,7 +366,7 @@ const styles = StyleSheet.create({
 		paddingBottom:20
 	},
 	question:{
-		height:190
+		height:200
 	},
 	button:{
 		backgroundColor:gColors.buttonColor,
