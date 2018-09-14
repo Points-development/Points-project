@@ -20,8 +20,8 @@
     "jasmine-core": "^2.4.1",
     "phantomjs-prebuilt": "^2.1.12",
     "tsd": "^0.6.5",
-    "gulp-imagemin":"^v3.1.1",
-    "gulp-clean-css":"^v2.3.2"
+    "gulp-imagemin": "^v3.1.1",
+    "gulp-clean-css": "^v2.3.2"
   },
   "scripts": {
     "init-npm": "npm install",

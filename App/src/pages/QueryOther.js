@@ -14,6 +14,10 @@ import NetUtil from '../service/NetUtil'
 
 
 export default class QueryOther extends React.Component {
+	
+	static navigationOptions = {
+	    tabBarLabel: '他评记录',
+	};
 
     componentWillUnmount() {
     }

@@ -14,6 +14,10 @@ import NetUtil from '../service/NetUtil'
 
 
 export default class QuerySelf extends React.Component {
+	
+	static navigationOptions = {
+	    tabBarLabel: '自评记录',
+	};
 
     componentWillUnmount() {
     }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { TabNavigator, StackNavigator,TabBarTop } from 'react-navigation';
+import { createMaterialTopTabNavigator } from 'react-navigation';
 import {
     StyleSheet,
     View,
@@ -8,41 +8,16 @@ import {
     Button,
     TouchableOpacity
 } from 'react-native'
-import {NavigationActions} from 'react-navigation'
 import QuerySelf from './QuerySelf'
 import QueryOther from './QueryOther'
 
-let QuerySelfNav = StackNavigator({
-	QuerySelf:{
-        screen:QuerySelf,
-        navigationOptions:{
-        	tabBarLabel:'自评记录',
-        	header:null,
-        	gesturesEnabled:true
-        }
-    }
-});
-
-let QueryOtherNav = StackNavigator({
-	QueryOther:{
-        screen:QueryOther,
-        navigationOptions:{
-        	tabBarLabel:'他评记录',
-        	header:null,
-        	gesturesEnabled:true
-        }
-		
-    }
-});
-
-let TabBar = TabNavigator({
-    self: {screen: QuerySelfNav},
-    other: {screen: QueryOtherNav},
+let TabBar = createMaterialTopTabNavigator({
+    self: {screen: QuerySelf},
+    other: {screen: QueryOther},
 },
 {
     tabBarPosition: 'top',
     initialRouteName:'self',
-    tabBarComponent:TabBarTop,
     tabBarOptions: {
         activeTintColor: gColors.theme,
         inactiveTintColor: 'gray',

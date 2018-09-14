@@ -70,7 +70,7 @@ export default class Login extends React.Component {
 		    		<View style={styles.loginBackground}> 
 		    	    </View>
 	        	    <View style={styles.loginContainer}>
-	        	    	<View style={styles.title}><Text style={{fontSize:20,fontWeight:'bold',color:'#fff'}}>渭城区党员党性体检系统</Text></View>
+	        	    	<View style={styles.title}></View>
 		        	    {
 		        	    	this.state.errorMsg !='' && 
 		        	    	<View style={styles.title}>
@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 	    alignItems: 'center',
+	    marginTop:10
 	},
 	loginInput:{
 		height: 50,
