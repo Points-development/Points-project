@@ -33,7 +33,7 @@
  * Login page
  */
 .login-container {
-  background-color: rgba(200, 249, 250, 0.8);
+  background-color: rgba(200, 249, 250, 0);
   background-position: center;
   background-size:cover;
   -moz-background-size:cover;
@@ -54,7 +54,7 @@ input[type="text"],input[type="password"],input[type="email"]{
   background-size:cover;
   -moz-background-size:cover;
   -webkit-background-size:cover;
-  background-color: rgba(200, 249, 250, 0.5);
+  background-color: rgba(200, 249, 250, 0);
   position:absolute;
   bottom:0;
   right:0;
@@ -81,10 +81,11 @@ input[type="text"],input[type="password"],input[type="email"]{
 .login-container-body-box {
   margin-left:auto;
   margin-right:auto;
-  margin-top:250px;
   width: 50%;
   min-width:300px;
-  
+  position: absolute;
+  left: 30%;
+  top: 35%;
 }
 
 .login-container-logo{
