@@ -28,7 +28,8 @@ export default class Assessment extends React.Component {
     componentDidMount() {
     	const {who} = this.props.navigation.state.params
     	if(who == 'others'){
-    		let url1 = gServer.host+'/branch/users?username='+gUser.name;
+    		//let url1 = gServer.host+'/branch/users?username='+gUser.name;
+    		let url1 = gServer.host+'/score/pointsbyuser?branch='+gUser.branch+'&scorer='+gUser.name;
         	NetUtil.get(url1,function (response) {
         		if(response.status == 200){
         			this.setState({branchUsers: response.data});
@@ -212,8 +213,8 @@ export default class Assessment extends React.Component {
     _keyExtractor = (item, index) => item.id;
     
     _onPress = item => {
-    	this.setState({modalVisible: false,evaluator:item.name});
-    	let url2 = gServer.host+'/paper/1?username='+item.name;
+    	this.setState({modalVisible: false,evaluator:item.username});
+    	let url2 = gServer.host+'/paper/2?username='+item.username;
     	NetUtil.get(url2,function (response) {
     		if(response.status == 200){
     			this.setState({dataSource: response.data});
@@ -237,22 +238,22 @@ export default class Assessment extends React.Component {
     }
     
     _renderUserItem = (item, key) => {
-        let itemName = item.name
+        let itemName = item.username
         return (
-        	<View key={`${item.name}-${key}`}>
-	        {itemName != gUser.name && 
+        	<View key={`${item.username}-${key}`}>
+	        {itemName != gUser.name && item.otherPoint==0 && 
 	        	<TouchableOpacity
 	                activeOpacity={0.75}
 	                style={styles.item}
 	                onPress={()=>this._onPress(item)}
 	            >
-	                <Text style={{color: '#000', fontSize:gFont.headerSize}}>{item.realName}</Text>
+	                <Text style={{color: '#000', fontSize:gFont.headerSize}}>{item.realname}</Text>
 	            </TouchableOpacity>
             }
-	        {itemName==gUser.name && 
+	        {(itemName==gUser.name || item.otherPoint>0) && 
 	        	<View
 	        		style={styles.item}>
-                	<Text style={{color: '#ddd', fontSize:gFont.headerSize}}>{item.realName}(不能评测自己)</Text>
+                	<Text style={{color: '#ddd', fontSize:gFont.headerSize}}>{item.realname}(已评价)</Text>
                 </View>
 	        }
 	        </View>
