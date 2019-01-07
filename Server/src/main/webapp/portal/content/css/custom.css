@@ -1,17 +1,5 @@
 @charset "UTF-8";
 
-@media
- print {
-    div.table_area select{
-        appearance:none;
-        -moz-appearance:none;
-        -webkit-appearance:none;
-        border:none;
-    }
-    .tg {background-color:#ffffff}
-    
-}
-
 body{
 	color: #73879c;
 	overflow: hidden;
@@ -1558,6 +1546,22 @@ div.tdContent input[type="checkbox"]{
 	height:20px;
 	margin-bottom: -5px;
 	vertical-align: top;
+}
+
+.table_area .tg .tg-yw4l.tg-ping {width:47%}
+.table_area .tg .tg-yw4l.tg-problem {width:30%}
+
+@media
+ print {
+    div.table_area select{
+        appearance:none;
+        -moz-appearance:none;
+        -webkit-appearance:none;
+        border:none;
+    }
+    .tg {background-color:#ffffff;table-layout: fixed;}
+    .table_area .tg .tg-yw4l.tg-ping {width:40%}
+    .table_area .tg .tg-yw4l.tg-problem {width:20%}
 }
 
 
