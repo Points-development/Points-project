@@ -8,13 +8,14 @@ CREATE TABLE IF NOT EXISTS `UserProperty` (
 
 /**
  * e10adc3949ba59abbe56e057f20f883e 是123456的md5
+ * 21218cca77804d2ba1922c33e0151105 是888888的md5
  */
 CREATE TABLE IF NOT EXISTS `User` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_property_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL UNIQUE,
   `realName` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL DEFAULT 'e10adc3949ba59abbe56e057f20f883e',
+  `password` varchar(255) NOT NULL DEFAULT '21218cca77804d2ba1922c33e0151105',
   `branch` varchar(255) NOT NULL DEFAULT 'NULL',
   `organization` varchar(255) NOT NULL,
   `isAdmin` tinyint(1) DEFAULT 0,

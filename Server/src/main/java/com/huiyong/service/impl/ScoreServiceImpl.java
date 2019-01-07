@@ -109,4 +109,12 @@ public class ScoreServiceImpl implements ScoreService {
 		return scoreDao.getScorePointByBranch(branch);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.huiyong.service.ScoreService#getScorePointByBranchAndScorer(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<ScorePoint> getScorePointByBranchAndScorer(String branch, String scorer) {
+		return scoreDao.getScorePointByBranchAndScorer(branch, scorer);
+	}
+
 }

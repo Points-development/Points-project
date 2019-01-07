@@ -23,4 +23,5 @@ public interface ScoreMapper {
 	public Integer getOtherScorePoint(String username);
 	public void updateScore(Score score);
 	public List<ScorePoint> getScorePointByBranch(String branch);
+	public List<ScorePoint> getScorePointByBranchAndScorer(@Param(value = "branch") String branch, @Param(value = "scorer") String scorer);
 }

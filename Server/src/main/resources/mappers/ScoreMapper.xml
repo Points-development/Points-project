@@ -51,6 +51,14 @@
 		) OS on U.name=OS.scoree
 		where U.branch=#{branch};
 	</select>
+	
+	<select id="getScorePointByBranchAndScorer" resultMap="ScorePointResultMap">
+	    select U.name username, U.realName realname, PS.point otherPoint, PS.lastModifiedTime
+		from User U left join PaperScore PS
+        on U.name=PS.scoree and PS.scorer=#{scorer}
+		where U.branch=#{branch};
+	</select>
+	
     <select id="getScoreByOther" resultMap="ScoreResultMap">
         SELECT *
         FROM PaperScore PS

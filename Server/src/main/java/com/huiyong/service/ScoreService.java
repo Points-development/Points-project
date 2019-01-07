@@ -20,4 +20,5 @@ public interface ScoreService {
 	public Integer getOtherScorePoint(String username);
 	public boolean addScore(Score score);
 	public List<ScorePoint> getScorePointByBranch(String branch);
+	public List<ScorePoint> getScorePointByBranchAndScorer(String branch, String scorer);
 }

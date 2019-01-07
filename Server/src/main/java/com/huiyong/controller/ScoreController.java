@@ -97,4 +97,16 @@ public class ScoreController {
     	}
     	return new ResponseEntity<List<ScorePoint>>(spList, HttpStatus.OK);
     }
+    //return the list of points and user that the scorer did to other user in the branch, if there's no score, the other points will be 0
+    @RequestMapping(value = "/pointsbyuser", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
+    public ResponseEntity<?> getScorePointsByUser(@RequestParam String branch, @RequestParam String scorer) {
+		List<ScorePoint> spList = null;
+		Message m = new Message();
+		spList = scoreService.getScorePointByBranchAndScorer(branch, scorer);
+    	if(null == spList || spList.size() == 0){
+    		m.setError("目前没有分数,请输入正确部门名称");
+    		return new ResponseEntity<Message>(m, HttpStatus.NOT_FOUND);
+    	}
+    	return new ResponseEntity<List<ScorePoint>>(spList, HttpStatus.OK);
+    }
 }
