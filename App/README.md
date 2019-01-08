@@ -20,12 +20,18 @@ react-native run-ios
 #Upgrade,execute below command:
 react-native-git-upgrade
 
-
+#Step4
+1. cd /Users/xzgan/Library/Android/sdk/tools
+2. find device: ./emulator -list-avds
+3. nohup emulator -avd device28 -dns-server 8.8.8.8 &
+4. npm start in project dir
 
 
 #Android packaging offline
 
 ./gradlew assembleRelease
+
+使用安卓studio 生成离线包
 
 #uninstall npm module from react native:
 #if this is non-js based module,execute belows:
