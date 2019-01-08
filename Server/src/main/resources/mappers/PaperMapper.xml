@@ -23,6 +23,7 @@
   <resultMap id="OptionResultMap" type="com.huiyong.model.paper.PaperOption" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="point" property="optionPoint" jdbcType="INTEGER" />
   </resultMap>
   <select id="getPaperById" parameterType="int" resultMap="PaperResultMap">
 	select * from PaperTest where id=#{id};
