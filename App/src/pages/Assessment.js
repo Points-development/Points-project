@@ -44,7 +44,7 @@ export default class Assessment extends React.Component {
         			this.setState({dataSource: response.data});
         			let options = [];
         			response.data.options.map(function (item) {
-        				options.push({'label':item.description,'value':item.description,'id':item.id});
+        				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint});
         			});
         			this.setState({options:options});
         		}else{
@@ -127,10 +127,18 @@ export default class Assessment extends React.Component {
     			return false;
     		}
     	}
+    	let option1point = this.state.options[0].optionPoint;
+    	let option2point = this.state.options[1].optionPoint;
+    	let option3point = this.state.options[2].optionPoint;
+    	let option4point = 0;
+    	if(this.state.options.length==4){
+    		option4point = this.state.options[3].optionPoint;
+    	}
+    	
     	score.commonTotal = score.common.scores1+score.common.scores2+score.common.scores3+score.common.scores4;
-    	score.commonTotalScore = score.common.scores1*5+score.common.scores2*4+score.common.scores3*2+score.common.scores4*1;
+    	score.commonTotalScore = score.common.scores1*option1point+score.common.scores2*option2point+score.common.scores3*option3point+score.common.scores4*option4point;
     	score.selfTotal = score.self.scores1+score.self.scores2+score.self.scores3+score.self.scores4;
-    	score.selfTotalScore = score.self.scores1*5+score.self.scores2*4+score.self.scores3*2+score.self.scores4*1;
+    	score.selfTotalScore = score.self.scores1*option1point+score.self.scores2*option2point+score.self.scores3*option3point+score.self.scores4*option4point;
     	this.setState({resultVisible: true,selfScore:score});
     }
     
@@ -214,13 +222,13 @@ export default class Assessment extends React.Component {
     
     _onPress = item => {
     	this.setState({modalVisible: false,evaluator:item.username});
-    	let url2 = gServer.host+'/paper/2?username='+item.username;
+    	let url2 = gServer.host+'/paper/1?username='+item.username;
     	NetUtil.get(url2,function (response) {
     		if(response.status == 200){
     			this.setState({dataSource: response.data});
     			let options = [];
     			response.data.options.map(function (item) {
-    				options.push({'label':item.description,'value':item.description,'id':item.id});
+    				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint});
     			});
     			this.setState({options:options});
     		}else{
