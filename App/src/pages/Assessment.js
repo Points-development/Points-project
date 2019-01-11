@@ -44,7 +44,7 @@ export default class Assessment extends React.Component {
         			this.setState({dataSource: response.data});
         			let options = [];
         			response.data.options.map(function (item) {
-        				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint});
+        				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint,'optionId':item.optionId});
         			});
         			this.setState({options:options});
         		}else{
@@ -193,7 +193,7 @@ export default class Assessment extends React.Component {
 				        			formHorizontal={true}
 				        		  	labelHorizontal={true}
 					                onPress={(value,index) => {
-					                	item.item.selected=this.state.options[index].id
+					                	item.item.selected=this.state.options[index].optionId
 					                }}
 					              />
 				            </View>
@@ -222,13 +222,13 @@ export default class Assessment extends React.Component {
     
     _onPress = item => {
     	this.setState({modalVisible: false,evaluator:item.username});
-    	let url2 = gServer.host+'/paper/1?username='+item.username;
+    	let url2 = gServer.host+'/paper/2?username='+item.username;
     	NetUtil.get(url2,function (response) {
     		if(response.status == 200){
     			this.setState({dataSource: response.data});
     			let options = [];
     			response.data.options.map(function (item) {
-    				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint});
+    				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint,'optionId':item.optionId});
     			});
     			this.setState({options:options});
     		}else{
