@@ -19,11 +19,13 @@
     <result column="property" property="property" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="question_id" property="questionId" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="OptionResultMap" type="com.huiyong.model.paper.PaperOption" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="point" property="optionPoint" jdbcType="INTEGER" />
+    <result column="option_id" property="optionId" jdbcType="INTEGER" />
   </resultMap>
   <select id="getPaperById" parameterType="int" resultMap="PaperResultMap">
 	select * from PaperTest where id=#{id};
@@ -38,6 +40,6 @@
 	select * from PaperTest where id=#{id};
   </select> 
    <select id="getQuestionsByIdAndProperty" resultMap="QuestionResultMap">
-	select PQ.id, UP.name property, PQ.description, PQ.type from PaperQuestion PQ join UserProperty UP on PQ.user_property_id=UP.id where PQ.test_id=#{id} and (UP.name=#{property} or UP.name='共性') order by PQ.id;
+	select PQ.id, UP.name property, PQ.question_id, PQ.description, PQ.type from PaperQuestion PQ join UserProperty UP on PQ.user_property_id=UP.id where PQ.test_id=#{id} and (UP.name=#{property} or UP.name='共性') order by PQ.id;
   </select> 
  </mapper>

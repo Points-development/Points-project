@@ -10,6 +10,7 @@ package com.huiyong.model.paper;
 public class PaperOption {
 	private Integer id;
 	private String description;
+	private Integer optionId;
 	private Integer optionPoint;
 	public Integer getId() {
 		return id;
@@ -34,5 +35,17 @@ public class PaperOption {
 	 */
 	public void setOptionPoint(Integer optionPoint) {
 		this.optionPoint = optionPoint;
+	}
+	/**
+	 * @return the optionId
+	 */
+	public Integer getOptionId() {
+		return optionId;
+	}
+	/**
+	 * @param optionId the optionId to set
+	 */
+	public void setOptionId(Integer optionId) {
+		this.optionId = optionId;
 	}
 }

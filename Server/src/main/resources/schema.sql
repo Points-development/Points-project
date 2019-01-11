@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `PaperTest` (
 
 CREATE TABLE IF NOT EXISTS `PaperQuestion` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `question_id` int(11) NOT NULL,
   `user_property_id` int(11) NOT NULL,
   `description` varchar(512) NOT NULL,
   `type` int(11) NOT NULL,
@@ -49,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `PaperQuestion` (
 CREATE TABLE IF NOT EXISTS `PaperOption` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(128) NOT NULL,
+  `option_id` int(11) NOT NULL,
   `point` int(11) NOT NULL,
   `test_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
