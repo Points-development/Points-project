@@ -52,9 +52,10 @@ INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `
 INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (8,1,'民主意识不强，存在急功近利，心浮气躁等现象，不能采纳下属意见，听不进去群众意见和建议。',1,2);
 INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (9,1,'工作和平时生活中，对自己要求不严格，有时存在接受吃请或接受礼物等情况和现象。',1,2);
 INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (10,1,'有老好人思想或行为，在贯彻组织生活会、谈心谈话、民主评议党员等组织生活制度过程中，不敢说、不愿说、不敢管等现象。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (11,1,'你认为你自己或评测对象目前在政治纪律、组织纪律、道德品行、履行义务、模范带头等方面还存在哪些问题？',2,2);
 INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (1, '从来没有', 1, 5);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (2, '偶尔有', 1, 4);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (3,'经常有', 1, 1);
+INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (2, '偶尔有', 1, 3);
+INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (3,'经常有', 1, 0);
 INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (1, '从来没有', 2, 10);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (2, '偶尔有', 2, 8);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (3,'经常有', 2, 2);
+INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (2, '偶尔有', 2, 6);
+INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (3,'经常有', 2, 0);
