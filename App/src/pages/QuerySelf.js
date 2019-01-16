@@ -86,10 +86,9 @@ export default class QuerySelf extends React.Component {
         				</Text>
         				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>
         				评测结果:共{score.total}个问题,
-		                其中优秀{score.scores1}项,
-		                良好{score.scores2}项,
-		                一般{score.scores3}项,
-		                较差{score.scores4}项,
+		                其中从来没有{score.scores1}项,
+		                偶尔有{score.scores2}项,
+		                经常有{score.scores3}项,
 		                分数为
 		                	<Text style={{color:'#ff5c49',fontSize:gFont.contentSize}}>{score.totalScore}分</Text>
         				</Text>
