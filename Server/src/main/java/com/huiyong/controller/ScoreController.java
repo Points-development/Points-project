@@ -97,6 +97,15 @@ public class ScoreController {
     	}
     	return new ResponseEntity<List<ScorePoint>>(spList, HttpStatus.OK);
     }
+    
+    @RequestMapping(value = "/points", produces = "application/json; charset=UTF-8", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteScorePoints(@RequestParam String branch) {
+		Message m = new Message();
+		scoreService.deleteScorePointByBranch(branch);
+		m.setSuccess("删除成绩成功");
+	    return new ResponseEntity<Message>(m, HttpStatus.OK);
+    }
+    
     //return the list of points and user that the scorer did to other user in the branch, if there's no score, the other points will be 0
     @RequestMapping(value = "/pointsbyuser", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
     public ResponseEntity<?> getScorePointsByUser(@RequestParam String branch, @RequestParam String scorer) {

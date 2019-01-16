@@ -117,4 +117,13 @@ public class ScoreServiceImpl implements ScoreService {
 		return scoreDao.getScorePointByBranchAndScorer(branch, scorer);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.huiyong.service.ScoreService#deleteScorePointByBranch(java.lang.String)
+	 */
+	@Override
+	public void deleteScorePointByBranch(String branch) {
+		scoreDao.deleteScorePointByBranch(branch);
+		
+	}
+
 }

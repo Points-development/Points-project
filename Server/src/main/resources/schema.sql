@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `PaperItemScore` (
   `option_id` int(11),
   `answer` text,
   PRIMARY KEY (`score_id`, `question_id`),
-  FOREIGN KEY (`score_id`) REFERENCES `PaperScore` (`id`),
+  FOREIGN KEY (`score_id`) REFERENCES `PaperScore` (`id`) on delete cascade,
   FOREIGN KEY (`question_id`) REFERENCES `PaperQuestion` (`id`));
   
 CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (

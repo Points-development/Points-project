@@ -21,4 +21,8 @@ public interface ScoreService {
 	public boolean addScore(Score score);
 	public List<ScorePoint> getScorePointByBranch(String branch);
 	public List<ScorePoint> getScorePointByBranchAndScorer(String branch, String scorer);
+	/**
+	 * @param branch
+	 */
+	public void deleteScorePointByBranch(String branch);
 }

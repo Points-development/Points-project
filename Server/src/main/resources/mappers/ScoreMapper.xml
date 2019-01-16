@@ -80,4 +80,9 @@
 		PS.lastModifiedTime=#{lastModifiedTime}
 	    WHERE PS.id=#{id}
    </update> 
+   	<delete id="deleteScorePointByBranch" parameterType="String">
+        DELETE PaperScore
+        FROM PaperScore join User on PaperScore.scoree=User.name
+    	where User.branch=#{branch};
+  </delete>
  </mapper>
