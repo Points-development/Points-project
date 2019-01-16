@@ -228,5 +228,31 @@
         	}
         }
         
+        vm.resetScore = function(){
+        	$uibModal.open({
+      	    	animation: true,
+      	    	size:"csm",
+      	    	ariaLabelledBy: 'modal-title-top',
+      	    	ariaDescribedBy: 'modal-body-top',
+				templateUrl: 'templates/confirmResetTemp.html',
+      	        controller:['$scope','$uibModalInstance', function($scope,$uibModalInstance) {
+      	        	$scope.deleteItem = '本操作一般用于每次组织评测之前，重置本支部成员上次成绩。确定重置?';
+      	      		$scope.delete_ok = function(){
+      	      			examineService.resetScore(vm.branch).then(function(response){
+	  	      				messageCenterService.add('success', '重置成功!', {timeout:3000});
+	  	      				$uibModalInstance.dismiss('cancel');
+						},	function(response){
+							messageCenterService.add('danger', response, {timeout:3000});
+							$uibModalInstance.dismiss('cancel');
+						});
+					}
+									  
+      	      		$scope.delete_cancel = function(){
+      	    	  		$uibModalInstance.dismiss('cancel');
+      	      		}
+      	      	}]		
+			});
+        }
+        
     }
 })();

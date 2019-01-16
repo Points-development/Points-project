@@ -181,6 +181,19 @@
             );
             return deferred.promise;
         };
+        factory.resetScore = function(branch){
+            var deferred = $q.defer();
+            var branch = encodeURIComponent(branch);
+            $http.delete('/pointservice/score/points?branch='+branch).then(
+                function (resp) {
+                    deferred.resolve(resp.data);
+                },
+                function (resp) {
+                    deferred.reject(resp.data);
+                }
+            );
+            return deferred.promise;
+        };
         return factory;
     }
 })();
