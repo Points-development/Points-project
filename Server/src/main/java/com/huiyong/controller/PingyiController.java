@@ -116,7 +116,7 @@ public class PingyiController {
     
     //返回该用户的报告单信息
     @RequestMapping(value = "/baogaodan", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
-    public ResponseEntity<?> getBaoGaoDan(@RequestParam String username) {
+    public ResponseEntity<?> getBaoGaoDan(@RequestParam String username) throws Exception {
     	BaoGaoDan baoGaoDan = pingYiService.getBaoGaoDan(username);
     	return new ResponseEntity<BaoGaoDan>(baoGaoDan, HttpStatus.OK);
     }

@@ -70,6 +70,9 @@ public class ScoreController {
     	if(null == username ){
     		return new ResponseEntity<String>("User name is null.", HttpStatus.BAD_REQUEST);
     	}
+    	if(score.getPoint() >= 99 ){
+    		return new ResponseEntity<String>("Cannot select all the best.", HttpStatus.BAD_REQUEST);
+    	}
     	if(!username.equals(score.getScoree())){
     		return new ResponseEntity<String>("Add score to the user different from username in url.", HttpStatus.BAD_REQUEST);
     	}

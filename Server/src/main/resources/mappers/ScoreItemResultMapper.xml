@@ -39,4 +39,20 @@
         FROM PaperItemScore 
     	where score_id = #{scoreId};
   </delete>
+  
+    <insert id="addBatchCategoryPoint" parameterType="java.util.List"> 
+  		<foreach collection="list" item="item" separator=";">   
+			Insert into PaperCategoryScore (score_id, 
+							    category_id,
+	                           point) values  
+			(#{item.scoreId},
+			#{item.categoryId},
+            #{item.point})  
+			</foreach>  
+	</insert>
+	<delete id="deleteScoreCategoryPoint" parameterType="int">
+        DELETE 
+        FROM PaperCategoryScore 
+    	where score_id = #{scoreId};
+  </delete>
  </mapper>

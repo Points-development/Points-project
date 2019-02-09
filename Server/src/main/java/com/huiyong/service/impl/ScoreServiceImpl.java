@@ -4,6 +4,8 @@
 package com.huiyong.service.impl;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +13,13 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.huiyong.dao.PaperMapper;
 import com.huiyong.dao.ScoreItemResultMapper;
 import com.huiyong.dao.ScoreMapper;
+import com.huiyong.model.paper.PaperOption;
+import com.huiyong.model.paper.PaperQuestion;
+import com.huiyong.model.paper.PaperTest;
+import com.huiyong.model.score.CategoryScorePoint;
 import com.huiyong.model.score.Score;
 import com.huiyong.model.score.ScoreItemResult;
 import com.huiyong.model.score.ScorePoint;
@@ -28,6 +35,9 @@ public class ScoreServiceImpl implements ScoreService {
 	
 	@Autowired
 	private ScoreMapper scoreDao;
+	
+	@Autowired
+	private PaperMapper paperDao;
 	
 	@Autowired
 	private ScoreItemResultMapper scoreItemResultDao;
@@ -55,6 +65,30 @@ public class ScoreServiceImpl implements ScoreService {
 	public List<Score> getScoreByOther(String username, boolean recent) {
 		return scoreDao.getScoreByOther(username, recent);
 	}
+	
+	private List<CategoryScorePoint> getCategoryPointByScore(Score score, int scoreId) {
+		PaperTest paper = paperDao.getPaperById(score.getPaperId());
+		List<PaperQuestion> pqList = paper.getQuestions();
+		List<PaperOption> opList = paper.getOptions();
+		Map<Integer, Integer> qId2CIdMap = pqList.stream().filter(a -> (a.getType()==1)).collect(Collectors.toMap(PaperQuestion::getId, PaperQuestion::getCategoryId));
+		Map<Integer, Integer> oId2OpointMap = opList.stream().collect(Collectors.toMap(PaperOption::getId, PaperOption::getOptionPoint));
+		Map<Integer, Integer> categoryPoingMap = score.getScores().stream().filter(a ->
+			null != qId2CIdMap.get(a.getQuestionId())
+		).map(a -> {
+			a.setQuestionId(qId2CIdMap.get(a.getQuestionId()));
+			return a;
+		}).map(a -> {
+			a.setOptionsId(oId2OpointMap.get(a.getOptionsId()));
+			return a;
+		}).collect(Collectors.groupingBy(ScoreItemResult::getQuestionId, Collectors.summingInt(ScoreItemResult::getOptionsId)));
+		return categoryPoingMap.entrySet().stream().map((et)->{
+			CategoryScorePoint aCSP = new CategoryScorePoint();
+			aCSP.setScoreId(scoreId);
+			aCSP.setCategoryId(et.getKey());
+			aCSP.setPoint(et.getValue());
+			return aCSP;
+		}).collect(Collectors.toList());
+	}
 
 	/* (non-Javadoc)
 	 * @see com.huiyong.service.ScoreService#addScore(com.huiyong.model.Score)
@@ -74,6 +108,8 @@ public class ScoreServiceImpl implements ScoreService {
 				sir.setScoreId(scoreId);
 			}
 			scoreItemResultDao.addBatchItemResult(score.getScores());
+			scoreItemResultDao.deleteScoreCategoryPoint(scoreId);
+			scoreItemResultDao.addBatchCategoryPoint(getCategoryPointByScore(score, scoreId));
 			return true;
 		}
 		scoreDao.addScore(score);
@@ -82,6 +118,7 @@ public class ScoreServiceImpl implements ScoreService {
 			sir.setScoreId(scoreId);
 		}
 		scoreItemResultDao.addBatchItemResult(score.getScores());
+		scoreItemResultDao.addBatchCategoryPoint(getCategoryPointByScore(score, scoreId));
 		return true;
 	}
 

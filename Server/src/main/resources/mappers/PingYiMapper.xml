@@ -3,24 +3,36 @@
 <mapper namespace="com.huiyong.dao.PingYiMapper" >
    <resultMap id="ZuZhiPingJiaResultMap" type="com.huiyong.model.pingyi.ZuZhiPingJia" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="userName" jdbcType="VARCHAR" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
     <result column="realName" property="realName" jdbcType="VARCHAR" />
-    <result column="zhengZhi" property="zhengZhi" jdbcType="INTEGER" />
-    <result column="zuZhi" property="zuZhi" jdbcType="INTEGER" />
-    <result column="daoDe" property="daoDe" jdbcType="INTEGER" />
-    <result column="lvXingYiWu" property="lvXingYiWu" jdbcType="INTEGER" />
-    <result column="moFan" property="moFan" jdbcType="INTEGER" />
+    <result column="liXiangXinNian" property="liXiangXinNian" jdbcType="INTEGER" />
+    <result column="zhengZhiYiShi" property="zhengZhiYiShi" jdbcType="INTEGER" />
+    <result column="xueXiYiShi" property="xueXiYiShi" jdbcType="INTEGER" />
+    <result column="zuZhiJiLv" property="zuZhiJiLv" jdbcType="INTEGER" />
+    <result column="daJuYiShi" property="daJuYiShi" jdbcType="INTEGER" />
+    <result column="gongZuoZuoFeng" property="gongZuoZuoFeng" jdbcType="INTEGER" />
+    <result column="daoDePinXing" property="daoDePinXing" jdbcType="INTEGER" />
+    <result column="shengHuoZuoFeng" property="shengHuoZuoFeng" jdbcType="INTEGER" />
+    <result column="fuWuYiShi" property="fuWuYiShi" jdbcType="INTEGER" />
+    <result column="lvXingDangYuanYiWu" property="lvXingDangYuanYiWu" jdbcType="INTEGER" />
+    <result column="xianFengMoFanZuoYongFaHui" property="xianFengMoFanZuoYongFaHui" jdbcType="INTEGER" />
     <result column="total" property="total" jdbcType="INTEGER" />
     <result column="problem" property="problem" jdbcType="VARCHAR" />
     <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
   </resultMap>
    <select id="getZuZhiPingJias" resultMap="ZuZhiPingJiaResultMap">
         SELECT Z.id,
-               Z.zhengZhi,
-               Z.zuZhi,
-               Z.daoDe,
-               Z.lvXingYiWu,
-               Z.moFan,
+               Z.liXiangXinNian,
+               Z.zhengZhiYiShi,
+               Z.xueXiYiShi,
+               Z.zuZhiJiLv,
+               Z.daJuYiShi,
+               Z.gongZuoZuoFeng,
+               Z.daoDePinXing,
+               Z.shengHuoZuoFeng,
+               Z.fuWuYiShi,
+               Z.lvXingDangYuanYiWu,
+               Z.xianFengMoFanZuoYongFaHui,
                ifnull(Z.total, 100) as total,
                Z.problem,
                Z.lastModifiedTime,
@@ -30,10 +42,32 @@
     	where U.organization = #{organization} and U.branch=#{branch};
   </select>
   
+   <select id="getZuZhiPingJiaByUser" resultMap="ZuZhiPingJiaResultMap">
+        SELECT Z.id,
+               Z.liXiangXinNian,
+               Z.zhengZhiYiShi,
+               Z.xueXiYiShi,
+               Z.zuZhiJiLv,
+               Z.daJuYiShi,
+               Z.gongZuoZuoFeng,
+               Z.daoDePinXing,
+               Z.shengHuoZuoFeng,
+               Z.fuWuYiShi,
+               Z.lvXingDangYuanYiWu,
+               Z.xianFengMoFanZuoYongFaHui,
+               ifnull(Z.total, 100) as total,
+               Z.problem,
+               Z.lastModifiedTime,
+               U.name,
+               U.realName
+        FROM ZuZhiPingJia Z RIGHT JOIN User U on U.name=Z.userName
+    	where U.name=#{username};
+  </select>
+  
   <insert id="insertZuZhiPingJias" parameterType="java.util.List" useGeneratedKeys="true">  
-	Insert into ZuZhiPingJia (userName, realName, zhengZhi, zuZhi, daoDe, lvXingYiWu, moFan, total, problem, lastModifiedTime) values
+	Insert into ZuZhiPingJia (userName, realName, liXiangXinNian, zhengZhiYiShi, xueXiYiShi, zuZhiJiLv, daJuYiShi, gongZuoZuoFeng, daoDePinXing, shengHuoZuoFeng, fuWuYiShi, lvXingDangYuanYiWu, xianFengMoFanZuoYongFaHui, total, problem, lastModifiedTime) values
 		<foreach collection="zuZhiPingJias" item="item" separator=",">  
-			(#{item.userName}, #{item.realName}, #{item.zhengZhi},#{item.zuZhi},#{item.daoDe}, #{item.lvXingYiWu},#{item.moFan}, #{item.total}, #{item.problem}, #{item.lastModifiedTime})
+			(#{item.userName}, #{item.realName}, #{item.liXiangXinNian},#{item.zhengZhiYiShi},#{item.xueXiYiShi}, #{item.zuZhiJiLv},#{item.daJuYiShi}, #{item.gongZuoZuoFeng},#{item.daoDePinXing}, #{item.shengHuoZuoFeng},#{item.fuWuYiShi},#{item.lvXingDangYuanYiWu}, #{item.xianFengMoFanZuoYongFaHui},#{item.total}, #{item.problem}, #{item.lastModifiedTime})
 		</foreach>  
 	</insert>
 	
@@ -43,24 +77,36 @@
 	
   <resultMap id="QunZhongPingYiResultMap" type="com.huiyong.model.pingyi.QunZhongPingYi" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="userName" jdbcType="VARCHAR" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
     <result column="realName" property="realName" jdbcType="VARCHAR" />
-    <result column="siXiang" property="siXiang" jdbcType="INTEGER" />
-    <result column="daoDe" property="daoDe" jdbcType="INTEGER" />
-    <result column="xueXi" property="xueXi" jdbcType="INTEGER" />
-    <result column="gongZuo" property="gongZuo" jdbcType="INTEGER" />
-    <result column="shengHuo" property="shengHuo" jdbcType="INTEGER" />
+    <result column="liXiangXinNian" property="liXiangXinNian" jdbcType="INTEGER" />
+    <result column="zhengZhiYiShi" property="zhengZhiYiShi" jdbcType="INTEGER" />
+    <result column="xueXiYiShi" property="xueXiYiShi" jdbcType="INTEGER" />
+    <result column="zuZhiJiLv" property="zuZhiJiLv" jdbcType="INTEGER" />
+    <result column="daJuYiShi" property="daJuYiShi" jdbcType="INTEGER" />
+    <result column="gongZuoZuoFeng" property="gongZuoZuoFeng" jdbcType="INTEGER" />
+    <result column="daoDePinXing" property="daoDePinXing" jdbcType="INTEGER" />
+    <result column="shengHuoZuoFeng" property="shengHuoZuoFeng" jdbcType="INTEGER" />
+    <result column="fuWuYiShi" property="fuWuYiShi" jdbcType="INTEGER" />
+    <result column="lvXingDangYuanYiWu" property="lvXingDangYuanYiWu" jdbcType="INTEGER" />
+    <result column="xianFengMoFanZuoYongFaHui" property="xianFengMoFanZuoYongFaHui" jdbcType="INTEGER" />
     <result column="total" property="total" jdbcType="INTEGER" />
     <result column="problem" property="problem" jdbcType="VARCHAR" />
     <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
   </resultMap>
    <select id="getQunZhongPingYis" resultMap="QunZhongPingYiResultMap">
         SELECT Z.id,
-               Z.siXiang,
-               Z.daoDe,
-               Z.xueXi,
-               Z.gongZuo,
-               Z.shengHuo,
+               Z.liXiangXinNian,
+               Z.zhengZhiYiShi,
+               Z.xueXiYiShi,
+               Z.zuZhiJiLv,
+               Z.daJuYiShi,
+               Z.gongZuoZuoFeng,
+               Z.daoDePinXing,
+               Z.shengHuoZuoFeng,
+               Z.fuWuYiShi,
+               Z.lvXingDangYuanYiWu,
+               Z.xianFengMoFanZuoYongFaHui,
                ifnull(Z.total, 100) as total,
                Z.problem,
                Z.lastModifiedTime,
@@ -71,15 +117,37 @@
   </select>
   
   <insert id="insertQunZhongPingYis" parameterType="java.util.List" useGeneratedKeys="true">  
-	Insert into QunZhongPingYi (userName, realName, siXiang, daoDe, xueXi, gongZuo, shengHuo, total, problem, lastModifiedTime) values
+  	Insert into QunZhongPingYi (userName, realName, liXiangXinNian, zhengZhiYiShi, xueXiYiShi, zuZhiJiLv, daJuYiShi, gongZuoZuoFeng, daoDePinXing, shengHuoZuoFeng, fuWuYiShi, lvXingDangYuanYiWu, xianFengMoFanZuoYongFaHui, total, problem, lastModifiedTime) values
 		<foreach collection="qunZhongPingYis" item="item" separator=",">  
-			(#{item.userName}, #{item.realName}, #{item.siXiang},#{item.daoDe},#{item.xueXi}, #{item.gongZuo},#{item.shengHuo}, #{item.total}, #{item.problem}, #{item.lastModifiedTime})
+			(#{item.userName}, #{item.realName}, #{item.liXiangXinNian},#{item.zhengZhiYiShi},#{item.xueXiYiShi}, #{item.zuZhiJiLv},#{item.daJuYiShi}, #{item.gongZuoZuoFeng},#{item.daoDePinXing}, #{item.shengHuoZuoFeng},#{item.fuWuYiShi},#{item.lvXingDangYuanYiWu}, #{item.xianFengMoFanZuoYongFaHui},#{item.total}, #{item.problem}, #{item.lastModifiedTime})
 		</foreach>  
 	</insert>
 	
 	<delete id="deleteQunZhongPingYis">  
         DELETE Z FROM QunZhongPingYi Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
 	</delete>
+	
+	<select id="getQunZhongPingJiaByUser" resultMap="QunZhongPingYiResultMap">
+        SELECT Z.id,
+               Z.liXiangXinNian,
+               Z.zhengZhiYiShi,
+               Z.xueXiYiShi,
+               Z.zuZhiJiLv,
+               Z.daJuYiShi,
+               Z.gongZuoZuoFeng,
+               Z.daoDePinXing,
+               Z.shengHuoZuoFeng,
+               Z.fuWuYiShi,
+               Z.lvXingDangYuanYiWu,
+               Z.xianFengMoFanZuoYongFaHui,
+               ifnull(Z.total, 100) as total,
+               Z.problem,
+               Z.lastModifiedTime,
+               U.name,
+               U.realName
+        FROM QunZhongPingYi Z RIGHT JOIN User U on U.name=Z.userName
+    	where U.name=#{username};
+  </select>
 	
 	
   <resultMap id="ZiPingResultMap" type="com.huiyong.model.pingyi.ZiPing" >
@@ -227,12 +295,32 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
        DELETE Z FROM DeFenHuiZong Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
 	</delete>
 	
+    <resultMap id="CategoryPointResultMap" type="com.huiyong.model.pingyi.CategoryPoint" >
+    <result column="point" property="point" jdbcType="INTEGER" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <select id="getZiPingCategoryPoint" resultMap="CategoryPointResultMap">
+	select ifnull(PCS.point, 0) point, QC.category_id, QC.description from PaperScore PS 
+	join PaperCategoryScore PCS on PS.id=PCS.score_id and PS.scorer=#{username} and PS.scoree=#{username}
+	right join QuestionCategory QC on QC.id=PCS.category_id
+	order by QC.category_id
+  </select>
+  
+  <select id="getHuPingCategoryPoint" resultMap="CategoryPointResultMap">
+    select ifnull(avg(PCS.point),0) point, QC.category_id, QC.description from PaperScore PS 
+	join PaperCategoryScore PCS on PS.id=PCS.score_id and PS.scoree=#{username} and PS.scorer!=PS.scoree 
+	right join QuestionCategory QC on QC.id=PCS.category_id
+	group by QC.category_id, QC.description
+    order by QC.category_id
+  </select>
+	
 	<resultMap id="BaoGaoDanResultMap" type="com.huiyong.model.pingyi.BaoGaoDan" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="userName" jdbcType="VARCHAR" />
     <result column="realName" property="realName" jdbcType="VARCHAR" />
     <result column="hongXian" property="hongXian" jdbcType="VARCHAR" />
-    <result column="deFen" property="deFen" jdbcType="INTEGER" />
     <result column="tiJian" property="tiJian" jdbcType="VARCHAR" />
     <result column="problem" property="problem" jdbcType="VARCHAR" />
     <result column="tiGao" property="tiGao" jdbcType="VARCHAR" />
@@ -240,12 +328,9 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
   </resultMap>
   
   <select id="getBaoGaoDan" resultMap="BaoGaoDanResultMap">
-	select U.name, U.realName, ifnull(ZiPing.total, 0)*0.2 + ifnull(HuPing.total, 0)*0.25 + ifnull(QunZhongPingYi.total, 0)*0.25 + ifnull(ZuZhiPingJia.total, 0)*0.3 deFen, DeFenHuiZong.hongxian, 
+	select U.name, U.realName, DeFenHuiZong.hongxian, 
 	DeFenHuiZong.jianKang tiJian, BaoGaoDan.problem, BaoGaoDan.tiGao, BaoGaoDan.lastModifiedTime
-	from User U left Join ZiPing on U.name = ZiPing.userName
-	left join HuPing on U.name = HuPing.userName
-	left join QunZhongPingYi on U.name = QunZhongPingYi.userName
-	left join ZuZhiPingJia on U.name = ZuZhiPingJia.userName
+	from User U 
 	left join DeFenHuiZong on U.name = DeFenHuiZong.userName
 	left join BaoGaoDan on U.name = BaoGaoDan.userName
 	where U.name=#{username}

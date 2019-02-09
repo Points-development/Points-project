@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `pointServiceWugongXian` default charset utf8 COLLATE utf8_general_ci;
-use pointServiceWugongXian;
+CREATE DATABASE IF NOT EXISTS `pointServiceBinXian` default charset utf8 COLLATE utf8_general_ci;
+use pointServiceBinXian;
 
 CREATE TABLE IF NOT EXISTS `UserProperty` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -32,16 +32,25 @@ CREATE TABLE IF NOT EXISTS `PaperTest` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL UNIQUE,
   PRIMARY KEY (`id`));
+  
+CREATE TABLE IF NOT EXISTS `QuestionCategory` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_id` int(11) NOT NULL,
+  `description` varchar(128) NOT NULL,
+  `category_type` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`));
 
 CREATE TABLE IF NOT EXISTS `PaperQuestion` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `question_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
   `user_property_id` int(11) NOT NULL,
   `description` varchar(512) NOT NULL,
   `type` int(11) NOT NULL,
   `test_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`test_id`) REFERENCES `PaperTest` (`id`),
+  FOREIGN KEY (`category_id`) REFERENCES `QuestionCategory` (`id`),
   FOREIGN KEY (`user_property_id`) REFERENCES `UserProperty` (`id`));
 
 /**
@@ -65,6 +74,14 @@ CREATE TABLE IF NOT EXISTS `PaperScore` (
   `paper_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`paper_id`) REFERENCES `PaperTest` (`id`));
+  
+CREATE TABLE IF NOT EXISTS `PaperCategoryScore` (
+  `score_id` int(128) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `point` int(11),
+  PRIMARY KEY (`score_id`, `category_id`),
+  FOREIGN KEY (`score_id`) REFERENCES `PaperScore` (`id`) on delete cascade,
+  FOREIGN KEY (`category_id`) REFERENCES `QuestionCategory` (`id`));
 
 CREATE TABLE IF NOT EXISTS `PaperItemScore` (
   `score_id` int(128) NOT NULL,
@@ -79,11 +96,17 @@ CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userName` varchar(128) NOT NULL,
   `realName` varchar(128) NOT NULL,
-  `zhengZhi` int(11),
-  `zuZhi` int(11),
-  `daoDe` int(11),
-  `lvXingYiWu` int(11),
-  `moFan` int(11),
+  `liXiangXinNian` int(11),
+  `zhengZhiYiShi` int(11),
+  `xueXiYiShi` int(11),
+  `zuZhiJiLv` int(11),
+  `daJuYiShi` int(11),
+  `gongZuoZuoFeng` int(11),
+  `daoDePinXing` int(11),
+  `shengHuoZuoFeng` int(11),
+  `fuWuYiShi` int(11),
+  `lvXingDangYuanYiWu` int(11),
+  `xianFengMoFanZuoYongFaHui` int(11),
   `total` int(11),
   `problem` varchar(1024),
   `lastModifiedTime` timestamp,
@@ -93,11 +116,17 @@ CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userName` varchar(128) NOT NULL,
   `realName` varchar(128) NOT NULL,
-  `siXiang` int(11),
-  `daoDe` int(11),
-  `xueXi` int(11),
-  `gongZuo` int(11),
-  `shengHuo` int(11),
+  `liXiangXinNian` int(11),
+  `zhengZhiYiShi` int(11),
+  `xueXiYiShi` int(11),
+  `zuZhiJiLv` int(11),
+  `daJuYiShi` int(11),
+  `gongZuoZuoFeng` int(11),
+  `daoDePinXing` int(11),
+  `shengHuoZuoFeng` int(11),
+  `fuWuYiShi` int(11),
+  `lvXingDangYuanYiWu` int(11),
+  `xianFengMoFanZuoYongFaHui` int(11),
   `total` int(11),
   `problem` varchar(1024),
   `lastModifiedTime` timestamp,

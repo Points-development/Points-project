@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.huiyong.model.pingyi.BaoGaoDan;
+import com.huiyong.model.pingyi.CategoryPoint;
 import com.huiyong.model.pingyi.DeFenHuiZong;
 import com.huiyong.model.pingyi.HuPing;
 import com.huiyong.model.pingyi.QunZhongPingYi;
@@ -44,6 +45,8 @@ public interface PingYiMapper {
 	public BaoGaoDan getBaoGaoDan(@Param(value = "username")String username);
 	public BaoGaoDan deleteBaoGaoDan(@Param(value = "username")String username);
 	public void insertBaoGaoDan(@Param(value = "username")String username, @Param(value = "baoGaoDan")BaoGaoDan baoGaoDan);
-
-
+	public List<CategoryPoint> getZiPingCategoryPoint(@Param(value = "username")String username);
+	public List<CategoryPoint> getHuPingCategoryPoint(@Param(value = "username")String username);
+	public ZuZhiPingJia getZuZhiPingJiaByUser(@Param(value = "username")String username);
+	public QunZhongPingYi getQunZhongPingJiaByUser(String username);
 }

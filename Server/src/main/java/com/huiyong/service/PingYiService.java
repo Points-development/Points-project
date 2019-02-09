@@ -32,6 +32,6 @@ public interface PingYiService {
 	public List<DeFenHuiZong> getDeFenHuiZongs(String branch, String organization);
 	public void updateDeFenHuiZongs(String branch, String organization, List<DeFenHuiZong> deFenHuiZongs);
 	
-	public BaoGaoDan getBaoGaoDan(String username);
+	public BaoGaoDan getBaoGaoDan(String username) throws Exception;
 	public void updateBaoGaoDan(String username, BaoGaoDan baoGaoDan);
 }
