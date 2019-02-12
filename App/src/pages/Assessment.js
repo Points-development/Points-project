@@ -179,7 +179,10 @@ export default class Assessment extends React.Component {
         return (
         		<View style={styles.question}>
         			<View style={{padding:20}}>
-        				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.index+1}. {item.item.description} <Text style={{color:gColors.hintColor,fontSize:gFont.contentSize}}>({item.item.category})</Text></Text>
+        				<Text>
+        					<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.index+1}. {item.item.description}</Text>
+        					<Text style={{color:gColors.hintColor,fontSize:gFont.contentSize}}>({item.item.category})</Text>
+        				</Text>
         			</View>
         			{
         				item.item.type==1?
@@ -218,7 +221,7 @@ export default class Assessment extends React.Component {
         return <View style={{ height: 1, backgroundColor: '#CCCCCC',opacity:0.5 }} />
     }
     
-    _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => item.id.toString();
     
     _onPress = item => {
     	this.setState({modalVisible: false,evaluator:item.username});
