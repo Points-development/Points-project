@@ -563,6 +563,10 @@ div.hack-header{
     width:65%;
     margin-top:3%;
 }
+.modal-cm-result{
+    width:75%;
+    margin-top:2%;
+}
 .modal-cm-imagebrowser{
 	width:800px;
 	margin-top:100px;
@@ -626,6 +630,27 @@ div.departure > div.city.traffic{
 }
 div.route-date .well{
 	margin-bottom: 5px;
+}
+.circle-green {
+	width: 10px;
+    height: 10px;
+    background: #34bc6e;
+    border-radius: 50%;
+    float:left;
+}
+.circle-yellow {
+	width: 10px;
+    height: 10px;
+    background: #fed500;
+    border-radius: 50%;
+    float:left;
+}
+.circle-red {
+	width: 10px;
+    height: 10px;
+    background: #e62325;
+    border-radius: 50%;
+    float:left;
 }
 
 

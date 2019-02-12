@@ -2,7 +2,8 @@
     'use strict';
 
     angular.module('portal.examine', [
-         'portal.core'
+         'portal.core',
+         'chart.js'
     ]).directive('contenteditable', ['$sce', function($sce) {
     	  return {
     		    restrict: 'A', // only activate on element attribute

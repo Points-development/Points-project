@@ -16,68 +16,222 @@
     <div class="table_title">
         彬县党员党性体检结果报告单
     </div>
-    <div class="table_title">
-        ({{ecCtrl.now|date:'yyyy'}})年度
-    </div>
+    <div>
+    	<div style="width:30%;float:left">党支部名称: {{ecCtrl.currentUser.branch}}</div>
+    	<div style="width:35%;float:left;text-align:center;">党员姓名: {{ecCtrl.result.realName}}</div>
+    	<div style="width:35%;float:left;text-align:right;">体检日期: {{ecCtrl.result.lastModifiedTime|date:'yyyy 年 MM 月 dd 日'}}</div>
+    <div>
     <div>
         <table class="tg">
 		  <tr>
-		    <th class="tg-yw4l" width="25%">姓名</th>
-		    <th class="tg-yw4l" width="25%">{{ecCtrl.result.realName}}</th>
-		    <th class="tg-yw4l" width="25%">体检单位</th>
-		    <th class="tg-yw4l" width="25%">{{ecCtrl.currentUser.organization}}</th>
+		    <th class="tg-yw4l" width="10%">党性体检结果</th>
+		    <th class="tg-yw4l" colspan="4">
+		    	<div class="tdContent">
+		        	<img class="imgCheck" ng-src="{{ecCtrl.getImg(ecCtrl.result.tiJian=='合格')}}">党性合格
+		         	<img class="imgCheck" ng-src="{{ecCtrl.getImg(ecCtrl.result.tiJian=='基本合格')}}">党性基本合格
+		         	<img class="imgCheck" ng-src="{{ecCtrl.getImg(ecCtrl.result.tiJian=='不合格')}}">党性不合格
+		      	</div>
+		      	<div class="tdContent">
+                  	<img class="imgCheck" ng-src="{{ecCtrl.getImg(ecCtrl.checkHongxian(ecCtrl.result.hongXian))}}">存在
+                  	<img class="imgCheck" ng-src="{{ecCtrl.getImg(!ecCtrl.checkHongxian(ecCtrl.result.hongXian))}}">不存在<br/>
+                  	红线指标情形:<span class="hasBottomline" ng-bind="ecCtrl.removeHtml(ecCtrl.result.hongXian)"></span>                      
+		      	</div>
+		    </th>
+		    <th class="tg-yw4l" colspan="4">党性体检得分为<br/><b>{{ecCtrl.result.zongHeDeFenPoints[11].point}}</b></th>
 		  </tr>
 		  <tr>
-		    <td class="tg-yw4l">所在党支部</td>
-		    <td class="tg-yw4l">{{ecCtrl.currentUser.branch}}</td>
-		    <td class="tg-yw4l">体检时间</td>
-		    <td class="tg-yw4l">{{ecCtrl.result.lastModifiedTime|date:'yyyy 年 MM 月 dd 日'}}</td>
-		  </tr>
-		  <tr>
-		    <td class="tg-yw4l">党性体检评议情况</td>
-		    <td class="tg-yw4l" colspan="3">
-		      <div class="tdContent">
-		          经评议，你的党性体检得分为<span class="hasBottomline">{{ecCtrl.result.deFen}}</span>分<br/>
-                  红线指标:
-                  <img class="imgCheck" src="{{ecCtrl.getImg(ecCtrl.checkHongxian(ecCtrl.result.hongXian))}}">存在
-                  <img class="imgCheck" src="{{ecCtrl.getImg(!ecCtrl.checkHongxian(ecCtrl.result.hongXian))}}">不存在<br/>
-                  红线指标情形:<span class="hasBottomline" ng-bind="ecCtrl.removeHtml(ecCtrl.result.hongXian)"></span>                      
-		      </div>
+		    <td class="tg-yw4l">分项指标健康度</td>
+		    <td class="tg-yw4l" colspan="8">
+		    	<div>
+			    	<div style="float:left;">
+			    	<img style='display:none;width:350px' src="##chartImage##" />
+			    	<canvas style="display:block;width:500px;" id="mybar" 
+			    		class="chart chart-bar"
+			    		chart-type="bar"
+			    		chart-options="ecCtrl.chart_options"
+			    		chart-data="ecCtrl.chart_data"
+			    		chart-dataset-override="ecCtrl.datasetOverride"
+			    		chart-labels="ecCtrl.chart_labels">
+					</canvas>
+					</div>
+					<div style="float:right;width:160px;font-size:13px;">
+						<div>
+							<svg height="10" width="10" style="margin-right:65px;">
+	  							<circle cx="5" cy="5" r="5" fill="{{ecCtrl.getJianKangColor(0)}}" />
+							</svg>理想信念
+						</div>
+						<div><svg height="10" width="10" style="margin-right:65px;">
+	  							<circle cx="5" cy="5" r="5" fill="{{ecCtrl.getJianKangColor(1)}}" />
+							</svg>政治意识
+						</div>
+						<div><svg height="10" width="10" style="margin-right:65px;">
+	  							<circle cx="5" cy="5" r="5" fill="{{ecCtrl.getJianKangColor(2)}}" />
+							</svg>学习意识
+						</div>
+						<div><svg height="10" width="10" style="margin-right:65px;">
+	  							<circle cx="5" cy="5" r="5" fill="{{ecCtrl.getJianKangColor(3)}}" />
+							</svg>组织纪律
+						</div>
+						<div><svg height="10" width="10" style="margin-right:65px;">
+	  							<circle cx="5" cy="5" r="5" fill="{{ecCtrl.getJianKangColor(4)}}" />
+							</svg>大局意识</div>
+						<div><svg height="10" width="10" style="margin-right:65px;">
+	  							<circle cx="5" cy="5" r="5" fill="{{ecCtrl.getJianKangColor(5)}}" />
+							</svg>工作作风
+						</div>
+						<div><svg height="10" width="10" style="margin-right:65px;">
+	  							<circle cx="5" cy="5" r="5" fill="{{ecCtrl.getJianKangColor(6)}}" />
+							</svg>道德品行
+						</div>
+						<div><svg height="10" width="10" style="margin-right:65px;">
+	  							<circle cx="5" cy="5" r="5" fill="{{ecCtrl.getJianKangColor(7)}}" />
+							</svg>生活作风
+						</div>
+						<div><svg height="10" width="10" style="margin-right:65px;">
+	  							<circle cx="5" cy="5" r="5" fill="{{ecCtrl.getJianKangColor(8)}}" />
+							</svg>服务意识
+						</div>
+						<div><svg height="10" width="10" style="margin-right:40px;">
+	  							<circle cx="5" cy="5" r="5" fill="{{ecCtrl.getJianKangColor(9)}}" />
+							</svg>履行党员义务
+						</div>
+						<div><svg height="10" width="10" style="margin-right:15px;">
+	  							<circle cx="5" cy="5" r="5" fill="{{ecCtrl.getJianKangColor(10)}}" />
+							</svg>先锋模范作用发挥
+						</div>
+					</div>
+				</div>
 		    </td>
 		  </tr>
 		  <tr>
-		    <td class="tg-yw4l">党性体检结果</td>
-		    <td class="tg-yw4l" colspan="3">
-		      <div class="tdContent">
-		         <img class="imgCheck" src="{{ecCtrl.getImg(ecCtrl.result.tiJian=='合格')}}">党性合格
-		         <img class="imgCheck" src="{{ecCtrl.getImg(ecCtrl.result.tiJian=='基本合格')}}">党性基本合格
-		         <img class="imgCheck" src="{{ecCtrl.getImg(ecCtrl.result.tiJian=='不合格')}}">党性不合格
-		      </div>
-		    </td>
+		    <td class="tg-yw4l" rowspan="14">分项指标</td>
+		    <td class="tg-yw4l" rowspan="2">体检指标</td>
+		    <td class="tg-yw4l" rowspan="2">评价指标</td>
+		    <td class="tg-yw4l" colspan="4">体检指标得分</td>
+		    <td class="tg-yw4l" rowspan="2">综合得分</td>
+		    <td class="tg-yw4l" rowspan="2">健康状态</td>
 		  </tr>
 		  <tr>
-		    <td class="tg-yw4l">党性体检意见建议书</td>
-		    <td class="tg-yw4l tg-edit" colspan="3">
-		      <div class="tdContent">
-		      <div>
-		          <span>通过群众评议、自己测评、党员互评、组织评议，此次党性教育体检，你存在以下问题：
-		          </span><br/>
-		      </div>
-		      <div class="edit hasBottom" contenteditable ng-model="ecCtrl.result.problem">
-              </div>
-              <div>
-                <br/>
-                <span>建议请你从以下方面积极整改提高</span><br/>
-              </div>
-              <div class="edit hasBottom" contenteditable ng-model="ecCtrl.result.tiGao">
-              </div>
-              <div style="text-align:right">
-                <br/>
-                <span>(党组织盖章或书记签名):</span><span style="border-bottom:1px solid #000;padding-right:100px"></span><br>
-                <span>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日</span>
-              </div>
-              </div>
-		    </td>
+		    <td class="tg-yw4l">服务对象评议</td>
+		    <td class="tg-yw4l">党员自评</td>
+		    <td class="tg-yw4l">党员互评</td>
+		    <td class="tg-yw4l">组织评议</td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l" rowspan="10">共性指标</td>
+		    <td class="tg-yw4l">理想信念</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[0].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[0].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.huPingPoints[0].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[0].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[0].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[0].point)}}</td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">政治意识</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[1].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[1].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.huPingPoints[1].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[1].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[1].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[1].point)}}</td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">学习意识</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[2].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[2].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.huPingPoints[2].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[2].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[2].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[2].point)}}</td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">组织纪律</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[3].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[3].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.huPingPoints[3].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[3].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[3].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[3].point)}}</td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">大局意识</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[4].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[4].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.huPingPoints[4].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[4].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[4].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[4].point)}}</td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">工作作风</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[5].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[5].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.huPingPoints[5].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[5].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[5].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[5].point)}}</td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">道德品行</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[6].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[6].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.huPingPoints[6].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[6].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[6].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[6].point)}}</td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">生活作风</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[7].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[7].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.huPingPoints[7].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[7].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[7].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[7].point)}}</td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">服务意识</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[8].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[8].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.huPingPoints[8].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[8].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[8].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[8].point)}}</td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">履行党员义务</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[9].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[9].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.huPingPoints[9].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[9].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[9].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[9].point)}}</td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l">个性指标</td>
+		    <td class="tg-yw4l">先锋模范作用发挥</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[10].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[10].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.huPingPoints[10].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[10].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[10].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[10].point)}}</td>
+		  </tr>
+		  <tr>
+		    <td class="tg-yw4l" colspan="2">综合评价</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[11].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[11].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.huPingPoints[11].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[11].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[11].point}}</td>
+		    <td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[11].point)}}</td>
+		  </tr>
+		  <tr>
+		  	<td class="tg-yw4l">党性体检意见</td>
+		  	<td class="tg-yw4l" colspan="8">
+		  		<div style="text-align:left;"  class="edit" contenteditable ng-model="ecCtrl.result.tiGao"></div>
+		  	</td>
 		  </tr>
 		</table>
     </div>

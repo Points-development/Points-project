@@ -5,9 +5,9 @@
 
     angular.module('portal.examine').controller('ExamineController', ExamineController);
 
-    ExamineController.$inject = ['storage','messageCenterService','examineService','systemService','security','$stateParams','$uibModal','transferUser','$uibModalStack'];
+    ExamineController.$inject = ['storage','messageCenterService','examineService','systemService','security','$stateParams','$uibModal','transferUser','$uibModalStack','$scope'];
 
-    function ExamineController(storage,messageCenterService,examineService,systemService,security,$stateParams,$uibModal,transferUser,$uibModalStack) {
+    function ExamineController(storage,messageCenterService,examineService,systemService,security,$stateParams,$uibModal,transferUser,$uibModalStack,$scope) {
         var vm = this;
         var currentUser = security.getCurrentUser();
         if(transferUser){
@@ -111,12 +111,46 @@
         	}
         }
         
+        $scope.$on('chart-create', function(evt, chart){
+        	  vm.mychart=chart;
+        });
+        
         vm.initResult=function(){
+        	vm.chart_labels = ['理想信念', '政治意识', '学习意识', '组织纪律', '大局意识',
+        		'工作作风', '道德品行','生活作风','服务意识','履行党员义务','先锋模范作用发挥'];
+        	vm.datasetOverride = [
+        		{
+	    	        borderWidth: 1,
+	    	        backgroundColor:[],
+	    	        type: 'bar'
+        		},
+    	    ];
+
+	    	vm.chart_data = [[]];
+	    	vm.chart_options={scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true,
+	                    stacked: true
+	                }
+	            }],
+	            xAxes: [{
+	            	ticks: {
+	                    offsetGridLines: true,
+	                    stacked: true,
+	                    autoSkip: false
+	                }
+	            }]
+	        }};
         	examineService.getResultScore(currentUser.name).then(function(response){
   	  			vm.result = response;
   	  			if(!vm.result.lastModifiedTime){
   	  				vm.result.lastModifiedTime = vm.now;
   	  			}
+  	  			for(var i=0;i<vm.result.zongHeDeFenPoints.length-1;i++){
+  	  				vm.chart_data[0].push(vm.result.zongHeDeFenPoints[i].point);
+					vm.datasetOverride[0].backgroundColor.push(vm.getJianKangColor(i));
+				}
   	  		},function(response){
   	  			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
   	  		})
@@ -181,12 +215,90 @@
         	return parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d)+parseInt(e);
         }
         
+        vm.calcTotal = function(obj){
+        	var a=obj.liXiangXinNian,b=obj.zhengZhiYiShi,c=obj.xueXiYiShi,d=obj.zuZhiJiLv,e=obj.daJuYiShi;
+        	var f=obj.gongZuoZuoFeng,g=obj.daoDePinXing,h=obj.shengHuoZuoFeng,i=obj.fuWuYiShi,j=obj.lvXingDangYuanYiWu;
+        	var k=obj.xianFengMoFanZuoYongFaHui;
+        	if(!a){
+        		a=0;
+        	}
+        	if(!b){
+        		b=0;
+        	}
+        	if(!c){
+        		c=0;
+        	}
+        	if(!d){
+        		d=0;
+        	}
+        	if(!e){
+        		e=0;
+        	}
+        	if(!f){
+        		f=0;
+        	}
+        	if(!g){
+        		g=0;
+        	}
+        	if(!h){
+        		h=0;
+        	}
+        	if(!i){
+        		i=0;
+        	}
+        	if(!j){
+        		j=0;
+        	}
+        	if(!k){
+        		k=0;
+        	}
+        	
+        	var total=parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d)+parseInt(e)+parseInt(f)+parseInt(g)+parseInt(h)+parseInt(i)+parseInt(j)+parseInt(k);
+        	if(total==0){
+        		return null;
+        	}
+        	obj.total=Math.ceil(total/11);
+        	return Math.ceil(total/11);
+        }
+        
+        vm.getJianKangColor=function(index){
+        	if(!vm.result){
+        		return '#ffffff';
+        	}
+        	var point = vm.result.jianKangZhuangTaiPoints[index].point;
+        	if(point==0){
+        		return '#e62325';
+        	}else if(point==50){
+        		return '#fed500';
+        	}else if(point==100){
+        		return '#34bc6e';
+        	}else{
+        		return 'blue';
+        	}
+        }
+        vm.getJianKangStatus=function(point){
+        	if(point==0){
+        		return "不健康"
+        	}else if(point==50){
+        		return "亚健康"
+        	}else if(point==100){
+        		return "健康"
+        	}else{
+        		return "未知";
+        	}
+        }
+        
         vm.clickTab = function(name){
         	vm.selectTab = name;
         	vm.initData();
         }
         vm.printdiv = function(divName){
         	var printContents = document.getElementById(divName).innerHTML;
+        	if(divName == 'result'){
+        		var canvas = document.getElementById("mybar");
+            	printContents = printContents.replace('##chartImage##',canvas.toDataURL());
+            	printContents = printContents.replace('display:none;','').replace('display:block;','display:none;').replace('display: block;','display:none;');
+        	}
             var popupWin = window.open('', '_blank', 'width=800,height=900');
             popupWin.document.open();
             popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="content/css/custom.css" /></head>');

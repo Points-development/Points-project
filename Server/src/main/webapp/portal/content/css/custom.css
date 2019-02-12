@@ -1508,12 +1508,12 @@ label.branch_label{
 /*table area*/
 
 .tg  {border-collapse:collapse;border-spacing:0;width:100%;background-color:#f3f3f3;}
-.tg td{font-family:Arial, sans-serif;font-size:14px;padding:12px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:12px 3px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
 .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:12px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
 .tg .tg-yw4l{vertical-align: middle;text-align: center;color:#000;}
 .tg .tg-yw4l input[type="text"]{
 	border: none;
-	width:80px;
+	width:65px;
 	text-align:center;
 }
 .tg .tg-edit{
@@ -1548,8 +1548,8 @@ div.tdContent input[type="checkbox"]{
 	vertical-align: top;
 }
 
-.table_area .tg .tg-yw4l.tg-ping {width:47%}
-.table_area .tg .tg-yw4l.tg-problem {width:30%}
+.table_area .tg .tg-yw4l.tg-ping {width:50%}
+.table_area .tg .tg-yw4l.tg-problem {width:20%}
 
 @media
  print {
@@ -1562,6 +1562,27 @@ div.tdContent input[type="checkbox"]{
     .tg {background-color:#ffffff;table-layout: fixed;}
     .table_area .tg .tg-yw4l.tg-ping {width:40%}
     .table_area .tg .tg-yw4l.tg-problem {width:20%}
+    .circle-green {
+		width: 10px;
+	    height: 10px;
+	    background: #34bc6e;
+	    border-radius: 50%;
+	    float:left;
+	}
+	.circle-yellow {
+		width: 10px;
+	    height: 10px;
+	    background: #fed500;
+	    border-radius: 50%;
+	    float:left;
+	}
+	.circle-red {
+		width: 10px;
+	    height: 10px;
+	    background: #e62325;
+	    border-radius: 50%;
+	    float:left;
+	}
 }
 
 
