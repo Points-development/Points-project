@@ -44,7 +44,7 @@ export default class Assessment extends React.Component {
         			this.setState({dataSource: response.data});
         			let options = [];
         			response.data.options.map(function (item) {
-        				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint,'optionId':item.optionId});
+        				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint,'optionId':item.optionId,'category':item.category});
         			});
         			this.setState({options:options});
         		}else{
@@ -166,7 +166,7 @@ export default class Assessment extends React.Component {
     			ToastAndroid.show('评测提交成功!', ToastAndroid.SHORT);
     			this.setState({isSubmitted:true,resultVisible: false});
     		}else{
-    			ToastAndroid.show('网络异常，请稍后重试!', ToastAndroid.SHORT); 
+    			ToastAndroid.show('答题不能全部最好', ToastAndroid.SHORT); 
     		}
         }.bind(this));
     }
@@ -179,7 +179,7 @@ export default class Assessment extends React.Component {
         return (
         		<View style={styles.question}>
         			<View style={{padding:20}}>
-        				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.index+1}. {item.item.description}</Text>
+        				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.index+1}. {item.item.description} <Text style={{color:gColors.hintColor,fontSize:gFont.contentSize}}>({item.item.category})</Text></Text>
         			</View>
         			{
         				item.item.type==1?
@@ -228,7 +228,7 @@ export default class Assessment extends React.Component {
     			this.setState({dataSource: response.data});
     			let options = [];
     			response.data.options.map(function (item) {
-    				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint,'optionId':item.optionId});
+    				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint,'optionId':item.optionId,'category':item.category});
     			});
     			this.setState({options:options});
     		}else{
