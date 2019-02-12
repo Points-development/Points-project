@@ -166,7 +166,7 @@ public class PingYiServiceImpl implements PingYiService{
 	public BaoGaoDan getBaoGaoDan(String username) throws Exception {
 		double ziPingPortion=0.2, huPingPortion=0.3, zuZhiPingPortion=0.3, qunZhongPingPortion=0.2;
 		//85以上为健康，60-85为亚健康，否则为不健康。 返回值0表示不健康，50表示亚健康，100表示健康
-		int health = 80, subhealth = 60;
+		int health = 85, subhealth = 60;
 		BaoGaoDan baoGaoDan = pingYiDao.getBaoGaoDan(username);
 		List<CategoryPoint> ziPingPoints = pingYiDao.getZiPingCategoryPoint(username);
 		ziPingPoints.add(getZongHePingJia(ziPingPoints));
