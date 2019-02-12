@@ -12,6 +12,9 @@ public class CategoryPoint {
 	private Integer categoryId;
 	private String description;
 	public Integer getPoint() {
+		if(99 <= point){
+			point = 100;
+		}
 		return point;
 	}
 	public void setPoint(Integer point) {

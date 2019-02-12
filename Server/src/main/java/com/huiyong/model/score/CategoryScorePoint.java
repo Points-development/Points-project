@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public class CategoryScorePoint {
 	@JsonIgnore
+	public static int categoryNum = 11;
+	@JsonIgnore
 	private int scoreId;
 	private int categoryId;
 	private int point;

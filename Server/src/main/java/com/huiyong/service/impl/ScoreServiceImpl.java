@@ -85,7 +85,7 @@ public class ScoreServiceImpl implements ScoreService {
 			CategoryScorePoint aCSP = new CategoryScorePoint();
 			aCSP.setScoreId(scoreId);
 			aCSP.setCategoryId(et.getKey());
-			aCSP.setPoint(et.getValue());
+			aCSP.setPoint(et.getValue() * CategoryScorePoint.categoryNum);
 			return aCSP;
 		}).collect(Collectors.toList());
 	}
