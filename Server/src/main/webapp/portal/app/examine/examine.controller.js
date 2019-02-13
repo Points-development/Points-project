@@ -278,11 +278,11 @@
         }
         vm.getJianKangStatus=function(point){
         	if(point==0){
-        		return "不健康"
+        		return "X"
         	}else if(point==50){
-        		return "亚健康"
+        		return "乄"
         	}else if(point==100){
-        		return "健康"
+        		return "√"
         	}else{
         		return "未知";
         	}
