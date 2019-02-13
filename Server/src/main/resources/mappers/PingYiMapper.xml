@@ -274,7 +274,7 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
   
   <select id="getDeFenHuiZongs" resultMap="DeFenHuiZongResultMap">
 	select U.name, U.realName, ZiPing.total ziPing, HuPing.total huPing, QunZhongPingYi.total qunZhongPing, ZuZhiPingJia.total zuZhiPing, 
-		ifnull(ZiPing.total, 0)*0.2 + ifnull(HuPing.total, 0)*0.25 + ifnull(QunZhongPingYi.total, 0)*0.25 + ifnull(ZuZhiPingJia.total, 0)*0.3 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastModifiedTime
+		ifnull(ZiPing.total, 0)*0.2 + ifnull(HuPing.total, 0)*0.3 + ifnull(QunZhongPingYi.total, 0)*0.2 + ifnull(ZuZhiPingJia.total, 0)*0.3 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastModifiedTime
 	from
 	User U left join ZiPing on U.name = ZiPing.userName
 	left join HuPing on U.name = HuPing.userName
