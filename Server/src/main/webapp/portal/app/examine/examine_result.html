@@ -27,17 +27,18 @@
 		    <th class="tg-yw4l" width="10%">党性体检结果</th>
 		    <th class="tg-yw4l" colspan="4">
 		    	<div class="tdContent">
-		        	<img class="imgCheck" ng-src="{{ecCtrl.getImg(ecCtrl.result.tiJian=='合格')}}">党性合格
-		         	<img class="imgCheck" ng-src="{{ecCtrl.getImg(ecCtrl.result.tiJian=='基本合格')}}">党性基本合格
-		         	<img class="imgCheck" ng-src="{{ecCtrl.getImg(ecCtrl.result.tiJian=='不合格')}}">党性不合格
+		        	<img class="imgCheck" ng-src="{{ecCtrl.getImg(ecCtrl.result.tiJian=='健康')}}">党性健康
+		         	<img class="imgCheck" ng-src="{{ecCtrl.getImg(ecCtrl.result.tiJian=='亚健康')}}">党性亚健康
+		         	<img class="imgCheck" ng-src="{{ecCtrl.getImg(ecCtrl.result.tiJian=='不健康')}}">党性不健康
 		      	</div>
 		      	<div class="tdContent">
+		      		红线指标:
                   	<img class="imgCheck" ng-src="{{ecCtrl.getImg(ecCtrl.checkHongxian(ecCtrl.result.hongXian))}}">存在
                   	<img class="imgCheck" ng-src="{{ecCtrl.getImg(!ecCtrl.checkHongxian(ecCtrl.result.hongXian))}}">不存在<br/>
                   	红线指标情形:<span class="hasBottomline" ng-bind="ecCtrl.removeHtml(ecCtrl.result.hongXian)"></span>                      
 		      	</div>
 		    </th>
-		    <th class="tg-yw4l" colspan="4">党性体检得分为<br/><b>{{ecCtrl.result.zongHeDeFenPoints[11].point}}</b></th>
+		    <th class="tg-yw4l" colspan="4">您的党性体检得分为<br/><b>{{ecCtrl.result.zongHeDeFenPoints[11].point}}</b></th>
 		  </tr>
 		  <tr>
 		    <td class="tg-yw4l">分项指标健康度</td>
