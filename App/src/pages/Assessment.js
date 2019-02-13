@@ -41,10 +41,23 @@ export default class Assessment extends React.Component {
     		let url2 = gServer.host+'/paper/1?username='+gUser.name;
         	NetUtil.get(url2,function (response) {
         		if(response.status == 200){
-        			this.setState({dataSource: response.data});
+        			let questions = [];
+        			let category=null;
+        			response.data.questions.map(function (question) {
+        				if(category != question.category){
+        					category = question.category;
+        					questions.push({'category':category,'isTitle':true});
+        				}
+        				questions.push(question);
+        			});
+        			this.setState({dataSource:{
+        				id:response.data.id,
+        				name:response.data.name,
+        				questions:questions
+        			}});
         			let options = [];
         			response.data.options.map(function (item) {
-        				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint,'optionId':item.optionId,'category':item.category});
+        				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint,'optionId':item.optionId});
         			});
         			this.setState({options:options});
         		}else{
@@ -96,33 +109,30 @@ export default class Assessment extends React.Component {
     		let item = this.state.dataSource.questions[i];
     		if(item.selected || item.type==2){
     			if(item.property =='共性'){
-    				if(item.selected == 1){
+    				if(item.selected == 1 || item.selected == 4){
         				score.common.scores1 +=1;
         			}
-        			if(item.selected == 2){
+        			if(item.selected == 2 || item.selected == 5){
         				score.common.scores2 +=1;
         			}
-        			if(item.selected == 3){
+        			if(item.selected == 3 || item.selected == 6){
         				score.common.scores3 +=1;
         			}
-        			if(item.selected == 4){
-        				score.common.scores4 +=1;
-        			}
     			}else{
-    				if(item.selected == 1){
+    				if(item.selected == 1 || item.selected == 4){
         				score.self.scores1 +=1;
         			}
-        			if(item.selected == 2){
+        			if(item.selected == 2 || item.selected == 5){
         				score.self.scores2 +=1;
         			}
-        			if(item.selected == 3){
+        			if(item.selected == 3 || item.selected == 6){
         				score.self.scores3 +=1;
-        			}
-        			if(item.selected == 4){
-        				score.self.scores4 +=1;
         			}
     			}
     		}else{
+    			if(item.isTitle){
+    				continue;
+    			}
     			ToastAndroid.show('还有题目未作答!', ToastAndroid.SHORT);
     			return false;
     		}
@@ -144,7 +154,7 @@ export default class Assessment extends React.Component {
     
     _submit = ()=>{
     	let score = {
-    		paperId:1,
+    		paperId:this.state.evaluator=='自己'?1:2,
     		scorer:gUser.name,
     		scoree:this.state.evaluator=='自己'?gUser.name:this.state.evaluator,
     		scores:[],
@@ -166,12 +176,20 @@ export default class Assessment extends React.Component {
     			ToastAndroid.show('评测提交成功!', ToastAndroid.SHORT);
     			this.setState({isSubmitted:true,resultVisible: false});
     		}else{
+    			console.log(response.data);
     			ToastAndroid.show('答题不能全部最好', ToastAndroid.SHORT); 
     		}
         }.bind(this));
     }
     _renderItem = (item,index) => {
     	
+    	if(item.item.isTitle){
+    		return (
+				<View style={styles.category}>
+					<Text style={{color:'#000',fontSize:21,fontWeight:'bold'}}>{item.item.category}</Text>
+				</View>	
+    		)
+    	}
     	let defaultSelect = 100;
     	if(item.item.selected){
     		defaultSelect = item.item.selected-1;
@@ -179,10 +197,7 @@ export default class Assessment extends React.Component {
         return (
         		<View style={styles.question}>
         			<View style={{padding:20}}>
-        				<Text>
-        					<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.index+1}. {item.item.description}</Text>
-        					<Text style={{color:gColors.hintColor,fontSize:gFont.contentSize}}>({item.item.category})</Text>
-        				</Text>
+        				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.item.questionId}. {item.item.description}</Text>
         			</View>
         			{
         				item.item.type==1?
@@ -196,7 +211,7 @@ export default class Assessment extends React.Component {
 				        			formHorizontal={true}
 				        		  	labelHorizontal={true}
 					                onPress={(value,index) => {
-					                	item.item.selected=this.state.options[index].optionId
+					                	item.item.selected=this.state.options[index].id
 					                }}
 					              />
 				            </View>
@@ -221,17 +236,30 @@ export default class Assessment extends React.Component {
         return <View style={{ height: 1, backgroundColor: '#CCCCCC',opacity:0.5 }} />
     }
     
-    _keyExtractor = (item, index) => item.id.toString();
+    _keyExtractor = (item, index) => index.toString();
     
     _onPress = item => {
     	this.setState({modalVisible: false,evaluator:item.username});
     	let url2 = gServer.host+'/paper/2?username='+item.username;
     	NetUtil.get(url2,function (response) {
     		if(response.status == 200){
-    			this.setState({dataSource: response.data});
+    			let questions = [];
+    			let category=null;
+    			response.data.questions.map(function (question) {
+    				if(category != question.category){
+    					category = question.category;
+    					questions.push({'category':category,'isTitle':true});
+    				}
+    				questions.push(question);
+    			});
+    			this.setState({dataSource:{
+    				id:response.data.id,
+    				name:response.data.name,
+    				questions:questions
+    			}});
     			let options = [];
     			response.data.options.map(function (item) {
-    				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint,'optionId':item.optionId,'category':item.category});
+    				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint,'optionId':item.optionId});
     			});
     			this.setState({options:options});
     		}else{
@@ -379,6 +407,11 @@ const styles = StyleSheet.create({
 	},
 	question:{
 		height:200
+	},
+	category:{
+		alignItems: 'center',
+		justifyContent: 'center',
+		height:70
 	},
 	button:{
 		backgroundColor:gColors.buttonColor,
