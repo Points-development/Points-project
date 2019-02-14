@@ -17,8 +17,8 @@
         彬州市党员党性体检结果报告单
     </div>
     <div>
-    	<div style="width:30%;float:left">党支部名称: {{ecCtrl.currentUser.branch}}</div>
-    	<div style="width:35%;float:left;text-align:center;">党员姓名: {{ecCtrl.result.realName}}</div>
+    	<div style="width:35%;float:left">党支部名称: {{ecCtrl.currentUser.branch}}</div>
+    	<div style="width:30%;float:left;text-align:center;">党员姓名: {{ecCtrl.result.realName}}</div>
     	<div style="width:35%;float:left;text-align:right;">体检日期: {{ecCtrl.result.lastModifiedTime|date:'yyyy 年 MM 月 dd 日'}}</div>
     <div>
     <div>
@@ -228,7 +228,7 @@
 		    <td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[11].point}}</td>
 		    <td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[11].point)}}</td>
 		  </tr>
-		  <tr>
+		  <tr style="height:100px">
 		  	<td class="tg-yw4l">党性体检意见</td>
 		  	<td class="tg-yw4l" colspan="8">
 		  		<div style="text-align:left;"  class="edit" contenteditable ng-model="ecCtrl.result.tiGao"></div>
@@ -237,7 +237,7 @@
 		</table>
     </div>
     <div class="table_bottom">备注：1. 体检指标得分=服务对象评议x20%+党员自评x20%+党员互评x30%+组织评议x30%</div>
-    <div class="table_bottom">     2. 85分以上为健康状态，标注为'√', 60-85分为亚健康状态，标注为'乄'，60分以下为不健康状态，标注为'x'</div>
+    <div class="table_bottom" style="padding-left: 30px;">     2. 85分以上为健康状态, 标注为'√', 60-85分为亚健康状态, 标注为'乄', 60分以下为不健康状态, 标注为'x'</div>
 </div>
 </div>
 </div>

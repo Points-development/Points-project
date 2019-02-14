@@ -1497,7 +1497,6 @@ div.table_area{
 div.table_bottom{
 	font-size:10px;
 	color:#a6a5a6;
-	text-align:center;
 }
 span.branch{
 	border-bottom:1px solid #000;
@@ -1508,8 +1507,8 @@ label.branch_label{
 /*table area*/
 
 .tg  {border-collapse:collapse;border-spacing:0;width:100%;background-color:#f3f3f3;}
-.tg td{font-family:Arial, sans-serif;font-size:13px;padding:5px 3px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-.tg th{font-family:Arial, sans-serif;font-size:13px;font-weight:normal;padding:5px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg td{font-family:Arial, sans-serif;font-size:13px;padding:6px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg th{font-family:Arial, sans-serif;font-size:13px;font-weight:normal;padding:6px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
 .tg .tg-yw4l{vertical-align: middle;text-align: center;color:#000;}
 .tg .tg-yw4l input[type="text"]{
 	border: none;
@@ -1553,6 +1552,11 @@ div.tdContent input[type="checkbox"]{
 
 @media
  print {
+ 	@page {
+      size: A4; /* DIN A4 standard, Europe */
+      margin:5mm;
+      margin-top:8mm;
+    }
     div.table_area select{
         appearance:none;
         -moz-appearance:none;
