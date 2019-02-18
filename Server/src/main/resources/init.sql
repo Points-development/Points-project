@@ -50,7 +50,7 @@ INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (10, 28,1,'不积极参加组织生活，党费缴纳不主动、不及时、不足额。',1,1);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (10, 29,1,'不忠实地向党组织汇报思想和工作，对党组织隐瞒自己的观点和行动。',1,1);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (10, 30,1,'对党的工作不提出合理化建议和倡议，不通过参加党的有关会议和活动阐述自己对党的政策的观点。',1,1);
-INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (11, 31,4,'在社区或村内私搭乱建、随意停车、丢弃倾倒生活垃圾。',1,1);
+INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (11, 31,2,'在社区或村内私搭乱建、随意停车、丢弃倾倒生活垃圾。',1,1);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (11, 32,2,'不按时参加党组织开展的公益活动或义务劳动。',1,1);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (11, 33,2,'认为村居文化建设、产业发展、环境保护、纠纷调节都是村干部的事情，与自己无关，不参与不配合。',1,1);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (11, 31,3,'满足于现有成绩，不积极创新，不主动开拓市场。',1,1);
