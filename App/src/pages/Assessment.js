@@ -96,33 +96,30 @@ export default class Assessment extends React.Component {
     		let item = this.state.dataSource.questions[i];
     		if(item.selected || item.type==2){
     			if(item.property =='共性'){
-    				if(item.selected == 1){
+    				if(item.selected == 1 || item.selected == 4){
         				score.common.scores1 +=1;
         			}
-        			if(item.selected == 2){
+        			if(item.selected == 2 || item.selected == 5){
         				score.common.scores2 +=1;
         			}
-        			if(item.selected == 3){
+        			if(item.selected == 3 || item.selected == 6){
         				score.common.scores3 +=1;
         			}
-        			if(item.selected == 4){
-        				score.common.scores4 +=1;
-        			}
     			}else{
-    				if(item.selected == 1){
+    				if(item.selected == 1 || item.selected == 4){
         				score.self.scores1 +=1;
         			}
-        			if(item.selected == 2){
+        			if(item.selected == 2 || item.selected == 5){
         				score.self.scores2 +=1;
         			}
-        			if(item.selected == 3){
+        			if(item.selected == 3 || item.selected == 6){
         				score.self.scores3 +=1;
-        			}
-        			if(item.selected == 4){
-        				score.self.scores4 +=1;
         			}
     			}
     		}else{
+    			if(item.isTitle){
+    				continue;
+    			}
     			ToastAndroid.show('还有题目未作答!', ToastAndroid.SHORT);
     			return false;
     		}
@@ -144,7 +141,7 @@ export default class Assessment extends React.Component {
     
     _submit = ()=>{
     	let score = {
-    		paperId:1,
+    		paperId:this.state.evaluator=='自己'?1:2,
     		scorer:gUser.name,
     		scoree:this.state.evaluator=='自己'?gUser.name:this.state.evaluator,
     		scores:[],
@@ -166,7 +163,7 @@ export default class Assessment extends React.Component {
     			ToastAndroid.show('评测提交成功!', ToastAndroid.SHORT);
     			this.setState({isSubmitted:true,resultVisible: false});
     		}else{
-    			ToastAndroid.show('网络异常，请稍后重试!', ToastAndroid.SHORT); 
+    			ToastAndroid.show('答题不能全部最好', ToastAndroid.SHORT); 
     		}
         }.bind(this));
     }
@@ -179,7 +176,7 @@ export default class Assessment extends React.Component {
         return (
         		<View style={styles.question}>
         			<View style={{padding:20}}>
-        				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.index+1}. {item.item.description}</Text>
+        				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.item.questionId}. {item.item.description}</Text>
         			</View>
         			{
         				item.item.type==1?
@@ -193,7 +190,7 @@ export default class Assessment extends React.Component {
 				        			formHorizontal={true}
 				        		  	labelHorizontal={true}
 					                onPress={(value,index) => {
-					                	item.item.selected=this.state.options[index].optionId
+					                	item.item.selected=this.state.options[index].id
 					                }}
 					              />
 				            </View>
@@ -218,7 +215,7 @@ export default class Assessment extends React.Component {
         return <View style={{ height: 1, backgroundColor: '#CCCCCC',opacity:0.5 }} />
     }
     
-    _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => index.toString();
     
     _onPress = item => {
     	this.setState({modalVisible: false,evaluator:item.username});
