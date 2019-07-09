@@ -18,9 +18,9 @@ public class DateUtil {
         Date dateOfLastMonth = cl.getTime();  
         return dateOfLastMonth;
     } 
-    public static void main(String[] args){
+ /*   public static void main(String[] args){
     	Date date = new Date();
     	System.out.println(date.toString());
     	System.out.println(getLastMonthDate(date).toString());   	
-    }
+    }*/
 }
