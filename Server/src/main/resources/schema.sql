@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `pointServiceBinXian` default charset utf8 COLLATE utf8_general_ci;
-use pointServiceBinXian;
+CREATE DATABASE IF NOT EXISTS `pointServiceNewBinXian` default charset utf8 COLLATE utf8_general_ci;
+use pointServiceNewBinXian;
 
 CREATE TABLE IF NOT EXISTS `UserProperty` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `PaperScore` (
   `lastModifiedTime` timestamp NOT NULL,
   `paper_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
+  constraint PS_UNIQUE unique(scorer, scoree),
   FOREIGN KEY (`paper_id`) REFERENCES `PaperTest` (`id`));
   
 CREATE TABLE IF NOT EXISTS `PaperCategoryScore` (
