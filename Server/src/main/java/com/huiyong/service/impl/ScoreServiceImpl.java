@@ -97,7 +97,7 @@ public class ScoreServiceImpl implements ScoreService {
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
 	public boolean addScore(Score score) {	
 		List<Score> aScoreList = scoreDao.getScoreByScorer(score.getScoree(), score.getScorer(), true);
-/*		if(null != aScoreList && aScoreList.size() > 0){
+		if(null != aScoreList && aScoreList.size() > 0){
 			Score aScore = aScoreList.get(0);
 			int scoreId = aScore.getId();
 			score.setId(scoreId);
@@ -111,7 +111,7 @@ public class ScoreServiceImpl implements ScoreService {
 			scoreItemResultDao.deleteScoreCategoryPoint(scoreId);
 			scoreItemResultDao.addBatchCategoryPoint(getCategoryPointByScore(score, scoreId));
 			return true;
-		}*/
+		}
 		scoreDao.addScore(score);
 		int scoreId=score.getId();
 		for(ScoreItemResult sir : score.getScores()){
