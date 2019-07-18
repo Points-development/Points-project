@@ -139,7 +139,10 @@ export default class Assessment extends React.Component {
     	}
     	let option1point = this.state.options[0].optionPoint;
     	let option2point = this.state.options[1].optionPoint;
-    	let option3point = this.state.options[2].optionPoint;
+    	let option3point = 0;
+    	if(this.state.options.length==3){
+    		option3point = this.state.options[2].optionPoint;
+    	}
     	let option4point = 0;
     	if(this.state.options.length==4){
     		option4point = this.state.options[3].optionPoint;
@@ -240,7 +243,7 @@ export default class Assessment extends React.Component {
     
     _onPress = item => {
     	this.setState({modalVisible: false,evaluator:item.username});
-    	let url2 = gServer.host+'/paper/2?username='+item.username;
+    	let url2 = gServer.host+'/paper/1?username='+item.username;
     	NetUtil.get(url2,function (response) {
     		if(response.status == 200){
     			let questions = [];
