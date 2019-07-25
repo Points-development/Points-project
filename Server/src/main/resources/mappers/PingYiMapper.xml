@@ -74,6 +74,43 @@
 	<delete id="deleteZuZhiPingJias">  
         DELETE Z FROM ZuZhiPingJia Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
 	</delete>  
+
+  <resultMap id="CategoryIssueResultMap" type="com.huiyong.model.pingyi.CategoryIssue" >
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="hitNum" property="hitNum" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="topIssue" property="topIssue" jdbcType="VARCHAR" />
+  </resultMap>
+<!-- Now the issue option is hard coded to 2 (PIS.option_id=2), later we can add column in PaperOption to indicate whether this option means issue -->
+   <select id="getCategoryIssue" resultMap="CategoryIssueResultMap">
+select T3.description topIssue, T3.hitNum, T3.category_id, QC.description
+from
+(select T1.description, T2.hitNum, T2.category_id 
+from
+(select QueIssue.question_id, QueIssue.hitNum, PQ.category_id, PQ.description
+from
+(select  PIS.question_id, count(PIS.question_id) hitNum
+from PaperItemScore PIS
+Join PaperScore PS on PS.id=PIS.score_id
+where PS.scoree=#{username} and PIS.option_id=2
+group by PIS.question_id) QueIssue
+join PaperQuestion PQ on QueIssue.question_id = PQ.id
+where PQ.type=1) T1
+join
+(select  Max(QueIssue.hitNum) hitNum, PQ.category_id 
+From
+(select  PIS.question_id, count(PIS.question_id) hitNum
+from PaperItemScore PIS
+Join PaperScore PS on PS.id=PIS.score_id
+where PS.scoree=#{username} and PIS.option_id=2
+group by PIS.question_id) QueIssue
+join PaperQuestion PQ on QueIssue.question_id = PQ.id
+where PQ.type=1
+group by PQ.category_id) T2
+on T1.category_id=T2.category_id and T1.hitNum=T2.hitNum) T3
+join QuestionCategory QC on QC.id = T3.category_id
+order by category_id
+  </select>
 	
   <resultMap id="QunZhongPingYiResultMap" type="com.huiyong.model.pingyi.QunZhongPingYi" >
     <id column="id" property="id" jdbcType="INTEGER" />

@@ -180,6 +180,7 @@ public class PingYiServiceImpl implements PingYiService{
 		List<CategoryPoint> zuZhiPingPoints = transferZuZhiPing(pingYiDao.getZuZhiPingJiaByUser(username));
 		zuZhiPingPoints.add(getZongHePingJia(zuZhiPingPoints));
 		baoGaoDan.setZuZhiPingPoints(zuZhiPingPoints);
+		baoGaoDan.setCategoryTopIssues(pingYiDao.getCategoryIssue(username));
 		List<CategoryPoint> zongHeList = new ArrayList<CategoryPoint>();
 		List<CategoryPoint> jianKangList = new ArrayList<CategoryPoint>();
 		for(int i=0; i<ziPingPoints.size(); i++){

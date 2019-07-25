@@ -31,7 +31,14 @@ public class BaoGaoDan {
 	private List<CategoryPoint> fuWuDuiXiangPingPoints;
 	private List<CategoryPoint> zongHeDeFenPoints;
 	private List<CategoryPoint> jianKangZhuangTaiPoints;
+	private List<CategoryIssue> categoryTopIssues;
 	private Date lastModifiedTime;
+	public List<CategoryIssue> getCategoryTopIssues() {
+		return categoryTopIssues;
+	}
+	public void setCategoryTopIssues(List<CategoryIssue> categoryTopIssues) {
+		this.categoryTopIssues = categoryTopIssues;
+	}
 	public Integer getId() {
 		return id;
 	}
