@@ -1498,6 +1498,14 @@ div.table_bottom{
 	font-size:10px;
 	color:#a6a5a6;
 }
+div.top_issue{
+	margin:10px;
+	color:#000;
+	font-size:13px;
+}
+div.top_item{
+	margin-bottom:15px;
+}
 span.branch{
 	border-bottom:1px solid #000;
 }
