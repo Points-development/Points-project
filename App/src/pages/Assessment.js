@@ -12,9 +12,9 @@ import {
 	Image,
 	ToastAndroid,
 	ScrollView,
-	TextInput
-} from 'react-native';
-
+	TextInput,
+} from 'react-native';	
+import CheckBox from '../components/Checkbox'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Button from '../components/Button'
 import NetUtil from '../service/NetUtil'
@@ -48,6 +48,10 @@ export default class Assessment extends React.Component {
         					category = question.category;
         					questions.push({'category':category,'isTitle':true});
         				}
+        				if(question.type==1){
+        					question.selected=1;
+        				}
+        				
         				questions.push(question);
         			});
         			this.setState({dataSource:{
@@ -82,6 +86,7 @@ export default class Assessment extends React.Component {
     		    ]
     		},
     		options: [],
+    		checkBoxChecked:[],
     		branchUsers:[],
     		selfScore:{common:{},self:{}}
     	}
@@ -105,8 +110,15 @@ export default class Assessment extends React.Component {
             	scores4:0
         	}
     	}
+    	var categories = {};
     	for(let i=0;i<this.state.dataSource.questions.length;i++){
     		let item = this.state.dataSource.questions[i];
+    		if(item.type && item.type==1  && categories[item.category]==null ){
+    			categories[item.category]=item.selected;
+    		}
+    		if(item.selected==2){
+    			categories[item.category] = item.selected;
+    		}
     		if(item.selected || item.type==2){
     			if(item.property =='共性'){
     				if(item.selected == 1 || item.selected == 4){
@@ -137,6 +149,12 @@ export default class Assessment extends React.Component {
     			return false;
     		}
     	}
+    	for(var p in categories){
+    		if(categories[p]==1){
+    			ToastAndroid.show('每一个类型至少选择一个, 请在('+p+')中选择一个!', ToastAndroid.SHORT);
+        		return false;
+    		}
+    	}
     	let option1point = this.state.options[0].optionPoint;
     	let option2point = this.state.options[1].optionPoint;
     	let option3point = 0;
@@ -157,7 +175,7 @@ export default class Assessment extends React.Component {
     
     _submit = ()=>{
     	let score = {
-    		paperId:this.state.evaluator=='自己'?1:2,
+    		paperId:this.state.evaluator=='自己'?1:1,
     		scorer:gUser.name,
     		scoree:this.state.evaluator=='自己'?gUser.name:this.state.evaluator,
     		scores:[],
@@ -184,6 +202,15 @@ export default class Assessment extends React.Component {
     		}
         }.bind(this));
     }
+    
+    changeCheck=(checked,item)=>{
+        if(checked){
+        	item.item.selected=2;
+        }else{
+        	item.item.selected=1;
+        }
+    }
+    
     _renderItem = (item,index) => {
     	
     	if(item.item.isTitle){
@@ -193,32 +220,28 @@ export default class Assessment extends React.Component {
 				</View>	
     		)
     	}
-    	let defaultSelect = 100;
-    	if(item.item.selected){
-    		defaultSelect = item.item.selected-1;
-    	}	
+    	const { checked } = this.state
+    	let label = item.item.questionId+". "+ item.item.description;
+    	
         return (
-        		<View style={styles.question}>
-        			<View style={{padding:20}}>
-        				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.item.questionId}. {item.item.description}</Text>
+        		<View >
+        		{
+					item.item.type ==1 &&
+        			<View style={[styles.question,{padding:20}]}>   				
+        					<CheckBox
+        					  label={label}
+        					  checked={checked}
+        					  labelStyle={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}
+        					  onChange={(checked) => this.changeCheck(checked,item)}
+        					/>
         			</View>
+        		}
         			{
-        				item.item.type==1?
-        					<View style={{padding:10,paddingLeft:20}}>
-				        		<RadioForm
-					                radio_props={this.state.options}
-				        			buttonColor={gColors.buttonColor}
-				        			initial={defaultSelect}
-				        			radioStyle={{paddingRight:15}}
-				        			labelStyle={{fontSize:gFont.contentSize}}
-				        			formHorizontal={true}
-				        		  	labelHorizontal={true}
-					                onPress={(value,index) => {
-					                	item.item.selected=this.state.options[index].id
-					                }}
-					              />
-				            </View>
-				        	:
+        				item.item.type !=1 &&
+        					<View style={{height:200}}>
+	        				<View style={{padding:20}}>
+		        				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.item.questionId}. {item.item.description}</Text>
+		        			</View>
 				        	<View style={{padding:10,paddingLeft:20}}>
 				        		<TextInput
 					                style={{height: 80,textAlignVertical:'top',borderColor:'#50C900',borderWidth: 1}}
@@ -227,6 +250,7 @@ export default class Assessment extends React.Component {
 				        			multiline = {true}
 					             />
 				        	</View>
+				            </View>
         			
         			}
         			
@@ -253,6 +277,10 @@ export default class Assessment extends React.Component {
     					category = question.category;
     					questions.push({'category':category,'isTitle':true});
     				}
+    				if(question.type==1){
+    					question.selected=1;
+    				}
+    				
     				questions.push(question);
     			});
     			this.setState({dataSource:{
@@ -319,7 +347,7 @@ export default class Assessment extends React.Component {
 	        			<FlatList
 		                    ref={(flatList)=>this._flatList = flatList}
 		                    ItemSeparatorComponent={this._separator}
-		                    renderItem={this._renderItem}
+		                    renderItem={(item, index) => this._renderItem(item,index)}
 	        				keyExtractor={this._keyExtractor}
 		                    data={this.state.dataSource.questions}>
 		                </FlatList>
@@ -409,7 +437,7 @@ const styles = StyleSheet.create({
 		paddingBottom:20
 	},
 	question:{
-		height:200
+		height:150
 	},
 	category:{
 		alignItems: 'center',

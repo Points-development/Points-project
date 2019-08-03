@@ -16,12 +16,7 @@
             <div class="divider"></div>
         </div>
         <div ng-if="qcCtrl.scoreResult" ng-repeat="obj in qcCtrl.questionResult.questions track by $index">
-            <div>{{$index+1}}. {{obj.description}}</div>
-            <div ng-if="obj.type ==1">
-                <label class="radio-inline" ng-repeat="option in qcCtrl.questionResult.options ">
-                    <input disabled ng-checked="qcCtrl.checkAnswer(obj,option)" type="radio"> {{option.description}}
-                </label>
-            </div>
+            <div><input ng-if="obj.type ==1" input type="checkbox" disabled ng-checked="qcCtrl.checkAnswer(obj)"> {{$index+1}}. {{obj.description}}</div>
             <div ng-if="obj.type ==2">
                 <div ng-bind="qcCtrl.getQuestionAnser(obj)"></div>
             </div>
