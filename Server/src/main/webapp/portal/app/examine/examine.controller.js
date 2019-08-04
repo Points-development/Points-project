@@ -152,15 +152,7 @@
   	  				vm.chart_data[0].push(vm.result.zongHeDeFenPoints[i].point);
 					vm.datasetOverride[0].backgroundColor.push(vm.getJianKangColor(i));
 				}
-	  	  		for(var i=0;i<vm.result.categoryTopIssues.length;i++){
-		  			var issue = vm.result.categoryTopIssues[i];
-		  			if(!vm.topIssues[issue.description]){
-		  				vm.topIssues[issue.description] = [];
-		  				vm.topIssues[issue.description].push(issue);
-		  			}else{
-		  				vm.topIssues[issue.description].push(issue);
-		  			}
-				}
+  	  			vm.topIssues = vm.result.categoryTopIssues;
   	  		},function(response){
   	  			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
   	  		})
