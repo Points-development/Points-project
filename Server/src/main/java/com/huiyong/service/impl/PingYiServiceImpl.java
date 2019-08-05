@@ -5,9 +5,12 @@ package com.huiyong.service.impl;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -180,7 +183,11 @@ public class PingYiServiceImpl implements PingYiService{
 		List<CategoryPoint> zuZhiPingPoints = transferZuZhiPing(pingYiDao.getZuZhiPingJiaByUser(username));
 		zuZhiPingPoints.add(getZongHePingJia(zuZhiPingPoints));
 		baoGaoDan.setZuZhiPingPoints(zuZhiPingPoints);
-		baoGaoDan.setCategoryTopIssues(pingYiDao.getCategoryIssue(username));
+		//getCategoryIssue, for every category of top issues, just select the first one
+		baoGaoDan.setCategoryTopIssues(pingYiDao.getCategoryIssue(username).stream().collect(
+				Collectors.collectingAndThen(
+				Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(ci->ci.getCategoryId()))), ArrayList::new)
+				));
 		List<CategoryPoint> zongHeList = new ArrayList<CategoryPoint>();
 		List<CategoryPoint> jianKangList = new ArrayList<CategoryPoint>();
 		for(int i=0; i<ziPingPoints.size(); i++){

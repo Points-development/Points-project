@@ -361,15 +361,17 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
     <result column="tiJian" property="tiJian" jdbcType="VARCHAR" />
     <result column="problem" property="problem" jdbcType="VARCHAR" />
     <result column="tiGao" property="tiGao" jdbcType="VARCHAR" />
+    <result column="pingyiNumber" property="pingyiNumber" jdbcType="INTEGER" />
     <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
   </resultMap>
   
   <select id="getBaoGaoDan" resultMap="BaoGaoDanResultMap">
-	select U.name, U.realName, DeFenHuiZong.hongxian, 
+	select U.name, U.realName, DeFenHuiZong.hongxian, PN.pingyiNumber,
 	DeFenHuiZong.jianKang tiJian, BaoGaoDan.problem, BaoGaoDan.tiGao, BaoGaoDan.lastModifiedTime
 	from User U 
 	left join DeFenHuiZong on U.name = DeFenHuiZong.userName
 	left join BaoGaoDan on U.name = BaoGaoDan.userName
+	join (select count(*) pingyiNumber from PaperScore where scoree=#{username}) PN
 	where U.name=#{username}
   </select>
   
