@@ -67,6 +67,17 @@ export default class Assessment extends React.Component {
         		}else{
         			this.setState({errorMsg: '请检查网络或联系管理员'});
         		}
+            }.bind(this));
+        	let url3 = gServer.host+'/score/'+gUser.name;
+        	NetUtil.get(url3,function (response) {
+        		if(response.status == 200){
+        			if(response.data.length>0){
+        				this.setState({isSubmitted:true});
+        				ToastAndroid.show('系统检测到您已完成本次自评，如有疑问请联系系统管理员', ToastAndroid.SHORT);
+        			}
+        		}else{
+        			this.setState({errorMsg: '请检查网络或联系管理员'});
+        		}
             }.bind(this))
     	}
     }
@@ -110,14 +121,12 @@ export default class Assessment extends React.Component {
             	scores4:0
         	}
     	}
-    	var categories = {};
+    	var totalSelect = 0;
     	for(let i=0;i<this.state.dataSource.questions.length;i++){
     		let item = this.state.dataSource.questions[i];
-    		if(item.type && item.type==1  && categories[item.category]==null ){
-    			categories[item.category]=item.selected;
-    		}
+
     		if(item.selected==2){
-    			categories[item.category] = item.selected;
+    			totalSelect++;
     		}
     		if(item.selected || item.type==2){
     			if(item.property =='共性'){
@@ -149,11 +158,9 @@ export default class Assessment extends React.Component {
     			return false;
     		}
     	}
-    	for(var p in categories){
-    		if(categories[p]==1){
-    			ToastAndroid.show('每一个类型至少选择一个, 请在('+p+')中选择一个!', ToastAndroid.SHORT);
-        		return false;
-    		}
+    	if(totalSelect<10){
+    		ToastAndroid.show('至少选择10个选项', ToastAndroid.SHORT);
+    		return false;
     	}
     	let option1point = this.state.options[0].optionPoint;
     	let option2point = this.state.options[1].optionPoint;

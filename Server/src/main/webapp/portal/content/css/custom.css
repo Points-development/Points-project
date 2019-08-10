@@ -1571,7 +1571,9 @@ div.tdContent input[type="checkbox"]{
         -webkit-appearance:none;
         border:none;
     }
-    .tg {background-color:#ffffff;table-layout: fixed;}
+    .tg {background-color:#ffffff;table-layout: fixed;height:90%;}
+    .tg-print1{height:90%;}
+    .tg-print2{height:95%;}
     .table_area .tg .tg-yw4l.tg-ping {width:40%}
     .table_area .tg .tg-yw4l.tg-problem {width:20%}
     .circle-green {
