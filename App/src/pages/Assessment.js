@@ -68,7 +68,7 @@ export default class Assessment extends React.Component {
         			this.setState({errorMsg: '请检查网络或联系管理员'});
         		}
             }.bind(this));
-        	let url3 = gServer.host+'/score/'+gUser.name;
+        	let url3 = gServer.host+'/score/'+gUser.name+"?scorer="+gUser.name;
         	NetUtil.get(url3,function (response) {
         		if(response.status == 200){
         			if(response.data.length>0){

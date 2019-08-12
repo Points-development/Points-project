@@ -1562,7 +1562,7 @@ div.tdContent input[type="checkbox"]{
  print {
  	@page {
       size: A4; /* DIN A4 standard, Europe */
-      margin:5mm 2mm;
+      margin:6mm;
       margin-top:10mm;
     }
     div.table_area select{
