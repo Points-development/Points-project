@@ -51,4 +51,5 @@ public interface PingYiMapper {
 	public ZuZhiPingJia getZuZhiPingJiaByUser(@Param(value = "username")String username);
 	public QunZhongPingYi getQunZhongPingJiaByUser(String username);
 	public List<CategoryIssue> getCategoryIssue(@Param(value = "username")String username);
+	public List<CategoryIssue> initCategoryIssue(@Param(value = "username")String username);
 }

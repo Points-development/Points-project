@@ -287,12 +287,10 @@
 				<tr>
 					<th width="15%" class="tg-yw4l">体检指标</th>
 					<th class="tg-yw4l">具体问题表现</th>
-					<th width="15%" class="tg-yw4l">评议人数</th>
 				</tr>
 				<tr ng-repeat="issue in ecCtrl.topIssues">
 					<td class="tg-yw4l">{{issue.description}}</td>
 					<td>{{issue.topIssue}}</td>
-					<td class="tg-yw4l">{{issue.hitNum}}/{{ecCtrl.result.pingyiNumber}}</td>
 				</tr>
 			</table>
 		</div>

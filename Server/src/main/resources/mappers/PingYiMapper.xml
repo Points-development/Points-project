@@ -81,6 +81,20 @@
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="topIssue" property="topIssue" jdbcType="VARCHAR" />
   </resultMap>
+  <select id="initCategoryIssue" resultMap="CategoryIssueResultMap">
+set @rank:=0;
+set @current_id:=0;
+select T1.category_id, 0 hitNum, T1.description, T1.topIssue
+from
+(select QC.category_id, QC.description, PQ.description topIssue, @rank:=case when @current_id != QC.category_id then 1 else @rank+1 end as rank, @current_id:=QC.category_id 
+from QuestionCategory QC
+join PaperQuestion PQ
+on QC.id = PQ.category_id
+where PQ.type = 1 and (PQ.user_property_id = (select U.user_property_id from User U where U.name = #{username}) or PQ.user_property_id = 1)
+order by QC.category_id) T1
+where T1.rank=1
+order by T1.category_id
+  </select>
 <!-- Now the issue option is hard coded to 2 (PIS.option_id=2), later we can add column in PaperOption to indicate whether this option means issue -->
    <select id="getCategoryIssue" resultMap="CategoryIssueResultMap">
 select T3.description topIssue, T3.hitNum, T3.category_id, QC.description

@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.huiyong.dao.PingYiMapper;
 import com.huiyong.model.pingyi.BaoGaoDan;
 import com.huiyong.model.pingyi.CategoryInfo;
+import com.huiyong.model.pingyi.CategoryIssue;
 import com.huiyong.model.pingyi.CategoryPoint;
 import com.huiyong.model.pingyi.DeFenHuiZong;
 import com.huiyong.model.pingyi.HuPing;
@@ -183,11 +184,6 @@ public class PingYiServiceImpl implements PingYiService{
 		List<CategoryPoint> zuZhiPingPoints = transferZuZhiPing(pingYiDao.getZuZhiPingJiaByUser(username));
 		zuZhiPingPoints.add(getZongHePingJia(zuZhiPingPoints));
 		baoGaoDan.setZuZhiPingPoints(zuZhiPingPoints);
-		//getCategoryIssue, for every category of top issues, just select the first one
-		baoGaoDan.setCategoryTopIssues(pingYiDao.getCategoryIssue(username).stream().collect(
-				Collectors.collectingAndThen(
-				Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(ci->ci.getCategoryId()))), ArrayList::new)
-				));
 		List<CategoryPoint> zongHeList = new ArrayList<CategoryPoint>();
 		List<CategoryPoint> jianKangList = new ArrayList<CategoryPoint>();
 		for(int i=0; i<ziPingPoints.size(); i++){
@@ -214,6 +210,36 @@ public class PingYiServiceImpl implements PingYiService{
 		}
 		baoGaoDan.setZongHeDeFenPoints(zongHeList);
 		baoGaoDan.setJianKangZhuangTaiPoints(jianKangList);
+
+		//only if zongHe is not zero which means ziPing/huPing/zuZhiPing/qunZhongPing is not zero we set CategoryTopIssues
+		if(zongHeList.get(zongHeList.size() - 1).getPoint() > 0) {
+			//init catgoryIssue, which will return all categories and 1 question in it, hit number will be set to 0
+			List<CategoryIssue> initCI = pingYiDao.initCategoryIssue(username);
+			//getCategoryIssue, for every category of top issues, just select the first one
+			List<CategoryIssue> tmpCI = pingYiDao.getCategoryIssue(username).stream().collect(
+					Collectors.collectingAndThen(
+					Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(ci->ci.getCategoryId()))), ArrayList::new)
+					);
+			List<CategoryIssue> finalList = new ArrayList<CategoryIssue>();
+			for(int i=0; i<jianKangList.size()-1; i++){
+				if(jianKangList.get(i).getPoint() < health) {
+					boolean found = false;
+					for(int j=0; j<tmpCI.size(); j++) {
+						if(tmpCI.get(j).getCategoryId() == 
+								initCI.get(i).getCategoryId()) {
+							finalList.add(tmpCI.get(j));
+							found = true;
+							break;
+						}
+					}
+					if(!found) {
+						finalList.add(initCI.get(i));
+					}
+				}
+			}
+			baoGaoDan.setCategoryTopIssues(finalList);		
+		}
+
 		return baoGaoDan;
 	}
 

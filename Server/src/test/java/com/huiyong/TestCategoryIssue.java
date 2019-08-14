@@ -41,9 +41,10 @@ public class TestCategoryIssue {
 			System.out.println("categoryId is " + x.getCategoryId() + " discription is " + x.getDescription() + " hitNum is " + x.getHitNum());
 		});
 		categoryTopIssues = categoryTopIssues.stream().collect(
-				Collectors.collectingAndThen(
-				Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(ci->ci.getCategoryId()))), ArrayList::new)
-				);
+					Collectors.collectingAndThen(
+							Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(ci->ci.getCategoryId()))), ArrayList::new
+					)
+		);
 		categoryTopIssues.stream().forEach((x)->{
 			System.out.println("categoryId is " + x.getCategoryId() + " discription is " + x.getDescription() + " hitNum is " + x.getHitNum());
 		});
