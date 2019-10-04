@@ -18,6 +18,7 @@ public class User {
 	private String realName;
 	private String password;
 	private String property;
+	private String role;
 	public Integer getId() {
 		return id;
 	}
@@ -60,5 +61,11 @@ public class User {
 	}
 	public void setBranchId(Integer branchId) {
 		this.branchId = branchId;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 }

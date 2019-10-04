@@ -64,7 +64,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {;
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
 	public void addUser(User user, int propertyID) {
 		userDao.addUser(user, propertyID);
-		
+		String role = user.getRole();
+		if(null != role ) {
+			if(role.equals(RestUserDetails.ROLE_BRANCH_ADMIN)  || role.equals(RestUserDetails.ROLE_ORGANIZATION_ADMIN) ) {
+				userDao.assignRoleToUser(user.getId(),userDao.getRoleId(role));
+			}
+		}
 	}
 
 	/* (non-Javadoc)
@@ -74,7 +79,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {;
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
 	public void updateUser(User user, int propertyID) {
 		userDao.updateUser(user, propertyID);
-		
+		String role = user.getRole();
+		if(null != role ) {
+			if(role.equals(RestUserDetails.ROLE_BRANCH_ADMIN)  || role.equals(RestUserDetails.ROLE_ORGANIZATION_ADMIN) ) {
+				userDao.assignRoleToUser(user.getId(),userDao.getRoleId(role));
+			}
+		}
 	}
 
 	/* (non-Javadoc)
@@ -141,7 +151,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {;
 		Set<GrantedAuthority> authoritiesSet = new HashSet<GrantedAuthority>();
 		GrantedAuthority authority;
 		if(null == rud.getRole()) {
-			authority = new SimpleGrantedAuthority("ROLE_USER");
+			authority = new SimpleGrantedAuthority(RestUserDetails.ROLE_USER);
 		}else {
 			authority = new SimpleGrantedAuthority(rud.getRole());
 		}

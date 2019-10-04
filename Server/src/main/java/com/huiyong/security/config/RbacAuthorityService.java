@@ -5,6 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
+import com.huiyong.model.user.RestUserDetails;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +28,7 @@ public class RbacAuthorityService {
 
             for (String url : urls) {
                 if (antPathMatcher.match(url, request.getRequestURI())) {
-                	if(((UserDetails) userInfo).getAuthorities().contains("ROLE_ORGANIZATION_ADMIN")) {
+                	if(((UserDetails) userInfo).getAuthorities().contains(RestUserDetails.ROLE_ORGANIZATION_ADMIN)) {
                         hasPermission = true;
                         break;
                 	}

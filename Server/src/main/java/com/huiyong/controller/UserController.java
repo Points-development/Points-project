@@ -67,7 +67,7 @@ public class UserController {
     public List<String> getUserProperties() {
     	return userService.getAllProperties();
     }
-    
+
     @RequestMapping(value = "/userservice/organizations", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
     public ResponseEntity<?> getOrganizations() {
     	List<Organization> organizations = userService.getOrganizations();
@@ -212,6 +212,7 @@ public class UserController {
         	user.setPassword(MD5Util.getPwd(user.getPassword()));
     	}
     	userService.addUser(user, propertyId);
+
     	m.setSuccess("创建成功.");
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
     }

@@ -57,10 +57,9 @@ CREATE TABLE IF NOT EXISTS `User` (
   FOREIGN KEY (`user_property_id`) REFERENCES `UserProperty` (`id`));
 
 CREATE TABLE IF NOT EXISTS `UserRole` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`user_id`, `role_id`),
   FOREIGN KEY (`role_id`) REFERENCES `Role` (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `User` (`id`));  
 

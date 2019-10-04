@@ -38,5 +38,7 @@ public interface UserMapper {
 	void addOrganization(@Param("organization") Organization organization);
 	void deleteOrganization(@Param("organization") String organization);
 	Organization getOrganization(@Param("organization") String organization);
+	Integer getRoleId(@Param("role") String role);
+	void assignRoleToUser(@Param("userId") Integer userId, @Param("roleId") Integer roleId);
 	
 }

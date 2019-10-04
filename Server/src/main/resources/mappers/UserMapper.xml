@@ -90,7 +90,9 @@
                         where User.name=#{user.name};
   </update>  
    <update id="deleteUser" parameterType="String">  
-        DELETE FROM User where name=#{username};
+        SET FOREIGN_KEY_CHECKS = 0;
+        DELETE UserRole, User FROM User left join UserRole on User.id = UserRole.user_id where User.name=#{username};
+        SET FOREIGN_KEY_CHECKS = 1;
   </update> 
   
   <select id="getBranchesInOrganization" parameterType="String" resultMap="BranchResultMap">
@@ -149,5 +151,11 @@
   
 	<delete id="deleteOrganization" parameterType="String">  
         DELETE FROM Organization where Organization.name=#{organization}
-	</delete>  		 
+	</delete> 
+  <select id="getRoleId" parameterType="String" resultType="Integer">
+    select Role.id from Role where Role.name=#{role}
+  </select>
+    <insert id="assignRoleToUser" useGeneratedKeys="false">  
+        INSERT INTO UserRole (user_id, role_id) VALUES (#{userId}, #{roleId} )
+  </insert>   		 
  </mapper>

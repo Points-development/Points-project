@@ -13,6 +13,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonInclude(Include.NON_NULL)
 public class RestUserDetails implements UserDetails {
+	public static final String ROLE_ORGANIZATION_ADMIN ="ROLE_ORGANIZATION_ADMIN";
+	public static final String ROLE_BRANCH_ADMIN ="ROLE_BRANCH_ADMIN";
+	public static final String ROLE_USER ="ROLE_USER";
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private String realName;
