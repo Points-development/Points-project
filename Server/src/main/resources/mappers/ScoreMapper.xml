@@ -26,6 +26,18 @@
         </if>  
         ;
   </select>
+  
+  <select id="getScoreByOther" resultMap="ScoreResultMap">
+        SELECT *
+        FROM PaperScore PS
+    	where PS.scoree=#{username} and PS.scorer != #{username}
+            order by lastModifiedTime
+        <if test="recent==true ">  
+        LIMIT 1
+        </if>  
+        ;
+	</select>
+	
   <select id="getScoreByScorer" resultMap="ScoreResultMap">
         SELECT *
         FROM PaperScore PS
@@ -36,7 +48,20 @@
         </if>  
         ;
   </select>
-	<select id="getScorePointByBranch" parameterType="String" resultMap="ScorePointResultMap">
+	
+	<insert id="addScore" parameterType="Score" useGeneratedKeys="true" keyProperty="id">  
+		INSERT INTO PaperScore (scorer, scoree, point, lastModifiedTime, paper_id)
+        VALUES
+		(#{scorer}, #{scoree}, #{point}, #{lastModifiedTime}, #{paperId} )
+   </insert>  
+   <update id="updateScore" parameterType="Score">  
+		UPDATE PaperScore PS SET
+		PS.point = #{point},
+		PS.lastModifiedTime=#{lastModifiedTime}
+	    WHERE PS.id=#{id}
+   </update> 
+   
+   	<select id="getScorePointByBranch" parameterType="String" resultMap="ScorePointResultMap">
 		select U.name username, U.realName realname, OS.selfPoint selfPoint, OP.otherPoint
 		otherPoint,OS.lastModifiedTime 
 		from User U LEFT JOIN (
@@ -49,40 +74,26 @@
 		from PaperScore PSSELF
 		where PSSELF.scoree=PSSELF.scorer
 		) OS on U.name=OS.scoree
-		where U.branch=#{branch};
+		JOIN Branch B on B.id = U.branch_id
+        JOIN Organization O on O.id = B.organization_id
+    	where O.name = #{organization} and B.name=#{branch} 
 	</select>
 	
 	<select id="getScorePointByBranchAndScorer" resultMap="ScorePointResultMap">
 	    select U.name username, U.realName realname, PS.point otherPoint, PS.lastModifiedTime
 		from User U left join PaperScore PS
-        on U.name=PS.scoree and PS.scorer=#{scorer}
-		where U.branch=#{branch};
+        on U.name=PS.scoree
+		JOIN Branch B on B.id = U.branch_id
+        JOIN Organization O on O.id = B.organization_id
+    	where O.name = #{organization} and B.name=#{branch}  and PS.scorer=#{scorer};
 	</select>
 	
-    <select id="getScoreByOther" resultMap="ScoreResultMap">
-        SELECT *
-        FROM PaperScore PS
-    	where PS.scoree=#{username} and PS.scorer != #{username}
-            order by lastModifiedTime
-        <if test="recent==true ">  
-        LIMIT 1
-        </if>  
-        ;
-	</select>
-    <insert id="addScore" parameterType="Score" useGeneratedKeys="true" keyProperty="id">  
-		INSERT INTO PaperScore (scorer, scoree, point, lastModifiedTime, paper_id)
-        VALUES
-		(#{scorer}, #{scoree}, #{point}, #{lastModifiedTime}, #{paperId} )
-   </insert>  
-   <update id="updateScore" parameterType="Score">  
-		UPDATE PaperScore PS SET
-		PS.point = #{point},
-		PS.lastModifiedTime=#{lastModifiedTime}
-	    WHERE PS.id=#{id}
-   </update> 
+
    	<delete id="deleteScorePointByBranch" parameterType="String">
         DELETE PaperScore
-        FROM PaperScore join User on PaperScore.scoree=User.name
-    	where User.branch=#{branch};
+        FROM PaperScore join User on PaperScore.scoree=User.name 
+        Join Branch on Branch.id=User.branch_id
+        Join Organization on Organization.id = Branch.organization_id
+    	where Branch.name=#{branch} and Organization.name=#{organization};
   </delete>
  </mapper>

@@ -28,7 +28,7 @@ import com.huiyong.service.PingYiService;
  *
  */
 @RestController
-@RequestMapping(value = "/pingyi")
+@RequestMapping(value = "/ws/pingyi")
 public class PingyiController {
 	
 	@Autowired

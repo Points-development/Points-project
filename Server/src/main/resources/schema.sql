@@ -1,11 +1,46 @@
-CREATE DATABASE IF NOT EXISTS `pointServiceNewBinXian` default charset utf8 COLLATE utf8_general_ci;
-use pointServiceNewBinXian;
+CREATE DATABASE IF NOT EXISTS `pointServiceRoadmap` default charset utf8 COLLATE utf8_general_ci;
+use pointServiceRoadmap;
+
+CREATE TABLE IF NOT EXISTS `AppInfo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `version` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255),
+  `additionalInfo` varchar(255),
+  PRIMARY KEY (`id`));
 
 CREATE TABLE IF NOT EXISTS `UserProperty` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL UNIQUE,
   PRIMARY KEY (`id`));
 
+ /**
+ * name can be "ROLE_BRANCH_ADMIN", "ROLE_ORGANIZATION_ADMIN"
+ */  
+CREATE TABLE IF NOT EXISTS `Role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL UNIQUE,
+  PRIMARY KEY (`id`));
+
+/* Organization can contain another organizations or branches */
+CREATE TABLE IF NOT EXISTS `Organization` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `organizations_id` int(11),
+  `name` varchar(255) NOT NULL UNIQUE,
+  `description` varchar(255),
+  `additionalInfo` varchar(255),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`organizations_id`) REFERENCES `Organization` (`id`));
+
+CREATE TABLE IF NOT EXISTS `Branch` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) not null,
+  `organization_id` int(11),
+  `description` varchar(255),
+  `additionalInfo` varchar(255),
+  PRIMARY KEY (`id`),
+  constraint BRANCH_UNIQUE unique(name, organization_id),
+  FOREIGN KEY (`organization_id`) REFERENCES `Organization` (`id`));
 /**
  * e10adc3949ba59abbe56e057f20f883e 是123456的md5
  * 21218cca77804d2ba1922c33e0151105 是888888的md5
@@ -16,17 +51,18 @@ CREATE TABLE IF NOT EXISTS `User` (
   `name` varchar(255) NOT NULL UNIQUE,
   `realName` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL DEFAULT '21218cca77804d2ba1922c33e0151105',
-  `branch` varchar(255) NOT NULL DEFAULT 'NULL',
-  `organization` varchar(255) NOT NULL,
-  `isAdmin` tinyint(1) DEFAULT 0,
+  `branch_id` int(11),
   PRIMARY KEY (`id`),
+  FOREIGN KEY (`branch_id`) REFERENCES `Branch` (`id`),
   FOREIGN KEY (`user_property_id`) REFERENCES `UserProperty` (`id`));
 
-CREATE TABLE IF NOT EXISTS `OrganBranch` (
+CREATE TABLE IF NOT EXISTS `UserRole` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `branch` varchar(255) NOT NULL,
-  `organization` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`));
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`role_id`) REFERENCES `Role` (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `User` (`id`));  
 
 CREATE TABLE IF NOT EXISTS `PaperTest` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

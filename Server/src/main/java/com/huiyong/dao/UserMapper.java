@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.huiyong.model.user.Branch;
+import com.huiyong.model.user.Organization;
+import com.huiyong.model.user.RestUserDetails;
 import com.huiyong.model.user.User;
 
 /**
@@ -15,14 +18,25 @@ import com.huiyong.model.user.User;
  */
 public interface UserMapper {
 	User getUserByName(@Param("name") String name);
+	RestUserDetails loadUserByUsername(@Param("name") String name);
+	Integer getPropertyId(@Param("name") String property);
+	Integer getOrganizationId(@Param("organziation")String organziation);
+	Integer getBranchId(@Param("organziation")String organziation, @Param("branch")String branch);
+	List<String> getAllProperties();
+	
 	List<User> getUsersInBranch(@Param("branchname") String branchname, @Param("organization")String organization);
 	void addUser(@Param("user") User user, @Param("propertyId") int propertyId);
 	void updateUser(@Param("user") User user, @Param("propertyId") int propertyId);
-	Integer getPropertyId(@Param("name") String property);
-	List<String> getAllProperties();
-	List<String> getAllBranches(@Param("organization")String organziation);
 	void deleteUser(String username);
-	void deleteBranch(@Param("branch") String branchname, @Param("organization")String organization);
-	void addBranch(@Param("branch") String branchname, @Param("organization")String organization);
-	String getBranch(@Param("branch") String branchname, @Param("organization")String organization);
+	
+	List<Branch> getBranchesInOrganization(@Param("organization")String organziation);
+	void deleteBranchInOrganizationByName(@Param("branch") String branchname, @Param("organization")String organization);
+	void addBranchInOrganization( @Param("organization")String organization, @Param("branch") Branch branch );
+	Branch getBranchInOrganizationByName(@Param("branch") String branch, @Param("organization")String organization);
+	
+	List<Organization> getOrganizations();
+	void addOrganization(@Param("organization") Organization organization);
+	void deleteOrganization(@Param("organization") String organization);
+	Organization getOrganization(@Param("organization") String organization);
+	
 }

@@ -27,7 +27,7 @@ import com.huiyong.service.UserService;
  *
  */
 @RestController
-@RequestMapping(value = "/score")
+@RequestMapping(value = "/ws/score")
 public class ScoreController {
 	@Autowired
 	private ScoreService scoreService;
@@ -90,10 +90,10 @@ public class ScoreController {
     }
     
     @RequestMapping(value = "/points", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
-    public ResponseEntity<?> getScorePoints(@RequestParam String branch) {
+    public ResponseEntity<?> getScorePointsByBranch(@RequestParam String organization, @RequestParam String branch) {
 		List<ScorePoint> spList = null;
 		Message m = new Message();
-		spList = scoreService.getScorePointByBranch(branch);
+		spList = scoreService.getScorePointByBranch(organization,branch);
     	if(null == spList || spList.size() == 0){
     		m.setError("目前没有分数,请输入正确部门名称");
     		return new ResponseEntity<Message>(m, HttpStatus.NOT_FOUND);
@@ -102,19 +102,19 @@ public class ScoreController {
     }
     
     @RequestMapping(value = "/points", produces = "application/json; charset=UTF-8", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteScorePoints(@RequestParam String branch) {
+    public ResponseEntity<?> deleteScorePointsByBranch(@RequestParam String organization, @RequestParam String branch) {
 		Message m = new Message();
-		scoreService.deleteScorePointByBranch(branch);
+		scoreService.deleteScorePointByBranch(organization, branch);
 		m.setSuccess("删除成绩成功");
 	    return new ResponseEntity<Message>(m, HttpStatus.OK);
     }
     
     //return the list of points and user that the scorer did to other user in the branch, if there's no score, the other points will be 0
     @RequestMapping(value = "/pointsbyuser", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
-    public ResponseEntity<?> getScorePointsByUser(@RequestParam String branch, @RequestParam String scorer) {
+    public ResponseEntity<?> getScorePointsByUser(@RequestParam String organization, @RequestParam String branch, @RequestParam String scorer) {
 		List<ScorePoint> spList = null;
 		Message m = new Message();
-		spList = scoreService.getScorePointByBranchAndScorer(branch, scorer);
+		spList = scoreService.getScorePointByBranchAndScorer(organization, branch, scorer);
     	if(null == spList || spList.size() == 0){
     		m.setError("目前没有分数,请输入正确部门名称");
     		return new ResponseEntity<Message>(m, HttpStatus.NOT_FOUND);

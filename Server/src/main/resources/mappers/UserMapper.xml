@@ -1,27 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.huiyong.dao.UserMapper" >
-
-  <resultMap id="BaseResultMap" type="com.huiyong.model.user.User" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+  
+  <resultMap id="UserDetailResultMap" type="com.huiyong.model.user.RestUserDetails" >
+    <result column="name" property="username" jdbcType="VARCHAR" />
     <result column="realName" property="realName" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="branch" property="branch" jdbcType="VARCHAR" />
     <result column="organization" property="organization" jdbcType="VARCHAR" />
     <result column="property" property="property" jdbcType="VARCHAR" />
-    <result column="isAdmin" property="isAdmin" jdbcType="TINYINT" />
+    <result column="role" property="role" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="loadUserByUsername" parameterType="String" resultMap="UserDetailResultMap">
+    select User.name, User.realName, User.password, UserProperty.name property, Organization.name organization, Branch.name branch, Role.name role
+    from User 
+    left join UserRole on User.id=UserRole.user_id
+    left join Role on UserRole.role_id=role.id
+    join UserProperty on User.user_property_id=UserProperty.id
+    join Branch on User.branch_id=Branch.id
+    join Organization on Branch.organization_id=Organization.id
+    where User.name=#{name}
+  </select>
+  <resultMap id="BaseResultMap" type="com.huiyong.model.user.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="realName" property="realName" jdbcType="VARCHAR" />
+    <result column="property" property="property" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="BranchResultMap" type="com.huiyong.model.user.Branch" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="additionalInfo" property="additionalInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="OrganizationResultMap" type="com.huiyong.model.user.Organization" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="additionalInfo" property="additionalInfo" jdbcType="VARCHAR" />
   </resultMap>
   <select id="getUserByName" parameterType="String" resultMap="BaseResultMap">
-    select User.id, User.name, User.realName, User.password, User.branch, User.organization, UserProperty.name property, User.isAdmin from User join UserProperty on User.user_property_id=UserProperty.id
+    select User.id, User.name, User.realName, UserProperty.name property from User join UserProperty on User.user_property_id=UserProperty.id
     	where User.name=#{name}
   </select>
    <select id="getPropertyId" parameterType="String" resultType="Integer">
     select id from UserProperty
     	where name=#{name}
   </select>
+  <select id="getOrganizationId" parameterType="String" resultType="Integer">
+    select id from Organization
+    	where name=#{organization}
+  </select>
+  <select id="getBranchId" resultType="Integer">
+    select Branch.id from Branch Join Organization on Branch.organization_id=Organization.id
+    	where Branch.name=#{branch} and Organization.name=#{organization}
+  </select>
     <select id="getUsersInBranch" parameterType="String" resultMap="BaseResultMap">
-    select User.id, User.name, User.realName, User.password, User.branch, User.organization, UserProperty.name property, User.isAdmin from User join UserProperty on User.user_property_id=UserProperty.id
+    select User.id, User.name, User.realName, UserProperty.name property from User join UserProperty on User.user_property_id=UserProperty.id
     	where branch=#{branchname} and organization=#{organization}
   </select>
   <select id="getAllProperties" resultType="String">
@@ -33,40 +68,24 @@
                           <if test="user.password != null" >
         					password,
       					  </if> 
-                          <if test="user.branch != null" >
-        					branch,
-      					  </if>  
-      					  <if test="user.organization != null" >
-        					organization,
-      					  </if>  
       					  user_property_id,
-                          isAdmin)  
+                          branch_id)  
               VALUES   (#{user.name},
               			#{user.realName},
                           <if test="user.password != null" >
         					#{user.password},
       					  </if> 
-                          <if test="user.branch != null" >
-        					#{user.branch},
-      					  </if> 
-      					  <if test="user.organization != null" >
-        					#{user.organization},
-      					  </if> 
       					  #{propertyId},
-                        #{user.isAdmin})      
+                        #{user.branchId})      
   </insert>  
     <update id="updateUser" useGeneratedKeys="true">  
         UPDATE User SET  <if test="user.password != null" >
         				 User.password=#{user.password},
         				  </if> 
-                          <if test="user.branch != null" >
-        				 User.branch=#{user.branch},
-      					  </if> 
-                          <if test="user.organization != null" >
-        				 User.organization=#{user.organization},
+                          <if test="user.branchId != null" >
+        				 User.branch_id=#{user.branchId},
       					  </if> 
       					User.realName=#{user.realName},
-                        User.isAdmin=#{user.isAdmin},
                         User.user_property_id=#{propertyId}
                         where User.name=#{user.name};
   </update>  
@@ -74,19 +93,61 @@
         DELETE FROM User where name=#{username};
   </update> 
   
-   <select id="getAllBranches" resultType="string">
-    select branch from OrganBranch where organization=#{organization}
+  <select id="getBranchesInOrganization" parameterType="String" resultMap="BranchResultMap">
+    select Branch.id, Branch.name, Branch.description, Branch.additionalInfo from Branch join Organziation on Branch.organziation_id = Organziation.id where Organization.name=#{organization}
   </select>
   
-  <select id="getBranch" resultType="string">
-    select branch from OrganBranch where organization=#{organization} and branch =#{branch}
+  <select id="getBranchInOrganizationByName" resultMap="BranchResultMap">
+    select Branch.id, Branch.name, Branch.description, Branch.additionalInfo from Branch Join Organization on Branch.organization_id=Organization.id where Organization.name=#{organization} and Branch.name =#{branch}
   </select>
   
-   <update id="deleteBranch" >  
-        DELETE O, U FROM OrganBranch O left join User U on O.branch = U.branch and O.organization = U.organization where O.branch=#{branch} and O.organization=#{organization}
+   <update id="deleteBranchInOrganizationByName" >  
+        DELETE B FROM Branch B join Organization O on O.id = B.organization_id where O.name=#{organization} and B.name=#{branch}
   </update> 
-  <insert id="addBranch" useGeneratedKeys="true">  
-        INSERT INTO OrganBranch (branch, organization)  
-              VALUES   (#{branch}, #{organization})      
+  <insert id="addBranchInOrganization" useGeneratedKeys="true">  
+        INSERT INTO Branch (name,  
+                          <if test="branch.description != null" >
+        					description,
+      					  </if> 
+                          <if test="branch.additionalInfo != null" >
+        					additionalInfo,
+      					  </if>  
+      					  organization_id)
+              VALUES   (#{branch.name},
+                          <if test="branch.description != null" >
+        					#{branch.description},
+      					  </if> 
+                          <if test="branch.additionalInfo != null" >
+        					#{branch.additionalInfo},
+      					  </if> 
+                        #{branch.organizationId})      
+  </insert> 
+  <select id="getOrganizations"  resultMap="OrganizationResultMap">
+    select * from Organization
+  </select>
+  <select id="getOrganization" parameterType="String" resultMap="OrganizationResultMap">
+    select * from Organization where Organization.name=#{organization}
+  </select>
+  <insert id="addOrganization" useGeneratedKeys="true">  
+        INSERT INTO Organization (
+                          <if test="organization.description != null" >
+        					description,
+      					  </if> 
+                          <if test="organization.additionalInfo != null" >
+        					additionalInfo,
+      					  </if>  
+      					  name)
+              VALUES   (
+                          <if test="organization.description != null" >
+        					#{organization.description},
+      					  </if> 
+                          <if test="organization.additionalInfo != null" >
+        					#{organization.additionalInfo},
+      					  </if> 
+                        #{organization.name})      
   </insert>  
+  
+	<delete id="deleteOrganization" parameterType="String">  
+        DELETE FROM Organization where Organization.name=#{organization}
+	</delete>  		 
  </mapper>

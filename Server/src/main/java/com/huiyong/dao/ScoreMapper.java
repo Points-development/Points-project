@@ -22,11 +22,11 @@ public interface ScoreMapper {
 	public Integer getSelfScorePoint(String username);
 	public Integer getOtherScorePoint(String username);
 	public void updateScore(Score score);
-	public List<ScorePoint> getScorePointByBranch(String branch);
-	public List<ScorePoint> getScorePointByBranchAndScorer(@Param(value = "branch") String branch, @Param(value = "scorer") String scorer);
+	public List<ScorePoint> getScorePointByBranch(@Param(value = "organization") String organization, String branch);
+	public List<ScorePoint> getScorePointByBranchAndScorer(@Param(value = "organization") String organization, @Param(value = "branch") String branch, @Param(value = "scorer") String scorer);
 	/**
 	 * @param branch
 	 * @return
 	 */
-	public void deleteScorePointByBranch(@Param(value = "branch") String branch);
+	public void deleteScorePointByBranch(@Param(value = "organization") String organization, @Param(value = "branch") String branch);
 }

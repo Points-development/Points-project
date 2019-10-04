@@ -142,24 +142,24 @@ public class ScoreServiceImpl implements ScoreService {
 	 * @see com.huiyong.service.ScoreService#getScorePointByBranch(java.lang.String)
 	 */
 	@Override
-	public List<ScorePoint> getScorePointByBranch(String branch) {
-		return scoreDao.getScorePointByBranch(branch);
+	public List<ScorePoint> getScorePointByBranch(String organization, String branch) {
+		return scoreDao.getScorePointByBranch(organization, branch);
 	}
 
 	/* (non-Javadoc)
 	 * @see com.huiyong.service.ScoreService#getScorePointByBranchAndScorer(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public List<ScorePoint> getScorePointByBranchAndScorer(String branch, String scorer) {
-		return scoreDao.getScorePointByBranchAndScorer(branch, scorer);
+	public List<ScorePoint> getScorePointByBranchAndScorer(String organization, String branch, String scorer) {
+		return scoreDao.getScorePointByBranchAndScorer(organization, branch, scorer);
 	}
 
 	/* (non-Javadoc)
 	 * @see com.huiyong.service.ScoreService#deleteScorePointByBranch(java.lang.String)
 	 */
 	@Override
-	public void deleteScorePointByBranch(String branch) {
-		scoreDao.deleteScorePointByBranch(branch);
+	public void deleteScorePointByBranch(String organization, String branch) {
+		scoreDao.deleteScorePointByBranch(organization, branch);
 		
 	}
 

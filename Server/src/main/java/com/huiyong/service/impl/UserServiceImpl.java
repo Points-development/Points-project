@@ -3,10 +3,15 @@
  */
 package com.huiyong.service.impl;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -14,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.huiyong.dao.UserMapper;
 import com.huiyong.model.user.Branch;
+import com.huiyong.model.user.Organization;
+import com.huiyong.model.user.RestUserDetails;
 import com.huiyong.model.user.User;
 import com.huiyong.service.UserService;
 
@@ -22,7 +29,7 @@ import com.huiyong.service.UserService;
  *
  */
 @Service
-public class UserServiceImpl implements UserService {;
+public class UserServiceImpl implements UserService, UserDetailsService {;
 	@Autowired
 	private UserMapper userDao;
 
@@ -71,23 +78,6 @@ public class UserServiceImpl implements UserService {;
 	}
 
 	/* (non-Javadoc)
-	 * @see com.huiyong.service.UserService#getAllUsers()
-	 */
-	@Override
-	public List<Branch> getAllUsers(String organziation) {
-		List<String> bList = userDao.getAllBranches(organziation);
-		List<Branch> buList = new ArrayList<Branch>();
-		for(String branch: bList){
-			List<User> uList = userDao.getUsersInBranch(branch, organziation);
-			Branch aBranch = new Branch();
-			aBranch.setbranchName(branch);
-			aBranch.setUsers(uList);
-			buList.add(aBranch);
-		}
-		return buList;
-	}
-
-	/* (non-Javadoc)
 	 * @see com.huiyong.service.UserService#getAllProperties()
 	 */
 	@Override
@@ -99,8 +89,8 @@ public class UserServiceImpl implements UserService {;
 	 * @see com.huiyong.service.UserService#getAllBranches()
 	 */
 	@Override
-	public List<String> getAllBranches(String organziation) {
-		return userDao.getAllBranches(organziation);
+	public List<Branch> getBranchesInOrganization(String organziation) {
+		return userDao.getBranchesInOrganization(organziation);
 	}
 
 	/* (non-Javadoc)
@@ -117,8 +107,8 @@ public class UserServiceImpl implements UserService {;
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
-	public void deleteBranch(String branchname, String organziation) {
-		userDao.deleteBranch(branchname, organziation);
+	public void deleteBranchInOrganizationByName(String branchname, String organziation) {
+		userDao.deleteBranchInOrganizationByName(branchname, organziation);
 		
 	}
 
@@ -127,11 +117,11 @@ public class UserServiceImpl implements UserService {;
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
-	public boolean addBranch(String branchname, String organziation) {
-		if(null != getBranch(branchname, organziation)){
+	public boolean addBranchInOrganization( String organziation, Branch branch) {
+		if(null != getBranchInOrganizationByName(branch.getName(), organziation)){
 			return false;
 		}
-		userDao.addBranch( branchname,  organziation);
+		userDao.addBranchInOrganization(organziation,  branch);
 		return true;
 	}
 	
@@ -140,8 +130,57 @@ public class UserServiceImpl implements UserService {;
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
-	public String getBranch(String branchname, String organziation) {
-		return userDao.getBranch( branchname,  organziation);	
+	public Branch getBranchInOrganizationByName(String branchname, String organziation) {
+		return userDao.getBranchInOrganizationByName( branchname,  organziation);	
+	}
+
+	@Override
+	public RestUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		RestUserDetails rud = userDao.loadUserByUsername(username);
+
+		Set<GrantedAuthority> authoritiesSet = new HashSet<GrantedAuthority>();
+		GrantedAuthority authority;
+		if(null == rud.getRole()) {
+			authority = new SimpleGrantedAuthority("ROLE_USER");
+		}else {
+			authority = new SimpleGrantedAuthority(rud.getRole());
+		}
+		authoritiesSet.add(authority);
+		rud.setAuthorities(authoritiesSet);
+
+		return rud;
+	}
+
+	@Override
+	public Integer getOrganizationId(String organziation) {
+		return userDao.getOrganizationId(organziation);
+	}
+
+	@Override
+	public Integer getBranchId(String organziation, String branch) {
+		return userDao.getBranchId(organziation, branch);
+	}
+
+	@Override
+	public List<Organization> getOrganizations() {
+		return userDao.getOrganizations();
+	}
+
+	@Override
+	public void addOrganization(Organization organization) {
+		userDao.addOrganization(organization);
+		
+	}
+
+	@Override
+	public Organization getOrganization(String organization) {
+		return userDao.getOrganization(organization);
+	}
+
+	@Override
+	public void deleteOrganization(String organization) {
+		userDao.deleteOrganization(organization);
+		
 	}
 
 }

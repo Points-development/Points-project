@@ -21,7 +21,7 @@ import com.huiyong.service.UserService;
  *
  */
 @RestController
-@RequestMapping(value = "/paper")
+@RequestMapping(value = "/ws/paper")
 public class PaperController {
 	@Autowired
 	private PaperService paperService;

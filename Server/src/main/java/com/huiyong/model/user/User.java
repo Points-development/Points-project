@@ -3,19 +3,21 @@
  */
 package com.huiyong.model.user;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  * @author gangpu
  *
  */
+@JsonInclude(Include.NON_NULL)
 public class User {
 	private Integer id;
+	private Integer branchId;
 	private String name;
 	private String realName;
 	private String password;
-	private String branch;
-	private String organization;
 	private String property;
-	private boolean isAdmin;
 	public Integer getId() {
 		return id;
 	}
@@ -34,18 +36,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getBranch() {
-		return branch;
-	}
-	public void setBranch(String branch) {
-		this.branch = branch;
-	}
-	public boolean isAdmin() {
-		return isAdmin;
-	}
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
+
 	public String getProperty() {
 		return property;
 	}
@@ -64,16 +55,10 @@ public class User {
 	public void setRealName(String realName) {
 		this.realName = realName;
 	}
-	/**
-	 * @return the organization
-	 */
-	public String getOrganization() {
-		return organization;
+	public Integer getBranchId() {
+		return branchId;
 	}
-	/**
-	 * @param organization the organization to set
-	 */
-	public void setOrganization(String organization) {
-		this.organization = organization;
+	public void setBranchId(Integer branchId) {
+		this.branchId = branchId;
 	}
 }

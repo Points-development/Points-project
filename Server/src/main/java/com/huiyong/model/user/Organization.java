@@ -3,7 +3,6 @@
  */
 package com.huiyong.model.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -12,13 +11,11 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  *
  */
 @JsonInclude(Include.NON_NULL)
-public class Branch {
+public class Organization {
 	public Integer id;
 	public String name;
 	public String description;
 	public String additionalInfo;
-	@JsonIgnore
-	private Integer organizationId;
 	public String getName() {
 		return name;
 	}
@@ -37,11 +34,10 @@ public class Branch {
 	public void setAdditionalInfo(String additionalInfo) {
 		this.additionalInfo = additionalInfo;
 	}
-	public Integer getOrganizationId() {
-		return organizationId;
+	public Integer getId() {
+		return id;
 	}
-	public void setOrganizationId(Integer organizationId) {
-		this.organizationId = organizationId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-
 }

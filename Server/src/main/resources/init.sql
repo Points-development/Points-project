@@ -1,12 +1,13 @@
+INSERT INTO `AppInfo`(`version`, `name`, `description`) values('1.0', '彬县党建', '彬县党建体检系统');
+INSERT INTO `Role`(`name`) values('ROLE_ORGANIZATION_ADMIN');
+INSERT INTO `Role`(`name`) values('ROLE_BRANCH_ADMIN');
+INSERT INTO `User`(`user_property_id`, `name`, `realName`) values(1, 'admin', 'admin');
+INSERT INTO `UserRole`(`user_id`, `role_id`) values(1,  1);
 INSERT INTO `UserProperty`(`name`) values('共性');
 INSERT INTO `UserProperty`(`name`) values('农村（社区）党员');
 INSERT INTO `UserProperty`(`name`) values('企业和社会组织党员');
 INSERT INTO `UserProperty`(`name`) values('机关事业单位党员');
 INSERT INTO `UserProperty`(`name`) values('党员领导干部');
-INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`) values(3, 'gangpu', 'pugang', 'Shannxi', 'ibm', 1);
-INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`) values(4, 'xzgan', 'ganxiangzhen', 'henan', 'google', 1);
-INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`) values(2, 'test', 'test', 'Shannxi', 'ibm', 0);
-INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`) values(2, 'test1', 'test1', 'Shannxi', 'ibm', 0);
 INSERT INTO `PaperTest`(`name`) values('党性体检参考指标');
 INSERT INTO `QuestionCategory` (`category_type`, `category_id`, `description`) values ( '共性指标', 1,'理想信念');
 INSERT INTO `QuestionCategory` (`category_type`, `category_id`, `description`) values ( '共性指标', 2,'政治意识');

@@ -39,7 +39,9 @@
                U.name,
                U.realName
         FROM ZuZhiPingJia Z RIGHT JOIN User U on U.name=Z.userName
-    	where U.organization = #{organization} and U.branch=#{branch};
+        JOIN Branch B on B.id = U.branch_id
+        JOIN Organization O on O.id = B.organization_id
+    	where O.name = #{organization} and B.name=#{branch};
   </select>
   
    <select id="getZuZhiPingJiaByUser" resultMap="ZuZhiPingJiaResultMap">
@@ -72,7 +74,7 @@
 	</insert>
 	
 	<delete id="deleteZuZhiPingJias">  
-        DELETE Z FROM ZuZhiPingJia Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
+        DELETE Z FROM ZuZhiPingJia Z JOIN User U on Z.userName=U.name JOIN Branch B on B.id=U.branch_id JOIN Organization O on O.id = B.organization_id WHERE O.name=#{organization} and B.name=#{branch}
 	</delete>  
 
   <resultMap id="CategoryIssueResultMap" type="com.huiyong.model.pingyi.CategoryIssue" >
@@ -164,7 +166,9 @@ order by category_id
                U.name,
                U.realName
         FROM QunZhongPingYi Z RIGHT JOIN User U on U.name=Z.userName
-    	where U.organization = #{organization} and U.branch=#{branch};
+    	JOIN Branch B on B.id = U.branch_id
+        JOIN Organization O on O.id = B.organization_id
+    	where O.name = #{organization} and B.name=#{branch};
   </select>
   
   <insert id="insertQunZhongPingYis" parameterType="java.util.List" useGeneratedKeys="true">  
@@ -175,7 +179,7 @@ order by category_id
 	</insert>
 	
 	<delete id="deleteQunZhongPingYis">  
-        DELETE Z FROM QunZhongPingYi Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
+        DELETE Z FROM QunZhongPingYi Z JOIN User U on Z.userName=U.name JOIN Branch B on B.id=U.branch_id JOIN Organization O on O.id = B.organization_id WHERE O.name=#{organization} and B.name=#{branch}
 	</delete>
 	
 	<select id="getQunZhongPingJiaByUser" resultMap="QunZhongPingYiResultMap">
@@ -243,7 +247,9 @@ select PS.name, PS.realName, PI.question_id, PI.option_id, PI.score_id from
 (
 select U.name, U.realName, P.id, P.paper_id from
 PaperScore P Join User U on U.name=P.scorer and U.name=P.scoree
-where U.branch=#{branch} and U.organization=#{organization}
+JOIN Branch B on B.id = U.branch_id
+JOIN Organization O on O.id = B.organization_id
+where O.name = #{organization} and B.name=#{branch}
 ) PS
 Join PaperItemScore PI on PI.score_id=PS.id
 ) UQI 
@@ -260,7 +266,9 @@ LEFT JOIN PaperItemScore on PaperItemScore.score_id=FINAL_2.score_id and PaperIt
 ) POINT
 RIGHT JOIN User on User.name=POINT.name 
 LEFT JOIN ZiPing on ZiPing.userName=User.name
-where User.branch=#{branch} and User.organization=#{organization}
+JOIN Branch on Branch.id = User.branch_id
+JOIN Organization on Organization.id = Branch.organization_id
+where Organization.name = #{organization} and Branch.name=#{branch}
   </select>
   
   <insert id="insertZiPings" parameterType="java.util.List" useGeneratedKeys="true">  
@@ -271,7 +279,7 @@ where User.branch=#{branch} and User.organization=#{organization}
 	</insert>
 	
 	<delete id="deleteZiPings">  
-        DELETE Z FROM ZiPing Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
+        DELETE Z FROM ZiPing Z JOIN User U on Z.userName=U.name JOIN Branch B on B.id=U.branch_id JOIN Organization O on O.id = B.organization_id WHERE O.name=#{organization} and B.name=#{branch}
 	</delete>
 	
    <resultMap id="HuPingResultMap" type="com.huiyong.model.pingyi.HuPing" >
@@ -291,7 +299,9 @@ where User.branch=#{branch} and User.organization=#{organization}
 		PSOTHER.scoree
 		) OP on U.name=OP.scoree
 		LEFT Join HuPing on U.name=HuPing.userName
-		where U.branch=#{branch} and U.organization=#{organization}
+		JOIN Branch B on B.id = U.branch_id
+        JOIN Organization O on O.id = B.organization_id
+    	where O.name = #{organization} and B.name=#{branch};
   </select>
   
   <select id="getHuPingAnswerByUser" parameterType="String" resultType="String">
@@ -306,7 +316,7 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
 	</insert>
 	
 	<delete id="deleteHuPings">  
-       DELETE Z FROM HuPing Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
+       DELETE Z FROM HuPing Z JOIN User U on Z.userName=U.name JOIN Branch B on B.id=U.branch_id JOIN Organization O on O.id = B.organization_id WHERE O.name=#{organization} and B.name=#{branch}
 	</delete>
 	
    <resultMap id="DeFenHuiZongResultMap" type="com.huiyong.model.pingyi.DeFenHuiZong" >
@@ -328,11 +338,13 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
 		ifnull(ZiPing.total, 0)*0.2 + ifnull(HuPing.total, 0)*0.3 + ifnull(QunZhongPingYi.total, 0)*0.2 + ifnull(ZuZhiPingJia.total, 0)*0.3 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastModifiedTime
 	from
 	User U left join ZiPing on U.name = ZiPing.userName
+    JOIN Branch B on B.id = U.branch_id
+    JOIN Organization O on O.id = B.organization_id
 	left join HuPing on U.name = HuPing.userName
 	left join QunZhongPingYi on U.name = QunZhongPingYi.userName
 	left join ZuZhiPingJia on U.name = ZuZhiPingJia.userName
 	left join DeFenHuiZong on U.name = DeFenHuiZong.userName
-	where U.organization=#{organization} and U.branch=#{branch}
+    where O.name = #{organization} and B.name=#{branch};
   </select>
   
   <insert id="insertDeFenHuiZongs" parameterType="java.util.List" useGeneratedKeys="true">  
@@ -343,7 +355,7 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
 	</insert>
 	
 	<delete id="deleteDeFenHuiZongs">  
-       DELETE Z FROM DeFenHuiZong Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
+       DELETE Z FROM DeFenHuiZong Z JOIN User U on Z.userName=U.name JOIN Branch B on B.id=U.branch_id JOIN Organization O on O.id = B.organization_id WHERE O.name=#{organization} and B.name=#{branch}
 	</delete>
 	
     <resultMap id="CategoryPointResultMap" type="com.huiyong.model.pingyi.CategoryPoint" >
