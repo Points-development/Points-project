@@ -1,6 +1,7 @@
 package com.huiyong.security.config;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -28,7 +29,7 @@ public class RbacAuthorityService {
 
             for (String url : urls) {
                 if (antPathMatcher.match(url, request.getRequestURI())) {
-                	if(((UserDetails) userInfo).getAuthorities().contains(RestUserDetails.ROLE_ORGANIZATION_ADMIN)) {
+                	if(((UserDetails) userInfo).getAuthorities().contains(new SimpleGrantedAuthority(RestUserDetails.ROLE_ORGANIZATION_ADMIN))) {
                         hasPermission = true;
                         break;
                 	}
