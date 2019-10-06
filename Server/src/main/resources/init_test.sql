@@ -4,5 +4,5 @@ INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch_id`) values(3
 INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch_id`) values(4, 'xzgan', 'ganxiangzhen', 1);
 INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch_id`) values(2, 'test', 'test', 1);
 INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch_id`) values(2, 'test1', 'test1', 1);
-INSERT INTO `UserRole`(`user_id`, `role_id`) values(1,  1);
-INSERT INTO `UserRole`(`user_id`, `role_id`) values(2,  2);
+INSERT INTO `UserRole`(`user_id`, `role_id`) values(2,  1);
+INSERT INTO `UserRole`(`user_id`, `role_id`) values(3,  2);
