@@ -147,7 +147,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {;
 	@Override
 	public RestUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		RestUserDetails rud = userDao.loadUserByUsername(username);
-
+		if(null == rud) {
+			return null;
+		}
 		Set<GrantedAuthority> authoritiesSet = new HashSet<GrantedAuthority>();
 		GrantedAuthority authority;
 		if(null == rud.getRole()) {
