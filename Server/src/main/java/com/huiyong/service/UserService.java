@@ -19,20 +19,20 @@ import com.huiyong.model.user.User;
 public interface UserService {
 	public RestUserDetails loadUserByUsername(@Param("name") String name);
 	public Integer getPropertyId(@Param("property")String property);
-	public Integer getOrganizationId(@Param("organziation")String organziation);
-	public Integer getBranchId(@Param("organziation")String organziation, @Param("branch")String branch);
+	public Integer getOrganizationId(@Param("organization")String organization);
+	public Integer getBranchId(@Param("organization")String organization, @Param("branch")String branch);
 	public List<String> getAllProperties();
 
 	public User getUserByName(String name);
-	public List<User> getUsersInBranch(@Param("branchname") String branchname, String organziation);
+	public List<User> getUsersInBranch(@Param("branchname") String branchname, String organization);
 	public void addUser(@Param("user")User user, @Param("property_id")int propertyID);
 	public void updateUser(@Param("user")User user, @Param("property_id")int propertyID);
 	public void deleteUser(String username);
 
-	public List<Branch> getBranchesInOrganization(String organziation);
-	public void deleteBranchInOrganizationByName(String branchname, String organziation);
-	public boolean addBranchInOrganization(String organziation, Branch branch);
-	public Branch getBranchInOrganizationByName(String branchname, String organziation);
+	public List<Branch> getBranchesInOrganization(String organization);
+	public void deleteBranchInOrganizationByName(String branchname, String organization);
+	public boolean addBranchInOrganization(String organization, Branch branch);
+	public Branch getBranchInOrganizationByName(String branchname, String organization);
 	
 	public List<Organization> getOrganizations();
 	public void addOrganization(Organization organization);

@@ -96,7 +96,7 @@
   </update> 
   
   <select id="getBranchesInOrganization" parameterType="String" resultMap="BranchResultMap">
-    select Branch.id, Branch.name, Branch.description, Branch.additionalInfo from Branch join Organziation on Branch.organziation_id = Organziation.id where Organization.name=#{organization}
+    select Branch.id, Branch.name, Branch.description, Branch.additionalInfo from Branch join Organization on Branch.organization_id = Organization.id where Organization.name=#{organization}
   </select>
   
   <select id="getBranchInOrganizationByName" resultMap="BranchResultMap">

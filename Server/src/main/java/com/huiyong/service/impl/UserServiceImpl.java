@@ -99,8 +99,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {;
 	 * @see com.huiyong.service.UserService#getAllBranches()
 	 */
 	@Override
-	public List<Branch> getBranchesInOrganization(String organziation) {
-		return userDao.getBranchesInOrganization(organziation);
+	public List<Branch> getBranchesInOrganization(String organization) {
+		return userDao.getBranchesInOrganization(organization);
 	}
 
 	/* (non-Javadoc)
@@ -117,8 +117,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {;
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
-	public void deleteBranchInOrganizationByName(String branchname, String organziation) {
-		userDao.deleteBranchInOrganizationByName(branchname, organziation);
+	public void deleteBranchInOrganizationByName(String branchname, String organization) {
+		userDao.deleteBranchInOrganizationByName(branchname, organization);
 		
 	}
 
@@ -127,11 +127,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {;
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
-	public boolean addBranchInOrganization( String organziation, Branch branch) {
-		if(null != getBranchInOrganizationByName(branch.getName(), organziation)){
+	public boolean addBranchInOrganization( String organization, Branch branch) {
+		if(null != getBranchInOrganizationByName(branch.getName(), organization)){
 			return false;
 		}
-		userDao.addBranchInOrganization(organziation,  branch);
+		userDao.addBranchInOrganization(organization,  branch);
 		return true;
 	}
 	
@@ -140,8 +140,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {;
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
-	public Branch getBranchInOrganizationByName(String branchname, String organziation) {
-		return userDao.getBranchInOrganizationByName( branchname,  organziation);	
+	public Branch getBranchInOrganizationByName(String branchname, String organization) {
+		return userDao.getBranchInOrganizationByName( branchname,  organization);	
 	}
 
 	@Override
@@ -164,13 +164,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {;
 	}
 
 	@Override
-	public Integer getOrganizationId(String organziation) {
-		return userDao.getOrganizationId(organziation);
+	public Integer getOrganizationId(String organization) {
+		return userDao.getOrganizationId(organization);
 	}
 
 	@Override
-	public Integer getBranchId(String organziation, String branch) {
-		return userDao.getBranchId(organziation, branch);
+	public Integer getBranchId(String organization, String branch) {
+		return userDao.getBranchId(organization, branch);
 	}
 
 	@Override

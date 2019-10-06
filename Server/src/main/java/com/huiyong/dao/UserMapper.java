@@ -20,8 +20,8 @@ public interface UserMapper {
 	User getUserByName(@Param("name") String name);
 	RestUserDetails loadUserByUsername(@Param("name") String name);
 	Integer getPropertyId(@Param("name") String property);
-	Integer getOrganizationId(@Param("organziation")String organziation);
-	Integer getBranchId(@Param("organziation")String organziation, @Param("branch")String branch);
+	Integer getOrganizationId(@Param("organization")String organization);
+	Integer getBranchId(@Param("organization")String organization, @Param("branch")String branch);
 	List<String> getAllProperties();
 	
 	List<User> getUsersInBranch(@Param("branchname") String branchname, @Param("organization")String organization);
@@ -29,7 +29,7 @@ public interface UserMapper {
 	void updateUser(@Param("user") User user, @Param("propertyId") int propertyId);
 	void deleteUser(String username);
 	
-	List<Branch> getBranchesInOrganization(@Param("organization")String organziation);
+	List<Branch> getBranchesInOrganization(@Param("organization")String organization);
 	void deleteBranchInOrganizationByName(@Param("branch") String branchname, @Param("organization")String organization);
 	void addBranchInOrganization( @Param("organization")String organization, @Param("branch") Branch branch );
 	Branch getBranchInOrganizationByName(@Param("branch") String branch, @Param("organization")String organization);
