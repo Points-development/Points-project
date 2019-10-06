@@ -17,8 +17,8 @@
     left join UserRole on User.id=UserRole.user_id
     left join Role on UserRole.role_id=role.id
     join UserProperty on User.user_property_id=UserProperty.id
-    join Branch on User.branch_id=Branch.id
-    join Organization on Branch.organization_id=Organization.id
+    left join Branch on User.branch_id=Branch.id
+    left join Organization on Branch.organization_id=Organization.id
     where User.name=#{name}
   </select>
   <resultMap id="BaseResultMap" type="com.huiyong.model.user.User" >
