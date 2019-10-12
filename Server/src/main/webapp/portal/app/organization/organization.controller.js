@@ -14,6 +14,10 @@
         vm.userName = currentUser.name;
         
         vm.createNewBranch = function(){
+        	if (undefined === vm.newBranch || vm.newBranch === "") {
+        		messageCenterService.add('danger', '请输入支部名称!', {timeout:3000});
+        		return false;
+        	}
         	systemService.addBranch(vm.newBranch,currentUser.organization).then(function(response){
         		messageCenterService.add('success', '支部创建成功!', {timeout:1000});
         		$scope.$emit('layout.update.tree', 'child');
