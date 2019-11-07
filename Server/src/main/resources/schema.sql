@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS `pointServiceChangWu` default charset utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `pointServiceWucangbao` default charset utf8 COLLATE utf8_general_ci;
 use pointServiceChangWu;
 
 CREATE TABLE IF NOT EXISTS `UserProperty` (
