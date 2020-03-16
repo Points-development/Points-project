@@ -34,5 +34,5 @@ global.gFont = {
 }
 
 global.gServer = {
-	host:'http://123.56.4.5:7090/pointservice'
+	host:'http://123.56.4.5:4080/pointservice'
 }

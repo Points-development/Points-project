@@ -70,7 +70,7 @@ export default class Login extends React.Component {
 		    		<View style={styles.loginBackground}> 
 		    	    </View>
 	        	    <View style={styles.loginContainer}>
-	        	    	<View style={styles.title}><Text style={{fontSize:20,fontWeight:'bold',color:'#fff'}}>吴仓堡镇党员党性教育体检系统</Text></View>
+	        	    	<View style={styles.title}><Text style={{fontSize:20,fontWeight:'bold',color:'#fff'}}>咸阳烟草党员党性教育体检系统</Text></View>
 		        	    {
 		        	    	this.state.errorMsg !='' && 
 		        	    	<View style={styles.title}>
