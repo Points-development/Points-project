@@ -133,7 +133,7 @@ var styles = StyleSheet.create({
         color: 'grey'
     },
     container: {
-    	flexDirection: 'row', justifyContent: 'space-between'
+    	flexDirection: 'row'
     }
 });
 

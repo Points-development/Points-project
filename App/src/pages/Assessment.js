@@ -444,7 +444,7 @@ const styles = StyleSheet.create({
 		paddingBottom:20
 	},
 	question:{
-		height:150
+		height:100
 	},
 	category:{
 		alignItems: 'center',
