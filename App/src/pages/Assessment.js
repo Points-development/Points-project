@@ -223,7 +223,7 @@ export default class Assessment extends React.Component {
     	if(item.item.isTitle){
     		return (
 				<View style={styles.category}>
-					<Text style={{color:'#000',fontSize:21,fontWeight:'bold'}}>{item.item.category}</Text>
+					<Text style={{color:'#000',fontSize:20,fontWeight:'bold'}}>{item.item.category}</Text>
 				</View>	
     		)
     	}
@@ -234,7 +234,7 @@ export default class Assessment extends React.Component {
         		<View >
         		{
 					item.item.type ==1 &&
-        			<View style={[styles.question,{padding:20}]}>   				
+        			<View style={[styles.question,{padding:12}]}>   				
         					<CheckBox
         					  label={label}
         					  checked={checked}
@@ -246,10 +246,10 @@ export default class Assessment extends React.Component {
         			{
         				item.item.type !=1 &&
         					<View style={{height:200}}>
-	        				<View style={{padding:20}}>
+	        				<View style={{padding:12}}>
 		        				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{item.item.questionId}. {item.item.description}</Text>
 		        			</View>
-				        	<View style={{padding:10,paddingLeft:20}}>
+				        	<View style={{padding:12,paddingLeft:20}}>
 				        		<TextInput
 					                style={{height: 80,textAlignVertical:'top',borderColor:'#50C900',borderWidth: 1}}
 					                onChangeText={(text) => item.item.answer=text}
@@ -324,13 +324,13 @@ export default class Assessment extends React.Component {
 	                style={styles.item}
 	                onPress={()=>this._onPress(item)}
 	            >
-	                <Text style={{color: '#000', fontSize:gFont.headerSize}}>{item.realname}</Text>
+	                <Text style={{color: '#000', fontSize:gFont.headerSize2}}>{item.realname}</Text>
 	            </TouchableOpacity>
             }
 	        {(itemName==gUser.name || item.otherPoint>0) && 
 	        	<View
 	        		style={styles.item}>
-                	<Text style={{color: '#ddd', fontSize:gFont.headerSize}}>{item.realname}(已评价)</Text>
+                	<Text style={{color: '#ddd', fontSize:gFont.headerSize2}}>{item.realname}(已评价)</Text>
                 </View>
 	        }
 	        </View>
@@ -343,9 +343,6 @@ export default class Assessment extends React.Component {
         return (
         		<View style={styles.container}>
         			<View style={{paddingTop:20,alignItems: 'center'}}>
-        				<Text style={{fontSize:gFont.headerSize,color:gColors.defaultFontColor}}>
-        					{this.state.dataSource.name}
-        				</Text>
         				<Text style={{fontSize:gFont.headerSize2,color:'#535a5a',textAlign:'right'}}>
 	    					评测对象: {this.state.evaluator}
 	    				</Text>	
@@ -444,12 +441,12 @@ const styles = StyleSheet.create({
 		paddingBottom:20
 	},
 	question:{
-		height:100
+		flex: 0
 	},
 	category:{
 		alignItems: 'center',
 		justifyContent: 'center',
-		height:70
+		height:60
 	},
 	button:{
 		backgroundColor:gColors.buttonColor,
@@ -492,11 +489,11 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     item: {
-        height: 54,
+        height: 45,
         justifyContent: 'center',
         alignItems: 'center',
         borderBottomColor: '#ddd',
         borderBottomWidth: StyleSheet.hairlineWidth,
-        padding: 15,
+        padding: 10,
     }
 })
