@@ -158,8 +158,8 @@ export default class Assessment extends React.Component {
     			return false;
     		}
     	}
-    	if(totalSelect<10){
-    		ToastAndroid.show('至少选择10个选项', ToastAndroid.SHORT);
+    	if(totalSelect<5){
+    		ToastAndroid.show('至少选择5个选项', ToastAndroid.SHORT);
     		return false;
     	}
     	let option1point = this.state.options[0].optionPoint;
