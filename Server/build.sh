@@ -11,6 +11,7 @@ rm -rf ../resources/static
 mkdir ../resources/static
 cp ./*.html ../resources/static
 cp -r ./portal ../resources/static
+cp -r ./mobile ../resources/static
 cp -r ./bower_components ../resources/static
 cp ./build/concat-libs.min.js ../resources/static/portal
 cp ./build/main.min.js ../resources/static/portal

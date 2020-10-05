@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+<title>彬州市党员党性政治体检系统</title>
+<link rel="stylesheet" href="./css/app.css"/>
+<link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.4.0/weui.min.css"/>
+</head>
+<body ontouchstart>
+	<template id="login">
+		<div class="content">
+		<div class="title">彬州市党员党性政治体检系统</div>
+	    <div class="weui-cells weui-cells_form">
+	    	<div v-if="errorList.length > 0">
+		        <div class="weui-toptips weui-toptips_warn" style="display:block;opacity:1" role="alert">{{errorList.join(';')}}</div>
+		    </div>
+	        <div class="weui-cell">
+	            <div class="weui-cell__hd"><label class="weui-label">账户</label></div>
+	            <div class="weui-cell__bd weui-cell_primary"><input type="text" v-model="username" class="weui-input" placeholder="用户名"/></div>
+	        </div>
+	        <div class="weui-cell">
+	            <div class="weui-cell__hd"><label class="weui-label">密码</label></div>
+	            <div class="weui-cell__bd weui-cell_primary"><input type="password" v-model="password" class="weui-input" placeholder="密码"/></div>
+	        </div>
+	    </div>
+	    <div class="weui-cells__tips"></div>
+	    <div class="weui-btn-area">
+	        <a href="javascript:" @click="login()" class="weui-btn weui-btn_primary" data-id="dashboard" style="background-color:red">
+	        	<p>登录</p>
+			</a>
+	    </div>
+	    </div>
+    </template>
+    <template id="home">
+    	<div class="box">
+	    	<div class="box-item" @click="goPage('test?target=self')">自评</div>
+	    	<div class="box-item" @click="goPage('test?target=other')">他评</div>
+	    	<div class="box-item">报告</div>
+	    	<div class="box-item" @click="goPage('login')">退出</div>
+    	</div>
+    </template>
+    
+    <template id="test">
+    	<div class="test" style="height:100%">
+	    	<div class="mytest" v-if="evaluator">
+	    		<div v-if="errorList.length > 0">
+			        <div class="weui-toptips weui-toptips_warn" style="display:block;opacity:1" role="alert">{{errorList.join(';')}}</div>
+			    </div>
+			    <div id="toast" v-if="successList.length > 0">
+			        <div class="weui-mask_transparent"></div>
+			        <div class="weui-toast">
+			            <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+			            <p class="weui-toast__content">提交成功</p>
+			        </div>
+			    </div>
+	    		<div style="text-align:center;">
+	    			<span class="mytitle">{{name}}</span>
+	    			<span>评测对象：{{evaluator}}</span>
+	    		</div>
+	    		<div class="question weui-cells weui-cells_checkbox" v-for="question in questions">
+	    			<label class="weui-cell weui-cell_active weui-check__label" v-if="!question.isTitle">
+		                <div class="weui-cell__hd">
+		                    <input type="checkbox" class="weui-check" @click="handleClick(question)"/>
+		                    <i class="weui-icon-checked"></i>
+		                </div>
+		                <div class="weui-cell__bd">
+		                    <p>{{question.questionId}}. {{question.description}}</p>
+		                </div>
+		            </label>
+		            <label class="weui-cell weui-cell_active weui-check__label" v-else>
+		            	<div class="weui-cell__bd">
+		                    <p style="font-weight:bold">{{question.category}}</p>
+		                </div>
+		            </label>
+	    		</div>
+	    		<div class="weui-form__opr-area">
+			    	<a class="weui-btn weui-btn_primary" @click="checkSubmit" href="javascript:">提交</a>
+			    </div>
+	    	</div>
+	    	<div v-if="!evaluator">
+	    		<div class="weui-search-bar" ref="searchBar" id="searchBar">
+		            <form class="weui-search-bar__form">
+		                <div class="weui-search-bar__box">
+		                    <i class="weui-icon-search"></i>
+		                    <input type="search" class="weui-search-bar__input" v-model="searchName" placeholder="请搜索评议人姓名" />
+		                    <a href="javascript:" class="weui-icon-clear" @click="clearSearch" id="searchClear"></a>
+		                </div>
+
+		            </form>
+		        </div>
+		        <div class="weui-cells searchbar-result" ref="searchResult" id="searchResult">
+		            <div class="weui-cell weui-cell_active weui-cell_access" v-for="user in displayUsers">
+		                <div class="weui-cell__bd weui-cell_primary">
+		                	<p v-if="user.username==gUser.name || user.otherPoint>0">{{user.realname}} (已评价)</p>
+		                    <a v-else href="javascript:" @click="pickUser(user)">{{user.realname}}</a>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+	    	<div class="js_dialog" id="iosDialog2" v-if="finished">
+	            <div class="weui-mask"></div>
+	            <div class="weui-dialog">
+	                <div class="weui-dialog__bd">本次体检分数为:{{total}}</div>
+	                <div class="weui-dialog__ft">
+	                	<a href="javascript:" @click="cancel()" class="weui-dialog__btn weui-dialog__btn_primary">取消</a>
+	                    <a href="javascript:" @click="submit()" class="weui-dialog__btn weui-dialog__btn_primary">提交</a>
+	                </div>
+	            </div>
+	        </div>
+	    	
+	    	<div class="js_dialog" id="iosDialog2" v-if="isSubmitted">
+	            <div class="weui-mask"></div>
+	            <div class="weui-dialog">
+	                <div class="weui-dialog__bd">系统检测到您已完成本次自评，如有疑问请联系系统管理员</div>
+	                <div class="weui-dialog__ft">
+	                    <a href="javascript:" @click="goPage('home')" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+	                </div>
+	            </div>
+	        </div>
+    	</div>
+    	
+    </template>
+    
+    <div id="app">
+    	<router-view></router-view>
+    </div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
+	<script src="./js/vue-router.min.js"></script>
+	<script src="./js/app.js"></script>
+</body>
+</html>
