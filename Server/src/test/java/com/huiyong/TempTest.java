@@ -26,9 +26,21 @@ public class TempTest {
 	public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException {
 		ZuZhiPingJia zzpj = new ZuZhiPingJia();
 		zzpj.setLiXiangXinNian(5);
+		ZuZhiPingJia zzpj1 = new ZuZhiPingJia();
+		zzpj1.setLiXiangXinNian(6);
 		Class<?> clazz=zzpj.getClass();
 		Field[] fields = clazz.getDeclaredFields();
 		List<CategoryPoint> cpList = new ArrayList<CategoryPoint>();
+		for(Field f:fields){
+			f.setAccessible(true);
+			if(f.isAnnotationPresent(CategoryInfo.class)){
+				System.out.println("field name is " + f.getName());
+				System.out.println("value of zzpj is " + f.get(zzpj));
+				System.out.println("value of zzpj1 is " + f.get(zzpj1));
+				f.set(zzpj, (Integer)f.get(zzpj) + (Integer)f.get(zzpj1));
+				System.out.println("after process value of zzpj is " + f.get(zzpj));
+			}
+		}
 		for(Field f:fields){
 			f.setAccessible(true);
 			if(f.isAnnotationPresent(CategoryInfo.class)){

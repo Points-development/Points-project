@@ -16,6 +16,9 @@ import com.huiyong.model.user.User;
 public interface UserMapper {
 	User getUserByName(@Param("name") String name);
 	List<User> getUsersInBranch(@Param("branchname") String branchname, @Param("organization")String organization);
+	
+	List<User> getUsersInOrganization(@Param("organization")String organization, @Param("realname")String username);
+	
 	void addUser(@Param("user") User user, @Param("propertyId") int propertyId);
 	void updateUser(@Param("user") User user, @Param("propertyId") int propertyId);
 	Integer getPropertyId(@Param("name") String property);

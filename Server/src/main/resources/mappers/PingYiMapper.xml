@@ -18,6 +18,7 @@
     <result column="xianFengMoFanZuoYongFaHui" property="xianFengMoFanZuoYongFaHui" jdbcType="INTEGER" />
     <result column="total" property="total" jdbcType="INTEGER" />
     <result column="problem" property="problem" jdbcType="VARCHAR" />
+    <result column="updateTimes" property="updateTimes" jdbcType="INTEGER" />
     <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
   </resultMap>
    <select id="getZuZhiPingJias" resultMap="ZuZhiPingJiaResultMap">
@@ -57,6 +58,7 @@
                Z.xianFengMoFanZuoYongFaHui,
                ifnull(Z.total, 100) as total,
                Z.problem,
+               Z.updateTimes,
                Z.lastModifiedTime,
                U.name,
                U.realName
@@ -65,11 +67,35 @@
   </select>
   
   <insert id="insertZuZhiPingJias" parameterType="java.util.List" useGeneratedKeys="true">  
-	Insert into ZuZhiPingJia (userName, realName, liXiangXinNian, zhengZhiYiShi, xueXiYiShi, zuZhiJiLv, daJuYiShi, gongZuoZuoFeng, daoDePinXing, shengHuoZuoFeng, fuWuYiShi, lvXingDangYuanYiWu, xianFengMoFanZuoYongFaHui, total, problem, lastModifiedTime) values
+	Insert into ZuZhiPingJia (userName, realName, liXiangXinNian, zhengZhiYiShi, xueXiYiShi, zuZhiJiLv, daJuYiShi, gongZuoZuoFeng, daoDePinXing, shengHuoZuoFeng, fuWuYiShi, lvXingDangYuanYiWu, xianFengMoFanZuoYongFaHui, total, problem, updateTimes, lastModifiedTime) values
 		<foreach collection="zuZhiPingJias" item="item" separator=",">  
-			(#{item.userName}, #{item.realName}, #{item.liXiangXinNian},#{item.zhengZhiYiShi},#{item.xueXiYiShi}, #{item.zuZhiJiLv},#{item.daJuYiShi}, #{item.gongZuoZuoFeng},#{item.daoDePinXing}, #{item.shengHuoZuoFeng},#{item.fuWuYiShi},#{item.lvXingDangYuanYiWu}, #{item.xianFengMoFanZuoYongFaHui},#{item.total}, #{item.problem}, #{item.lastModifiedTime})
+			(#{item.userName}, #{item.realName}, #{item.liXiangXinNian},#{item.zhengZhiYiShi},#{item.xueXiYiShi}, #{item.zuZhiJiLv},#{item.daJuYiShi}, #{item.gongZuoZuoFeng},#{item.daoDePinXing}, #{item.shengHuoZuoFeng},#{item.fuWuYiShi},#{item.lvXingDangYuanYiWu}, #{item.xianFengMoFanZuoYongFaHui},#{item.total}, #{item.problem}, #{item.updateTimes}, #{item.lastModifiedTime})
 		</foreach>  
 	</insert>
+	
+	<insert id="insertZuZhiPingJia" parameterType="com.huiyong.model.pingyi.ZuZhiPingJia" useGeneratedKeys="true">  
+	Insert into ZuZhiPingJia (userName, realName, liXiangXinNian, zhengZhiYiShi, xueXiYiShi, zuZhiJiLv, daJuYiShi, gongZuoZuoFeng, daoDePinXing, shengHuoZuoFeng, fuWuYiShi, lvXingDangYuanYiWu, xianFengMoFanZuoYongFaHui, total, problem, updateTimes, lastModifiedTime) values
+		(#{userName}, #{realName}, #{liXiangXinNian},#{zhengZhiYiShi},#{xueXiYiShi}, #{zuZhiJiLv},#{daJuYiShi}, #{gongZuoZuoFeng},#{daoDePinXing}, #{shengHuoZuoFeng},#{fuWuYiShi},#{lvXingDangYuanYiWu}, #{xianFengMoFanZuoYongFaHui},#{total}, #{problem}, #{updateTimes}, #{lastModifiedTime})
+	</insert>
+	
+	<update id="updateZuZhiPingJia" parameterType="com.huiyong.model.pingyi.ZuZhiPingJia">  
+		UPDATE ZuZhiPingJia Z SET
+		Z.liXiangXinNian=#{liXiangXinNian},
+		Z.zhengZhiYiShi=#{zhengZhiYiShi},
+		Z.xueXiYiShi=#{xueXiYiShi},
+		Z.zuZhiJiLv=#{zuZhiJiLv},
+		Z.daJuYiShi=#{daJuYiShi},
+		Z.gongZuoZuoFeng=#{gongZuoZuoFeng},
+		Z.daoDePinXing=#{daoDePinXing},
+		Z.shengHuoZuoFeng=#{shengHuoZuoFeng},
+		Z.fuWuYiShi=#{fuWuYiShi},
+		Z.lvXingDangYuanYiWu=#{lvXingDangYuanYiWu},
+		Z.xianFengMoFanZuoYongFaHui=#{xianFengMoFanZuoYongFaHui},
+		Z.problem=#{problem},
+		Z.updateTimes=#{updateTimes},
+		Z.lastModifiedTime=#{lastModifiedTime}
+	    WHERE Z.id=#{id}
+   </update> 
 	
 	<delete id="deleteZuZhiPingJias">  
         DELETE Z FROM ZuZhiPingJia Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
@@ -160,6 +186,7 @@ order by category_id
                Z.xianFengMoFanZuoYongFaHui,
                ifnull(Z.total, 100) as total,
                Z.problem,
+               Z.updateTimes,
                Z.lastModifiedTime,
                U.name,
                U.realName
@@ -170,9 +197,33 @@ order by category_id
   <insert id="insertQunZhongPingYis" parameterType="java.util.List" useGeneratedKeys="true">  
   	Insert into QunZhongPingYi (userName, realName, liXiangXinNian, zhengZhiYiShi, xueXiYiShi, zuZhiJiLv, daJuYiShi, gongZuoZuoFeng, daoDePinXing, shengHuoZuoFeng, fuWuYiShi, lvXingDangYuanYiWu, xianFengMoFanZuoYongFaHui, total, problem, lastModifiedTime) values
 		<foreach collection="qunZhongPingYis" item="item" separator=",">  
-			(#{item.userName}, #{item.realName}, #{item.liXiangXinNian},#{item.zhengZhiYiShi},#{item.xueXiYiShi}, #{item.zuZhiJiLv},#{item.daJuYiShi}, #{item.gongZuoZuoFeng},#{item.daoDePinXing}, #{item.shengHuoZuoFeng},#{item.fuWuYiShi},#{item.lvXingDangYuanYiWu}, #{item.xianFengMoFanZuoYongFaHui},#{item.total}, #{item.problem}, #{item.lastModifiedTime})
+			(#{item.userName}, #{item.realName}, #{item.liXiangXinNian},#{item.zhengZhiYiShi},#{item.xueXiYiShi}, #{item.zuZhiJiLv},#{item.daJuYiShi}, #{item.gongZuoZuoFeng},#{item.daoDePinXing}, #{item.shengHuoZuoFeng},#{item.fuWuYiShi},#{item.lvXingDangYuanYiWu}, #{item.xianFengMoFanZuoYongFaHui},#{item.total}, #{item.problem}, #{item.updateTimes}, #{item.lastModifiedTime})
 		</foreach>  
 	</insert>
+	
+   <insert id="insertQunZhongPingYi" parameterType="com.huiyong.model.pingyi.QunZhongPingYi" useGeneratedKeys="true">  
+  	Insert into QunZhongPingYi (userName, realName, liXiangXinNian, zhengZhiYiShi, xueXiYiShi, zuZhiJiLv, daJuYiShi, gongZuoZuoFeng, daoDePinXing, shengHuoZuoFeng, fuWuYiShi, lvXingDangYuanYiWu, xianFengMoFanZuoYongFaHui, total, problem, updateTimes, lastModifiedTime) values
+		(#{userName}, #{realName}, #{liXiangXinNian},#{zhengZhiYiShi},#{xueXiYiShi}, #{zuZhiJiLv},#{daJuYiShi}, #{gongZuoZuoFeng},#{daoDePinXing}, #{shengHuoZuoFeng},#{fuWuYiShi},#{lvXingDangYuanYiWu}, #{xianFengMoFanZuoYongFaHui},#{total}, #{problem}, #{updateTimes}, #{lastModifiedTime})
+	</insert>
+	
+	<update id="updateQunZhongPingYi" parameterType="com.huiyong.model.pingyi.QunZhongPingYi">  
+		UPDATE QunZhongPingYi Z SET
+		Z.liXiangXinNian=#{liXiangXinNian},
+		Z.zhengZhiYiShi=#{zhengZhiYiShi},
+		Z.xueXiYiShi=#{xueXiYiShi},
+		Z.zuZhiJiLv=#{zuZhiJiLv},
+		Z.daJuYiShi=#{daJuYiShi},
+		Z.gongZuoZuoFeng=#{gongZuoZuoFeng},
+		Z.daoDePinXing=#{daoDePinXing},
+		Z.shengHuoZuoFeng=#{shengHuoZuoFeng},
+		Z.fuWuYiShi=#{fuWuYiShi},
+		Z.lvXingDangYuanYiWu=#{lvXingDangYuanYiWu},
+		Z.xianFengMoFanZuoYongFaHui=#{xianFengMoFanZuoYongFaHui},
+		Z.problem=#{problem},
+		Z.updateTimes=#{updateTimes},
+		Z.lastModifiedTime=#{lastModifiedTime}
+	    WHERE Z.id=#{id}
+   </update> 
 	
 	<delete id="deleteQunZhongPingYis">  
         DELETE Z FROM QunZhongPingYi Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}

@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {;
 	 * @see com.huiyong.service.UserService#getAllUsers()
 	 */
 	@Override
-	public List<Branch> getAllUsers(String organziation) {
+	public List<Branch> getAllUsersInBranch(String organziation) {
 		List<String> bList = userDao.getAllBranches(organziation);
 		List<Branch> buList = new ArrayList<Branch>();
 		for(String branch: bList){
@@ -142,6 +142,11 @@ public class UserServiceImpl implements UserService {;
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
 	public String getBranch(String branchname, String organziation) {
 		return userDao.getBranch( branchname,  organziation);	
+	}
+
+	@Override
+	public List<User> getUsersInOrganziation(String organiziation, String username) {
+		return userDao.getUsersInOrganization(organiziation, username);
 	}
 
 }

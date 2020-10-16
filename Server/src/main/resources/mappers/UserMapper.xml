@@ -20,10 +20,15 @@
     select id from UserProperty
     	where name=#{name}
   </select>
-    <select id="getUsersInBranch" parameterType="String" resultMap="BaseResultMap">
+  <select id="getUsersInBranch" parameterType="String" resultMap="BaseResultMap">
     select User.id, User.name, User.realName, User.password, User.branch, User.organization, UserProperty.name property, User.isAdmin from User join UserProperty on User.user_property_id=UserProperty.id
     	where branch=#{branchname} and organization=#{organization}
   </select>
+  <select id="getUsersInOrganization" parameterType="String" resultMap="BaseResultMap">
+    select User.id, User.name, User.realName, User.password, User.branch, User.organization, UserProperty.name property, User.isAdmin from User join UserProperty on User.user_property_id=UserProperty.id
+    	where organization=#{organization} and User.realName like concat('%', #{realname}, '%')
+  </select>
+  
   <select id="getAllProperties" resultType="String">
     select name from UserProperty where name !='共性'
   </select>

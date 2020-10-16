@@ -17,10 +17,12 @@ import com.huiyong.model.user.User;
 public interface UserService {
 	public User getUserByName(String name);
 	public List<User> getUsersInBranch(@Param("branchname") String branchname, String organziation);
+	
+	public List<User> getUsersInOrganziation(String organziation, String username);
 	public Integer getPropertyId(@Param("property")String property);
 	public void addUser(@Param("user")User user, @Param("property_id")int propertyID);
 	public void updateUser(@Param("user")User user, @Param("property_id")int propertyID);
-	public List<Branch> getAllUsers(String organziation);
+	public List<Branch> getAllUsersInBranch(String organziation);
 	public List<String> getAllProperties();
 	public void deleteUser(String username);
 	public List<String> getAllBranches(String organziation);

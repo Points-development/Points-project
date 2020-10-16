@@ -138,9 +138,15 @@ public class UserController {
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
     }
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public List<Branch> getAllUsers(@RequestParam String organization) {
-    	return userService.getAllUsers(organization);
+    public List<Branch> getAllUsersInBranches(@RequestParam String organization) {
+    	return userService.getAllUsersInBranch(organization);
     }
+    
+    @RequestMapping(value = "/alluser", method = RequestMethod.GET)
+    public List<User> getAllUsers(@RequestParam String organization, @RequestParam(required=false) String realname) {
+    	return userService.getUsersInOrganziation(organization, realname);
+    }
+    
     @RequestMapping(value = "/user/property", method = RequestMethod.GET)
     public List<String> getProperties() {
     	return userService.getAllProperties();

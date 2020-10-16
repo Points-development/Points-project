@@ -300,4 +300,68 @@ public class PingYiServiceImpl implements PingYiService{
 		pingYiDao.insertBaoGaoDan(username, baoGaoDan);
 	}
 
+	@Override
+	public List<CategoryPoint> getZiPingBaoGaoDan(String username) {
+		List<CategoryPoint> ziPingPoints = pingYiDao.getZiPingCategoryPoint(username);
+		return ziPingPoints;
+	}
+
+	@Override
+	public List<CategoryPoint> getHuPingBaoGaoDan(String username) {
+		List<CategoryPoint> huPingPoints = pingYiDao.getHuPingCategoryPoint(username);
+		return huPingPoints;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
+	public void updateZuZhiPingJiaByUser(String username, ZuZhiPingJia zuZhiPingJia) throws Exception {
+		ZuZhiPingJia zzpj = pingYiDao.getZuZhiPingJiaByUser(username);
+		if(null != zzpj.getId()) {
+			Class<?> clazz = ZuZhiPingJia.class;
+			Field[] fields = clazz.getDeclaredFields();
+			int updateTimes = zzpj.getUpdateTimes();
+			for(Field f:fields){
+				f.setAccessible(true);
+				if(f.isAnnotationPresent(CategoryInfo.class)){
+					Integer value = (Optional.ofNullable((Integer)f.get(zzpj)).map(u->u).orElse(0) * updateTimes + Optional.ofNullable((Integer)f.get(zuZhiPingJia)).map(u->u).orElse(0))/(updateTimes + 1);
+					f.set(zzpj, value);
+				}
+			}
+			zzpj.setUpdateTimes(updateTimes+1);
+			zzpj.setProblem(zzpj.getProblem() + ";" + zuZhiPingJia.getProblem());
+			zzpj.setLastModifiedTime(new Date());
+			pingYiDao.updateZuZhiPingJia(zzpj);
+		}else {
+			zuZhiPingJia.setUpdateTimes(1);
+			zuZhiPingJia.setLastModifiedTime(new Date());
+			pingYiDao.insertZuZhiPingJia(zuZhiPingJia);
+		}
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
+	public void updateQunZhongPingYiByUser(String username, QunZhongPingYi qunZhongPingYi) throws Exception {
+		QunZhongPingYi qzpy = pingYiDao.getQunZhongPingJiaByUser(username);
+		if(null != qzpy.getId()) {
+			int updateTimes = qzpy.getUpdateTimes();
+			Class<?> clazz = QunZhongPingYi.class;
+			Field[] fields = clazz.getDeclaredFields();
+			for(Field f:fields){
+				f.setAccessible(true);
+				if(f.isAnnotationPresent(CategoryInfo.class)){
+					Integer value = (Optional.ofNullable((Integer)f.get(qzpy)).map(u->u).orElse(0) * updateTimes + Optional.ofNullable((Integer)f.get(qunZhongPingYi)).map(u->u).orElse(0))/(updateTimes + 1);
+					f.set(qzpy, value);
+				}
+			}
+			qzpy.setUpdateTimes(updateTimes+1);
+			qzpy.setProblem(qzpy.getProblem() + ";" + qunZhongPingYi.getProblem());
+			qzpy.setLastModifiedTime(new Date());
+			pingYiDao.updateQunZhongPingYi(qzpy);
+		}else {
+			qunZhongPingYi.setUpdateTimes(1);
+			qunZhongPingYi.setLastModifiedTime(new Date());
+			pingYiDao.insertQunZhongPingYi(qunZhongPingYi);
+		}			
+	}
+
 }

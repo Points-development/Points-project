@@ -6,6 +6,7 @@ package com.huiyong.service;
 import java.util.List;
 
 import com.huiyong.model.pingyi.BaoGaoDan;
+import com.huiyong.model.pingyi.CategoryPoint;
 import com.huiyong.model.pingyi.DeFenHuiZong;
 import com.huiyong.model.pingyi.HuPing;
 import com.huiyong.model.pingyi.QunZhongPingYi;
@@ -34,4 +35,8 @@ public interface PingYiService {
 	
 	public BaoGaoDan getBaoGaoDan(String username) throws Exception;
 	public void updateBaoGaoDan(String username, BaoGaoDan baoGaoDan);
+	public List<CategoryPoint> getZiPingBaoGaoDan(String username);
+	public List<CategoryPoint> getHuPingBaoGaoDan(String username);
+	public void updateZuZhiPingJiaByUser(String username, ZuZhiPingJia zuZhiPingJia) throws Exception;
+	public void updateQunZhongPingYiByUser(String username, QunZhongPingYi qunZhongPingYi) throws Exception;
 }

@@ -3,6 +3,8 @@
  */
 package com.huiyong.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author gangpu
  *
@@ -11,6 +13,7 @@ public class User {
 	private Integer id;
 	private String name;
 	private String realName;
+	@JsonIgnore
 	private String password;
 	private String branch;
 	private String organization;

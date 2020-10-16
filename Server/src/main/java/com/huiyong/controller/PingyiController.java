@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,10 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.huiyong.model.Message;
 import com.huiyong.model.pingyi.BaoGaoDan;
+import com.huiyong.model.pingyi.CategoryPoint;
 import com.huiyong.model.pingyi.DeFenHuiZong;
 import com.huiyong.model.pingyi.HuPing;
+import com.huiyong.model.pingyi.HuPingBaoGaoDan;
 import com.huiyong.model.pingyi.QunZhongPingYi;
 import com.huiyong.model.pingyi.ZiPing;
+import com.huiyong.model.pingyi.ZiPingBaoGaoDan;
 import com.huiyong.model.pingyi.ZuZhiPingJia;
 import com.huiyong.service.PingYiService;
 
@@ -50,6 +54,15 @@ public class PingyiController {
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
     }
     
+    //更新branch内的党员的组织评价信息, 和之前的分数算平均分
+    @RequestMapping(value = "/zuzhipingjia/{username}", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
+    public ResponseEntity<?> updateZuZhiPingJiaByUser(@PathVariable String username, @RequestBody ZuZhiPingJia zuZhiPingJia) throws Exception {
+    	pingYiService.updateZuZhiPingJiaByUser(username, zuZhiPingJia);
+    	Message m = new Message();
+    	m.setSuccess("更新成功.");
+    	return new ResponseEntity<Message>(m, HttpStatus.OK);
+    }
+    
     //返回branch内的所有党员的群众评议信息
     @RequestMapping(value = "/qunzhongpingyi", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
     public ResponseEntity<?> getQunZhongPingYis(@RequestParam String branch, @RequestParam String organization) {
@@ -61,6 +74,15 @@ public class PingyiController {
     @RequestMapping(value = "/qunzhongpingyi", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
     public ResponseEntity<?> updateQunZhongPingYis(@RequestParam String branch, @RequestParam String organization,  @RequestBody List<QunZhongPingYi> qunZhongPingYis) {
     	pingYiService.updateQunZhongPingYis(branch, organization, qunZhongPingYis);
+    	Message m = new Message();
+    	m.setSuccess("更新成功.");
+    	return new ResponseEntity<Message>(m, HttpStatus.OK);
+    }
+    
+    //更新branch内的党员的群众评议信息, 和之前的分数算平均分
+    @RequestMapping(value = "/qunzhongpingyi/{username}", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
+    public ResponseEntity<?> updateQunZhongPingYiByUser(@PathVariable String username, @RequestBody QunZhongPingYi qunZhongPingYi) throws Exception {
+    	pingYiService.updateQunZhongPingYiByUser(username, qunZhongPingYi);
     	Message m = new Message();
     	m.setSuccess("更新成功.");
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
@@ -128,5 +150,25 @@ public class PingyiController {
     	Message m = new Message();
     	m.setSuccess("更新成功.");
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
+    }
+    
+    //返回该用户的自评报告单信息
+    @RequestMapping(value = "/baogaodan/self", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
+    public ResponseEntity<?> getZiPingBaoGaoDan(@RequestParam String username) throws Exception {
+    	ZiPingBaoGaoDan baoGaoDan = new ZiPingBaoGaoDan();
+    	List<CategoryPoint> alist = pingYiService.getZiPingBaoGaoDan(username);
+    	baoGaoDan.setUserName(username);
+    	baoGaoDan.setZiPingPoints(alist);
+    	return new ResponseEntity<ZiPingBaoGaoDan>(baoGaoDan, HttpStatus.OK);
+    }
+    
+    //返回该用户的互评报告单信息
+    @RequestMapping(value = "/baogaodan/other", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
+    public ResponseEntity<?> getHuPingBaoGaoDan(@RequestParam String username) throws Exception {
+    	HuPingBaoGaoDan baoGaoDan = new HuPingBaoGaoDan();
+    	List<CategoryPoint> alist = pingYiService.getHuPingBaoGaoDan(username);
+    	baoGaoDan.setUserName(username);
+    	baoGaoDan.setHuPingPoints(alist);
+    	return new ResponseEntity<HuPingBaoGaoDan>(baoGaoDan, HttpStatus.OK);
     }
 }

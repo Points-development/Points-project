@@ -13,6 +13,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public class QunZhongPingYi{
 	@JsonIgnore
+	private Integer updateTimes = 0;
+	
+	public Integer getUpdateTimes() {
+		return updateTimes;
+	}
+	public void setUpdateTimes(Integer updateTimes) {
+		this.updateTimes = updateTimes;
+	}
+	@JsonIgnore
 	private Integer id;
 	private String userName;
 	private String realName;
