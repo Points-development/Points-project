@@ -3,7 +3,7 @@
  */
 package com.huiyong.model.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * @author gangpu
@@ -13,7 +13,8 @@ public class User {
 	private Integer id;
 	private String name;
 	private String realName;
-	@JsonIgnore
+
+	@JsonSerialize(using = Pass2NullSerializer.class)
 	private String password;
 	private String branch;
 	private String organization;
