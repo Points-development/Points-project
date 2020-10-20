@@ -1,5 +1,5 @@
 //var APIServer = "http://123.56.4.5:4090/pointservice";
-var APIServer = "http://123.56.4.5:4090/pointservice";
+var APIServer = "/pointservice";
 var Login=Vue.extend({template:"#login",
 data:function(){
     return {
@@ -52,7 +52,25 @@ methods:{
 	}
 }
 });
-var Home=Vue.extend({template:"#home"});
+var Home=Vue.extend({template:"#home",
+data:function(){
+	return {
+		gUser:null
+	}
+},
+mounted:function(){
+	this.init();
+},
+methods: {
+	switchRole(){
+		
+	},
+	init(){
+		gUser = JSON.parse(localStorage.getItem('gUser'));
+		this.gUser = gUser;	
+	}
+}
+});
 var Test=Vue.extend({template:"#test",
 data:function() {
 	return {
@@ -88,9 +106,9 @@ methods: {
 			this.displayUsers = this.userList;
 			return false;
 		}
-		if(this.target == 'other'){
+		if(this.target != 'self'){
 			this.displayUsers = this.userList.filter(function (element, index, self) {
-			    if(element.realname.indexOf(value)>=0){
+			    if(element.realName.indexOf(value)>=0){
 			    	return true;
 			    }else{
 			    	return false;
@@ -222,6 +240,20 @@ methods: {
 			}
 		 })
 	},
+	getAllUsers(){
+		let url1 = APIServer+'/alluser?organization='+this.gUser.organization+'&realname=';
+		fetch(url1,{
+		     method:"get",
+		     headers: {
+		      'Content-Type': 'application/json'
+		     }
+		}).then(response=>{
+			return response.json();
+		}).then(data=>{
+			this.userList = data;
+			this.displayUsers = data;
+		});
+	},
 	getBranchUsers(){
 		let url1 = APIServer+'/score/pointsbyuser?branch='+this.gUser.branch+'&scorer='+this.gUser.name;
 		fetch(url1,{
@@ -255,12 +287,17 @@ methods: {
 				}
 			});
 			this.initQuestion();
-		}else if(this.target == 'other'){
-			this.getBranchUsers();
+		}else if(this.target != 'self'){
+			if(this.gUser.name == 'guest'){
+				this.getAllUsers();
+			}else{
+				this.getBranchUsers();
+			}
+			
 		}
 	 },
 	 pickUser(user){
-		 this.evaluator = user.username;
+		 this.evaluator = user.name;
 		 this.initQuestion();
 	 }
 }

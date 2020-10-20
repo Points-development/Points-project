@@ -35,9 +35,14 @@
     </template>
     <template id="home">
     	<div class="box">
-	    	<div class="box-item" @click="goPage('test?target=self')">自评</div>
-	    	<div class="box-item" @click="goPage('test?target=other')">他评</div>
-	    	<div class="box-item">报告</div>
+    		<div class="user">欢迎你，<span style="font-weight:bold">{{gUser.realName}}</span>! 当前身份:<span style="font-weight:bold">{{gUser.property}}</span>,
+    		 <a href="javascript:" @click="switchRole()">切换身份</a>
+    		</div>
+	    	<div class="box-item" v-if="gUser.name !='guest'" @click="goPage('test?target=self')">自评</div>
+	    	<div class="box-item" v-if="gUser.name !='guest'" @click="goPage('test?target=other')">他评</div>
+	    	<div class="box-item" v-if="gUser.name !='guest'" @click="goPage('report')">报告</div>
+	    	<div class="box-item" v-if="gUser.name =='guest'" @click="goPage('test?target=organization')">组织评</div>
+	    	<div class="box-item" v-if="gUser.name =='guest'" @click="goPage('test?target=public')">群众评</div>
 	    	<div class="box-item" @click="goPage('login')">退出</div>
     	</div>
     </template>
@@ -80,6 +85,7 @@
 			    </div>
 	    	</div>
 	    	<div v-if="!evaluator">
+	    		<div class="search-title">选择评议人</div>
 	    		<div class="weui-search-bar" ref="searchBar" id="searchBar">
 		            <form class="weui-search-bar__form">
 		                <div class="weui-search-bar__box">
@@ -93,8 +99,8 @@
 		        <div class="weui-cells searchbar-result" ref="searchResult" id="searchResult">
 		            <div class="weui-cell weui-cell_active weui-cell_access" v-for="user in displayUsers">
 		                <div class="weui-cell__bd weui-cell_primary">
-		                	<p v-if="user.username==gUser.name || user.otherPoint>0">{{user.realname}} (已评价)</p>
-		                    <a v-else href="javascript:" @click="pickUser(user)">{{user.realname}}</a>
+		                	<p v-if="user.name==gUser.name || user.otherPoint>0">{{user.realName}} (已评价)</p>
+		                    <a v-else href="javascript:" @click="pickUser(user)">{{user.realName}}</a>
 		                </div>
 		            </div>
 		        </div>

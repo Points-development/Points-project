@@ -10,17 +10,12 @@ import java.util.Date;
  *
  */
 public class ScorePoint {
-	private String username;
-	private String realname;
+	private String name;
+	private String realName;
 	private int selfPoint;
 	private int otherPoint;
 	private Date lastModifiedTime;
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	
 	public int getSelfPoint() {
 		return selfPoint;
 	}
@@ -39,17 +34,16 @@ public class ScorePoint {
 	public void setLastModifiedTime(Date lastModifiedTime) {
 		this.lastModifiedTime = lastModifiedTime;
 	}
-	/**
-	 * @return the realname
-	 */
-	public String getRealname() {
-		return realname;
+	public String getName() {
+		return name;
 	}
-	/**
-	 * @param realname the realname to set
-	 */
-	public void setRealname(String realname) {
-		this.realname = realname;
+	public void setName(String name) {
+		this.name = name;
 	}
-	
+	public String getRealName() {
+		return realName;
+	}
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
 }

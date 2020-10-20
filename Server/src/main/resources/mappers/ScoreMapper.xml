@@ -11,8 +11,8 @@
     <collection property="scores" column="id" javaType="ArrayList" ofType="ScoreItemResult" select="com.huiyong.dao.ScoreItemResultMapper.getItemResultByScoreId" />
   </resultMap> 
   <resultMap id="ScorePointResultMap" type="com.huiyong.model.score.ScorePoint" >
-    <result column="username" property="username" jdbcType="VARCHAR" />
-    <result column="realname" property="realname" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="realName" property="realName" jdbcType="VARCHAR" />
     <result column="selfPoint" property="selfPoint" jdbcType="INTEGER" />
     <result column="otherPoint" property="otherPoint" jdbcType="INTEGER" />
   </resultMap>
@@ -37,7 +37,7 @@
         ;
   </select>
 	<select id="getScorePointByBranch" parameterType="String" resultMap="ScorePointResultMap">
-		select U.name username, U.realName realname, OS.selfPoint selfPoint, OP.otherPoint
+		select U.name, U.realName, OS.selfPoint selfPoint, OP.otherPoint
 		otherPoint,OS.lastModifiedTime 
 		from User U LEFT JOIN (
 		select PSOTHER.scoree, avg(PSOTHER.point) otherPoint
@@ -53,7 +53,7 @@
 	</select>
 	
 	<select id="getScorePointByBranchAndScorer" resultMap="ScorePointResultMap">
-	    select U.name username, U.realName realname, PS.point otherPoint, PS.lastModifiedTime
+	    select U.name, U.realName, PS.point otherPoint, PS.lastModifiedTime
 		from User U left join PaperScore PS
         on U.name=PS.scoree and PS.scorer=#{scorer}
 		where U.branch=#{branch};

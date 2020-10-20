@@ -36,6 +36,11 @@ body {
   justify-content: space-around;
   flex-wrap: wrap;
 }
+.user{
+	position:absolute;
+	top:30px;
+	margin: 0 20px;
+}
 .box-item{
 	width:35%;
 	height:100px;
@@ -59,4 +64,7 @@ body {
 .searchbar-result{
 	height:60vh;
 	overflow-y:auto !important;	
+}
+.search-title{
+	margin-bottom:8px;
 }
