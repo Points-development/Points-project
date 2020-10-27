@@ -1,5 +1,6 @@
 //var APIServer = "http://123.56.4.5:4090/pointservice";
 var APIServer = "/pointservice";
+Vue.component(VeBar.name, VeBar)
 var Login=Vue.extend({template:"#login",
 data:function(){
     return {
@@ -55,19 +56,85 @@ methods:{
 var Home=Vue.extend({template:"#home",
 data:function(){
 	return {
-		gUser:null
+		gUser:{},
+		showRoleList:false,
+		roleList:[],
+		errorList: [],
+		newRole:'',
 	}
 },
 mounted:function(){
 	this.init();
 },
 methods: {
+	showMsg(msg){
+		this.errorList.push(msg)
+		let _this=this
+		setTimeout(function()  {
+			_this.errorList = [];
+		},3000);
+	},
+	pickRole(role){
+		this.newRole = role;
+	},
 	switchRole(){
-		
+		let url = APIServer+'/user/property';
+    	fetch(url,{
+  	      method:"get",
+  	      headers: {
+  	    	  'Content-Type': 'application/json'
+      	  }
+  	    }).then(response=>{
+  	    	if(response.status != 400 && response.status != 200){
+  	    		this.showMsg('请检查网络或联系管理员');
+  		    }
+  	    	if (response.status==200){
+  	    		return response.json();
+  	    	}else{
+  	    		return {'error':response.text(),'status':response.status}
+  	    	}
+  	    }).then(data=>{
+  	    	if(data.error){
+  	    		data.error.then(e=>this.showMsg(e));
+      		}else{
+      			this.roleList = data;
+				this.showRoleList = true
+      		}
+  		})
+	},
+	cancel(){
+		this.showRoleList = false;	
+	},
+	submit(){
+		this.showRoleList = false;
+		let user = this.gUser;
+		user.property = this.newRole;
+		fetch(APIServer+"/user/"+this.gUser.name,{
+	      method:"put",
+	      headers: {
+	    	  'Content-Type': 'application/json'
+    	  },
+	      body: JSON.stringify(user)
+	    }).then(response=>{
+	    	if(response.status != 403 && response.status != 200){
+	    		this.showMsg('请检查网络或联系管理员');
+		    }
+	       return response.json();
+	    }).then(data=>{
+	    	if(data.error){
+    			this.showMsg(data.error);
+    		}else{
+    			setUser(user);
+    		}
+		})	
 	},
 	init(){
-		gUser = JSON.parse(localStorage.getItem('gUser'));
-		this.gUser = gUser;	
+		let gUser = JSON.parse(localStorage.getItem('gUser'));
+		if(!gUser){
+			return;
+		}
+		this.gUser = gUser;
+		this.newRole = gUser.property;
 	}
 }
 });
@@ -139,6 +206,9 @@ methods: {
 	handleClick(q){
 		q.checked = !q.checked;
 	},
+	handleSelect(q,option){
+		q.optionId = option.optionId;
+	},
 	cancel(){
 		this.finished=false;
 	},
@@ -166,10 +236,11 @@ methods: {
     		point:this.total
     	}
     	this.questions.map(function(item){
-    		if(item.checked){
-    			let question={questionId:item.id,optionsId:item.checked?2:1,answer:null};
+			if(!item.isTitle){
+				let question={questionId:item.id,optionsId:item.checked?2:1};
     			score.scores.push(question);
-    		}
+			}
+    		
 //    		if(item.type == 2){
 //    			let question={questionId:item.id,answer:item.answer,optionsId:null};
 //    			score.scores.push(question);
@@ -201,7 +272,11 @@ methods: {
   		})
 	},
 	initQuestion(){
-		fetch(APIServer+'/paper/1?username='+this.evaluator,{
+		let paperId = 1;
+		if(this.gUser.name == 'guest'){
+			paperId = 2;
+		}
+		fetch(APIServer+'/paper/'+paperId+'?username='+this.evaluator,{
 			method:"get",
 		    headers: {
 		    	'Content-Type': 'application/json'
@@ -224,8 +299,11 @@ methods: {
 					}else{
 						question.isTitle = false;
 					}
-					if(question.type==1){
+					if(question.type==1 && paperId==1){
 						question.checked=false;
+					}
+					if(question.type==1 && paperId==2){
+						question.optionId=0;
 					}
 					questions.push(question);
 				});
@@ -270,7 +348,7 @@ methods: {
 	},
 	init() {
 		this.target = this.$route.query.target;
-		gUser = JSON.parse(localStorage.getItem('gUser'));
+		let gUser = JSON.parse(localStorage.getItem('gUser'));
 		this.gUser = gUser;
 		if (this.target == 'self'){
 			this.evaluator = this.gUser.name;
@@ -302,6 +380,84 @@ methods: {
 	 }
 }
 });
+var Report=Vue.extend({template:"#report",
+data:function(){
+	return {
+		gUser:null,
+		errorList: [],
+		tabs:['自评报告','他评报告'],
+	    activeIndex:0,
+		colors: ["#4589ff", "#AAB3AB", "#61a0a8", "#d48265", "#A8E6CE","#AAB3AB", "#61a0a8"],
+		chartExtend : {
+			colors: ["#69D2E7", "#AAB3AB", "#61a0a8", "#d48265", "#A8E6CE"],
+	        xAxis: {
+	           axisLabel: {
+	             interval: 0,
+	             rotate: 30,
+	             formatter: name => {
+	               // eslint-disable-next-line
+	               return echarts.format.truncateText(name, 100, '14px Microsoft Yahei', '…')
+	             }
+	           },
+	           triggerEvent: true
+	        }
+        },
+		chartData: {
+            columns: ['description','point'],
+            rows: []
+		}
+	}
+},
+mounted:function(){
+	this.init();
+},
+methods: {
+	showMsg(msg){
+		this.errorList.push(msg)
+		let _this=this
+		setTimeout(function()  {
+			_this.errorList = [];
+		},3000);
+	},
+	init(){
+		let gUser = JSON.parse(localStorage.getItem('gUser'));
+		if(!gUser){
+			return;
+		}
+		this.gUser = gUser;
+		this.getReports('self');
+	},
+	switchTab(index){
+		this.activeIndex = index;
+		if (index == 0){
+			this.getReports('self');
+		}else{
+			this.getReports('other');
+		}
+	},
+	getReports(type){
+		let url = APIServer+'/pingyi/baogaodan/self?username='+this.gUser.name
+		if(type=='other'){
+			url = APIServer+'/pingyi/baogaodan/other?username='+this.gUser.name
+		}
+		fetch(url,{
+		     method:"get",
+		     headers: {
+		      'Content-Type': 'application/json'
+		     }
+		}).then(response=>{
+			return response.json();
+		}).then(data=>{
+			if(type=='self'){
+				this.chartData['rows'] = data.ziPingPoints;	
+			}else{
+				this.chartData['rows'] = data.huPingPoints;
+			}
+			
+		});
+	}
+}
+});
 var routes=[
 {
 	path:"/login",
@@ -317,6 +473,11 @@ var routes=[
 }
 ,
 {
+	path:"/report",
+	component:Report
+}
+,
+{
 	path:"/",
 	component:Login
 }
@@ -324,26 +485,16 @@ var routes=[
 var router=new VueRouter({
 	routes:routes
 });
+
 var vm=new Vue({
 	el:"#app",
 	router:router
 });
+
 goPage = function(url){
 	router.push({path:url})
 }
 
 setUser = function(user){
 	localStorage.setItem('gUser',JSON.stringify(user));
-}
-
-getQuestions=function(user){
-	fetch(APIServer+"/paper/1?username="+user,{
-      method:"get"
-    }).then(result=>{
-      console.log(result);
-       return result.json();
-    }).then(data=>{
-       console.log(data);
-       vm.questions = data;
-	})
 }

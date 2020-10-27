@@ -7,6 +7,7 @@
 <title>彬州市党员党性政治体检系统</title>
 <link rel="stylesheet" href="./css/app.css"/>
 <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.4.0/weui.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/v-charts/lib/style.min.css">
 </head>
 <body ontouchstart>
 	<template id="login">
@@ -44,11 +45,27 @@
 	    	<div class="box-item" v-if="gUser.name =='guest'" @click="goPage('test?target=organization')">组织评</div>
 	    	<div class="box-item" v-if="gUser.name =='guest'" @click="goPage('test?target=public')">群众评</div>
 	    	<div class="box-item" @click="goPage('login')">退出</div>
+	    	<div class="js_dialog" id="iosDialog2" v-if="showRoleList">
+	            <div class="weui-mask"></div>
+	            <div class="weui-dialog">
+	                <div class="weui-dialog__bd weui-cells_checkbox">
+	                	<div class="weui-cell " v-for="(role,index) in roleList">
+	                		<input type="radio" :id="'radio'+index" class="radio_type" v-bind:value="role" v-model="newRole"/>
+	                		<label :for="'radio'+index">{{role}}</label>
+			            </div>
+	                </div>
+	                <div class="weui-dialog__ft">
+	                	<a href="javascript:" @click="cancel()" class="weui-dialog__btn weui-dialog__btn_primary">取消</a>
+	                    <a href="javascript:" @click="submit()" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+	                </div>
+	           	</div>
+        	</div>
     	</div>
+    	
     </template>
     
     <template id="test">
-    	<div class="test" style="height:100%">
+    	<div class="test" style="height:100%;width: 100%;">
 	    	<div class="mytest" v-if="evaluator">
 	    		<div v-if="errorList.length > 0">
 			        <div class="weui-toptips weui-toptips_warn" style="display:block;opacity:1" role="alert">{{errorList.join(';')}}</div>
@@ -64,14 +81,20 @@
 	    			<span class="mytitle">{{name}}</span>
 	    			<span>评测对象：{{evaluator}}</span>
 	    		</div>
-	    		<div class="question weui-cells weui-cells_checkbox" v-for="question in questions">
-	    			<label class="weui-cell weui-cell_active weui-check__label" v-if="!question.isTitle">
-		                <div class="weui-cell__hd">
+	    		<div class="question weui-cells weui-cells_checkbox" v-for="(question,index1) in questions">
+	    			<label class="weui-cell weui-cell_active weui-check__label" :class="{'question-label':options.length==4}" v-if="!question.isTitle">
+		                <div class="weui-cell__hd" v-if="options.length==2">
 		                    <input type="checkbox" class="weui-check" @click="handleClick(question)"/>
 		                    <i class="weui-icon-checked"></i>
 		                </div>
 		                <div class="weui-cell__bd">
 		                    <p>{{question.questionId}}. {{question.description}}</p>
+		                </div>
+		                <div class="weui-cells_checkbox inline-checkbox" v-if="options.length==4">
+		                	<div class="weui-cell" v-for="(option,index) in options">
+		                		<input type="radio" :id="'radio'+index1+'_'+index" :name="'radio'+index1" class="radio_type" @click="handleSelect(question,option)"/>
+		                		<label :for="'radio'+index1+'_'+index">{{option.label}}</label>
+				            </div>
 		                </div>
 		            </label>
 		            <label class="weui-cell weui-cell_active weui-check__label" v-else>
@@ -97,10 +120,10 @@
 		            </form>
 		        </div>
 		        <div class="weui-cells searchbar-result" ref="searchResult" id="searchResult">
-		            <div class="weui-cell weui-cell_active weui-cell_access" v-for="user in displayUsers">
-		                <div class="weui-cell__bd weui-cell_primary">
-		                	<p v-if="user.name==gUser.name || user.otherPoint>0">{{user.realName}} (已评价)</p>
-		                    <a v-else href="javascript:" @click="pickUser(user)">{{user.realName}}</a>
+		            <div class="weui-cell weui-cell_active weui-cell_access" v-for="user in displayUsers" style="padding:0">
+		                <div class="weui-cell__bd weui-cell_primary" >
+		                	<p class="username" v-if="user.name==gUser.name || user.otherPoint>0">{{user.realName}} (已评价)</p>
+		                    <a v-else class="username" href="javascript:" @click="pickUser(user)">{{user.realName}}</a>
 		                </div>
 		            </div>
 		        </div>
@@ -126,13 +149,26 @@
 	            </div>
 	        </div>
     	</div>
-    	
+    </template>
+    <template id="report">
+    	<div class="report" style="height:100%;width: 100%;">
+    		<ul class="tab-tilte">
+				<li v-for="(tab,index) in tabs"  :class="{'active':activeIndex==index}" @click="switchTab(index)">{{tab}}</li>
+		   	</ul>
+		   	<div class="tab-content">
+		    	<ve-bar :data="chartData" :colors="colors"  width="95vw" height="90vh"></ve-bar>   
+		    </div>
+    	</div>
     </template>
     
-    <div id="app">
+    
+    
+    <div id="app" class="main">
     	<router-view></router-view>
     </div>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/v-charts/lib/bar.min.js"></script>
 	<script src="./js/vue-router.min.js"></script>
 	<script src="./js/app.js"></script>
 </body>
