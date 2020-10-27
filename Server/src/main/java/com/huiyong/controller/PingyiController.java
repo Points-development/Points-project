@@ -54,7 +54,7 @@ public class PingyiController {
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
     }
     
-    //更新branch内的党员的组织评价信息, 和之前的分数算平均分
+    //更新org内的党员的组织评价信息, 和之前的分数算平均分
     @RequestMapping(value = "/zuzhipingjia/{username}", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
     public ResponseEntity<?> updateZuZhiPingJiaByUser(@PathVariable String username, @RequestBody ZuZhiPingJia zuZhiPingJia) throws Exception {
     	pingYiService.updateZuZhiPingJiaByUser(username, zuZhiPingJia);
@@ -63,14 +63,14 @@ public class PingyiController {
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
     }
     
-    //返回branch内的所有党员的群众评议信息
+    //返回内的所有党员的群众评议信息
     @RequestMapping(value = "/qunzhongpingyi", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
     public ResponseEntity<?> getQunZhongPingYis(@RequestParam String branch, @RequestParam String organization) {
     	List<QunZhongPingYi> qunZhongPingYis = pingYiService.getQunZhongPingYis(branch, organization);
     	return new ResponseEntity<List<QunZhongPingYi>>(qunZhongPingYis, HttpStatus.OK);
     }
     
-    //更新branch内的党员的群众评议信息
+    //更新org内的党员的群众评议信息, 和之前的分数算平均分
     @RequestMapping(value = "/qunzhongpingyi", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
     public ResponseEntity<?> updateQunZhongPingYis(@RequestParam String branch, @RequestParam String organization,  @RequestBody List<QunZhongPingYi> qunZhongPingYis) {
     	pingYiService.updateQunZhongPingYis(branch, organization, qunZhongPingYis);
