@@ -70,10 +70,10 @@ INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (6, 6,1,'持续保持高压态势，坚持无禁区、全覆盖、零容忍，坚持重遏制、强高压、长震慑，坚持受贿行贿一起查；坚决防止党内形成利益集团；坚决防范各种利益集团“围猎”和绑架领导干部；做到织密监督的“天网”，扎紧制度的篱笆，发挥巡视利剑作用，推动全面从严治党向基层延伸，让人民群众真正感受到清正干部、清廉政府、清明政治就在身边、就在眼前。',1,2);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (7, 7,1,'做到不断提升把握方向、把握大势、把握全局的能力，辨别政治是非、保持政治定力、驾驭政治局面、防范政治风险的能力；是否做到善于从政治上分析问题、解决问题；做到炼就一双政治慧眼，不畏浮云遮望眼，切实担负起党和人民赋予的政治责任。',1,2);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (8, 8,1,'其他问题',2,2);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (1, '优秀', 2, 10);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (2, '良好', 2, 8);
+INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (1, '优秀', 2, 13);
+INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (2, '良好', 2, 10);
 INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (3, '一般', 2, 5);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (4, '较差', 2, 2);
+INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (4, '较差', 2, 1);
 
 
 

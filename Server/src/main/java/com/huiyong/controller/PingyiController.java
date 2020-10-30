@@ -4,6 +4,7 @@
 package com.huiyong.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,13 @@ import com.huiyong.model.pingyi.QunZhongPingYi;
 import com.huiyong.model.pingyi.ZiPing;
 import com.huiyong.model.pingyi.ZiPingBaoGaoDan;
 import com.huiyong.model.pingyi.ZuZhiPingJia;
+import com.huiyong.model.score.CategoryScorePoint;
+import com.huiyong.model.score.Score;
+import com.huiyong.model.user.User;
 import com.huiyong.service.PingYiService;
+import com.huiyong.service.ScoreService;
+import com.huiyong.service.UserService;
+import com.huiyong.util.PingYiUtil;
 
 /**
  * @author gangpu
@@ -37,6 +44,12 @@ public class PingyiController {
 	
 	@Autowired
 	private PingYiService pingYiService;
+	
+	@Autowired
+	private ScoreService scoreService;
+	
+	@Autowired
+	private UserService userService;
 	
     //返回branch内的所有党员的组织评价信息
     @RequestMapping(value = "/zuzhipingjia", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
@@ -54,9 +67,33 @@ public class PingyiController {
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
     }
     
-    //更新org内的党员的组织评价信息, 和之前的分数算平均分
-    @RequestMapping(value = "/zuzhipingjia/{username}", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
-    public ResponseEntity<?> updateZuZhiPingJiaByUser(@PathVariable String username, @RequestBody ZuZhiPingJia zuZhiPingJia) throws Exception {
+    //更新org内的党员的组织评价信息, 和之前的分数算平均分    
+    @RequestMapping(value = "/zuzhipingjia/{username}", method = RequestMethod.POST)
+    public ResponseEntity<?> addZuZhiPingJiaScore(@PathVariable String username, @RequestBody Score score) throws Exception {
+    	if(null == score){
+        	return new ResponseEntity<String>("Score is null.", HttpStatus.BAD_REQUEST);
+    	}
+    	if(null == username ){
+    		return new ResponseEntity<String>("User name is null.", HttpStatus.BAD_REQUEST);
+    	}
+    	if(score.getPoint() >= 99 ){
+    		return new ResponseEntity<String>("Cannot select all the best.", HttpStatus.BAD_REQUEST);
+    	}
+    	if(!username.equals(score.getScoree())){
+    		return new ResponseEntity<String>("Add score to the user different from username in url.", HttpStatus.BAD_REQUEST);
+    	}
+    	User user = userService.getUserByName(username);
+    	if(null == user){
+    		return new ResponseEntity<String>("User name does not exist", HttpStatus.BAD_REQUEST);
+    	}
+    	//Here pass 0 as scoreId since we don't really have a score id
+    	List<CategoryScorePoint> aCSPList = scoreService.getCategoryPointByScore(score, 0);
+    	ZuZhiPingJia zuZhiPingJia = new ZuZhiPingJia();
+    	PingYiUtil.transferCategoryPoint(aCSPList, ZuZhiPingJia.class, zuZhiPingJia);
+    	zuZhiPingJia.setUserName(username);
+    	zuZhiPingJia.setRealName(user.getRealName());
+    	zuZhiPingJia.setProblem(score.getScores().stream().filter(z->z.getAnswer() != null).map(z->z.getAnswer())
+    			.collect(Collectors.joining("")));
     	pingYiService.updateZuZhiPingJiaByUser(username, zuZhiPingJia);
     	Message m = new Message();
     	m.setSuccess("更新成功.");
@@ -70,7 +107,7 @@ public class PingyiController {
     	return new ResponseEntity<List<QunZhongPingYi>>(qunZhongPingYis, HttpStatus.OK);
     }
     
-    //更新org内的党员的群众评议信息, 和之前的分数算平均分
+    //更新branch内的党员的群众评议信息
     @RequestMapping(value = "/qunzhongpingyi", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
     public ResponseEntity<?> updateQunZhongPingYis(@RequestParam String branch, @RequestParam String organization,  @RequestBody List<QunZhongPingYi> qunZhongPingYis) {
     	pingYiService.updateQunZhongPingYis(branch, organization, qunZhongPingYis);
@@ -81,7 +118,32 @@ public class PingyiController {
     
     //更新branch内的党员的群众评议信息, 和之前的分数算平均分
     @RequestMapping(value = "/qunzhongpingyi/{username}", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
-    public ResponseEntity<?> updateQunZhongPingYiByUser(@PathVariable String username, @RequestBody QunZhongPingYi qunZhongPingYi) throws Exception {
+    public ResponseEntity<?> addQunZhongPingYiScore(@PathVariable String username, @RequestBody Score score) throws Exception {
+    	if(null == score){
+        	return new ResponseEntity<String>("Score is null.", HttpStatus.BAD_REQUEST);
+    	}
+    	if(null == username ){
+    		return new ResponseEntity<String>("User name is null.", HttpStatus.BAD_REQUEST);
+    	}
+    	if(score.getPoint() >= 99 ){
+    		return new ResponseEntity<String>("Cannot select all the best.", HttpStatus.BAD_REQUEST);
+    	}
+    	if(!username.equals(score.getScoree())){
+    		return new ResponseEntity<String>("Add score to the user different from username in url.", HttpStatus.BAD_REQUEST);
+    	}
+    	User user = userService.getUserByName(username);
+    	if(null == user){
+    		return new ResponseEntity<String>("User name does not exist", HttpStatus.BAD_REQUEST);
+    	}
+    	
+    	//Here pass 0 as scoreId since we don't really have a score id
+    	List<CategoryScorePoint> aCSPList = scoreService.getCategoryPointByScore(score, 0);
+    	QunZhongPingYi qunZhongPingYi = new QunZhongPingYi();
+    	PingYiUtil.transferCategoryPoint(aCSPList, QunZhongPingYi.class, qunZhongPingYi);
+    	qunZhongPingYi.setUserName(username);
+    	qunZhongPingYi.setRealName(user.getRealName());
+    	qunZhongPingYi.setProblem(score.getScores().stream().filter(z->z.getAnswer() != null).map(z->z.getAnswer())
+    			.collect(Collectors.joining("")));
     	pingYiService.updateQunZhongPingYiByUser(username, qunZhongPingYi);
     	Message m = new Message();
     	m.setSuccess("更新成功.");

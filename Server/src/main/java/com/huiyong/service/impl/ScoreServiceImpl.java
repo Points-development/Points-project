@@ -66,7 +66,7 @@ public class ScoreServiceImpl implements ScoreService {
 		return scoreDao.getScoreByOther(username, recent);
 	}
 	
-	private List<CategoryScorePoint> getCategoryPointByScore(Score score, int scoreId) {
+	public List<CategoryScorePoint> getCategoryPointByScore(Score score, int scoreId) {
 		PaperTest paper = paperDao.getPaperById(score.getPaperId());
 		List<PaperQuestion> pqList = paper.getQuestions();
 		List<PaperOption> opList = paper.getOptions();

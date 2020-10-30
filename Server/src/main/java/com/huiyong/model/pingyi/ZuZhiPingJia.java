@@ -27,94 +27,66 @@ public class ZuZhiPingJia{
 	private Integer total;
 	private String problem;
 	private Date lastModifiedTime;
-	@CategoryInfo(description="理想信念", categoryId=1)
-	private Integer liXiangXinNian;
-	@CategoryInfo(description="政治意识", categoryId=2)
-	private Integer zhengZhiYiShi;
-	@CategoryInfo(description="学习意识", categoryId=3)
-	private Integer xueXiYiShi;
-	@CategoryInfo(description="遵守组织纪律", categoryId=4)
-	private Integer zuZhiJiLv;
-	@CategoryInfo(description="大局意识", categoryId=5)
-	private Integer daJuYiShi;
-	@CategoryInfo(description="工作作风", categoryId=6)
-	private Integer gongZuoZuoFeng;
-	@CategoryInfo(description="道德品行", categoryId=7)
-	private Integer daoDePinXing;
-	@CategoryInfo(description="生活作风", categoryId=8)
-	private Integer shengHuoZuoFeng;
-	@CategoryInfo(description="服务奉献意识", categoryId=9)
-	private Integer fuWuYiShi;
-	@CategoryInfo(description="履行党员义务", categoryId=10)
-	private Integer lvXingDangYuanYiWu;
-	@CategoryInfo(description="先锋模范作用发挥", categoryId=11)
-	private Integer xianFengMoFanZuoYongFaHui;
-	public Integer getLiXiangXinNian() {
-		return liXiangXinNian;
+
+	@CategoryInfo(description="把准政治方向", categoryId=1)
+	private Integer zhengZhiFangXiang;
+	@CategoryInfo(description="加强党的政治领导", categoryId=2)
+	private Integer zhengZhiLingDao;
+	@CategoryInfo(description="夯实政治根基", categoryId=3)
+	private Integer zhengZhiGenJi;
+	@CategoryInfo(description="涵养政治生态", categoryId=4)
+	private Integer zhengZhiShengTai;
+	@CategoryInfo(description="防范政治风险", categoryId=5)
+	private Integer zhengZhiFengXian;
+	@CategoryInfo(description="永葆政治本色", categoryId=6)
+	private Integer zhengZhiBenSe;
+	@CategoryInfo(description="提高政治能力", categoryId=7)
+	private Integer zhengZhiNengLi;
+
+
+	public Integer getZhengZhiFangXiang() {
+		return zhengZhiFangXiang;
 	}
-	public void setLiXiangXinNian(Integer liXiangXinNian) {
-		this.liXiangXinNian = liXiangXinNian;
+	public void setZhengZhiFangXiang(Integer zhengZhiFangXiang) {
+		this.zhengZhiFangXiang = zhengZhiFangXiang;
 	}
-	public Integer getZhengZhiYiShi() {
-		return zhengZhiYiShi;
+	public Integer getZhengZhiLingDao() {
+		return zhengZhiLingDao;
 	}
-	public void setZhengZhiYiShi(Integer zhengZhiYiShi) {
-		this.zhengZhiYiShi = zhengZhiYiShi;
+	public void setZhengZhiLingDao(Integer zhengZhiLingDao) {
+		this.zhengZhiLingDao = zhengZhiLingDao;
 	}
-	public Integer getXueXiYiShi() {
-		return xueXiYiShi;
+	public Integer getZhengZhiGenJi() {
+		return zhengZhiGenJi;
 	}
-	public void setXueXiYiShi(Integer xueXiYiShi) {
-		this.xueXiYiShi = xueXiYiShi;
+	public void setZhengZhiGenJi(Integer zhengZhiGenJi) {
+		this.zhengZhiGenJi = zhengZhiGenJi;
 	}
-	public Integer getZuZhiJiLv() {
-		return zuZhiJiLv;
+	public Integer getZhengZhiShengTai() {
+		return zhengZhiShengTai;
 	}
-	public void setZuZhiJiLv(Integer zuZhiJiLv) {
-		this.zuZhiJiLv = zuZhiJiLv;
+	public void setZhengZhiShengTai(Integer zhengZhiShengTai) {
+		this.zhengZhiShengTai = zhengZhiShengTai;
 	}
-	public Integer getDaJuYiShi() {
-		return daJuYiShi;
+	public Integer getZhengZhiFengXian() {
+		return zhengZhiFengXian;
 	}
-	public void setDaJuYiShi(Integer daJuYiShi) {
-		this.daJuYiShi = daJuYiShi;
+	public void setZhengZhiFengXian(Integer zhengZhiFengXian) {
+		this.zhengZhiFengXian = zhengZhiFengXian;
 	}
-	public Integer getGongZuoZuoFeng() {
-		return gongZuoZuoFeng;
+	public Integer getZhengZhiBenSe() {
+		return zhengZhiBenSe;
 	}
-	public void setGongZuoZuoFeng(Integer gongZuoZuoFeng) {
-		this.gongZuoZuoFeng = gongZuoZuoFeng;
+	public void setZhengZhiBenSe(Integer zhengZhiBenSe) {
+		this.zhengZhiBenSe = zhengZhiBenSe;
 	}
-	public Integer getDaoDePinXing() {
-		return daoDePinXing;
+	public Integer getZhengZhiNengLi() {
+		return zhengZhiNengLi;
 	}
-	public void setDaoDePinXing(Integer daoDePinXing) {
-		this.daoDePinXing = daoDePinXing;
+	public void setZhengZhiNengLi(Integer zhengZhiNengLi) {
+		this.zhengZhiNengLi = zhengZhiNengLi;
 	}
-	public Integer getShengHuoZuoFeng() {
-		return shengHuoZuoFeng;
-	}
-	public void setShengHuoZuoFeng(Integer shengHuoZuoFeng) {
-		this.shengHuoZuoFeng = shengHuoZuoFeng;
-	}
-	public Integer getFuWuYiShi() {
-		return fuWuYiShi;
-	}
-	public void setFuWuYiShi(Integer fuWuYiShi) {
-		this.fuWuYiShi = fuWuYiShi;
-	}
-	public Integer getLvXingDangYuanYiWu() {
-		return lvXingDangYuanYiWu;
-	}
-	public void setLvXingDangYuanYiWu(Integer lvXingDangYuanYiWu) {
-		this.lvXingDangYuanYiWu = lvXingDangYuanYiWu;
-	}
-	public Integer getXianFengMoFanZuoYongFaHui() {
-		return xianFengMoFanZuoYongFaHui;
-	}
-	public void setXianFengMoFanZuoYongFaHui(Integer xianFengMoFanZuoYongFaHui) {
-		this.xianFengMoFanZuoYongFaHui = xianFengMoFanZuoYongFaHui;
-	}
+	
 	public Integer getId() {
 		return id;
 	}

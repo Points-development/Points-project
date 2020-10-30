@@ -25,9 +25,9 @@ public class TempTest {
 	 */
 	public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException {
 		ZuZhiPingJia zzpj = new ZuZhiPingJia();
-		zzpj.setLiXiangXinNian(5);
+		zzpj.setZhengZhiBenSe(5);
 		ZuZhiPingJia zzpj1 = new ZuZhiPingJia();
-		zzpj1.setLiXiangXinNian(6);
+		zzpj1.setZhengZhiBenSe(6);
 		Class<?> clazz=zzpj.getClass();
 		Field[] fields = clazz.getDeclaredFields();
 		List<CategoryPoint> cpList = new ArrayList<CategoryPoint>();
