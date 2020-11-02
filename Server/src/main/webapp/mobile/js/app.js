@@ -153,7 +153,9 @@ data:function() {
 		finished:false,
 		total:0,
 		searchName:'',
-		displayUsers:[]
+		displayUsers:[],
+		target:'',
+		paperId:1
 	}
 },
 mounted:function(){
@@ -207,7 +209,8 @@ methods: {
 		q.checked = !q.checked;
 	},
 	handleSelect(q,option){
-		q.optionId = option.optionId;
+		q.optionId = option.id;
+		q.optionPoint = option.optionPoint;
 	},
 	cancel(){
 		this.finished=false;
@@ -216,8 +219,15 @@ methods: {
 		let total = 0;
 		for(index in this.questions){
 			q = this.questions[index];
-			if(!q.isTitle && !q.checked){
-				total += this.options[0].optionPoint
+			if(this.options.length==2){
+				if(!q.isTitle && !q.checked){
+					total += this.options[0].optionPoint
+				}
+			}else{
+				//四个选项
+				if(!q.isTitle){
+					total += q.optionPoint;
+				}
 			}
 		}
 		total = Math.round(total);
@@ -229,16 +239,23 @@ methods: {
 	},
 	submit(){
 		let score = {
-    		paperId:1,
+    		paperId:this.paperId,
     		scorer:this.gUser.name,
     		scoree:this.evaluator,
     		scores:[],
     		point:this.total
     	}
+		let options = this.options;
     	this.questions.map(function(item){
 			if(!item.isTitle){
-				let question={questionId:item.id,optionsId:item.checked?2:1};
-    			score.scores.push(question);
+				if(options.length==2){
+					let question={questionId:item.id,optionsId:item.checked?2:1};
+    				score.scores.push(question);
+				}else{
+					let question={questionId:item.id,optionsId:item.optionId};
+    				score.scores.push(question);
+				}
+				
 			}
     		
 //    		if(item.type == 2){
@@ -247,6 +264,12 @@ methods: {
 //    		}
     	});
     	let url = APIServer+'/score/'+score.scoree;
+		if (this.target == 'organization'){
+			url = APIServer+'/pingyi/zuzhipingjia/'+score.scoree;
+		}
+		if (this.target == 'public'){
+			url = APIServer+'/pingyi/qunzhongpingyi/'+score.scoree;
+		}
     	fetch(url,{
   	      method:"post",
   	      headers: {
@@ -275,6 +298,7 @@ methods: {
 		let paperId = 1;
 		if(this.gUser.name == 'guest'){
 			paperId = 2;
+			this.paperId = 2;
 		}
 		fetch(APIServer+'/paper/'+paperId+'?username='+this.evaluator,{
 			method:"get",
@@ -292,12 +316,17 @@ methods: {
 			}else{
 				let questions = [];
 				let category=null;
+				let qId=0;
 				data.questions.map(function (question) {
 					if(category != question.category){
 						category = question.category;
 						questions.push({'category':category,'isTitle':true});
 					}else{
 						question.isTitle = false;
+					}
+					if (!question.isTitle){
+						qId+=1;
+						question.qId=qId;
 					}
 					if(question.type==1 && paperId==1){
 						question.checked=false;
@@ -382,26 +411,30 @@ methods: {
 });
 var Report=Vue.extend({template:"#report",
 data:function(){
+	this.chartExtend = {
+		series(item) {
+			item[0].data = item[0].data.map((v, index) => {
+				let color = '#57d785';
+				if(v>80){
+					color='#57d785'
+				}else if(v>60){
+					color='#fed500'
+				}else{
+					color='#fe6100'
+				}
+				return {
+					value: v,
+					itemStyle: { color: color }
+				}
+			})
+			return item
+		}
+	}
 	return {
 		gUser:null,
 		errorList: [],
 		tabs:['自评报告','他评报告'],
 	    activeIndex:0,
-		colors: ["#4589ff", "#AAB3AB", "#61a0a8", "#d48265", "#A8E6CE","#AAB3AB", "#61a0a8"],
-		chartExtend : {
-			colors: ["#69D2E7", "#AAB3AB", "#61a0a8", "#d48265", "#A8E6CE"],
-	        xAxis: {
-	           axisLabel: {
-	             interval: 0,
-	             rotate: 30,
-	             formatter: name => {
-	               // eslint-disable-next-line
-	               return echarts.format.truncateText(name, 100, '14px Microsoft Yahei', '…')
-	             }
-	           },
-	           triggerEvent: true
-	        }
-        },
 		chartData: {
             columns: ['description','point'],
             rows: []

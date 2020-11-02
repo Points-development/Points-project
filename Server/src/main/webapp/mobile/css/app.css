@@ -162,3 +162,7 @@ ul li {
 .inline-checkbox{
 	display:flex;
 }
+.name-tip{
+	font-size:11px;
+	color:#d0dada;
+}

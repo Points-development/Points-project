@@ -88,7 +88,7 @@
 		                    <i class="weui-icon-checked"></i>
 		                </div>
 		                <div class="weui-cell__bd">
-		                    <p>{{question.questionId}}. {{question.description}}</p>
+		                    <p>{{question.qId}}. {{question.description}}</p>
 		                </div>
 		                <div class="weui-cells_checkbox inline-checkbox" v-if="options.length==4">
 		                	<div class="weui-cell" v-for="(option,index) in options">
@@ -123,7 +123,7 @@
 		            <div class="weui-cell weui-cell_active weui-cell_access" v-for="user in displayUsers" style="padding:0">
 		                <div class="weui-cell__bd weui-cell_primary" >
 		                	<p class="username" v-if="user.name==gUser.name || user.otherPoint>0">{{user.realName}} (已评价)</p>
-		                    <a v-else class="username" href="javascript:" @click="pickUser(user)">{{user.realName}}</a>
+		                    <a v-else class="username" href="javascript:" @click="pickUser(user)">{{user.realName}} <span class="name-tip">支部:{{user.branch}}</span></a>
 		                </div>
 		            </div>
 		        </div>
@@ -156,7 +156,7 @@
 				<li v-for="(tab,index) in tabs"  :class="{'active':activeIndex==index}" @click="switchTab(index)">{{tab}}</li>
 		   	</ul>
 		   	<div class="tab-content">
-		    	<ve-bar :data="chartData" :colors="colors"  width="95vw" height="90vh"></ve-bar>   
+		    	<ve-bar :data="chartData" :extend="chartExtend"  width="95vw" height="90vh"></ve-bar>   
 		    </div>
     	</div>
     </template>
