@@ -303,12 +303,14 @@ public class PingYiServiceImpl implements PingYiService{
 	@Override
 	public List<CategoryPoint> getZiPingBaoGaoDan(String username) {
 		List<CategoryPoint> ziPingPoints = pingYiDao.getZiPingCategoryPoint(username);
+		ziPingPoints.add(getZongHePingJia(ziPingPoints));
 		return ziPingPoints;
 	}
 
 	@Override
 	public List<CategoryPoint> getHuPingBaoGaoDan(String username) {
 		List<CategoryPoint> huPingPoints = pingYiDao.getHuPingCategoryPoint(username);
+		huPingPoints.add(getZongHePingJia(huPingPoints));
 		return huPingPoints;
 	}
 
