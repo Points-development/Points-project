@@ -21,6 +21,8 @@ public class BaoGaoDan {
 	private String tiJian;
 	private String problem;
 	private String tiGao;
+	
+	private Double portion;
 	//deFen is an internal property to test whether the BaoGaoDan for a user exists
 	//select count(*) from BaoGaoDan where userName = #{username} 的值赋给defen
 	@JsonIgnore
@@ -135,6 +137,12 @@ public class BaoGaoDan {
 	}
 	public void setPingyiNumber(Integer pingyiNumber) {
 		this.pingyiNumber = pingyiNumber;
+	}
+	public Double getPortion() {
+		return portion;
+	}
+	public void setPortion(Double portion) {
+		this.portion = portion;
 	}
 
 

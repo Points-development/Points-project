@@ -458,13 +458,14 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
     <result column="tiJian" property="tiJian" jdbcType="VARCHAR" />
     <result column="problem" property="problem" jdbcType="VARCHAR" />
     <result column="tiGao" property="tiGao" jdbcType="VARCHAR" />
+    <result column="portion" property="portion" jdbcType="DOUBLE" />
     <result column="pingyiNumber" property="pingyiNumber" jdbcType="INTEGER" />
     <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
   </resultMap>
   
   <select id="getBaoGaoDan" resultMap="BaoGaoDanResultMap">
 	select U.name, U.realName, DeFenHuiZong.hongxian, PN.pingyiNumber,
-	DeFenHuiZong.jianKang tiJian, BaoGaoDan.problem, BaoGaoDan.tiGao, BaoGaoDan.lastModifiedTime
+	DeFenHuiZong.jianKang tiJian, BaoGaoDan.problem, BaoGaoDan.tiGao, BaoGaoDan.portion, BaoGaoDan.lastModifiedTime
 	from User U 
 	left join DeFenHuiZong on U.name = DeFenHuiZong.userName
 	left join BaoGaoDan on U.name = BaoGaoDan.userName
@@ -485,6 +486,9 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
                <if test="baoGaoDan.tiGao != null" >  
                     tiGao= #{baoGaoDan.tiGao},
                </if>
+               <if test="baoGaoDan.portion != null" >  
+                    portion= #{baoGaoDan.portion},
+               </if>
                lastModifiedTime=#{baoGaoDan.lastModifiedTime}
             </set>
             <where>
@@ -492,8 +496,8 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
             </where>
         </if>
         <if test="deFen == 0">
-            	Insert into BaoGaoDan (userName, realName, problem, tiGao, lastModifiedTime) values
-				(#{baoGaoDan.userName}, #{baoGaoDan.realName}, #{baoGaoDan.problem}, #{baoGaoDan.tiGao}, #{baoGaoDan.lastModifiedTime} )
+            	Insert into BaoGaoDan (userName, realName, problem, tiGao, portion, lastModifiedTime) values
+				(#{baoGaoDan.userName}, #{baoGaoDan.realName}, #{baoGaoDan.problem}, #{baoGaoDan.tiGao}, #{baoGaoDan.portion}, #{baoGaoDan.lastModifiedTime} )
         </if>
 	</insert>
 	

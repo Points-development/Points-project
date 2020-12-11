@@ -158,6 +158,7 @@ CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userName` varchar(128) NOT NULL,
   `realName` varchar(128) NOT NULL,
+  `portion` double,
   `problem` varchar(1024),
   `tiGao` varchar(1024),
   `lastModifiedTime` timestamp,
