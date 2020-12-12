@@ -117,8 +117,8 @@
         });
         
         vm.initResult=function(){
-        	vm.chart_labels = ['理想信念', '政治意识', '大局意识', '学习意识', '组织纪律',
-        		'工作作风', '道德品行','生活作风','服务意识','履行党员义务','先锋模范作用发挥'];
+        	vm.chart_labels = ['政治方向', '政治领导', '政治根基', '政治生态', '政治风险',
+        		'政治本色', '政治能力'];
         	vm.datasetOverride = [
         		{
 	    	        borderWidth: 1,
@@ -218,9 +218,8 @@
         }
         
         vm.calcTotal = function(obj){
-        	var a=obj.liXiangXinNian,b=obj.zhengZhiYiShi,c=obj.xueXiYiShi,d=obj.zuZhiJiLv,e=obj.daJuYiShi;
-        	var f=obj.gongZuoZuoFeng,g=obj.daoDePinXing,h=obj.shengHuoZuoFeng,i=obj.fuWuYiShi,j=obj.lvXingDangYuanYiWu;
-        	var k=obj.xianFengMoFanZuoYongFaHui;
+        	var a=obj.zhengZhiFangXiang,b=obj.zhengZhiLingDao,c=obj.zhengZhiGenJi,d=obj.zhengZhiShengTai,e=obj.zhengZhiFengXian;
+        	var f=obj.zhengZhiBenSe,g=obj.zhengZhiNengLi;
         	if(!a){
         		a=0;
         	}
@@ -242,25 +241,13 @@
         	if(!g){
         		g=0;
         	}
-        	if(!h){
-        		h=0;
-        	}
-        	if(!i){
-        		i=0;
-        	}
-        	if(!j){
-        		j=0;
-        	}
-        	if(!k){
-        		k=0;
-        	}
         	
-        	var total=parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d)+parseInt(e)+parseInt(f)+parseInt(g)+parseInt(h)+parseInt(i)+parseInt(j)+parseInt(k);
+        	var total=parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d)+parseInt(e)+parseInt(f)+parseInt(g);
         	if(total==0){
         		return null;
         	}
-        	obj.total=Math.ceil(total/11);
-        	return Math.ceil(total/11);
+        	obj.total=Math.ceil(total/7);
+        	return Math.ceil(total/7);
         }
         
         vm.getJianKangColor=function(index){

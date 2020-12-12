@@ -211,7 +211,7 @@ order by category_id
                  zhengZhiFengXian,
                  zhengZhiBenSe,
                  zhengZhiNengLi,
-  	             total, problem, lastModifiedTime) values
+  	             total, problem, updateTimes,lastModifiedTime) values
 		<foreach collection="qunZhongPingYis" item="item" separator=",">  
 			(#{item.userName}, #{item.realName}, 
 			   #{item.zhengZhiFangXiang},

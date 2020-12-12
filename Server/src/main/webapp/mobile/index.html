@@ -123,7 +123,7 @@
 		            <div class="weui-cell weui-cell_active weui-cell_access" v-for="user in displayUsers" style="padding:0">
 		                <div class="weui-cell__bd weui-cell_primary" >
 		                	<p class="username" v-if="user.name==gUser.name || user.otherPoint>0">{{user.realName}} (已评价)</p>
-		                    <a v-else class="username" href="javascript:" @click="pickUser(user)">{{user.realName}} <span class="name-tip">支部:{{user.branch}}</span></a>
+		                    <a v-else class="username" href="javascript:" @click="pickUser(user)">{{user.realName}} <span class="name-tip">支部:{{user.branch||gUser.branch}}</span></a>
 		                </div>
 		            </div>
 		        </div>

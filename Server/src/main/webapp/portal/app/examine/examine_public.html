@@ -25,37 +25,29 @@
 		  <tr>
 		    <th class="tg-yw4l" rowspan="2">序号</th>
 		    <th class="tg-yw4l" rowspan="2">党员姓名</th>
-		    <th class="tg-yw4l tg-ping" colspan="11">评议指标(每项满分一百)</th>
+		    <th class="tg-yw4l tg-ping" colspan="7">评议指标(每项满分一百)</th>
 		    <th class="tg-yw4l" rowspan="2">总分</th>
 		    <th class="tg-yw4l tg-problem" rowspan="2">存在问题</th>
 		  </tr>
 		  <tr>
-		    <td class="tg-yw4l">理想信念</td>
-		    <td class="tg-yw4l">政治意识</td>
-		    <td class="tg-yw4l">学习意识</td>
-		    <td class="tg-yw4l">组织纪律</td>
-		    <td class="tg-yw4l">大局意识</td>
-		    <td class="tg-yw4l">工作作风</td>
-		    <td class="tg-yw4l">道德品行</td>
-		    <td class="tg-yw4l">生活作风</td>
-		    <td class="tg-yw4l">服务意识</td>
-		    <td class="tg-yw4l">履行党员义务</td>
-		    <td class="tg-yw4l">先锋模范作用发挥</td>
+		    <td class="tg-yw4l">政治方向</td>
+		    <td class="tg-yw4l">政治领导</td>
+		    <td class="tg-yw4l">政治根基</td>
+		    <td class="tg-yw4l">政治生态</td>
+		    <td class="tg-yw4l">政治风险</td>
+		    <td class="tg-yw4l">政治本色</td>
+		    <td class="tg-yw4l">政治能力</td>
 		  </tr>
 		  <tr ng-repeat="obj in ecCtrl.datalist">
 		    <td class="tg-yw4l">{{$index+1}}</td>
 		    <td class="tg-yw4l">{{obj.realName}}</td>
-		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.liXiangXinNian}}" ng-model="obj.liXiangXinNian"></td>
-		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.zhengZhiYiShi}}" ng-model="obj.zhengZhiYiShi"></td>
-		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.xueXiYiShi}}" ng-model="obj.xueXiYiShi"></td>
-		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.zuZhiJiLv}}" ng-model="obj.zuZhiJiLv"></td>
-		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.daJuYiShi}}" ng-model="obj.daJuYiShi"></td>
-		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.gongZuoZuoFeng}}" ng-model="obj.gongZuoZuoFeng"></td>
-		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.daoDePinXing}}" ng-model="obj.daoDePinXing"></td>
-		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.shengHuoZuoFeng}}" ng-model="obj.shengHuoZuoFeng"></td>
-		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.fuWuYiShi}}" ng-model="obj.fuWuYiShi"></td>
-		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.lvXingDangYuanYiWu}}" ng-model="obj.lvXingDangYuanYiWu"></td>
-		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.xianFengMoFanZuoYongFaHui}}" ng-model="obj.xianFengMoFanZuoYongFaHui"></td>
+		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.zhengZhiFangXiang}}" ng-model="obj.zhengZhiFangXiang"></td>
+		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.zhengZhiLingDao}}" ng-model="obj.zhengZhiLingDao"></td>
+		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.zhengZhiGenJi}}" ng-model="obj.zhengZhiGenJi"></td>
+		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.zhengZhiShengTai}}" ng-model="obj.zhengZhiShengTai"></td>
+		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.zhengZhiFengXian}}" ng-model="obj.zhengZhiFengXian"></td>
+		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.zhengZhiBenSe}}" ng-model="obj.zhengZhiBenSe"></td>
+		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.zhengZhiNengLi}}" ng-model="obj.zhengZhiNengLi"></td>
 		    <td class="tg-yw4l" ng-bind="ecCtrl.calcTotal(obj)"></td>
 		    </td>
 		    <td class="tg-yw4l tg-edit">
