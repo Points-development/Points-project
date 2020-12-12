@@ -83,6 +83,10 @@
     select branch from OrganBranch where organization=#{organization}
   </select>
   
+  <select id="getAllOrganizations" resultType="string">
+    select distinct organization from OrganBranch
+  </select>
+  
   <select id="getBranch" resultType="string">
     select branch from OrganBranch where organization=#{organization} and branch =#{branch}
   </select>

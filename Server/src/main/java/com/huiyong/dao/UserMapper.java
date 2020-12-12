@@ -28,4 +28,5 @@ public interface UserMapper {
 	void deleteBranch(@Param("branch") String branchname, @Param("organization")String organization);
 	void addBranch(@Param("branch") String branchname, @Param("organization")String organization);
 	String getBranch(@Param("branch") String branchname, @Param("organization")String organization);
+	List<String> getAllOrganizations();
 }

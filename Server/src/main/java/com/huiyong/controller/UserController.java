@@ -178,6 +178,13 @@ public class UserController {
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
     }
     
+    //得到所有组织的列表
+    @RequestMapping(value = "/user/organizations", method = RequestMethod.GET)
+    public ResponseEntity<?> getOrganizations() {
+    	List<String> organizations = userService.getAllOrganizations();
+    	return new ResponseEntity<List<String>>(organizations, HttpStatus.OK);
+    }
+    
     //得到该组织内的所有branch的列表
     @RequestMapping(value = "/user/branches", method = RequestMethod.GET)
     public ResponseEntity<?> getBranch(@RequestParam String organization) {

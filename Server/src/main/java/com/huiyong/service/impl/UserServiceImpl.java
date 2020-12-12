@@ -149,4 +149,9 @@ public class UserServiceImpl implements UserService {;
 		return userDao.getUsersInOrganization(organiziation, username);
 	}
 
+	@Override
+	public List<String> getAllOrganizations() {
+		return userDao.getAllOrganizations();
+	}
+
 }
