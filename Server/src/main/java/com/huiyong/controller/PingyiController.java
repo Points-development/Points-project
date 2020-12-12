@@ -77,7 +77,7 @@ public class PingyiController {
     		return new ResponseEntity<String>("User name is null.", HttpStatus.BAD_REQUEST);
     	}
     	if(score.getPoint() >= 99 ){
-    		return new ResponseEntity<String>("不能全部选择最好.", HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<String>("分数必须小于为100.", HttpStatus.BAD_REQUEST);
     	}
     	if(!username.equals(score.getScoree())){
     		return new ResponseEntity<String>("Add score to the user different from username in url.", HttpStatus.BAD_REQUEST);
@@ -126,7 +126,7 @@ public class PingyiController {
     		return new ResponseEntity<String>("User name is null.", HttpStatus.BAD_REQUEST);
     	}
     	if(score.getPoint() >= 99 ){
-    		return new ResponseEntity<String>("不能全部选择最好.", HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<String>("分数必须小于为100.", HttpStatus.BAD_REQUEST);
     	}
     	if(!username.equals(score.getScoree())){
     		return new ResponseEntity<String>("Add score to the user different from username in url.", HttpStatus.BAD_REQUEST);

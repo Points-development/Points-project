@@ -18,7 +18,8 @@
         vm.branch = $stateParams.branchName;
         vm.now = new Date();
         vm.selectTab ='public';
-        vm.topIssues = {};
+		vm.topIssues = {};
+		vm.min =0;
         
         vm.initData = function(){
         	vm.datalist = null;
@@ -103,6 +104,7 @@
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(id == 'result'){
+				vm.result.portion = vm.min;
         		examineService.updateResultScore(currentUser.name,vm.result)
         		.then(function(response){
         			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
@@ -118,7 +120,7 @@
         
         vm.initResult=function(){
         	vm.chart_labels = ['政治方向', '政治领导', '政治根基', '政治生态', '政治风险',
-        		'政治本色', '政治能力'];
+        		'政治本色', '政治能力','先锋模范'];
         	vm.datasetOverride = [
         		{
 	    	        borderWidth: 1,
@@ -147,7 +149,12 @@
   	  			vm.result = response;
   	  			if(!vm.result.lastModifiedTime){
   	  				vm.result.lastModifiedTime = vm.now;
-  	  			}
+					}
+				if(!vm.result.portion){
+  	  				vm.result.portion = 0;
+				}
+				vm.min = vm.result.portion;
+				vm.max = 100-vm.result.zongHeDeFenPoints[8].point;
   	  			for(var i=0;i<vm.result.zongHeDeFenPoints.length-1;i++){
   	  				vm.chart_data[0].push(vm.result.zongHeDeFenPoints[i].point);
 					vm.datasetOverride[0].backgroundColor.push(vm.getJianKangColor(i));
@@ -219,7 +226,7 @@
         
         vm.calcTotal = function(obj){
         	var a=obj.zhengZhiFangXiang,b=obj.zhengZhiLingDao,c=obj.zhengZhiGenJi,d=obj.zhengZhiShengTai,e=obj.zhengZhiFengXian;
-        	var f=obj.zhengZhiBenSe,g=obj.zhengZhiNengLi;
+        	var f=obj.zhengZhiBenSe,g=obj.zhengZhiNengLi,h=obj.xianFengMoFan;
         	if(!a){
         		a=0;
         	}
@@ -240,18 +247,21 @@
         	}
         	if(!g){
         		g=0;
+			}
+			if(!h){
+        		h=0;
         	}
         	
-        	var total=parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d)+parseInt(e)+parseInt(f)+parseInt(g);
+        	var total=parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d)+parseInt(e)+parseInt(f)+parseInt(g)+parseInt(h);
         	if(total==0){
         		return null;
         	}
-        	obj.total=Math.ceil(total/7);
-        	return Math.ceil(total/7);
+        	obj.total=Math.ceil(total/8);
+        	return Math.ceil(total/8);
         }
         
         vm.getJianKangColor=function(index){
-        	if(!vm.result){
+        	if(!vm.result ||  !vm.result.jianKangZhuangTaiPoints){
         		return '#ffffff';
         	}
         	var point = vm.result.jianKangZhuangTaiPoints[index].point;

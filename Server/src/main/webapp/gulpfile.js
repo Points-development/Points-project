@@ -63,7 +63,8 @@ gulp.task('concat-libs', [], function() {
           'bower_components/angularPrint/angularPrint.js',
   		  'bower_components/message-center/message-center.js',
   		  'bower_components/chart.js/dist/Chart.min.js',
-  		  'bower_components/angular-chart.js/dist/angular-chart.min.js',
+          'bower_components/angular-chart.js/dist/angular-chart.min.js',
+          'bower_components/angularjs-slider/dist/rzslider.min.js'  
   		  ])
         .pipe(concat('concat-libs.min.js'))
         .pipe(uglify())

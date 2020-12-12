@@ -48,7 +48,18 @@
 									</div>
 								</th>
 								<th class="tg-yw4l" colspan="4">您的党性体检得分为<br /> <span
-									style="font-size: 16px"><b>{{ecCtrl.result.zongHeDeFenPoints[11].point}}</b></span></th>
+									style="font-size: 16px"><b>{{ecCtrl.result.zongHeDeFenPoints[8].point+ecCtrl.min}}</b></span></th>
+							</tr>
+							<tr>
+								<td class="tg-yw4l">附加分数</td>	
+								<td class="tg-yw4l" colspan="4" style="background-color: #fff;">
+									意见:
+									<div class="edit" contenteditable ng-model="ecCtrl.result.problem"></div>
+								</td>
+								<td class="tg-yw4l" colspan="4" style="background-color: #fff;" id="portion">
+									<rzslider style="display: block;" rz-slider-model="ecCtrl.min" rz-slider-high="ecCtrl.max"></rzslider>
+									<div style="display: none;">{{ecCtrl.min}}</div>
+								</td>
 							</tr>
 							<tr>
 								<td class="tg-yw4l">分项指标健康度</td>
@@ -114,6 +125,13 @@
 														fill="{{ecCtrl.getJianKangColor(6)}}" />
 							</svg>
 												政治能力
+											</div>
+											<div>
+												<svg height="10" width="10" style="margin-right: 10px">
+	  							<circle cx="5" cy="5" r="5"
+														fill="{{ecCtrl.getJianKangColor(7)}}" />
+							</svg>
+												先锋模范
 											</div>
 										</div>
 									</div>
@@ -200,21 +218,21 @@
 							<tr>
 								<td class="tg-yw4l">个性指标</td>
 								<td class="tg-yw4l">先锋模范作用发挥</td>
-								<td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[10].point}}</td>
-								<td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[10].point}}</td>
-								<td class="tg-yw4l">{{ecCtrl.result.huPingPoints[10].point}}</td>
-								<td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[10].point}}</td>
-								<td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[10].point}}</td>
-								<td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[10].point)}}</td>
+								<td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[7].point}}</td>
+								<td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[7].point}}</td>
+								<td class="tg-yw4l">{{ecCtrl.result.huPingPoints[7].point}}</td>
+								<td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[7].point}}</td>
+								<td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[7].point}}</td>
+								<td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[7].point)}}</td>
 							</tr>
 							<tr>
 								<td class="tg-yw4l" colspan="3">综合评价</td>
-								<td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[11].point}}</td>
-								<td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[11].point}}</td>
-								<td class="tg-yw4l">{{ecCtrl.result.huPingPoints[11].point}}</td>
-								<td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[11].point}}</td>
-								<td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[11].point}}</td>
-								<td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[11].point)}}</td>
+								<td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[8].point}}</td>
+								<td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[8].point}}</td>
+								<td class="tg-yw4l">{{ecCtrl.result.huPingPoints[8].point}}</td>
+								<td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[8].point}}</td>
+								<td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[8].point}}</td>
+								<td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[8].point)}}</td>
 							</tr>
 						</table>
 					</div>

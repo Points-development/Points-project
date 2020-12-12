@@ -3,7 +3,8 @@
 
     angular.module('portal.examine', [
          'portal.core',
-         'chart.js'
+		 'chart.js',
+		 'rzSlider'
     ]).directive('contenteditable', ['$sce', function($sce) {
     	  return {
     		    restrict: 'A', // only activate on element attribute

@@ -25,7 +25,7 @@
           <tr>
             <th class="tg-yw4l" rowspan="2">序号</th>
             <th class="tg-yw4l" rowspan="2">党员姓名</th>
-            <th class="tg-yw4l tg-ping"  colspan="7">评议指标(每项满分一百)</th>
+            <th class="tg-yw4l tg-ping"  colspan="8">评议指标(每项满分一百)</th>
             <th class="tg-yw4l" rowspan="2">总分</th>
             <th class="tg-yw4l tg-problem" rowspan="2">存在问题</th>
           </tr>
@@ -37,6 +37,7 @@
 		    <td class="tg-yw4l">政治风险</td>
 		    <td class="tg-yw4l">政治本色</td>
 		    <td class="tg-yw4l">政治能力</td>
+		    <td class="tg-yw4l">先锋模范</td>
           </tr>
           <tr ng-repeat="obj in ecCtrl.datalist">
             <td class="tg-yw4l">{{$index+1}}</td>
@@ -48,6 +49,7 @@
 		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.zhengZhiFengXian}}" ng-model="obj.zhengZhiFengXian"></td>
 		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.zhengZhiBenSe}}" ng-model="obj.zhengZhiBenSe"></td>
 		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.zhengZhiNengLi}}" ng-model="obj.zhengZhiNengLi"></td>
+		    <td class="tg-yw4l tg-edit"><input type="text" value="{{obj.xianFengMoFan}}" ng-model="obj.xianFengMoFan"></td>
             <td class="tg-yw4l" ng-bind="ecCtrl.calcTotal(obj)"></td>
             <td class="tg-yw4l tg-edit">
                 <div class="edit" contenteditable ng-model="obj.problem">
