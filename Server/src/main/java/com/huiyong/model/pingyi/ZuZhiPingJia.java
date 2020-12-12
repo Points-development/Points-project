@@ -42,8 +42,17 @@ public class ZuZhiPingJia{
 	private Integer zhengZhiBenSe;
 	@CategoryInfo(description="提高政治能力", categoryId=7)
 	private Integer zhengZhiNengLi;
+	
+	@CategoryInfo(description="先锋模范作用发挥", categoryId=8)
+	private Integer xianFengMoFan;
 
 
+	public Integer getXianFengMoFan() {
+		return xianFengMoFan;
+	}
+	public void setXianFengMoFan(Integer xianFengMoFan) {
+		this.xianFengMoFan = xianFengMoFan;
+	}
 	public Integer getZhengZhiFangXiang() {
 		return zhengZhiFangXiang;
 	}

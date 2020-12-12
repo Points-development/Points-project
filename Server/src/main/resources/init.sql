@@ -13,7 +13,7 @@ INSERT INTO `QuestionCategory` (`category_type`, `category_id`, `description`) v
 INSERT INTO `QuestionCategory` (`category_type`, `category_id`, `description`) values ( '共性指标', 5,'防范政治风险');
 INSERT INTO `QuestionCategory` (`category_type`, `category_id`, `description`) values ( '共性指标', 6,'永葆政治本色');
 INSERT INTO `QuestionCategory` (`category_type`, `category_id`, `description`) values ( '共性指标', 7,'提高政治能力');
-INSERT INTO `QuestionCategory` (`category_type`, `category_id`, `description`) values ( '个性指标', 8,'政治体检个性指标');
+INSERT INTO `QuestionCategory` (`category_type`, `category_id`, `description`) values ( '个性指标', 8,'先锋模范作用发挥');
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (1, 1,1,'信仰信念是虚无渺茫的、是唱高调，实惠、报酬才是看得见、摸得着的。',1,1);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (1, 2,1,'共产主义是革命战争年代崇尚追求的，和平年代只要经济发展、过上好日子就行了。',1,1);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (1, 3,1,'中国特色社会主义到底能干多久，现在谈还为时过早，活好当下便是。',1,1);
@@ -69,7 +69,8 @@ INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (5, 5,1,'教育引导干部增强政治敏锐性和政治鉴别力，对容易诱发政治问题特别是重大突发事件的敏感因素、苗头性倾向性问题，做到眼睛亮、见事早、行动快，及时消除各种政治隐患；高度重视并及时阻断不同领域风险的转化通道，避免各领域风险产生交叉感染，防止非公共性风险扩大为公共性风险、非政治性风险蔓延为政治风险；增强斗争精神，敢于亮剑、敢于斗争，坚决防止和克服嗅不出敌情、分不清是非、辨不明方向的政治麻痹症。',1,2);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (6, 6,1,'持续保持高压态势，坚持无禁区、全覆盖、零容忍，坚持重遏制、强高压、长震慑，坚持受贿行贿一起查；坚决防止党内形成利益集团；坚决防范各种利益集团“围猎”和绑架领导干部；做到织密监督的“天网”，扎紧制度的篱笆，发挥巡视利剑作用，推动全面从严治党向基层延伸，让人民群众真正感受到清正干部、清廉政府、清明政治就在身边、就在眼前。',1,2);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (7, 7,1,'做到不断提升把握方向、把握大势、把握全局的能力，辨别政治是非、保持政治定力、驾驭政治局面、防范政治风险的能力；是否做到善于从政治上分析问题、解决问题；做到炼就一双政治慧眼，不畏浮云遮望眼，切实担负起党和人民赋予的政治责任。',1,2);
-INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (8, 8,1,'其他问题',2,2);
+INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (8, 8,1,'对党组织分配的工作任务推三阻四，不能按时保质保量完成。',1,2);
+INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (8, 9,1,'其他问题',2,2);
 INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (1, '优秀', 2, 13);
 INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (2, '良好', 2, 10);
 INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (3, '一般', 2, 5);

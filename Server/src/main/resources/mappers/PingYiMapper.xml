@@ -12,6 +12,7 @@
     <result column="zhengZhiFengXian" property="zhengZhiFengXian" jdbcType="INTEGER" />
     <result column="zhengZhiBenSe" property="zhengZhiBenSe" jdbcType="INTEGER" />
     <result column="zhengZhiNengLi" property="zhengZhiNengLi" jdbcType="INTEGER" />
+    <result column="xianFengMoFan" property="xianFengMoFan" jdbcType="INTEGER" />
     <result column="total" property="total" jdbcType="INTEGER" />
     <result column="problem" property="problem" jdbcType="VARCHAR" />
     <result column="updateTimes" property="updateTimes" jdbcType="INTEGER" />
@@ -26,6 +27,7 @@
                Z.zhengZhiFengXian,
                Z.zhengZhiBenSe,
                Z.zhengZhiNengLi,
+               Z.xianFengMoFan,
                ifnull(Z.total, 100) as total,
                Z.problem,
                Z.lastModifiedTime,
@@ -44,6 +46,7 @@
                Z.zhengZhiFengXian,
                Z.zhengZhiBenSe,
                Z.zhengZhiNengLi,
+               Z.xianFengMoFan,
                ifnull(Z.total, 100) as total,
                Z.problem,
                Z.updateTimes,
@@ -63,6 +66,7 @@
                  zhengZhiFengXian,
                  zhengZhiBenSe,
                  zhengZhiNengLi,
+                 xianFengMoFan,
                  total, problem, updateTimes, lastModifiedTime) values
 		<foreach collection="zuZhiPingJias" item="item" separator=",">  
 			(#{item.userName}, #{item.realName}, 
@@ -73,6 +77,7 @@
 			   #{item.zhengZhiFengXian}, 
 			   #{item.zhengZhiBenSe},
 			   #{item.zhengZhiNengLi},
+			   #{item.xianFengMoFan},
 			   #{item.total}, #{item.problem}, #{item.updateTimes}, #{item.lastModifiedTime})
 		</foreach>  
 	</insert>
@@ -86,6 +91,7 @@
                  zhengZhiFengXian,
                  zhengZhiBenSe,
                  zhengZhiNengLi,
+                 xianFengMoFan,
 	             total, problem, updateTimes, lastModifiedTime) values
 		(#{userName}, #{realName}, 
 		         #{zhengZhiFangXiang},
@@ -95,6 +101,7 @@
 		         #{zhengZhiFengXian}, 
 		         #{zhengZhiBenSe},
 		         #{zhengZhiNengLi}, 
+		         #{xianFengMoFan}, 
 		         #{total}, #{problem}, #{updateTimes}, #{lastModifiedTime})
 	</insert>
 	
@@ -107,6 +114,7 @@
 		Z.zhengZhiFengXian=#{zhengZhiFengXian},
 		Z.zhengZhiBenSe=#{zhengZhiBenSe},
 		Z.zhengZhiNengLi=#{zhengZhiNengLi},
+		Z.xianFengMoFan=#{xianFengMoFan},
 		Z.problem=#{problem},
 		Z.updateTimes=#{updateTimes},
 		Z.lastModifiedTime=#{lastModifiedTime}
@@ -179,8 +187,10 @@ order by category_id
     <result column="zhengZhiFengXian" property="zhengZhiFengXian" jdbcType="INTEGER" />
     <result column="zhengZhiBenSe" property="zhengZhiBenSe" jdbcType="INTEGER" />
     <result column="zhengZhiNengLi" property="zhengZhiNengLi" jdbcType="INTEGER" />
+    <result column="xianFengMoFan" property="xianFengMoFan" jdbcType="INTEGER" />
     <result column="total" property="total" jdbcType="INTEGER" />
     <result column="problem" property="problem" jdbcType="VARCHAR" />
+    <result column="updateTimes" property="updateTimes" jdbcType="INTEGER" />
     <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
   </resultMap>
    <select id="getQunZhongPingYis" resultMap="QunZhongPingYiResultMap">
@@ -192,9 +202,9 @@ order by category_id
                Z.zhengZhiFengXian,
                Z.zhengZhiBenSe,
                Z.zhengZhiNengLi,
+               Z.xianFengMoFan,
                ifnull(Z.total, 100) as total,
                Z.problem,
-               Z.updateTimes,
                Z.lastModifiedTime,
                U.name,
                U.realName
@@ -211,6 +221,7 @@ order by category_id
                  zhengZhiFengXian,
                  zhengZhiBenSe,
                  zhengZhiNengLi,
+                 xianFengMoFan,
   	             total, problem, updateTimes,lastModifiedTime) values
 		<foreach collection="qunZhongPingYis" item="item" separator=",">  
 			(#{item.userName}, #{item.realName}, 
@@ -220,7 +231,8 @@ order by category_id
 			   #{item.zhengZhiShengTai},
 			   #{item.zhengZhiFengXian}, 
 			   #{item.zhengZhiBenSe},
-			   #{item.zhengZhiNengLi},			    
+			   #{item.zhengZhiNengLi},		
+			   #{item.xianFengMoFan},		    
 			   #{item.total}, #{item.problem}, #{item.updateTimes}, #{item.lastModifiedTime})
 		</foreach>  
 	</insert>
@@ -233,7 +245,8 @@ order by category_id
                  zhengZhiShengTai,
                  zhengZhiFengXian,
                  zhengZhiBenSe,
-                 zhengZhiNengLi,  		
+                 zhengZhiNengLi,  	
+                 xianFengMoFan,	
                  total, problem, updateTimes, lastModifiedTime) values
 		      (#{userName}, #{realName}, 
 		         #{zhengZhiFangXiang},
@@ -242,7 +255,8 @@ order by category_id
 		         #{zhengZhiShengTai},
 		         #{zhengZhiFengXian}, 
 		         #{zhengZhiBenSe},
-		         #{zhengZhiNengLi}, 		      
+		         #{zhengZhiNengLi}, 
+		         #{xianFengMoFan}, 		      
 		         #{total}, #{problem}, #{updateTimes}, #{lastModifiedTime})
 	</insert>
 	
@@ -255,6 +269,7 @@ order by category_id
 		Z.zhengZhiFengXian=#{zhengZhiFengXian},
 		Z.zhengZhiBenSe=#{zhengZhiBenSe},
 		Z.zhengZhiNengLi=#{zhengZhiNengLi},
+		Z.xianFengMoFan=#{xianFengMoFan},
 		Z.problem=#{problem},
 		Z.updateTimes=#{updateTimes},
 		Z.lastModifiedTime=#{lastModifiedTime}
@@ -274,8 +289,10 @@ order by category_id
                Z.zhengZhiFengXian,
                Z.zhengZhiBenSe,
                Z.zhengZhiNengLi,
+               Z.xianFengMoFan,
                ifnull(Z.total, 100) as total,
                Z.problem,
+               Z.updateTimes,
                Z.lastModifiedTime,
                U.name,
                U.realName
