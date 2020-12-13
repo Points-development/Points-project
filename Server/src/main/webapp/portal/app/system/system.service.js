@@ -153,6 +153,18 @@
             );
             return deferred.promise;
         };
+        factory.getOrganizations = function(){
+            var deferred = $q.defer();
+            $http.get('/pointservice/user/organizations').then(
+                    function (resp) {
+                        deferred.resolve(resp.data);
+                    },
+                    function (resp) {
+                        deferred.reject(resp.data);
+                    }
+            );
+            return deferred.promise;
+        };
         return factory;
     }
 })();

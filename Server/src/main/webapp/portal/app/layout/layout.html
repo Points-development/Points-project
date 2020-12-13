@@ -25,14 +25,23 @@
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <ul class="nav side-menu">
-                  <li ng-class="{'active':lac.activeNode=='home.organization'}" ng-click="lac.activeTreeNode('home.organization')">
+                  <li ng-class="{'active':lac.activeNode.indexOf('home.organization')>-1}" ng-click="lac.activeTreeNode('home.organization')">
                   	<a>
-                  	     <i class="iconfont icon-user red"></i>支部管理
+                  	     <i class="iconfont icon-user red"></i>组织管理
                   	     <span class="iconfont green" ng-class="{true:'icon-up',false:'icon-16'}[lac.organizationNode]"></span>
                   	</a>
                   	<ul class="nav child_menu" ng-if = "lac.organizationNode">
-                  	  <li ng-class="{'current-page':lac.activeSubNode=='home.organization.create'}"><a ng-click="lac.activeSubTreeNode('home.organization.create',$event)">创建支部</a></li>
-                      <li ng-repeat="branch in lac.branchlist" ng-class="{'current-page':lac.activeSubNode=='home.organization.{{branch}}'}"><a ng-click="lac.activeSubTreeNode('home.organization.queryuser',$event,branch)">{{branch}}</a></li>
+                      <li ng-repeat="organization in lac.organizations" ng-class="{'current-page':lac.activeSubNode=='home.organization.{{organization}}'}">
+                      	<a ng-click="lac.activeOrgTreeNode('home.organization',$event,organization)">{{organization}}</a>
+                      	<ul class="nav child_menu" ng-if="lac.activeSubNode.indexOf(organization)>-1">
+                      	  <li ng-class="{'current-page':lac.activeSubNode=='home.organization.create'}">
+                      	  	<a ng-click="lac.activeOrgSubTreeNode('home.organization.create',$event)">创建支部</a>
+                      	  </li>
+	                      <li ng-repeat="branch in lac.branchlist" ng-class="{'current-page':lac.activeSubNode=='home.organization.{{branch}}'}">
+	                      	<a ng-click="lac.activeOrgSubTreeNode('home.organization.queryuser',$event,branch)">{{branch}}</a>
+	                      </li>
+	                    </ul>
+                      </li>
                     </ul>
                   </li>
                   <li ng-class="{'active':lac.activeNode=='home.examine'}" ng-click="lac.activeTreeNode('home.examine')">
@@ -41,8 +50,15 @@
                          <span class="iconfont green" ng-class="{true:'icon-up',false:'icon-16'}[lac.examineNode]"></span>
                     </a>
                     <ul class="nav child_menu" ng-if = "lac.examineNode">
-                      <li ng-repeat="branch in lac.branchlist" ng-class="{'current-page':lac.activeSubNode=='home.examine.{{branch}}'}"><a ng-click="lac.activeSubTreeNode('home.examine.query',$event,branch)">{{branch}}</a>
+                      <li ng-repeat="organization in lac.organizations" ng-class="{'current-page':lac.activeSubNode=='home.examine.{{organization}}'}">
+                      	<a ng-click="lac.activeOrgTreeNode('home.examine',$event,organization)">{{organization}}</a>
+                      	<ul class="nav child_menu" ng-if="lac.activeSubNode.indexOf(organization)>-1">
+	                      <li ng-repeat="branch in lac.branchlist" ng-class="{'current-page':lac.activeSubNode=='home.examine.{{branch}}'}">
+	                      	<a ng-click="lac.activeOrgSubTreeNode('home.examine.query',$event,branch)">{{branch}}</a>
+                      	  </li>
+	                    </ul>
                       </li>
+                      
                     </ul>
                   </li>
                   <li ng-class="{'active':lac.activeNode=='home.query'}" ng-click="lac.activeTreeNode('home.query')">

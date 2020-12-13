@@ -19,12 +19,15 @@
             $state.go('login');
         };
         var states = $state.current.name.split(/\./);
-        vm.activeNode =states[0]+'.'+states[1];
+		vm.activeNode =states[0]+'.'+states[1];
+		if(storage.get('organizations')){
+        	vm.organizations = storage.get('organizations');
+        }
         if(storage.get('branches')){
         	vm.branchlist = storage.get('branches');
         }
         if($state.current.name == 'home.organization.queryuser'){
-        	vm.activeSubNode = 'home.organization.'+storage.get('branch');
+        	vm.activeSubNode = 'home.organization.'+storage.get('organization');
         }else if($state.current.name == 'home.examine.query'){
         	vm.activeSubNode = 'home.examine.'+storage.get('branch');
         }else{
@@ -53,17 +56,31 @@
         	}
         };
         
-        var getBranchList = function(){
-        	systemService.getBranches(vm.currentUser.organization).then(function(response){
+        var getBranchList = function(organization){
+        	systemService.getBranches(organization).then(function(response){
         		vm.branchlist = response;
         		storage.set('branches',vm.branchlist);
+        	},function(response){
+        		messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
+			});
+		}
+		
+		var getOrganizations = function(){
+			systemService.getOrganizations().then(function(response){
+        		vm.organizations = response;
+        		storage.set('organizations',vm.organizations);
         	},function(response){
         		messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         	});
         }
         
         $scope.$on('layout.update.tree', function(event,data) {
-        	getBranchList();
+			var organization = storage.get('organization');
+            if (!organization){
+                organization = currentUser.organization
+            }
+			getBranchList(organization);
+			getOrganizations();
         });
         
         vm.activeTreeNode = function(v){
@@ -73,16 +90,45 @@
         	}else if(v == 'home.query'){
         		vm.queryNode = !vm.queryNode;
         	}else if(v == 'home.organization'){
+				vm.activeSubNode = null;
         		vm.organizationNode = !vm.organizationNode;
-        		getBranchList();
+				getOrganizations();
         		return;
         	}else if(v == 'home.examine'){
-        		vm.examineNode = !vm.examineNode;
-        		getBranchList();
+				vm.examineNode = !vm.examineNode;
+				getOrganizations();
         		return;
         	}
         	$state.go(v,{},{reload:true});
-        };
+		};
+		
+		vm.activeOrgTreeNode = function(v,$event,organization){
+			$event.stopPropagation();
+			vm.activeSubNode = v+'.'+organization;
+			if(v == 'home.examine'){
+				vm.examineNode=true;
+				vm.organizationNode = false;
+			}else if(v == 'home.organization'){
+				vm.examineNode=false;
+				vm.organizationNode = true;
+			}
+        	if(organization){
+        		storage.set('organization',organization);
+        		getBranchList(organization);
+        	}else{
+        		$state.go(v,{},{reload:true});
+        	}
+		};
+		
+		vm.activeOrgSubTreeNode = function(v,$event,branch){
+			$event.stopPropagation();
+        	if(branch){
+        		storage.set('branch',branch);
+        		$state.go(v,{branchName:branch},{});
+        	}else{
+        		$state.go(v,{},{});
+        	}
+		};
         
         vm.activeSubTreeNode = function(v,$event,branch){
         	$event.stopPropagation();
@@ -93,7 +139,6 @@
         		vm.activeSubNode = v;
         		$state.go(v,{},{reload:true});
         	}
-        	
         };
         
         vm.changePwd = function(){

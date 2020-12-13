@@ -13,7 +13,11 @@
         if(transferUser){
         	currentUser = transferUser;
         	vm.currentUser = currentUser;
-        }
+		}
+		var organization = storage.get('organization');
+		if (!organization){
+			organization = currentUser.organization
+		}
         vm.userName = currentUser.name;
         vm.branch = $stateParams.branchName;
         vm.now = new Date();
@@ -24,31 +28,31 @@
         vm.initData = function(){
         	vm.datalist = null;
         	if(vm.selectTab == 'public'){
-        		examineService.getPublicScore(vm.branch,currentUser.organization).then(function(response){
+        		examineService.getPublicScore(vm.branch,organization).then(function(response){
         			vm.datalist = response;
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(vm.selectTab == 'self'){
-        		examineService.getSelfScore(vm.branch,currentUser.organization).then(function(response){
+        		examineService.getSelfScore(vm.branch,organization).then(function(response){
         			vm.datalist = response;
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(vm.selectTab == 'each'){
-        		examineService.getEachScore(vm.branch,currentUser.organization).then(function(response){
+        		examineService.getEachScore(vm.branch,organization).then(function(response){
         			vm.datalist = response;
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(vm.selectTab == 'organization'){
-        		examineService.getOrganizationScore(vm.branch,currentUser.organization).then(function(response){
+        		examineService.getOrganizationScore(vm.branch,organization).then(function(response){
         			vm.datalist = response;
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(vm.selectTab == 'summary'){
-        		examineService.getSummaryScore(vm.branch,currentUser.organization).then(function(response){
+        		examineService.getSummaryScore(vm.branch,organization).then(function(response){
         			vm.datalist = response;
       	    	  	for(var i=0;i<vm.datalist.length;i++){
       	    	  		if(vm.datalist[i].jianKang == null){
@@ -59,7 +63,7 @@
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(vm.selectTab == 'result_list'){
-        		systemService.getUsers(vm.branch,currentUser.organization).then(function(response){
+        		systemService.getUsers(vm.branch,organization).then(function(response){
             		vm.userlist = response;
             	},function(response){
             		messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
@@ -69,35 +73,35 @@
         
         vm.update = function(id){
         	if(id == 'public'){
-        		examineService.updatePublicScore(vm.branch,currentUser.organization,vm.datalist)
+        		examineService.updatePublicScore(vm.branch,organization,vm.datalist)
         		.then(function(response){
         			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(id == 'self'){
-        		examineService.updateSelfScore(vm.branch,currentUser.organization,vm.datalist)
+        		examineService.updateSelfScore(vm.branch,organization,vm.datalist)
         		.then(function(response){
         			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(id == 'each'){
-        		examineService.updateEachScore(vm.branch,currentUser.organization,vm.datalist)
+        		examineService.updateEachScore(vm.branch,organization,vm.datalist)
         		.then(function(response){
         			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(id == 'organization'){
-        		examineService.updateOrganizationScore(vm.branch,currentUser.organization,vm.datalist)
+        		examineService.updateOrganizationScore(vm.branch,organization,vm.datalist)
         		.then(function(response){
         			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(id == 'summary'){
-        		examineService.updateSummaryScore(vm.branch,currentUser.organization,vm.datalist)
+        		examineService.updateSummaryScore(vm.branch,organization,vm.datalist)
         		.then(function(response){
         			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
         		},function(response){

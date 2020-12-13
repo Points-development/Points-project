@@ -17,12 +17,25 @@
         
         var successCallback = function () {
         	vm.currentUser = security.getCurrentUser();
-        	systemService.getBranches(vm.currentUser.organization).then(function(response){
-        		vm.branchlist = response;
-        		storage.set('branches',vm.branchlist);
-        		if(vm.branchlist && vm.branchlist.length>0){
-        			storage.set('branch',vm.branchlist[0]);
-        			$state.go("home.organization.queryuser",{branchName:vm.branchlist[0]},{reload:true});
+        	systemService.getOrganizations().then(function(response){
+        		vm.organizations = response;
+        		storage.set('organizations',vm.organizations);
+        		if(vm.organizations && vm.organizations.length>0){
+					storage.set('organization',vm.organizations[0]);
+					systemService.getBranches(vm.organizations[0]).then(function(response){
+						vm.branchlist = response;
+						storage.set('branches',vm.branchlist);
+						if(vm.branchlist && vm.branchlist.length>0){
+							storage.set('branch',vm.branchlist[0]);
+							$state.go("home.organization.queryuser",{branchName:vm.branchlist[0]},{reload:true});
+						}else{
+							$state.go("home.organization.create",{},{reload:true});
+						}
+					},function(response){
+						messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
+						$state.go("home.organization.create",{},{reload:true});
+					});
+        			
         		}else{
         			$state.go("home.organization.create",{},{reload:true});
         		}

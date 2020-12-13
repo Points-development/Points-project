@@ -17,8 +17,12 @@
         	if (undefined === vm.newBranch || vm.newBranch === "") {
         		messageCenterService.add('danger', '请输入支部名称!', {timeout:3000});
         		return false;
-        	}
-        	systemService.addBranch(vm.newBranch,currentUser.organization).then(function(response){
+            }
+            var organization = storage.get('organization');
+            if (!organization){
+                organization = currentUser.organization
+            }
+        	systemService.addBranch(vm.newBranch,organization).then(function(response){
         		messageCenterService.add('success', '支部创建成功!', {timeout:1000});
         		$scope.$emit('layout.update.tree', 'child');
         	},function(response){
