@@ -147,6 +147,15 @@ CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (
   `lastModifiedTime` timestamp,
   PRIMARY KEY (`id`));
   
+  CREATE TABLE IF NOT EXISTS `PartyHistory` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(128) NOT NULL,
+  `realName` varchar(128) NOT NULL,
+  `total` int(11),
+  `problem` varchar(1024),
+  `lastModifiedTime` timestamp,
+  PRIMARY KEY (`id`));
+  
   CREATE TABLE IF NOT EXISTS `DeFenHuiZong` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userName` varchar(128) NOT NULL,

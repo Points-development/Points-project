@@ -409,6 +409,34 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
        DELETE Z FROM HuPing Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
 	</delete>
 	
+   <resultMap id="PartyHistoryResultMap" type="com.huiyong.model.pingyi.PartyHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="userName" jdbcType="VARCHAR" />
+    <result column="realName" property="realName" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="problem" property="problem" jdbcType="VARCHAR" />
+    <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <select id="getPartyHistorys" resultMap="PartyHistoryResultMap">
+		select U.name, U.realName, PaperScore.point total, PartyHistory.problem, PartyHistory.lastModifiedTime
+		from User U 
+		LEFT JOIN PaperScore on U.name=PaperScore.scorer
+		LEFT Join PartyHistory on U.name=PartyHistory.userName
+		where U.branch=#{branch} and U.organization=#{organization} and PaperScore.paper_id=2
+  </select>
+  
+    <insert id="insertPartyHistorys" parameterType="java.util.List" useGeneratedKeys="true">  
+	Insert into PartyHistory (userName, realName, total, problem, lastModifiedTime) values
+		<foreach collection="partyHistorys" item="item" separator=",">  
+			(#{item.userName}, #{item.realName}, #{item.total}, #{item.problem}, #{item.lastModifiedTime})
+		</foreach>  
+	</insert>
+	
+	<delete id="deletePartyHistorys">  
+       DELETE Z FROM PartyHistory Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
+	</delete>
+	
    <resultMap id="DeFenHuiZongResultMap" type="com.huiyong.model.pingyi.DeFenHuiZong" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="userName" jdbcType="VARCHAR" />
@@ -424,8 +452,8 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
   </resultMap>
   
   <select id="getDeFenHuiZongs" resultMap="DeFenHuiZongResultMap">
-	select U.name, U.realName, ZiPing.total ziPing, HuPing.total huPing, QunZhongPingYi.total qunZhongPing, ZuZhiPingJia.total zuZhiPing, 
-		ifnull(ZiPing.total, 0)*0.2 + ifnull(HuPing.total, 0)*0.3 + ifnull(QunZhongPingYi.total, 0)*0.2 + ifnull(ZuZhiPingJia.total, 0)*0.3 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastModifiedTime
+	select U.name, U.realName, ZiPing.total ziPing, HuPing.total huPing, PartyHistory.total partyHistory, QunZhongPingYi.total qunZhongPing, ZuZhiPingJia.total zuZhiPing, 
+		ifnull(ZiPing.total, 0)*0.2 + ifnull(HuPing.total, 0)*0.2 + ifnull(partyHistory.total, 0)*0.2 + ifnull(QunZhongPingYi.total, 0)*0.2 + ifnull(ZuZhiPingJia.total, 0)*0.2 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastModifiedTime
 	from
 	User U left join ZiPing on U.name = ZiPing.userName
 	left join HuPing on U.name = HuPing.userName

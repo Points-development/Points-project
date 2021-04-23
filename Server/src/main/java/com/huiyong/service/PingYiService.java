@@ -9,6 +9,7 @@ import com.huiyong.model.pingyi.BaoGaoDan;
 import com.huiyong.model.pingyi.CategoryPoint;
 import com.huiyong.model.pingyi.DeFenHuiZong;
 import com.huiyong.model.pingyi.HuPing;
+import com.huiyong.model.pingyi.PartyHistory;
 import com.huiyong.model.pingyi.QunZhongPingYi;
 import com.huiyong.model.pingyi.ZiPing;
 import com.huiyong.model.pingyi.ZuZhiPingJia;
@@ -39,4 +40,6 @@ public interface PingYiService {
 	public List<CategoryPoint> getHuPingBaoGaoDan(String username);
 	public void updateZuZhiPingJiaByUser(String username, ZuZhiPingJia zuZhiPingJia) throws Exception;
 	public void updateQunZhongPingYiByUser(String username, QunZhongPingYi qunZhongPingYi) throws Exception;
+	public List<PartyHistory> getPartyHistorys(String branch, String organization);
+	public void updatePartyHistorys(String branch, String organization, List<PartyHistory> partyHistorys);
 }

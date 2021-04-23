@@ -22,6 +22,7 @@ import com.huiyong.model.pingyi.CategoryPoint;
 import com.huiyong.model.pingyi.DeFenHuiZong;
 import com.huiyong.model.pingyi.HuPing;
 import com.huiyong.model.pingyi.HuPingBaoGaoDan;
+import com.huiyong.model.pingyi.PartyHistory;
 import com.huiyong.model.pingyi.QunZhongPingYi;
 import com.huiyong.model.pingyi.ZiPing;
 import com.huiyong.model.pingyi.ZiPingBaoGaoDan;
@@ -177,6 +178,22 @@ public class PingyiController {
     @RequestMapping(value = "/huping", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
     public ResponseEntity<?> updateHuPings(@RequestParam String branch, @RequestParam String organization,  @RequestBody List<HuPing> huPings) {
     	pingYiService.updateHuPings(branch, organization, huPings);
+    	Message m = new Message();
+    	m.setSuccess("更新成功.");
+    	return new ResponseEntity<Message>(m, HttpStatus.OK);
+    }
+    
+    //返回branch内的所有党员的党史测评信息
+    @RequestMapping(value = "/partyhistory", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
+    public ResponseEntity<?> getPartyHistorys(@RequestParam String branch, @RequestParam String organization) {
+    	List<PartyHistory> partyHistorys = pingYiService.getPartyHistorys(branch, organization);
+    	return new ResponseEntity<List<PartyHistory>>(partyHistorys, HttpStatus.OK);
+    }
+    
+    //更新branch内的党员的党史测评信息
+    @RequestMapping(value = "/partyhistory", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
+    public ResponseEntity<?> updatePartyHistorys(@RequestParam String branch, @RequestParam String organization,  @RequestBody List<PartyHistory> partyHistorys) {
+    	pingYiService.updatePartyHistorys(branch, organization, partyHistorys);
     	Message m = new Message();
     	m.setSuccess("更新成功.");
     	return new ResponseEntity<Message>(m, HttpStatus.OK);
