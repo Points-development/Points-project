@@ -8,6 +8,7 @@ import java.util.List;
 import com.huiyong.model.pingyi.BaoGaoDan;
 import com.huiyong.model.pingyi.DeFenHuiZong;
 import com.huiyong.model.pingyi.HuPing;
+import com.huiyong.model.pingyi.PartyHistory;
 import com.huiyong.model.pingyi.QunZhongPingYi;
 import com.huiyong.model.pingyi.ZiPing;
 import com.huiyong.model.pingyi.ZuZhiPingJia;
@@ -34,4 +35,6 @@ public interface PingYiService {
 	
 	public BaoGaoDan getBaoGaoDan(String username) throws Exception;
 	public void updateBaoGaoDan(String username, BaoGaoDan baoGaoDan);
+	public List<PartyHistory> getPartyHistorys(String branch, String organization);
+	public void updatePartyHistorys(String branch, String organization, List<PartyHistory> partyHistorys);
 }

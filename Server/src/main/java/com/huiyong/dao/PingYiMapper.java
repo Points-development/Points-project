@@ -12,6 +12,7 @@ import com.huiyong.model.pingyi.CategoryIssue;
 import com.huiyong.model.pingyi.CategoryPoint;
 import com.huiyong.model.pingyi.DeFenHuiZong;
 import com.huiyong.model.pingyi.HuPing;
+import com.huiyong.model.pingyi.PartyHistory;
 import com.huiyong.model.pingyi.QunZhongPingYi;
 import com.huiyong.model.pingyi.ZiPing;
 import com.huiyong.model.pingyi.ZuZhiPingJia;
@@ -52,4 +53,7 @@ public interface PingYiMapper {
 	public QunZhongPingYi getQunZhongPingJiaByUser(String username);
 	public List<CategoryIssue> getCategoryIssue(@Param(value = "username")String username);
 	public List<CategoryIssue> initCategoryIssue(@Param(value = "username")String username);
+	public List<PartyHistory> getPartyHistorys(@Param(value = "branch")String branch, @Param(value = "organization")String organization);
+	public void deletePartyHistorys(@Param(value = "branch")String branch, @Param(value = "organization")String organization);
+	public void insertPartyHistorys(@Param(value = "partyHistorys")List<PartyHistory> partyHistorys);
 }

@@ -25,6 +25,7 @@ import com.huiyong.model.pingyi.CategoryIssue;
 import com.huiyong.model.pingyi.CategoryPoint;
 import com.huiyong.model.pingyi.DeFenHuiZong;
 import com.huiyong.model.pingyi.HuPing;
+import com.huiyong.model.pingyi.PartyHistory;
 import com.huiyong.model.pingyi.QunZhongPingYi;
 import com.huiyong.model.pingyi.ZiPing;
 import com.huiyong.model.pingyi.ZuZhiPingJia;
@@ -298,6 +299,22 @@ public class PingYiServiceImpl implements PingYiService{
 //		pingYiDao.deleteBaoGaoDan(username);
 		baoGaoDan.setLastModifiedTime(new Date());
 		pingYiDao.insertBaoGaoDan(username, baoGaoDan);
+	}
+	
+
+	@Override
+	public List<PartyHistory> getPartyHistorys(String branch, String organization) {
+		List<PartyHistory> partyHistoryList = pingYiDao.getPartyHistorys(branch, organization);
+		return partyHistoryList;
+	}
+
+	@Override
+	public void updatePartyHistorys(String branch, String organization, List<PartyHistory> partyHistorys) {
+		pingYiDao.deletePartyHistorys(branch, organization);
+		for(PartyHistory q : partyHistorys){
+			q.setLastModifiedTime(new Date());
+		}
+		pingYiDao.insertPartyHistorys(partyHistorys);		
 	}
 
 }
