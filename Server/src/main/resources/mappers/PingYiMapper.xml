@@ -423,7 +423,12 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
 		from User U 
 		LEFT JOIN PaperScore on U.name=PaperScore.scorer
 		LEFT Join PartyHistory on U.name=PartyHistory.userName
-		where U.branch=#{branch} and U.organization=#{organization} and PaperScore.paper_id=2
+		where U.branch=#{branch} and U.organization=#{organization} and PaperScore.scoree='partyHistory'
+  </select>
+  
+  <select id="getPartyHistoryByUser" resultType="Integer">
+		select PaperScore.point partyHistoryPoint from PaperScore
+		where PaperScore.scorer=#{username} and PaperScore.scoree='partyHistory'
   </select>
   
     <insert id="insertPartyHistorys" parameterType="java.util.List" useGeneratedKeys="true">  
@@ -457,6 +462,7 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
 	from
 	User U left join ZiPing on U.name = ZiPing.userName
 	left join HuPing on U.name = HuPing.userName
+	left join PartyHistory on U.name = PartyHistory.userName
 	left join QunZhongPingYi on U.name = QunZhongPingYi.userName
 	left join ZuZhiPingJia on U.name = ZuZhiPingJia.userName
 	left join DeFenHuiZong on U.name = DeFenHuiZong.userName

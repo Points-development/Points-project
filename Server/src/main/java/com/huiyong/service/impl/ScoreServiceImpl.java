@@ -65,9 +65,8 @@ public class ScoreServiceImpl implements ScoreService {
 	public List<Score> getScoreByOther(String username, boolean recent) {
 		return scoreDao.getScoreByOther(username, recent);
 	}
-	
-	public List<CategoryScorePoint> getCategoryPointByScore(Score score, int scoreId) {
-		PaperTest paper = paperDao.getPaperById(score.getPaperId());
+
+	private List<CategoryScorePoint> getCategoryPointByScore(Score score, int scoreId, PaperTest paper) {
 		List<PaperQuestion> pqList = paper.getQuestions();
 		List<PaperOption> opList = paper.getOptions();
 		Map<Integer, Integer> qId2CIdMap = pqList.stream().filter(a -> (a.getType()==1)).collect(Collectors.toMap(PaperQuestion::getId, PaperQuestion::getCategoryId));
@@ -96,7 +95,13 @@ public class ScoreServiceImpl implements ScoreService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
 	public boolean addScore(Score score) {	
+		PaperTest paper = paperDao.getPaperById(score.getPaperId());
+		if(paper.isPartyHistory()) {
+			score.setScoree(PaperTest.PaperAttribute.PARTY_HISTORY.attributeName);
+		}
 		List<Score> aScoreList = scoreDao.getScoreByScorer(score.getScoree(), score.getScorer(), true);
+
+		
 		if(null != aScoreList && aScoreList.size() > 0){
 			Score aScore = aScoreList.get(0);
 			int scoreId = aScore.getId();
@@ -108,8 +113,10 @@ public class ScoreServiceImpl implements ScoreService {
 				sir.setScoreId(scoreId);
 			}
 			scoreItemResultDao.addBatchItemResult(score.getScores());
-			scoreItemResultDao.deleteScoreCategoryPoint(scoreId);
-			scoreItemResultDao.addBatchCategoryPoint(getCategoryPointByScore(score, scoreId));
+			if(!paper.isPartyHistory()) {
+				scoreItemResultDao.deleteScoreCategoryPoint(scoreId);
+				scoreItemResultDao.addBatchCategoryPoint(getCategoryPointByScore(score, scoreId, paper));
+			}
 			return true;
 		}
 		scoreDao.addScore(score);
@@ -118,7 +125,9 @@ public class ScoreServiceImpl implements ScoreService {
 			sir.setScoreId(scoreId);
 		}
 		scoreItemResultDao.addBatchItemResult(score.getScores());
-		scoreItemResultDao.addBatchCategoryPoint(getCategoryPointByScore(score, scoreId));
+		if(!paper.isPartyHistory()) {
+			scoreItemResultDao.addBatchCategoryPoint(getCategoryPointByScore(score, scoreId, paper));
+		}
 		return true;
 	}
 

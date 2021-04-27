@@ -31,6 +31,8 @@ CREATE TABLE IF NOT EXISTS `OrganBranch` (
 CREATE TABLE IF NOT EXISTS `PaperTest` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL UNIQUE,
+  /* Now 0 means partyhistory, 1 means others */
+  `attribute` int(11),
   PRIMARY KEY (`id`));
   
 CREATE TABLE IF NOT EXISTS `QuestionCategory` (
@@ -43,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `QuestionCategory` (
 CREATE TABLE IF NOT EXISTS `PaperQuestion` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `question_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
+  `category_id` int(11),
   `user_property_id` int(11) NOT NULL,
   `description` varchar(512) NOT NULL,
   `type` int(11) NOT NULL,
