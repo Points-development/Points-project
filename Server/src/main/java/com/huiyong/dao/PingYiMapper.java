@@ -56,4 +56,5 @@ public interface PingYiMapper {
 	public List<PartyHistory> getPartyHistorys(@Param(value = "branch")String branch, @Param(value = "organization")String organization);
 	public void deletePartyHistorys(@Param(value = "branch")String branch, @Param(value = "organization")String organization);
 	public void insertPartyHistorys(@Param(value = "partyHistorys")List<PartyHistory> partyHistorys);
+	public Integer getPartyHistoryByUser(@Param(value = "username")String username);
 }

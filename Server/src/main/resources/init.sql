@@ -7,7 +7,7 @@ INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organizati
 INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`) values(4, 'xzgan', 'ganxiangzhen', 'henan', 'google', 1);
 INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`) values(2, 'test', 'test', 'Shannxi', 'ibm', 0);
 INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`) values(2, 'test1', 'test1', 'Shannxi', 'ibm', 0);
-INSERT INTO `PaperTest`(`name`) values('党性体检参考指标');
+INSERT INTO `PaperTest`(`name`, `attribute`) values('党性体检参考指标', 1);
 INSERT INTO `QuestionCategory` (`category_type`, `category_id`, `description`) values ( '共性指标', 1,'理想信念');
 INSERT INTO `QuestionCategory` (`category_type`, `category_id`, `description`) values ( '共性指标', 2,'政治意识');
 INSERT INTO `QuestionCategory` (`category_type`, `category_id`, `description`) values ( '共性指标', 3,'大局意识');
@@ -92,3 +92,30 @@ INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (11, 56,1,'你认为你自己或评测对象目前在政治纪律、组织纪律、道德品行、履行义务、模范带头等方面还存在哪些问题？',2,1);
 INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (1, '没有', 1, 2);
 INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (2, '有', 1, 0);
+
+
+
+/* test questions for party history */
+INSERT INTO `PaperTest`(`name`, `attribute`) values('党史测评', 0);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (1,1,'一谈到理想信念，总认为是虚的、是唱高调，工作和生活中奉行实用主义，遇到份外工作或其他任务，只讲求经济利益，要补助、提报酬。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (2,1,'共产主义是革命战争年代崇尚追求的，和平年代只要经济发展、过上好日子就行了。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (3,1,'认为工作就是一份养家糊口的职业而已，没有当成体现人生价值、实现理想抱负的事业来干，整天混日子。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (4,1,'从内心对党组织不信任，遇到党组织调研或了解情况时，不愿意讲实话、道实情，官话套话多。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (5,1,'从宗教迷信中寻找精神寄托，喜好算命看相、烧香拜佛，遇事“问计于神”。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (6,1,'公共场合口无遮拦、信口开河，对党的大政方针说三道四、评头论足，编造散布一些不负责任的言论，歪曲党和政府形象。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (7,1,'传播和散布未经证实的“内部消息”“小道消息”，泄露党和国家秘密。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (8,1,'对社会上、网络上出现的一些政治谣言和错误言论，熟视无睹，甚至随声附和。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (9,1,'对身边歪风邪气和违纪违法行为不揭露、不制止、不斗争，甚至包庇纵容、通风报信。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (10,1,'认为现在规矩多了、约束严了，把“干的越多、出事就越多，不干事就是不出事”作为人生信条。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (11,1,'认为自己“人微言轻”，只要干好“一亩三分地”的活儿就行了，至于大局观念，那是领导干部和上级机关的事。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (12,1,'凡事都要组织去布置去提醒去交待，什么是重点、什么是大局，当前工作进展、下步工作打算都稀里糊涂、得过且过，经常是“脑中一锅粥，手中一团麻”。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (13,1,'只要涉及自身利益的统统都计划得很周全，处处抢占先机，惟独把单位和集体利益放在一旁。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (14,1,'在国家、集体财产及群众生命财产安全遭受威胁时视而不见、袖手旁观，甚至临阵脱逃。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (15,1,'在贯彻落实上级工作部署时，首先想到的是个人利益和得失，对自己有利的就执行，无利的就“打太极”，偏离上级精神。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (16,1,'理论学习不上心、不深入，浮于表面、“蜻蜓点水”，平时不学习，用时“抱佛脚”。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (17,1,'对党的路线方针政策和最新理论成果学习不系统，囫囵吞枣、一知半解、似懂非懂。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (18,1,'学习自觉性不够，存在畏难情绪，真正投入学习的时间不多，学习心得体会从网上下载现成的。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (19,1,'重业务轻学习，认为学理论、养正气是虚的，抓经济、搞业务才是实的。',1,2);
+INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (20,1,'理论联系实际不紧密、学用脱节，学归学、做归做，不能学以致用、融会贯通。',1,2);
+INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (1, '没有', 2, 5);
+INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (2, '有', 2, 0);

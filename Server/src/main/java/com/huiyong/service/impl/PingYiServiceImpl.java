@@ -209,6 +209,25 @@ public class PingYiServiceImpl implements PingYiService{
 			zongHeList.add(zongheCP);
 			jianKangList.add(jiankangCP);
 		}
+		//process partyhistory information
+		baoGaoDan.setPartyHistoryPoint(pingYiDao.getPartyHistoryByUser(username));
+		if(null != baoGaoDan.getPartyHistoryPoint()) {
+			int lastIndex = zongHeList.size() - 1;
+			CategoryPoint lastIndexC = zongHeList.get(lastIndex);
+			int newZonghePoint = (int) Math.round(
+					(lastIndexC.getPoint() * zongHeList.size() + baoGaoDan.getPartyHistoryPoint())/(zongHeList.size() + 1)
+					);
+			lastIndexC.setPoint(newZonghePoint);
+			zongHeList.set(lastIndex, lastIndexC);
+			//update Jiankang based on newZonghePoint 
+			if(newZonghePoint >= health){
+				jianKangList.get(lastIndex).setPoint(100);
+			}else if(newZonghePoint >= subhealth){
+				jianKangList.get(lastIndex).setPoint(50);
+			}else{
+				jianKangList.get(lastIndex).setPoint(0);
+			}
+		}
 		baoGaoDan.setZongHeDeFenPoints(zongHeList);
 		baoGaoDan.setJianKangZhuangTaiPoints(jianKangList);
 

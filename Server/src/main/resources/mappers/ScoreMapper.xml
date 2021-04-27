@@ -42,7 +42,7 @@
 		from User U LEFT JOIN (
 		select PSOTHER.scoree, avg(PSOTHER.point) otherPoint
 		from PaperScore PSOTHER
-		where PSOTHER.scorer !=PSOTHER.scoree group by
+		where PSOTHER.scorer !=PSOTHER.scoree and PSOTHER.scoree != group by
 		PSOTHER.scoree
 		) OP on U.name=OP.scoree LEFT JOIN (
 		select PSSELF.scoree, PSSELF.point selfPoint,PSSELF.lastModifiedTime 
@@ -62,7 +62,7 @@
     <select id="getScoreByOther" resultMap="ScoreResultMap">
         SELECT *
         FROM PaperScore PS
-    	where PS.scoree=#{username} and PS.scorer != #{username}
+    	where PS.scoree=#{username} and PS.scorer !='partyHistory' #{username}
             order by lastModifiedTime
         <if test="recent==true ">  
         LIMIT 1

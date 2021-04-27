@@ -25,6 +25,8 @@ public class BaoGaoDan {
 	//select count(*) from BaoGaoDan where userName = #{username} 的值赋给defen
 	@JsonIgnore
 	private Integer deFen;
+	
+	private Integer partyHistoryPoint;
 	private Integer pingyiNumber;
 	private List<CategoryPoint> ziPingPoints;
 	private List<CategoryPoint> huPingPoints;
@@ -136,6 +138,10 @@ public class BaoGaoDan {
 	public void setPingyiNumber(Integer pingyiNumber) {
 		this.pingyiNumber = pingyiNumber;
 	}
-
-
+	public Integer getPartyHistoryPoint() {
+		return partyHistoryPoint;
+	}
+	public void setPartyHistoryPoint(Integer partyHistoryPoint) {
+		this.partyHistoryPoint = partyHistoryPoint;
+	}
 }
