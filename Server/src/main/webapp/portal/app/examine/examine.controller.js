@@ -63,6 +63,12 @@
             	},function(response){
             		messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
             	});
+        	}else if(vm.selectTab == 'party'){
+        		examineService.getPartyScore(vm.branch,currentUser.organization).then(function(response){
+            		vm.parties = response;
+            	},function(response){
+            		messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
+            	});
         	}
         }
         
@@ -104,6 +110,13 @@
         		});
         	}else if(id == 'result'){
         		examineService.updateResultScore(currentUser.name,vm.result)
+        		.then(function(response){
+        			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
+        		},function(response){
+        			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
+        		});
+        	}else if(id == 'party'){
+        		examineService.updatePartyScore(vm.branch,currentUser.organization,vm.parties)
         		.then(function(response){
         			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
         		},function(response){
@@ -284,6 +297,18 @@
         	}else if(point==50){
         		return "乄"
         	}else if(point==100){
+        		return "√"
+        	}else{
+        		return "未知";
+        	}
+        }
+
+		vm.getPartyStatus=function(point){
+        	if(point<60){
+        		return "X"
+        	}else if(point>=60 &&point<=80){
+        		return "乄"
+        	}else if(point>80){
         		return "√"
         	}else{
         		return "未知";

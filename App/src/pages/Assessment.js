@@ -12,7 +12,7 @@ import {
 	Image,
 	ToastAndroid,
 	ScrollView,
-	TextInput,
+	TextInput
 } from 'react-native';	
 import CheckBox from '../components/Checkbox'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
@@ -68,17 +68,7 @@ export default class Assessment extends React.Component {
         			this.setState({errorMsg: '请检查网络或联系管理员'});
         		}
             }.bind(this));
-        	let url3 = gServer.host+'/score/'+gUser.name+"?scorer="+gUser.name;
-        	NetUtil.get(url3,function (response) {
-        		if(response.status == 200){
-        			if(response.data.length>0){
-        				this.setState({isSubmitted:true});
-        				ToastAndroid.show('系统检测到您已完成本次自评，如有疑问请联系系统管理员', ToastAndroid.SHORT);
-        			}
-        		}else{
-        			this.setState({errorMsg: '请检查网络或联系管理员'});
-        		}
-            }.bind(this))
+        	this.checkAnswer(gUser.name);
     	}
     }
     
@@ -89,6 +79,8 @@ export default class Assessment extends React.Component {
     		modalVisible: who=='others',
     		resultVisible:false,
     		isSubmitted:false,
+			activeTab:1,
+			paperId:1,
     		evaluator:who=='self'?'自己':'其他',
     		dataSource:{
     		    "id": 1,
@@ -102,6 +94,20 @@ export default class Assessment extends React.Component {
     		selfScore:{common:{},self:{}}
     	}
     }
+
+	checkAnswer = (scoree)=>{
+		let url3 = gServer.host+'/score/'+scoree+"?scorer="+gUser.name;
+    	NetUtil.get(url3,function (response) {
+    		if(response.status == 200){
+    			if(response.data.length>0){
+    				this.setState({isSubmitted:true});
+    				ToastAndroid.show('系统检测到您已完成本次自评，如有疑问请联系系统管理员', ToastAndroid.SHORT);
+    			}
+    		}else{
+    			this.setState({errorMsg: '请检查网络或联系管理员'});
+    		}
+        }.bind(this))
+	}
     
     _checkSubmit = ()=>{
     	let score = {
@@ -158,7 +164,7 @@ export default class Assessment extends React.Component {
     			return false;
     		}
     	}
-    	if(totalSelect<10){
+    	if(totalSelect<10 && this.state.paperId==1){
     		ToastAndroid.show('至少选择10个选项', ToastAndroid.SHORT);
     		return false;
     	}
@@ -182,7 +188,7 @@ export default class Assessment extends React.Component {
     
     _submit = ()=>{
     	let score = {
-    		paperId:this.state.evaluator=='自己'?1:1,
+    		paperId:this.state.paperId,
     		scorer:gUser.name,
     		scoree:this.state.evaluator=='自己'?gUser.name:this.state.evaluator,
     		scores:[],
@@ -274,7 +280,11 @@ export default class Assessment extends React.Component {
     
     _onPress = item => {
     	this.setState({modalVisible: false,evaluator:item.username});
-    	let url2 = gServer.host+'/paper/1?username='+item.username;
+    	this.refreshPaper(item.username,this.state.paperId);
+    }
+	
+	refreshPaper=(username,paperId)=>{
+		let url2 = gServer.host+'/paper/'+paperId+'?username='+username;
     	NetUtil.get(url2,function (response) {
     		if(response.status == 200){
     			let questions = [];
@@ -295,16 +305,18 @@ export default class Assessment extends React.Component {
     				name:response.data.name,
     				questions:questions
     			}});
+				this.setState({errorMsg: questions.length});	
     			let options = [];
     			response.data.options.map(function (item) {
     				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint,'optionId':item.optionId});
     			});
     			this.setState({options:options});
     		}else{
+				ToastAndroid.show('数据加载异常，请联系管理员', ToastAndroid.SHORT); 
     			this.setState({errorMsg: '请检查网络或联系管理员'});
     		}
-        }.bind(this))
-    }
+        }.bind(this))	
+	}
     
     _back = ()=>{
     	this.props.navigation.goBack();
@@ -337,12 +349,33 @@ export default class Assessment extends React.Component {
         )
     }
 
+	switchTab = (index)=>{
+    	this.setState({activeTab: index,paperId:index});
+		let u = this.state.evaluator=='自己'?gUser.name:this.state.evaluator;
+		this.refreshPaper(u,index);
+		if(index==2){
+			this.checkAnswer('partyHistory');
+		}
+    }
+
     render() {
     	const {isConnected,who} = this.props.navigation.state.params
     	
         return (
         		<View style={styles.container}>
-        			<View style={{paddingTop:20,alignItems: 'center'}}>
+					{
+						this.state.evaluator=='自己' &&
+						<View style={styles.tab}>
+							<TouchableOpacity onPress={()=>this.switchTab(1)}> 
+								<View style={{borderBottomColor:this.state.activeTab==1?'#FF2D2D':'#FCFCFC',borderBottomWidth:2,width:gScreen.width/2,justifyContent: 'center',alignItems: 'center',}}><Text>党性体检</Text></View>
+							</TouchableOpacity>
+							<TouchableOpacity onPress={()=>this.switchTab(2)}> 
+								<View style={{borderBottomColor:this.state.activeTab==2?'#FF2D2D':'#FCFCFC',borderBottomWidth:2,width:gScreen.width/2,justifyContent: 'center',alignItems: 'center',}}><Text>党史测评</Text></View>
+							</TouchableOpacity>
+						</View>
+					}
+					
+        			<View style={{paddingTop:5,alignItems: 'center'}}>
         				<Text style={{fontSize:gFont.headerSize,color:gColors.defaultFontColor}}>
         					{this.state.dataSource.name}
         				</Text>
@@ -426,6 +459,15 @@ const styles = StyleSheet.create({
 	container: {
 	    flex: 1,
 	    backgroundColor:gColors.background
+	},
+	tab:{
+		height:50,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+		width:gScreen.width,
+		borderBottomWidth:5,
+		borderBottomColor:'#FCFCFC'
 	},
 	circle:{
 		marginHorizontal:5,

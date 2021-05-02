@@ -194,6 +194,34 @@
             );
             return deferred.promise;
         };
+		factory.getPartyScore = function(branch,organization){
+            var deferred = $q.defer();
+            var branch = encodeURIComponent(branch);
+            var organization = encodeURIComponent(organization);
+            $http.get('/pointservice/pingyi/partyhistory?branch='+branch+'&organization='+organization).then(
+                function (resp) {
+                    deferred.resolve(resp.data);
+                },
+                function (resp) {
+                    deferred.reject(resp.data);
+                }
+            );
+            return deferred.promise;
+        };
+        factory.updatePartyScore = function(branch,organization,parties){
+            var deferred = $q.defer();
+            var branch = encodeURIComponent(branch);
+            var organization = encodeURIComponent(organization);
+            $http.post('/pointservice/pingyi/partyhistory?branch='+branch+'&organization='+organization,parties).then(
+                function (resp) {
+                    deferred.resolve(resp.data);
+                },
+                function (resp) {
+                    deferred.reject(resp.data);
+                }
+            );
+            return deferred.promise;
+        };
         return factory;
     }
 })();

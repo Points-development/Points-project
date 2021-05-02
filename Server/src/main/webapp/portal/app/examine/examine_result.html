@@ -148,7 +148,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="tg-yw4l" rowspan="14">分项指标</td>
+								<td class="tg-yw4l" rowspan="15">分项指标</td>
 								<td class="tg-yw4l" rowspan="2">体检指标</td>
 								<td class="tg-yw4l" rowspan="2">评价指标</td>
 								<td class="tg-yw4l" colspan="4">体检指标得分</td>
@@ -162,7 +162,7 @@
 								<td class="tg-yw4l">组织评议</td>
 							</tr>
 							<tr>
-								<td class="tg-yw4l" rowspan="10">共性指标</td>
+								<td class="tg-yw4l" rowspan="11">共性指标</td>
 								<td class="tg-yw4l">理想信念</td>
 								<td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[0].point}}</td>
 								<td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[0].point}}</td>
@@ -251,6 +251,15 @@
 								<td class="tg-yw4l">{{ecCtrl.result.zuZhiPingPoints[9].point}}</td>
 								<td class="tg-yw4l">{{ecCtrl.result.zongHeDeFenPoints[9].point}}</td>
 								<td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[9].point)}}</td>
+							</tr>
+							<tr>
+								<td class="tg-yw4l">党史教育</td>
+								<td class="tg-yw4l">-</td>
+								<td class="tg-yw4l">-</td>
+								<td class="tg-yw4l">-</td>
+								<td class="tg-yw4l">-</td>
+								<td class="tg-yw4l">{{ecCtrl.result.partyHistoryPoint}}</td>
+								<td class="tg-yw4l">{{ecCtrl.getPartyStatus(ecCtrl.result.partyHistoryPoint)}}</td>
 							</tr>
 							<tr>
 								<td class="tg-yw4l">个性指标</td>
