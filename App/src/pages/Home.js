@@ -68,6 +68,10 @@ export default class Home extends React.Component {
     _goAssessment = (para)=>{
     	this.props.navigation.navigate('Assessment',{'who':para});
     }
+   
+    _goParty = ()=>{
+    	this.props.navigation.navigate('PartyHistory',{'who':'self'});
+    }
     
     _goQuery = ()=>{
     	this.props.navigation.navigate('Query');
@@ -159,7 +163,19 @@ export default class Home extends React.Component {
 			            </TouchableOpacity>
         			</View>
         			<View style={styles.btgroup}>
-	        			<TouchableOpacity
+						<TouchableOpacity
+			            	activeOpacity={0.55}
+			            	style={[styles.buttonContainer,styles.button]}
+			            	onPress={()=>this._goParty()}>
+			                <View style={{flexDirection:'row'}}>
+			                	<Text style={styles.textStyle}>党史</Text>
+			                	<Image 
+					    			source={require('../assets/image/party.png')}
+					            	style={styles.buttonImage}
+					            />
+			                </View>
+			            </TouchableOpacity>
+						<TouchableOpacity
 			            	activeOpacity={0.55}
 			            	style={[styles.buttonContainer,styles.button]}
 			            	onPress={()=>this._goQuery()}>
@@ -171,20 +187,19 @@ export default class Home extends React.Component {
 					            />
 			                </View>
 			            </TouchableOpacity>
-		        		<TouchableOpacity
+        			</View>
+        			</View>
+                    <View style={styles.settings}>
+						<TouchableOpacity
 			            	activeOpacity={0.55}
-			            	style={[styles.buttonContainer,styles.button]}
+			            	style={styles.button_settings}
 			            	onPress={()=>this._goSystem()}>
-			                <View style={{flexDirection:'row'}}>
-			                	<Text style={styles.textStyle}>系统</Text>
 			                	<Image 
 					    			source={require('../assets/image/system.png')}
 					            	style={styles.buttonImage}
 					            />
-			                </View>
 			            </TouchableOpacity>
-        			</View>
-        			</View>
+					</View>
         			{this.state.pwdmodelVisible && <Modal 
 		              	animationType={"fade"}
 		              	transparent={true}
@@ -276,6 +291,10 @@ const styles = StyleSheet.create({
 		width:(gScreen.width-100)/3,
 		height:(gScreen.width-100)/3 >(gScreen.height-100)/3?(gScreen.height-100)/3:(gScreen.width-100)/3,
 	},
+	button_settings:{
+		width:(gScreen.width-100)/6,
+		height:(gScreen.width-100)/6,
+	},
 	buttonImage:{
 		width:40,
 		height:40
@@ -283,6 +302,12 @@ const styles = StyleSheet.create({
 	textStyle:{
 		color:'#fff',
 		fontSize:30,
+	},
+	settings:{
+		position: 'absolute',
+		right:20,
+		top:20,
+		zIndex:100,
 	},
 	homeBackground: {
 		position: 'absolute',

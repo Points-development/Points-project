@@ -20,7 +20,7 @@ import Button from '../components/Button'
 import NetUtil from '../service/NetUtil'
 
 
-export default class Assessment extends React.Component {
+export default class PartyHistory extends React.Component {
 
     componentWillUnmount() {
     }
@@ -38,7 +38,7 @@ export default class Assessment extends React.Component {
         		}
             }.bind(this));
     	}else{
-    		let url2 = gServer.host+'/paper/1?username='+gUser.name;
+    		let url2 = gServer.host+'/paper/2?username='+gUser.name;
         	NetUtil.get(url2,function (response) {
         		if(response.status == 200){
         			let questions = [];
@@ -79,8 +79,7 @@ export default class Assessment extends React.Component {
     		modalVisible: who=='others',
     		resultVisible:false,
     		isSubmitted:false,
-			activeTab:1,
-			paperId:1,
+			paperId:2,
     		evaluator:who=='self'?'自己':'其他',
     		dataSource:{
     		    "id": 1,
@@ -96,7 +95,7 @@ export default class Assessment extends React.Component {
     }
 
 	checkAnswer = (scoree)=>{
-		let url3 = gServer.host+'/score/'+scoree+"?scorer="+gUser.name;
+		let url3 = gServer.host+'/score/partyHistory?scorer='+gUser.name;
     	NetUtil.get(url3,function (response) {
     		if(response.status == 200){
     			if(response.data.length>0){
@@ -111,7 +110,7 @@ export default class Assessment extends React.Component {
     
     _checkSubmit = ()=>{
     	let score = {
-        	paperId:1,
+        	paperId:2,
         	scorer:gUser.name,
         	scoree:this.state.evaluator=='自己'?gUser.name:this.state.evaluator,
         	common:{
@@ -348,6 +347,7 @@ export default class Assessment extends React.Component {
 	        </View>
         )
     }
+
 
     render() {
     	const {isConnected,who} = this.props.navigation.state.params
