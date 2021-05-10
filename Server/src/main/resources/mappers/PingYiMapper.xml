@@ -321,9 +321,9 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
   <select id="getPartyHistorys" resultMap="PartyHistoryResultMap">
 		select U.name, U.realName, PaperScore.point total, PartyHistory.problem, PartyHistory.lastModifiedTime
 		from User U 
-		LEFT JOIN PaperScore on U.name=PaperScore.scorer
+		LEFT JOIN PaperScore on U.name=PaperScore.scorer and PaperScore.scoree='partyHistory'
 		LEFT Join PartyHistory on U.name=PartyHistory.userName
-		where U.branch=#{branch} and U.organization=#{organization} and PaperScore.scoree='partyHistory'
+		where U.branch=#{branch} and U.organization=#{organization}
   </select>
   
   <select id="getPartyHistoryByUser" resultType="Integer">
