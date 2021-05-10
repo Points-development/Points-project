@@ -66,7 +66,10 @@ public class ScoreServiceImpl implements ScoreService {
 		return scoreDao.getScoreByOther(username, recent);
 	}
 
-	private List<CategoryScorePoint> getCategoryPointByScore(Score score, int scoreId, PaperTest paper) {
+	public List<CategoryScorePoint> getCategoryPointByScore(Score score, int scoreId, PaperTest paper) {
+		if(null == paper) {
+			paper = paperDao.getPaperById(score.getPaperId());
+		}
 		List<PaperQuestion> pqList = paper.getQuestions();
 		List<PaperOption> opList = paper.getOptions();
 		Map<Integer, Integer> qId2CIdMap = pqList.stream().filter(a -> (a.getType()==1)).collect(Collectors.toMap(PaperQuestion::getId, PaperQuestion::getCategoryId));

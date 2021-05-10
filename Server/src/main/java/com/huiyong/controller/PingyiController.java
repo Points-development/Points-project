@@ -88,7 +88,7 @@ public class PingyiController {
     		return new ResponseEntity<String>("User name does not exist", HttpStatus.BAD_REQUEST);
     	}
     	//Here pass 0 as scoreId since we don't really have a score id
-    	List<CategoryScorePoint> aCSPList = scoreService.getCategoryPointByScore(score, 0);
+    	List<CategoryScorePoint> aCSPList = scoreService.getCategoryPointByScore(score, 0, null);
     	ZuZhiPingJia zuZhiPingJia = new ZuZhiPingJia();
     	PingYiUtil.transferCategoryPoint(aCSPList, ZuZhiPingJia.class, zuZhiPingJia);
     	zuZhiPingJia.setUserName(username);
@@ -138,7 +138,7 @@ public class PingyiController {
     	}
     	
     	//Here pass 0 as scoreId since we don't really have a score id
-    	List<CategoryScorePoint> aCSPList = scoreService.getCategoryPointByScore(score, 0);
+    	List<CategoryScorePoint> aCSPList = scoreService.getCategoryPointByScore(score, 0, null);
     	QunZhongPingYi qunZhongPingYi = new QunZhongPingYi();
     	PingYiUtil.transferCategoryPoint(aCSPList, QunZhongPingYi.class, qunZhongPingYi);
     	qunZhongPingYi.setUserName(username);
