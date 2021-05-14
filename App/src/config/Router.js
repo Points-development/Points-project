@@ -14,6 +14,7 @@ import Home from '../pages/Home'
 import Assessment from '../pages/Assessment'
 import Query from '../pages/Query'
 import System from '../pages/System'
+import PartyHistory from '../pages/PartyHistory'
 
 
 
@@ -29,6 +30,10 @@ const App = StackNavigator({
 	Assessment: {
 		screen: Assessment,
 		navigationOptions:{title:'评测'}
+	},
+	PartyHistory: {
+		screen: PartyHistory,
+		navigationOptions:{title:'党史'}
 	},
     Query: {
     	screen: Query,
