@@ -2,3 +2,4 @@
 /.settings/
 /pointservice.log
 /logs
+.classpath
