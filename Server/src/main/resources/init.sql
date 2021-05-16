@@ -1,10 +1,10 @@
 INSERT INTO `UserProperty`(`name`) values('共性');
 INSERT INTO `UserProperty`(`name`) values('主要领导干部');
 INSERT INTO `UserProperty`(`name`) values('其他领导干部');
-INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`) values(3, 'gangpu', 'pugang', 'Shannxi', 'ibm', 1);
-INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`) values(3, 'xzgan', 'ganxiangzhen', 'Shannxi', 'google', 1);
-INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`) values(2, 'test', 'test', 'Shannxi', 'ibm', 0);
-INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`) values(2, 'test1', 'test1', 'Shannxi', 'ibm', 0);
+INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`, `sex`) values(3, 'gangpu', 'pugang', 'Shannxi', 'ibm', 1, 0);
+INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`, `sex`) values(3, 'xzgan', 'ganxiangzhen', 'Shannxi', 'google', 1, 0);
+INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`, `sex`) values(2, 'test', 'test', 'Shannxi', 'ibm', 0, 1);
+INSERT INTO `User`(`user_property_id`, `name`, `realName`, `branch`, `organization`, `isAdmin`, `sex`) values(2, 'test1', 'test1', 'Shannxi', 'ibm', 0, 1);
 INSERT INTO `PaperTest`(`name`, `attribute`) values('党性体检参考指标', 1);
 INSERT INTO `QuestionCategory` (`category_type`, `category_id`, `description`) values ( '共性指标', 1,'理想信念');
 INSERT INTO `QuestionCategory` (`category_type`, `category_id`, `description`) values ( '共性指标', 2,'政治意识');
@@ -62,8 +62,8 @@ INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (8, 43,3,'工作时间串岗溜岗、处理私事、闲聊打游戏；办公室门开着不见人，唱“空城计”，间歇性“失联”。',1,1);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (8, 44,3,'对群众反映的内容不重视、不上心，能推则推，能避则避，生怕惹祸上身。',1,1);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (8, 45,3,'产生船到码头车到站思想，工作上当一天和尚撞一天钟，满足于不出事，习惯于当“守摊子”的太平官。',1,1);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (1, '没有', 1, 2);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (2, '有', 1, 0);
+INSERT INTO `PaperOption` (`option_id`, `description`,`question_id`, `point`) values (1, '没有', 1, 2);
+INSERT INTO `PaperOption` (`option_id`, `description`,`question_id`, `point`) values (2, '有', 1, 0);
 
 INSERT INTO `PaperTest`(`name`) values('领导干部政治体检点评指标', 1);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (1, 1,1,'发挥政治指南针作用，引导全党坚定理想信念、坚定“四个意识”，把全党智慧和力量凝聚到中国特色社会主义伟大事业上；经常对标对表，及时校准偏差，坚决纠正偏离和违背党的政治方向的行为；把党组织建设成坚强战斗堡垒，对有问题党员、干部进行严肃批评教育，问题严重的要依照党纪进行处理。',1,2);
@@ -75,10 +75,10 @@ INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (7, 7,1,'做到不断提升把握方向、把握大势、把握全局的能力，辨别政治是非、保持政治定力、驾驭政治局面、防范政治风险的能力；是否做到善于从政治上分析问题、解决问题；做到炼就一双政治慧眼，不畏浮云遮望眼，切实担负起党和人民赋予的政治责任。',1,2);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (8, 8,1,'对党组织分配的工作任务推三阻四，不能按时保质保量完成。',1,2);
 INSERT INTO `PaperQuestion` (`category_id`, `question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (8, 9,1,'其他问题',2,2);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (1, '优秀', 2, 13);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (2, '良好', 2, 10);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (3, '一般', 2, 5);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (4, '较差', 2, 1);
+INSERT INTO `PaperOption` (`option_id`, `description`,`question_id`, `point`) values (1, '优秀', 2, 13);
+INSERT INTO `PaperOption` (`option_id`, `description`,`question_id`, `point`) values (2, '良好', 2, 10);
+INSERT INTO `PaperOption` (`option_id`, `description`,`question_id`, `point`) values (3, '一般', 2, 5);
+INSERT INTO `PaperOption` (`option_id`, `description`,`question_id`, `point`) values (4, '较差', 2, 1);
 
 /* test questions for party history */
 INSERT INTO `PaperTest`(`name`, `attribute`) values('党史测评', 0);
@@ -102,5 +102,5 @@ INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `
 INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (18,1,'学习自觉性不够，存在畏难情绪，真正投入学习的时间不多，学习心得体会从网上下载现成的。',1,2);
 INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (19,1,'重业务轻学习，认为学理论、养正气是虚的，抓经济、搞业务才是实的。',1,2);
 INSERT INTO `PaperQuestion` (`question_id`, `user_property_id`, `description`, `type`, `test_id`) VALUES (20,1,'理论联系实际不紧密、学用脱节，学归学、做归做，不能学以致用、融会贯通。',1,2);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (1, '没有', 2, 5);
-INSERT INTO `PaperOption` (`option_id`, `description`,`test_id`, `point`) values (2, '有', 2, 0);
+INSERT INTO `PaperOption` (`option_id`, `description`,`question_id`, `point`) values (1, '没有', 2, 5);
+INSERT INTO `PaperOption` (`option_id`, `description`,`question_id`, `point`) values (2, '有', 2, 0);

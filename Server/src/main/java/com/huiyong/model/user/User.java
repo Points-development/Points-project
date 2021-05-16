@@ -20,6 +20,7 @@ public class User {
 	private String organization;
 	private String property;
 	private boolean isAdmin;
+	private boolean sex;
 	public Integer getId() {
 		return id;
 	}
@@ -79,5 +80,11 @@ public class User {
 	 */
 	public void setOrganization(String organization) {
 		this.organization = organization;
+	}
+	public boolean isSex() {
+		return sex;
+	}
+	public void setSex(boolean sex) {
+		this.sex = sex;
 	}
 }

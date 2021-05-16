@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `User` (
   `password` varchar(255) NOT NULL DEFAULT '21218cca77804d2ba1922c33e0151105',
   `branch` varchar(255) NOT NULL DEFAULT 'NULL',
   `organization` varchar(255) NOT NULL,
+  `sex` tinyint(1) DEFAULT 0,
   `isAdmin` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_property_id`) REFERENCES `UserProperty` (`id`));
@@ -63,9 +64,9 @@ CREATE TABLE IF NOT EXISTS `PaperOption` (
   `description` varchar(128) NOT NULL,
   `option_id` int(11) NOT NULL,
   `point` int(11) NOT NULL,
-  `test_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`test_id`) REFERENCES `PaperTest` (`id`));
+  FOREIGN KEY (`question_id`) REFERENCES `PaperQuestion` (`id`));
 
 CREATE TABLE IF NOT EXISTS `PaperScore` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

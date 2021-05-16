@@ -3,6 +3,8 @@
  */
 package com.huiyong.model.paper;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -19,6 +21,8 @@ public class PaperQuestion {
 	//目前有选择题, 问答题两种类型，选择题为1， 问答题为2
 	private Integer type;
 	private String property;
+	
+	private List<PaperOption> options;
 	public Integer getId() {
 		return id;
 	}
@@ -85,5 +89,10 @@ public class PaperQuestion {
 	public void setCategoryId(Integer categoryId) {
 		this.categoryId = categoryId;
 	}
-
+	public List<PaperOption> getOptions() {
+		return options;
+	}
+	public void setOptions(List<PaperOption> options) {
+		this.options = options;
+	}
 }

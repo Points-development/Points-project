@@ -11,9 +11,10 @@
     <result column="organization" property="organization" jdbcType="VARCHAR" />
     <result column="property" property="property" jdbcType="VARCHAR" />
     <result column="isAdmin" property="isAdmin" jdbcType="TINYINT" />
+    <result column="sex" property="sex" jdbcType="TINYINT" />
   </resultMap>
   <select id="getUserByName" parameterType="String" resultMap="BaseResultMap">
-    select User.id, User.name, User.realName, User.password, User.branch, User.organization, UserProperty.name property, User.isAdmin from User join UserProperty on User.user_property_id=UserProperty.id
+    select User.id, User.name, User.realName, User.password, User.branch, User.organization, UserProperty.name property, User.isAdmin, User.sex from User join UserProperty on User.user_property_id=UserProperty.id
     	where User.name=#{name}
   </select>
    <select id="getPropertyId" parameterType="String" resultType="Integer">
@@ -21,11 +22,11 @@
     	where name=#{name}
   </select>
   <select id="getUsersInBranch" parameterType="String" resultMap="BaseResultMap">
-    select User.id, User.name, User.realName, User.password, User.branch, User.organization, UserProperty.name property, User.isAdmin from User join UserProperty on User.user_property_id=UserProperty.id
+    select User.id, User.name, User.realName, User.password, User.branch, User.organization, UserProperty.name property, User.isAdmin, User.sex from User join UserProperty on User.user_property_id=UserProperty.id
     	where branch=#{branchname} and organization=#{organization}
   </select>
   <select id="getUsersInOrganization" parameterType="String" resultMap="BaseResultMap">
-    select User.id, User.name, User.realName, User.password, User.branch, User.organization, UserProperty.name property, User.isAdmin from User join UserProperty on User.user_property_id=UserProperty.id
+    select User.id, User.name, User.realName, User.password, User.branch, User.organization, UserProperty.name property, User.isAdmin, User.sex from User join UserProperty on User.user_property_id=UserProperty.id
     	where organization=#{organization} and User.realName like concat('%', #{realname}, '%')
   </select>
   
@@ -45,7 +46,8 @@
         					organization,
       					  </if>  
       					  user_property_id,
-                          isAdmin)  
+                          isAdmin,
+                          sex)  
               VALUES   (#{user.name},
               			#{user.realName},
                           <if test="user.password != null" >
@@ -58,7 +60,8 @@
         					#{user.organization},
       					  </if> 
       					  #{propertyId},
-                        #{user.isAdmin})      
+                        #{user.isAdmin},
+                        #{user.sex})    
   </insert>  
     <update id="updateUser" useGeneratedKeys="true">  
         UPDATE User SET  <if test="user.password != null" >
@@ -72,6 +75,7 @@
       					  </if> 
       					User.realName=#{user.realName},
                         User.isAdmin=#{user.isAdmin},
+                        User.sex=#{user.sex},
                         User.user_property_id=#{propertyId}
                         where User.name=#{user.name};
   </update>  

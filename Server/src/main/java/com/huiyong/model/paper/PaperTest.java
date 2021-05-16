@@ -28,7 +28,7 @@ public class PaperTest {
 	private Integer attribute;
 	private String name;
 	private List<PaperQuestion> questions;
-	private List<PaperOption> options;
+
 	public Integer getId() {
 		return id;
 	}
@@ -46,12 +46,6 @@ public class PaperTest {
 	}
 	public void setSections(List<PaperQuestion> questions) {
 		this.questions = questions;
-	}
-	public List<PaperOption> getOptions() {
-		return options;
-	}
-	public void setOptions(List<PaperOption> options) {
-		this.options = options;
 	}
 	public void setQuestions(List<PaperQuestion> questions) {
 		this.questions = questions;
