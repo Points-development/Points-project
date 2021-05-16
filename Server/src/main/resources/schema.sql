@@ -63,9 +63,9 @@ CREATE TABLE IF NOT EXISTS `PaperOption` (
   `description` varchar(128) NOT NULL,
   `option_id` int(11) NOT NULL,
   `point` int(11) NOT NULL,
-  `test_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`test_id`) REFERENCES `PaperTest` (`id`));
+  FOREIGN KEY (`question_id`) REFERENCES `PaperQuestion` (`id`));
 
 CREATE TABLE IF NOT EXISTS `PaperScore` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

@@ -7,13 +7,12 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="attribute" property="attribute" jdbcType="INTEGER" />
     <collection column="id" property="questions" javaType="ArrayList" ofType="PaperQuestion" select="getQuestions" />
-    <collection column="id" property="options" javaType="ArrayList" ofType="PaperOption" select="getOptions" />
   </resultMap>
   <resultMap id="PaperResultMapByIdAndProperty" type="com.huiyong.model.paper.PaperTest" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="attribute" property="attribute" jdbcType="INTEGER" />
     <result column="property" jdbcType="VARCHAR" />
-    <collection column="id" property="options" javaType="ArrayList" ofType="PaperOption" select="getOptions" />
   </resultMap>
    <resultMap id="QuestionResultMap" type="com.huiyong.model.paper.PaperQuestion" >
     <id column="id" property="id" jdbcType="INTEGER" />
@@ -23,6 +22,7 @@
     <result column="question_id" property="questionId" jdbcType="INTEGER" />
     <result column="category" property="category" jdbcType="VARCHAR" />
     <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <collection column="id" property="options" javaType="ArrayList" ofType="PaperOption" select="getOptions" />
   </resultMap>
   <resultMap id="OptionResultMap" type="com.huiyong.model.paper.PaperOption" >
     <id column="id" property="id" jdbcType="INTEGER" />
@@ -37,7 +37,7 @@
 	select PQ.id, PQ.question_id, QC.description category, QC.id category_id, PQ.description, PQ.type, PQ.test_id from PaperQuestion PQ left join QuestionCategory QC on PQ.category_id=QC.id where PQ.test_id=#{id} order by id;
   </select> 
     <select id="getOptions" parameterType="int" resultMap="OptionResultMap">
-	select * from PaperOption where test_id=#{id};
+	select * from PaperOption where question_id=#{id};
   </select> 
     <select id="getPaperByIdAndUserProperty" resultMap="PaperResultMapByIdAndProperty">
 	select * from PaperTest where id=#{id};

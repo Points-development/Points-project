@@ -68,16 +68,16 @@ public class ScoreServiceImpl implements ScoreService {
 	
 	private List<CategoryScorePoint> getCategoryPointByScore(Score score, int scoreId, PaperTest paper) {
 		List<PaperQuestion> pqList = paper.getQuestions();
-		List<PaperOption> opList = paper.getOptions();
 		Map<Integer, Integer> qId2CIdMap = pqList.stream().filter(a -> (a.getType()==1)).collect(Collectors.toMap(PaperQuestion::getId, PaperQuestion::getCategoryId));
-		Map<Integer, Integer> oId2OpointMap = opList.stream().collect(Collectors.toMap(PaperOption::getId, PaperOption::getOptionPoint));
 		Map<Integer, Integer> categoryPoingMap = score.getScores().stream().filter(a ->
 			null != qId2CIdMap.get(a.getQuestionId())
-		).map(a -> {
-			a.setQuestionId(qId2CIdMap.get(a.getQuestionId()));
+		).map(a->{
+			PaperQuestion paperQuestion = pqList.stream().filter(pq-> pq.getId() == a.getQuestionId()).findFirst().get();
+			PaperOption paperOption = paperQuestion.getOptions().stream().filter(po-> po.getId() == a.getOptionsId()).findFirst().get();
+			a.setOptionsId(paperOption.getOptionPoint());
 			return a;
 		}).map(a -> {
-			a.setOptionsId(oId2OpointMap.get(a.getOptionsId()));
+			a.setQuestionId(qId2CIdMap.get(a.getQuestionId()));
 			return a;
 		}).collect(Collectors.groupingBy(ScoreItemResult::getQuestionId, Collectors.summingInt(ScoreItemResult::getOptionsId)));
 		return categoryPoingMap.entrySet().stream().map((et)->{
