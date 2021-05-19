@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.huiyong</groupId>
 	<artifactId>points-app-wugong-v3</artifactId>
-	<version>0.0.1-NEWBINXIAN-BROWSER</version>
+	<version>0.0.1-WUGONG-V3</version>
 
 	<name>points-app</name>
 	<description>Server side for points-app</description>

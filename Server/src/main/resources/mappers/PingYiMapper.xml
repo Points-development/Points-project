@@ -440,7 +440,7 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
 	
 	<delete id="deletePartyHistorys">  
        DELETE Z FROM PartyHistory Z JOIN User U on Z.userName=U.name WHERE U.organization=#{organization} and U.branch=#{branch}
-	</delete>
+	</delete>	
 	
    <resultMap id="DeFenHuiZongResultMap" type="com.huiyong.model.pingyi.DeFenHuiZong" >
     <id column="id" property="id" jdbcType="INTEGER" />
@@ -452,6 +452,11 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
     <result column="zuZhiPing" property="zuZhiPing" jdbcType="INTEGER" />
     <result column="total" property="total" jdbcType="INTEGER" />
     <result column="lastTotal" property="lastTotal" jdbcType="INTEGER" />
+    <result column="lastGivenValue" property="lastGivenValue" jdbcType="INTEGER" />
+    <result column="zhengZhiGivenValue" property="zhengZhiGivenValue" jdbcType="INTEGER" />
+    <result column="plusItem" property="plusItem" jdbcType="INTEGER" />
+    <result column="minusItem" property="minusItem" jdbcType="INTEGER" />
+    <result column="totalPlus" property="totalPlus" jdbcType="INTEGER" />
     <result column="hongXian" property="hongXian" jdbcType="VARCHAR" />
     <result column="jianKang" property="jianKang" jdbcType="VARCHAR" />
     <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
@@ -459,7 +464,8 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
   
   <select id="getDeFenHuiZongs" resultMap="DeFenHuiZongResultMap">
 	select U.name, U.realName, ZiPing.total ziPing, HuPing.total huPing, PartyHistory.total partyHistory, QunZhongPingYi.total qunZhongPing, ZuZhiPingJia.total zuZhiPing, 
-		ifnull(ZiPing.total, 0)*0.2 + ifnull(HuPing.total, 0)*0.2 + ifnull(partyHistory.total, 0)*0.2 + ifnull(QunZhongPingYi.total, 0)*0.2 + ifnull(ZuZhiPingJia.total, 0)*0.2 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastTotal, DeFenHuiZong.lastModifiedTime
+		ifnull(ZiPing.total, 0)*0.2 + ifnull(HuPing.total, 0)*0.2 + ifnull(partyHistory.total, 0)*0.2 + ifnull(QunZhongPingYi.total, 0)*0.2 + ifnull(ZuZhiPingJia.total, 0)*0.2 total, 
+		DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastTotal, DeFenHuiZong.lastGivenValue, DeFenHuiZong.zhengZhiGivenValue, DeFenHuiZong.plusItem, DeFenHuiZong.minusItem, DeFenHuiZong.totalPlus, DeFenHuiZong.lastModifiedTime
 	from
 	User U left join ZiPing on U.name = ZiPing.userName
 	left join HuPing on U.name = HuPing.userName
@@ -471,9 +477,9 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
   </select>
   
   <insert id="insertDeFenHuiZongs" parameterType="java.util.List" useGeneratedKeys="true">  
-	Insert into DeFenHuiZong (userName, realName, hongXian, jianKang, lastTotal, lastModifiedTime) values
+	Insert into DeFenHuiZong (userName, realName, hongXian, jianKang, lastTotal, lastGivenValue, zhengZhiGivenValue, plusItem, minusItem, totalPlus, lastModifiedTime) values
 		<foreach collection="deFenHuiZongs" item="item" separator=",">  
-			(#{item.userName}, #{item.realName}, #{item.hongXian}, #{item.jianKang}, #{item.total}, #{item.lastModifiedTime})
+			(#{item.userName}, #{item.realName}, #{item.hongXian}, #{item.jianKang}, #{item.total}, #{item.givenValue}, #{item.zhengZhiGivenValue}, #{item.plusItem}, #{item.minusItem}, #{item.totalPlus}, #{item.lastModifiedTime})
 		</foreach>  
 	</insert>
 	

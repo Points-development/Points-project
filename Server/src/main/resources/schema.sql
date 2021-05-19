@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `pointServiceNewBinXianBrowser` default charset utf8 COLLATE utf8_general_ci;
-use pointServiceNewBinXianBrowser;
+CREATE DATABASE IF NOT EXISTS `pointServiceWuGongV3` default charset utf8 COLLATE utf8_general_ci;
+use pointServiceWuGongV3;
 
 CREATE TABLE IF NOT EXISTS `UserProperty` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -166,6 +166,11 @@ CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (
   `hongXian` varchar(1024),
   `jianKang` varchar(1024),
   `lastTotal` int(11),
+  `lastGivenValue` int(11),
+  `zhengZhiGivenValue` int(11),
+  `plusItem` int(11),
+  `minusItem` int(11),
+  `totalPlus` int(11),
   `lastModifiedTime` timestamp,
   PRIMARY KEY (`id`));
   
