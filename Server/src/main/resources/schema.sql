@@ -165,6 +165,7 @@ CREATE TABLE IF NOT EXISTS `ZuZhiPingJia` (
   `realName` varchar(128) NOT NULL,
   `hongXian` varchar(1024),
   `jianKang` varchar(1024),
+  `lastTotal` int(11),
   `lastModifiedTime` timestamp,
   PRIMARY KEY (`id`));
   

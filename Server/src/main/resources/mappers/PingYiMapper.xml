@@ -451,6 +451,7 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
     <result column="qunZhongPing" property="qunZhongPing" jdbcType="INTEGER" />
     <result column="zuZhiPing" property="zuZhiPing" jdbcType="INTEGER" />
     <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="lastTotal" property="lastTotal" jdbcType="INTEGER" />
     <result column="hongXian" property="hongXian" jdbcType="VARCHAR" />
     <result column="jianKang" property="jianKang" jdbcType="VARCHAR" />
     <result column="lastModifiedTime" property="lastModifiedTime" jdbcType="TIMESTAMP" />
@@ -458,7 +459,7 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
   
   <select id="getDeFenHuiZongs" resultMap="DeFenHuiZongResultMap">
 	select U.name, U.realName, ZiPing.total ziPing, HuPing.total huPing, PartyHistory.total partyHistory, QunZhongPingYi.total qunZhongPing, ZuZhiPingJia.total zuZhiPing, 
-		ifnull(ZiPing.total, 0)*0.2 + ifnull(HuPing.total, 0)*0.2 + ifnull(partyHistory.total, 0)*0.2 + ifnull(QunZhongPingYi.total, 0)*0.2 + ifnull(ZuZhiPingJia.total, 0)*0.2 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastModifiedTime
+		ifnull(ZiPing.total, 0)*0.2 + ifnull(HuPing.total, 0)*0.2 + ifnull(partyHistory.total, 0)*0.2 + ifnull(QunZhongPingYi.total, 0)*0.2 + ifnull(ZuZhiPingJia.total, 0)*0.2 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastTotal, DeFenHuiZong.lastModifiedTime
 	from
 	User U left join ZiPing on U.name = ZiPing.userName
 	left join HuPing on U.name = HuPing.userName
@@ -470,9 +471,9 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
   </select>
   
   <insert id="insertDeFenHuiZongs" parameterType="java.util.List" useGeneratedKeys="true">  
-	Insert into DeFenHuiZong (userName, realName, hongXian, jianKang, lastModifiedTime) values
+	Insert into DeFenHuiZong (userName, realName, hongXian, jianKang, lastTotal, lastModifiedTime) values
 		<foreach collection="deFenHuiZongs" item="item" separator=",">  
-			(#{item.userName}, #{item.realName}, #{item.hongXian}, #{item.jianKang}, #{item.lastModifiedTime})
+			(#{item.userName}, #{item.realName}, #{item.hongXian}, #{item.jianKang}, #{item.total}, #{item.lastModifiedTime})
 		</foreach>  
 	</insert>
 	

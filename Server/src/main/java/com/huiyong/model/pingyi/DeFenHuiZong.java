@@ -21,6 +21,8 @@ public class DeFenHuiZong {
 	private Integer qunZhongPing;
 	private Integer zuZhiPing;
 	private Integer total;
+	
+	private Integer lastTotal;
 	private String hongXian;
 	private String jianKang;
 	private Date lastModifiedTime;
@@ -95,5 +97,11 @@ public class DeFenHuiZong {
 	 */
 	public void setRealName(String realName) {
 		this.realName = realName;
+	}
+	public Integer getLastTotal() {
+		return lastTotal;
+	}
+	public void setLastTotal(Integer lastTotal) {
+		this.lastTotal = lastTotal;
 	}
 }
