@@ -22,13 +22,13 @@ public class DeFenHuiZong {
 	private Integer zuZhiPing;
 	private Integer total;
 	
-	private Integer givenValue;
+	private Integer thisTotal;
+	
+	private Integer thisGivenValue;
 	
 	private Integer lastTotal;
 	
 	private Integer lastGivenValue;
-	
-	private Integer zhengZhiGivenValue;
 	
 	private Integer plusItem;
 	
@@ -117,24 +117,14 @@ public class DeFenHuiZong {
 		this.lastTotal = lastTotal;
 	}
 	
-	public Integer getGivenValue() {
-		return givenValue;
-	}
-	public void setGivenValue(Integer givenValue) {
-		this.givenValue = givenValue;
-	}
+
 	public Integer getLastGivenValue() {
 		return lastGivenValue;
 	}
 	public void setLastGivenValue(Integer lastGivenValue) {
 		this.lastGivenValue = lastGivenValue;
 	}
-	public Integer getZhengZhiGivenValue() {
-		return zhengZhiGivenValue;
-	}
-	public void setZhengZhiGivenValue(Integer zhengZhiGivenValue) {
-		this.zhengZhiGivenValue = zhengZhiGivenValue;
-	}
+
 	public Integer getPlusItem() {
 		return plusItem;
 	}
@@ -152,5 +142,17 @@ public class DeFenHuiZong {
 	}
 	public void setTotalPlus(Integer totalPlus) {
 		this.totalPlus = totalPlus;
+	}
+	public Integer getThisTotal() {
+		return thisTotal;
+	}
+	public void setThisTotal(Integer thisTotal) {
+		this.thisTotal = thisTotal;
+	}
+	public Integer getThisGivenValue() {
+		return thisGivenValue;
+	}
+	public void setThisGivenValue(Integer thisGivenValue) {
+		this.thisGivenValue = thisGivenValue;
 	}
 }
