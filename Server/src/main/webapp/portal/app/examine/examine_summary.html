@@ -26,15 +26,30 @@
     <div>
        <table class="tg">
           <tr>
-            <th class="tg-yw4l">序号</th>
-            <th class="tg-yw4l">党员姓名</th>
+            <th class="tg-yw4l" rowspan="2">序号</th>
+            <th class="tg-yw4l" rowspan="2">党员姓名</th>
+			<th class="tg-yw4l" colspan="5">政治体检测评会诊情况(30%)</th>
+			<th class="tg-yw4l" colspan="2">上年度考核情况情况(30%)</th>
+			<th class="tg-yw4l" colspan="2">本年度考核情况情况(40%)</th>
+			<th class="tg-yw4l" rowspan="2">加分项</th>
+			<th class="tg-yw4l" rowspan="2">减分项</th>
+            <th class="tg-yw4l" rowspan="2">总赋分</th>
+            <th class="tg-yw4l" rowspan="2">红线指标情况</th>
+            <th class="tg-yw4l" rowspan="2">状况评定</th>
+          </tr>
+		  <tr>
             <th class="tg-yw4l">个人自评(20%)</th>
             <th class="tg-yw4l">党员互评(30%)</th>
             <th class="tg-yw4l">群众评议(20%)</th>
             <th class="tg-yw4l">组织评价(30%)</th>
-            <th class="tg-yw4l">总分</th>
-            <th class="tg-yw4l">红线指标情况</th>
-            <th class="tg-yw4l">状况评定</th>
+			<th class="tg-yw4l">赋分小计</th>
+			
+			<th class="tg-yw4l">考核结果</th>
+			<th class="tg-yw4l">赋分小计</th>
+			
+			<th class="tg-yw4l">完成结果</th>
+			<th class="tg-yw4l">赋分小计</th>
+            
           </tr>
           <tr ng-repeat="obj in ecCtrl.datalist">
             <td class="tg-yw4l">{{$index+1}}</td>
@@ -43,7 +58,23 @@
             <td class="tg-yw4l">{{obj.huPing}}</td>
             <td class="tg-yw4l">{{obj.qunZhongPing}}</td>
             <td class="tg-yw4l">{{obj.zuZhiPing}}</td>
-            <td class="tg-yw4l">{{obj.total}}</td>
+			<th class="tg-yw4l" ng-bind="obj.total"></th>
+			<th class="tg-yw4l tg-edit">
+				<input type="text" value="{{obj.lastTotal || 100}}" ng-model="obj.lastTotal">
+			</th>
+			<th class="tg-yw4l" ng-bind="ecCtrl.getLastGiven(obj)"></th>
+			
+			<th class="tg-yw4l tg-edit">
+				<input type="text" value="{{obj.thisTotal}}" ng-model="obj.thisTotal">
+			</th>
+			<th class="tg-yw4l" ng-bind="ecCtrl.getThisGiven(obj)"></th>
+			<th class="tg-yw4l tg-edit">
+				<input type="text" value="{{obj.plusItem}}" ng-model="obj.plusItem">
+			</th>
+			<th class="tg-yw4l tg-edit">
+				<input type="text" value="{{obj.minusItem}}" ng-model="obj.minusItem">
+			</th>
+            <td class="tg-yw4l" ng-bind="ecCtrl.getTotalPlus(obj)"></td>
             <td class="tg-yw4l tg-edit">
                 <!-- <select ng-model="obj.hongXian">
                     <option value="不存在" ng-selected ="obj.hongXian=='不存在' || !obj.hongXian">不存在</option>

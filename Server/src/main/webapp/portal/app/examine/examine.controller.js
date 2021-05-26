@@ -13,41 +13,46 @@
         if(transferUser){
         	currentUser = transferUser;
         	vm.currentUser = currentUser;
-        }
+		}
+		var organization = storage.get('organization');
+		if (!organization){
+			organization = currentUser.organization
+		}
         vm.userName = currentUser.name;
         vm.branch = $stateParams.branchName;
         vm.now = new Date();
         vm.selectTab ='public';
-        vm.topIssues = {};
+		vm.topIssues = {};
+		vm.min =0;
         
         vm.initData = function(){
         	vm.datalist = null;
         	if(vm.selectTab == 'public'){
-        		examineService.getPublicScore(vm.branch,currentUser.organization).then(function(response){
+        		examineService.getPublicScore(vm.branch,organization).then(function(response){
         			vm.datalist = response;
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(vm.selectTab == 'self'){
-        		examineService.getSelfScore(vm.branch,currentUser.organization).then(function(response){
+        		examineService.getSelfScore(vm.branch,organization).then(function(response){
         			vm.datalist = response;
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(vm.selectTab == 'each'){
-        		examineService.getEachScore(vm.branch,currentUser.organization).then(function(response){
+        		examineService.getEachScore(vm.branch,organization).then(function(response){
         			vm.datalist = response;
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(vm.selectTab == 'organization'){
-        		examineService.getOrganizationScore(vm.branch,currentUser.organization).then(function(response){
+        		examineService.getOrganizationScore(vm.branch,organization).then(function(response){
         			vm.datalist = response;
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(vm.selectTab == 'summary'){
-        		examineService.getSummaryScore(vm.branch,currentUser.organization).then(function(response){
+        		examineService.getSummaryScore(vm.branch,organization).then(function(response){
         			vm.datalist = response;
       	    	  	for(var i=0;i<vm.datalist.length;i++){
       	    	  		if(vm.datalist[i].jianKang == null){
@@ -58,57 +63,59 @@
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(vm.selectTab == 'result_list'){
-        		systemService.getUsers(vm.branch,currentUser.organization).then(function(response){
+        		systemService.getUsers(vm.branch,organization).then(function(response){
             		vm.userlist = response;
             	},function(response){
             		messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
             	});
         	}else if(vm.selectTab == 'party'){
-        		examineService.getPartyScore(vm.branch,currentUser.organization).then(function(response){
+        		examineService.getPartyScore(vm.branch,organization).then(function(response){
             		vm.parties = response;
             	},function(response){
             		messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
             	});
         	}
+
         }
         
         vm.update = function(id){
         	if(id == 'public'){
-        		examineService.updatePublicScore(vm.branch,currentUser.organization,vm.datalist)
+        		examineService.updatePublicScore(vm.branch,organization,vm.datalist)
         		.then(function(response){
         			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(id == 'self'){
-        		examineService.updateSelfScore(vm.branch,currentUser.organization,vm.datalist)
+        		examineService.updateSelfScore(vm.branch,organization,vm.datalist)
         		.then(function(response){
         			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(id == 'each'){
-        		examineService.updateEachScore(vm.branch,currentUser.organization,vm.datalist)
+        		examineService.updateEachScore(vm.branch,organization,vm.datalist)
         		.then(function(response){
         			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(id == 'organization'){
-        		examineService.updateOrganizationScore(vm.branch,currentUser.organization,vm.datalist)
+        		examineService.updateOrganizationScore(vm.branch,organization,vm.datalist)
         		.then(function(response){
         			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(id == 'summary'){
-        		examineService.updateSummaryScore(vm.branch,currentUser.organization,vm.datalist)
+        		examineService.updateSummaryScore(vm.branch,organization,vm.datalist)
         		.then(function(response){
         			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
         		},function(response){
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(id == 'result'){
+				vm.result.portion = vm.min;
         		examineService.updateResultScore(currentUser.name,vm.result)
         		.then(function(response){
         			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
@@ -116,7 +123,7 @@
         			messageCenterService.add('danger', '数据请求失败!', {timeout:3000});
         		});
         	}else if(id == 'party'){
-        		examineService.updatePartyScore(vm.branch,currentUser.organization,vm.parties)
+        		examineService.updatePartyScore(vm.branch,organization,vm.parties)
         		.then(function(response){
         			messageCenterService.add('success', '数据保存成功!', {timeout:1000});
         		},function(response){
@@ -130,8 +137,8 @@
         });
         
         vm.initResult=function(){
-        	vm.chart_labels = ['理想信念', '政治意识', '大局意识', '学习意识', '组织纪律',
-        		'工作作风', '道德品行','生活作风','服务意识','履行党员义务','先锋模范作用发挥'];
+        	vm.chart_labels = ['政治方向', '政治领导', '政治根基', '政治生态', '政治风险',
+        		'政治本色', '政治能力','先锋模范'];
         	vm.datasetOverride = [
         		{
 	    	        borderWidth: 1,
@@ -160,7 +167,12 @@
   	  			vm.result = response;
   	  			if(!vm.result.lastModifiedTime){
   	  				vm.result.lastModifiedTime = vm.now;
-  	  			}
+					}
+				if(!vm.result.portion){
+  	  				vm.result.portion = 0;
+				}
+				vm.min = vm.result.portion;
+				vm.max = 100-vm.result.zongHeDeFenPoints[8].point;
   	  			for(var i=0;i<vm.result.zongHeDeFenPoints.length-1;i++){
   	  				vm.chart_data[0].push(vm.result.zongHeDeFenPoints[i].point);
 					vm.datasetOverride[0].backgroundColor.push(vm.getJianKangColor(i));
@@ -231,9 +243,8 @@
         }
         
         vm.calcTotal = function(obj){
-        	var a=obj.liXiangXinNian,b=obj.zhengZhiYiShi,c=obj.xueXiYiShi,d=obj.zuZhiJiLv,e=obj.daJuYiShi;
-        	var f=obj.gongZuoZuoFeng,g=obj.daoDePinXing,h=obj.shengHuoZuoFeng,i=obj.fuWuYiShi,j=obj.lvXingDangYuanYiWu;
-        	var k=obj.xianFengMoFanZuoYongFaHui;
+        	var a=obj.zhengZhiFangXiang,b=obj.zhengZhiLingDao,c=obj.zhengZhiGenJi,d=obj.zhengZhiShengTai,e=obj.zhengZhiFengXian;
+        	var f=obj.zhengZhiBenSe,g=obj.zhengZhiNengLi,h=obj.xianFengMoFan;
         	if(!a){
         		a=0;
         	}
@@ -254,30 +265,97 @@
         	}
         	if(!g){
         		g=0;
-        	}
-        	if(!h){
+			}
+			if(!h){
         		h=0;
         	}
-        	if(!i){
-        		i=0;
-        	}
-        	if(!j){
-        		j=0;
-        	}
-        	if(!k){
-        		k=0;
-        	}
         	
-        	var total=parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d)+parseInt(e)+parseInt(f)+parseInt(g)+parseInt(h)+parseInt(i)+parseInt(j)+parseInt(k);
+        	var total=parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d)+parseInt(e)+parseInt(f)+parseInt(g)+parseInt(h);
         	if(total==0){
         		return null;
         	}
-        	obj.total=Math.ceil(total/11);
-        	return Math.ceil(total/11);
+        	obj.total=Math.ceil(total/8);
+        	return Math.ceil(total/8);
         }
+		
+		vm.getZhenZhiGiven = function(obj){
+			var a=obj.ziPing,b=obj.huPing,c=obj.qunZhongPing,d=obj.zuZhiPing;
+			if(!a){
+        		a=0;
+        	}
+        	if(!b){
+        		b=0;
+        	}
+        	if(!c){
+        		c=0;
+        	}
+        	if(!d){
+        		d=0;
+        	}
+			var total=parseInt(a)*0.2+parseInt(b)*0.3+parseInt(c)*0.2+parseInt(d)*0.3;
+        	if(total==0){
+        		return null;
+        	}
+			total = Math.ceil(total);
+			obj.zhengZhiGivenValue=total;
+			return total;
+		}
+		vm.getLastGiven = function(obj){
+			var a = obj.lastTotal;
+			if(!a){
+        		a=0;
+        	}
+			var total=parseInt(a)*0.3;
+			if(total==0){
+        		return null;
+        	}
+			total = Math.ceil(total);
+			obj.lastGivenValue = total;
+			return total;
+		}
+		
+		vm.getThisGiven = function(obj){
+			var a = obj.thisTotal;
+			if(!a){
+        		a=0;
+        	}
+			var total=parseInt(a)*0.4;
+			if(total==0){
+        		return null;
+        	}
+			total = Math.ceil(total);
+			obj.thisGivenValue = total;
+			return total;
+		}
+		
+		vm.getTotalPlus = function(obj){
+			var a = obj.total,b=obj.lastGivenValue,c = obj.thisGivenValue,d=obj.plusItem,e=obj.minusItem;
+			if(!a){
+        		a=0;
+        	}
+        	if(!b){
+        		b=0;
+        	}
+        	if(!c){
+        		c=0;
+        	}
+        	if(!d){
+        		d=0;
+        	}
+			if(!e){
+        		e=0;
+        	}
+			var total=parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d)-parseInt(e);
+        	if(total==0){
+        		return null;
+        	}
+			total = Math.ceil(total);
+			obj.totalPlus = total;
+			return total;
+		}
         
         vm.getJianKangColor=function(index){
-        	if(!vm.result){
+        	if(!vm.result ||  !vm.result.jianKangZhuangTaiPoints){
         		return '#ffffff';
         	}
         	var point = vm.result.jianKangZhuangTaiPoints[index].point;

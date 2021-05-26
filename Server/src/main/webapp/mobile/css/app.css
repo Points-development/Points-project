@@ -166,3 +166,7 @@ ul li {
 	font-size:11px;
 	color:#d0dada;
 }
+.left-align{
+	flex-direction: column;
+	align-items: flex-start !important;
+}

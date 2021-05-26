@@ -219,15 +219,8 @@ methods: {
 		let total = 0;
 		for(index in this.questions){
 			q = this.questions[index];
-			if(this.options.length==2){
-				if(!q.isTitle && !q.checked){
-					total += this.options[0].optionPoint
-				}
-			}else{
-				//四个选项
-				if(!q.isTitle){
-					total += q.optionPoint;
-				}
+			if(!q.isTitle && q.type==1){
+				total += q.optionPoint;
 			}
 		}
 		total = Math.round(total);
@@ -245,16 +238,10 @@ methods: {
     		scores:[],
     		point:this.total
     	}
-		let options = this.options;
     	this.questions.map(function(item){
 			if(!item.isTitle){
-				if(options.length==2){
-					let question={questionId:item.id,optionsId:item.checked?2:1};
-    				score.scores.push(question);
-				}else{
-					let question={questionId:item.id,optionsId:item.optionId};
-    				score.scores.push(question);
-				}
+				let question={questionId:item.id,optionsId:item.optionId};
+    			score.scores.push(question);
 				
 			}
     		
@@ -328,22 +315,17 @@ methods: {
 						qId+=1;
 						question.qId=qId;
 					}
-					if(question.type==1 && paperId==1){
-						question.checked=false;
-					}
-					if(question.type==1 && paperId==2){
-						question.optionId=0;
-					}
+					if(question.type==1){
+						question.options.map(function (item) {
+							item['label'] = item.description;
+							item['value'] = item.description;
+    					});
+    				}
 					questions.push(question);
 				});
 				this.id = data.id;
 				this.name = data.name;
 				this.questions = questions;
-				let options = [];
-				data.options.map(function (item) {
-					options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint,'optionId':item.optionId});
-				});
-				this.options = options;
 			}
 		 })
 	},

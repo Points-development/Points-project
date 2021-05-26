@@ -82,16 +82,12 @@
 	    			<span>评测对象：{{evaluator}}</span>
 	    		</div>
 	    		<div class="question weui-cells weui-cells_checkbox" v-for="(question,index1) in questions">
-	    			<label class="weui-cell weui-cell_active weui-check__label" :class="{'question-label':options.length==4}" v-if="!question.isTitle">
-		                <div class="weui-cell__hd" v-if="options.length==2">
-		                    <input type="checkbox" class="weui-check" @click="handleClick(question)"/>
-		                    <i class="weui-icon-checked"></i>
-		                </div>
+	    			<label class="weui-cell weui-cell_active weui-check__label" :class="{'question-label':question.options.length>0}" v-if="!question.isTitle">
 		                <div class="weui-cell__bd">
 		                    <p>{{question.qId}}. {{question.description}}</p>
 		                </div>
-		                <div class="weui-cells_checkbox inline-checkbox" v-if="options.length==4">
-		                	<div class="weui-cell" v-for="(option,index) in options">
+		                <div class="weui-cells_checkbox inline-checkbox" v-if="question.options.length>0">
+		                	<div class="weui-cell" v-for="(option,index) in question.options">
 		                		<input type="radio" :id="'radio'+index1+'_'+index" :name="'radio'+index1" class="radio_type" @click="handleSelect(question,option)"/>
 		                		<label :for="'radio'+index1+'_'+index">{{option.label}}</label>
 				            </div>

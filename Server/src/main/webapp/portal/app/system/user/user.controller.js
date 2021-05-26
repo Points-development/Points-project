@@ -59,6 +59,7 @@
       	    	  	}
       	    	  	$scope.branch = vm.branch;
       	    	  	$scope.admin = false;
+					$scope.sex = true;
       	    	  	$scope.userPropertys = vm.userPropertys;
       	      		$scope.submit_user = function(){
 	      	      		if(!$scope.name || !$scope.realName || !$scope.branch || !$scope.user.property){
@@ -69,6 +70,7 @@
 	      	      		var user= {
 	      	      				name:$scope.name,
 	      	      				realName:$scope.realName,
+								sex:$scope.sex,
 	      	      				organization:$scope.user.organization,
 	      	      				branch:$scope.branch,
 	      	      				property:$scope.user.property,
