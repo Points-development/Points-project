@@ -12,7 +12,7 @@ import {
 	Image,
 	ToastAndroid,
 	ScrollView,
-	TextInput
+	TextInput,
 } from 'react-native';	
 import CheckBox from '../components/Checkbox'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
@@ -49,9 +49,11 @@ export default class Assessment extends React.Component {
         					questions.push({'category':category,'isTitle':true});
         				}
         				if(question.type==1){
-        					question.selected=1;
+							question.options.map(function (item) {
+								item['label'] = item.description;
+								item['description'] = item.description;
+        					});
         				}
-        				
         				questions.push(question);
         			});
         			this.setState({dataSource:{
@@ -59,16 +61,21 @@ export default class Assessment extends React.Component {
         				name:response.data.name,
         				questions:questions
         			}});
-        			let options = [];
-        			response.data.options.map(function (item) {
-        				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint,'optionId':item.optionId});
-        			});
-        			this.setState({options:options});
         		}else{
         			this.setState({errorMsg: '请检查网络或联系管理员'});
         		}
             }.bind(this));
-        	this.checkAnswer(gUser.name);
+        	let url3 = gServer.host+'/score/'+gUser.name+"?scorer="+gUser.name;
+        	NetUtil.get(url3,function (response) {
+        		if(response.status == 200){
+        			if(response.data.length>0){
+        				this.setState({isSubmitted:true});
+        				ToastAndroid.show('系统检测到您已完成本次自评，如有疑问请联系系统管理员', ToastAndroid.SHORT);
+        			}
+        		}else{
+        			this.setState({errorMsg: '请检查网络或联系管理员'});
+        		}
+            }.bind(this))
     	}
     }
     
@@ -79,8 +86,6 @@ export default class Assessment extends React.Component {
     		modalVisible: who=='others',
     		resultVisible:false,
     		isSubmitted:false,
-			activeTab:1,
-			paperId:1,
     		evaluator:who=='self'?'自己':'其他',
     		dataSource:{
     		    "id": 1,
@@ -94,109 +99,49 @@ export default class Assessment extends React.Component {
     		selfScore:{common:{},self:{}}
     	}
     }
-
-	checkAnswer = (scoree)=>{
-		let url3 = gServer.host+'/score/'+scoree+"?scorer="+gUser.name;
-    	NetUtil.get(url3,function (response) {
-    		if(response.status == 200){
-    			if(response.data.length>0){
-    				this.setState({isSubmitted:true});
-    				ToastAndroid.show('系统检测到您已完成本次自评，如有疑问请联系系统管理员', ToastAndroid.SHORT);
-    			}
-    		}else{
-    			this.setState({errorMsg: '请检查网络或联系管理员'});
-    		}
-        }.bind(this))
-	}
     
     _checkSubmit = ()=>{
     	let score = {
         	paperId:1,
         	scorer:gUser.name,
         	scoree:this.state.evaluator=='自己'?gUser.name:this.state.evaluator,
-        	common:{
-        		scores1:0,
-            	scores2:0,
-            	scores3:0,
-            	scores4:0
-        	},
-        	self:{
-        		scores1:0,
-            	scores2:0,
-            	scores3:0,
-            	scores4:0
-        	}
+        	common:0,
+        	self:0
     	}
-    	var totalSelect = 0;
     	for(let i=0;i<this.state.dataSource.questions.length;i++){
     		let item = this.state.dataSource.questions[i];
 
-    		if(item.selected==2){
-    			totalSelect++;
-    		}
-    		if(item.selected || item.type==2){
+    		if(item.hasOwnProperty('selected')){
     			if(item.property =='共性'){
-    				if(item.selected == 1 || item.selected == 4){
-        				score.common.scores1 +=1;
-        			}
-        			if(item.selected == 2 || item.selected == 5){
-        				score.common.scores2 +=1;
-        			}
-        			if(item.selected == 3 || item.selected == 6){
-        				score.common.scores3 +=1;
-        			}
+    				score.common +=item.options[item.selected].optionPoint;
     			}else{
-    				if(item.selected == 1 || item.selected == 4){
-        				score.self.scores1 +=1;
-        			}
-        			if(item.selected == 2 || item.selected == 5){
-        				score.self.scores2 +=1;
-        			}
-        			if(item.selected == 3 || item.selected == 6){
-        				score.self.scores3 +=1;
-        			}
+    				score.self += item.options[item.selected].optionPoint
     			}
     		}else{
-    			if(item.isTitle){
+    			if(item.isTitle || item.type==2){
     				continue;
     			}
     			ToastAndroid.show('还有题目未作答!', ToastAndroid.SHORT);
     			return false;
     		}
     	}
-    	if(totalSelect<10 && this.state.paperId==1){
-    		ToastAndroid.show('至少选择10个选项', ToastAndroid.SHORT);
-    		return false;
-    	}
-    	let option1point = this.state.options[0].optionPoint;
-    	let option2point = this.state.options[1].optionPoint;
-    	let option3point = 0;
-    	if(this.state.options.length==3){
-    		option3point = this.state.options[2].optionPoint;
-    	}
-    	let option4point = 0;
-    	if(this.state.options.length==4){
-    		option4point = this.state.options[3].optionPoint;
-    	}
     	
-    	score.commonTotal = score.common.scores1+score.common.scores2+score.common.scores3+score.common.scores4;
-    	score.commonTotalScore = score.common.scores1*option1point+score.common.scores2*option2point+score.common.scores3*option3point+score.common.scores4*option4point;
-    	score.selfTotal = score.self.scores1+score.self.scores2+score.self.scores3+score.self.scores4;
-    	score.selfTotalScore = score.self.scores1*option1point+score.self.scores2*option2point+score.self.scores3*option3point+score.self.scores4*option4point;
+    	score.commonTotalScore = score.common;
+    	score.selfTotalScore = score.self;
     	this.setState({resultVisible: true,selfScore:score});
     }
     
     _submit = ()=>{
     	let score = {
-    		paperId:this.state.paperId,
+    		paperId:this.state.evaluator=='自己'?1:1,
     		scorer:gUser.name,
     		scoree:this.state.evaluator=='自己'?gUser.name:this.state.evaluator,
     		scores:[],
     		point:this.state.selfScore.commonTotalScore+this.state.selfScore.selfTotalScore
     	}
     	this.state.dataSource.questions.map(function(item){
-    		if(item.selected){
-    			let question={questionId:item.id,optionsId:item.selected,answer:null};
+    		if(item.hasOwnProperty('selected')){
+    			let question={questionId:item.id,optionsId:item.options[item.selected].id,answer:null};
     			score.scores.push(question);
     		}
     		if(item.type == 2){
@@ -210,21 +155,16 @@ export default class Assessment extends React.Component {
     			ToastAndroid.show('评测提交成功!', ToastAndroid.SHORT);
     			this.setState({isSubmitted:true,resultVisible: false});
     		}else{
-    			console.log(response.data);
-    			ToastAndroid.show('答题不能全部最好', ToastAndroid.SHORT); 
+    			ToastAndroid.show(response.data, ToastAndroid.SHORT); 
     		}
         }.bind(this));
     }
     
-    changeCheck=(checked,item)=>{
-        if(checked){
-        	item.item.selected=2;
-        }else{
-        	item.item.selected=1;
-        }
+    changeCheck=(item,index)=>{
+        item.selected = index;
     }
     
-    _renderItem = (item,index) => {
+    _renderItem = (item,index1) => {
     	
     	if(item.item.isTitle){
     		return (
@@ -233,20 +173,28 @@ export default class Assessment extends React.Component {
 				</View>	
     		)
     	}
-    	const { checked } = this.state
     	let label = item.item.questionId+". "+ item.item.description;
     	
         return (
         		<View >
         		{
 					item.item.type ==1 &&
-        			<View style={[styles.question,{padding:20}]}>   				
-        					<CheckBox
-        					  label={label}
-        					  checked={checked}
-        					  labelStyle={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}
-        					  onChange={(checked) => this.changeCheck(checked,item)}
-        					/>
+        			<View style={styles.question1}>
+	        			<View style={{padding:20,paddingTop:30}}>
+	        				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{label}</Text>
+	        			</View>
+	        			<View style={{padding:10,paddingLeft:20}}>
+			        		<RadioForm
+				                radio_props={item.item.options}
+			        			buttonColor={gColors.buttonColor}
+			        			initial={-1}
+			        			radioStyle={{paddingRight:15}}
+			        			labelStyle={{fontSize:18}}
+			        			formHorizontal={true}
+			        		  	labelHorizontal={true}
+				                onPress={(value,index) =>this.changeCheck(item.item,index)}
+				              />
+			            </View>
         			</View>
         		}
         			{
@@ -279,12 +227,8 @@ export default class Assessment extends React.Component {
     _keyExtractor = (item, index) => index.toString();
     
     _onPress = item => {
-    	this.setState({modalVisible: false,evaluator:item.username});
-    	this.refreshPaper(item.username,this.state.paperId);
-    }
-	
-	refreshPaper=(username,paperId)=>{
-		let url2 = gServer.host+'/paper/'+paperId+'?username='+username;
+    	this.setState({modalVisible: false,evaluator:item.name});
+    	let url2 = gServer.host+'/paper/1?username='+item.name;
     	NetUtil.get(url2,function (response) {
     		if(response.status == 200){
     			let questions = [];
@@ -295,9 +239,11 @@ export default class Assessment extends React.Component {
     					questions.push({'category':category,'isTitle':true});
     				}
     				if(question.type==1){
-    					question.selected=1;
+						question.options.map(function (item) {
+							item['label'] = item.description;
+							item['description'] = item.description;
+    					});
     				}
-    				
     				questions.push(question);
     			});
     			this.setState({dataSource:{
@@ -305,18 +251,11 @@ export default class Assessment extends React.Component {
     				name:response.data.name,
     				questions:questions
     			}});
-				this.setState({errorMsg: questions.length});	
-    			let options = [];
-    			response.data.options.map(function (item) {
-    				options.push({'label':item.description,'value':item.description,'id':item.id,'optionPoint':item.optionPoint,'optionId':item.optionId});
-    			});
-    			this.setState({options:options});
     		}else{
-				ToastAndroid.show('数据加载异常，请联系管理员', ToastAndroid.SHORT); 
     			this.setState({errorMsg: '请检查网络或联系管理员'});
     		}
-        }.bind(this))	
-	}
+        }.bind(this))
+    }
     
     _back = ()=>{
     	this.props.navigation.goBack();
@@ -327,22 +266,22 @@ export default class Assessment extends React.Component {
     }
     
     _renderUserItem = (item, key) => {
-        let itemName = item.username
+        let itemName = item.name
         return (
-        	<View key={`${item.username}-${key}`}>
+        	<View key={`${item.name}-${key}`}>
 	        {itemName != gUser.name && item.otherPoint==0 && 
 	        	<TouchableOpacity
 	                activeOpacity={0.75}
 	                style={styles.item}
 	                onPress={()=>this._onPress(item)}
 	            >
-	                <Text style={{color: '#000', fontSize:gFont.headerSize}}>{item.realname}</Text>
+	                <Text style={{color: '#000', fontSize:gFont.headerSize}}>{item.realName}</Text>
 	            </TouchableOpacity>
             }
 	        {(itemName==gUser.name || item.otherPoint>0) && 
 	        	<View
 	        		style={styles.item}>
-                	<Text style={{color: '#ddd', fontSize:gFont.headerSize}}>{item.realname}(已评价)</Text>
+                	<Text style={{color: '#ddd', fontSize:gFont.headerSize}}>{item.realName}(已评价)</Text>
                 </View>
 	        }
 	        </View>
@@ -354,7 +293,7 @@ export default class Assessment extends React.Component {
     	
         return (
         		<View style={styles.container}>
-        			<View style={{paddingTop:5,alignItems: 'center'}}>
+        			<View style={{paddingTop:20,alignItems: 'center'}}>
         				<Text style={{fontSize:gFont.headerSize,color:gColors.defaultFontColor}}>
         					{this.state.dataSource.name}
         				</Text>
@@ -438,15 +377,6 @@ const styles = StyleSheet.create({
 	container: {
 	    flex: 1,
 	    backgroundColor:gColors.background
-	},
-	tab:{
-		height:50,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-		width:gScreen.width,
-		borderBottomWidth:5,
-		borderBottomColor:'#FCFCFC'
 	},
 	circle:{
 		marginHorizontal:5,
