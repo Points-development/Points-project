@@ -145,7 +145,7 @@ export default class Assessment extends React.Component {
     			score.scores.push(question);
     		}
     		if(item.type == 2){
-    			let question={questionId:item.id,answer:item.answer,optionsId:null};
+    			let question={questionId:item.id,answer:item.answer,optionsId:0};
     			score.scores.push(question);
     		}
     	});
@@ -155,7 +155,7 @@ export default class Assessment extends React.Component {
     			ToastAndroid.show('评测提交成功!', ToastAndroid.SHORT);
     			this.setState({isSubmitted:true,resultVisible: false});
     		}else{
-    			ToastAndroid.show(response.data, ToastAndroid.SHORT); 
+    			ToastAndroid.show(JSON.stringify(response), ToastAndroid.SHORT); 
     		}
         }.bind(this));
     }
@@ -190,7 +190,7 @@ export default class Assessment extends React.Component {
 			        			initial={-1}
 			        			radioStyle={{paddingRight:15}}
 			        			labelStyle={{fontSize:18}}
-			        			formHorizontal={true}
+			        			formHorizontal={false}
 			        		  	labelHorizontal={true}
 				                onPress={(value,index) =>this.changeCheck(item.item,index)}
 				              />
@@ -227,8 +227,8 @@ export default class Assessment extends React.Component {
     _keyExtractor = (item, index) => index.toString();
     
     _onPress = item => {
-    	this.setState({modalVisible: false,evaluator:item.name});
-    	let url2 = gServer.host+'/paper/1?username='+item.name;
+    	this.setState({modalVisible: false,evaluator:item.username});
+    	let url2 = gServer.host+'/paper/1?username='+item.username;
     	NetUtil.get(url2,function (response) {
     		if(response.status == 200){
     			let questions = [];
@@ -266,22 +266,22 @@ export default class Assessment extends React.Component {
     }
     
     _renderUserItem = (item, key) => {
-        let itemName = item.name
+        let itemName = item.username
         return (
-        	<View key={`${item.name}-${key}`}>
+        	<View key={`${item.username}-${key}`}>
 	        {itemName != gUser.name && item.otherPoint==0 && 
 	        	<TouchableOpacity
 	                activeOpacity={0.75}
 	                style={styles.item}
 	                onPress={()=>this._onPress(item)}
 	            >
-	                <Text style={{color: '#000', fontSize:gFont.headerSize}}>{item.realName}</Text>
+	                <Text style={{color: '#000', fontSize:gFont.headerSize}}>{item.realname}</Text>
 	            </TouchableOpacity>
             }
 	        {(itemName==gUser.name || item.otherPoint>0) && 
 	        	<View
 	        		style={styles.item}>
-                	<Text style={{color: '#ddd', fontSize:gFont.headerSize}}>{item.realName}(已评价)</Text>
+                	<Text style={{color: '#ddd', fontSize:gFont.headerSize}}>{item.realname}(已评价)</Text>
                 </View>
 	        }
 	        </View>

@@ -76,7 +76,7 @@ export default class PartyHistory extends React.Component {
     		modalVisible: who=='others',
     		resultVisible:false,
     		isSubmitted:false,
-			paperId:3,
+			paperId:2,
     		evaluator:who=='self'?'自己':'其他',
     		dataSource:{
     		    "id": 1,
@@ -105,7 +105,7 @@ export default class PartyHistory extends React.Component {
     
     _checkSubmit = ()=>{
     	let score = {
-        	paperId:3,
+        	paperId:2,
         	scorer:gUser.name,
         	scoree:this.state.evaluator=='自己'?gUser.name:this.state.evaluator,
         	common:0,
@@ -159,7 +159,7 @@ export default class PartyHistory extends React.Component {
     			this.setState({isSubmitted:true,resultVisible: false});
     		}else{
     			console.log(response.data);
-    			ToastAndroid.show('答题不能全部最好', ToastAndroid.SHORT); 
+    			ToastAndroid.show(JSON.stringify(response), ToastAndroid.SHORT); 
     		}
         }.bind(this));
     }
@@ -195,7 +195,7 @@ export default class PartyHistory extends React.Component {
 			        			initial={-1}
 			        			radioStyle={{paddingRight:15}}
 			        			labelStyle={{fontSize:18}}
-			        			formHorizontal={true}
+			        			formHorizontal={false}
 			        		  	labelHorizontal={true}
 				                onPress={(value,index) =>this.changeCheck(item.item,index)}
 				              />
