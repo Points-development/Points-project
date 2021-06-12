@@ -128,6 +128,10 @@ export default class Assessment extends React.Component {
     	
     	score.commonTotalScore = score.common;
     	score.selfTotalScore = score.self;
+		if(score.commonTotalScore+score.selfTotalScore>100){
+			ToastAndroid.show('总分不能超过100!', ToastAndroid.SHORT);	
+			return false;
+		}
     	this.setState({resultVisible: true,selfScore:score});
     }
     
@@ -143,11 +147,13 @@ export default class Assessment extends React.Component {
     		if(item.hasOwnProperty('selected')){
     			let question={questionId:item.id,optionsId:item.options[item.selected].id,answer:null};
     			score.scores.push(question);
-    		}
-    		if(item.type == 2){
-    			let question={questionId:item.id,answer:item.answer,optionsId:0};
-    			score.scores.push(question);
-    		}
+    		}else{
+				if(item.type == 2){
+    				let question={questionId:item.id,answer:item.answer,optionsId:null};
+    				score.scores.push(question);
+    			}
+			}
+    		
     	});
     	let url = gServer.host+'/score/'+score.scoree;
     	NetUtil.post(url,score,function (response) {
