@@ -141,24 +141,18 @@ export default class Home extends React.Component {
 			            	activeOpacity={0.55}
 			            	style={[styles.buttonContainer,styles.button]}
 			            	onPress={()=>this._goAssessment('self')}>
-			                <View style={{flexDirection:'row'}}>
-			                	<Text style={styles.textStyle}>自评</Text>
-			                	<Image 
-					    			source={require('../assets/image/pingjia.png')}
-					            	style={styles.buttonImage}
-					            />
+			                <View style={{flexDirection:'column'}}>
+			                	<Text style={styles.textStyle}>自我</Text>
+								<Text style={styles.textStyle}>评测</Text>
 			                </View>
 			            </TouchableOpacity>
 		        		<TouchableOpacity
 			            	activeOpacity={0.55}
 			            	style={[styles.buttonContainer,styles.button]}
 			            	onPress={()=>this._goAssessment('others')}>
-			                <View style={{flexDirection:'row'}}>
-			                	<Text style={styles.textStyle}>互评</Text>
-			                	<Image 
-					    			source={require('../assets/image/huping.png')}
-					            	style={styles.buttonImage}
-					            />
+			                <View style={{flexDirection:'column'}}>
+			                	<Text style={styles.textStyle}>互相</Text>
+								<Text style={styles.textStyle}>评测</Text>
 			                </View>
 			            </TouchableOpacity>
         			</View>
@@ -167,24 +161,18 @@ export default class Home extends React.Component {
 			            	activeOpacity={0.55}
 			            	style={[styles.buttonContainer,styles.button]}
 			            	onPress={()=>this._goParty()}>
-			                <View style={{flexDirection:'row'}}>
+			                <View style={{flexDirection:'column'}}>
 			                	<Text style={styles.textStyle}>党史</Text>
-			                	<Image 
-					    			source={require('../assets/image/party.png')}
-					            	style={styles.buttonImage}
-					            />
+								<Text style={styles.textStyle}>教育</Text>
 			                </View>
 			            </TouchableOpacity>
 						<TouchableOpacity
 			            	activeOpacity={0.55}
 			            	style={[styles.buttonContainer,styles.button]}
 			            	onPress={()=>this._goQuery()}>
-			                <View style={{flexDirection:'row'}}>
-			                	<Text style={styles.textStyle}>查询</Text>
-			                	<Image 
-					    			source={require('../assets/image/query.png')}
-					            	style={styles.buttonImage}
-					            />
+			                <View style={{flexDirection:'column'}}>
+			                	<Text style={styles.textStyle}>成绩</Text>
+								<Text style={styles.textStyle}>查询</Text>
 			                </View>
 			            </TouchableOpacity>
         			</View>
