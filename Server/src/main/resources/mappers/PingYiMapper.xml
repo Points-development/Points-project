@@ -348,6 +348,7 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
     <result column="realName" property="realName" jdbcType="VARCHAR" />
     <result column="ziPing" property="ziPing" jdbcType="INTEGER" />
     <result column="huPing" property="huPing" jdbcType="INTEGER" />
+     <result column="partyHistory" property="partyHistory" jdbcType="INTEGER" />
     <result column="qunZhongPing" property="qunZhongPing" jdbcType="INTEGER" />
     <result column="zuZhiPing" property="zuZhiPing" jdbcType="INTEGER" />
     <result column="total" property="total" jdbcType="INTEGER" />
@@ -358,7 +359,7 @@ select GROUP_CONCAT(answer separator '; ') from PaperItemScore where PaperItemSc
   
   <select id="getDeFenHuiZongs" resultMap="DeFenHuiZongResultMap">
 	select U.name, U.realName, ZiPing.total ziPing, HuPing.total huPing, PartyHistory.total partyHistory, QunZhongPingYi.total qunZhongPing, ZuZhiPingJia.total zuZhiPing, 
-		ifnull(ZiPing.total, 0)*0.2 + ifnull(HuPing.total, 0)*0.2 + ifnull(PartyHistory.total, 0)*0.2 + ifnull(QunZhongPingYi.total, 0)*0.2 + ifnull(ZuZhiPingJia.total, 0)*0.2 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastModifiedTime
+		ifnull(ZiPing.total, 0)*0.2 + ifnull(HuPing.total, 0)*0.2 + ifnull(PartyHistory.total, 0)*0.1 + ifnull(QunZhongPingYi.total, 0)*0.2 + ifnull(ZuZhiPingJia.total, 0)*0.3 total, DeFenHuiZong.hongxian, DeFenHuiZong.jianKang, DeFenHuiZong.lastModifiedTime
 	from
 	User U left join ZiPing on U.name = ZiPing.userName
 	left join HuPing on U.name = HuPing.userName

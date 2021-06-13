@@ -18,6 +18,8 @@ public class DeFenHuiZong {
 	private String realName;
 	private Integer ziPing;
 	private Integer huPing;
+	
+	private Integer partyHistory;
 	private Integer qunZhongPing;
 	private Integer zuZhiPing;
 	private Integer total;
@@ -95,5 +97,11 @@ public class DeFenHuiZong {
 	 */
 	public void setRealName(String realName) {
 		this.realName = realName;
+	}
+	public Integer getPartyHistory() {
+		return partyHistory;
+	}
+	public void setPartyHistory(Integer partyHistory) {
+		this.partyHistory = partyHistory;
 	}
 }
