@@ -49,11 +49,9 @@ export default class Assessment extends React.Component {
         					questions.push({'category':category,'isTitle':true});
         				}
         				if(question.type==1){
-							question.options.map(function (item) {
-								item['label'] = item.description;
-								item['description'] = item.description;
-        					});
+        					question.selected=0;
         				}
+        				
         				questions.push(question);
         			});
         			this.setState({dataSource:{
@@ -105,13 +103,17 @@ export default class Assessment extends React.Component {
         	paperId:1,
         	scorer:gUser.name,
         	scoree:this.state.evaluator=='自己'?gUser.name:this.state.evaluator,
-        	common:0,
+        		common:0,
         	self:0
     	}
+    	var totalSelect = 0;
     	for(let i=0;i<this.state.dataSource.questions.length;i++){
     		let item = this.state.dataSource.questions[i];
 
-    		if(item.hasOwnProperty('selected')){
+    		if(item.selected==1){
+    			totalSelect++;
+    		}
+    		if(item.type==1){
     			if(item.property =='共性'){
     				score.common +=item.options[item.selected].optionPoint;
     			}else{
@@ -125,13 +127,12 @@ export default class Assessment extends React.Component {
     			return false;
     		}
     	}
-    	
+    	if(totalSelect<10){
+    		ToastAndroid.show('至少选择10个选项', ToastAndroid.SHORT);
+    		return false;
+    	}
     	score.commonTotalScore = score.common;
     	score.selfTotalScore = score.self;
-		if(score.commonTotalScore+score.selfTotalScore>100){
-			ToastAndroid.show('总分不能超过100!', ToastAndroid.SHORT);	
-			return false;
-		}
     	this.setState({resultVisible: true,selfScore:score});
     }
     
@@ -144,16 +145,14 @@ export default class Assessment extends React.Component {
     		point:this.state.selfScore.commonTotalScore+this.state.selfScore.selfTotalScore
     	}
     	this.state.dataSource.questions.map(function(item){
-    		if(item.hasOwnProperty('selected')){
+    		if(item.type==1){
     			let question={questionId:item.id,optionsId:item.options[item.selected].id,answer:null};
     			score.scores.push(question);
-    		}else{
-				if(item.type == 2){
-    				let question={questionId:item.id,answer:item.answer,optionsId:null};
-    				score.scores.push(question);
-    			}
-			}
-    		
+    		}
+    		if(item.type == 2){
+    			let question={questionId:item.id,answer:item.answer,optionsId:null};
+    			score.scores.push(question);
+    		}
     	});
     	let url = gServer.host+'/score/'+score.scoree;
     	NetUtil.post(url,score,function (response) {
@@ -161,16 +160,21 @@ export default class Assessment extends React.Component {
     			ToastAndroid.show('评测提交成功!', ToastAndroid.SHORT);
     			this.setState({isSubmitted:true,resultVisible: false});
     		}else{
-    			ToastAndroid.show(JSON.stringify(response), ToastAndroid.SHORT); 
+    			console.log(response.data);
+    			ToastAndroid.show('答题不能全部最好', ToastAndroid.SHORT); 
     		}
         }.bind(this));
     }
     
-    changeCheck=(item,index)=>{
-        item.selected = index;
+    changeCheck=(checked,item)=>{
+        if(checked){
+        	item.item.selected=1;
+        }else{
+        	item.item.selected=0;
+        }
     }
     
-    _renderItem = (item,index1) => {
+    _renderItem = (item,index) => {
     	
     	if(item.item.isTitle){
     		return (
@@ -179,28 +183,20 @@ export default class Assessment extends React.Component {
 				</View>	
     		)
     	}
+    	const { checked } = this.state
     	let label = item.item.questionId+". "+ item.item.description;
     	
         return (
         		<View >
         		{
 					item.item.type ==1 &&
-        			<View style={styles.question1}>
-	        			<View style={{padding:20,paddingTop:30}}>
-	        				<Text style={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}>{label}</Text>
-	        			</View>
-	        			<View style={{padding:10,paddingLeft:20}}>
-			        		<RadioForm
-				                radio_props={item.item.options}
-			        			buttonColor={gColors.buttonColor}
-			        			initial={-1}
-			        			radioStyle={{paddingRight:15}}
-			        			labelStyle={{fontSize:18}}
-			        			formHorizontal={false}
-			        		  	labelHorizontal={true}
-				                onPress={(value,index) =>this.changeCheck(item.item,index)}
-				              />
-			            </View>
+        			<View style={[styles.question,{padding:20}]}>   				
+        					<CheckBox
+        					  label={label}
+        					  checked={checked}
+        					  labelStyle={{color:gColors.defaultFontColor,fontSize:gFont.contentSize}}
+        					  onChange={(checked) => this.changeCheck(checked,item)}
+        					/>
         			</View>
         		}
         			{
@@ -245,11 +241,9 @@ export default class Assessment extends React.Component {
     					questions.push({'category':category,'isTitle':true});
     				}
     				if(question.type==1){
-						question.options.map(function (item) {
-							item['label'] = item.description;
-							item['description'] = item.description;
-    					});
+    					question.selected=0;
     				}
+    				
     				questions.push(question);
     			});
     			this.setState({dataSource:{
