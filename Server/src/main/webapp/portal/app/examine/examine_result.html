@@ -18,11 +18,11 @@
 		<div class="table_area">
 			<div class="table_title">永寿县党员党性体检结果报告单</div>
 			<div>
-				<div style="width: 35%; float: left">党支部名称:
+				<div style="width: 35%; float: left;font-size:13px">党支部名称:
 					{{ecCtrl.currentUser.branch}}</div>
-				<div style="width: 30%; float: left; text-align: center;">党员姓名:
+				<div style="width: 30%; float: left; text-align: center;font-size:13px">党员姓名:
 					{{ecCtrl.result.realName}}</div>
-				<div style="width: 35%; float: left; text-align: right;">体检日期:
+				<div style="width: 35%; float: left; text-align: right;font-size:13px">体检日期:
 					{{ecCtrl.result.lastModifiedTime|date:'yyyy 年 MM 月 dd 日'}}</div>
 				<div>
 					<div>
@@ -199,7 +199,7 @@
 								<td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[3].point)}}</td>
 							</tr>
 							<tr>
-								<td class="tg-yw4l">遵守组织纪律</td>
+								<td class="tg-yw4l">组织纪律</td>
 								<td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[4].point}}</td>
 								<td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[4].point}}</td>
 								<td class="tg-yw4l">{{ecCtrl.result.huPingPoints[4].point}}</td>
@@ -235,7 +235,7 @@
 								<td class="tg-yw4l">{{ecCtrl.getJianKangStatus(ecCtrl.result.jianKangZhuangTaiPoints[7].point)}}</td>
 							</tr>
 							<tr>
-								<td class="tg-yw4l">服务奉献意识</td>
+								<td class="tg-yw4l">服务意识</td>
 								<td class="tg-yw4l">{{ecCtrl.result.fuWuDuiXiangPingPoints[8].point}}</td>
 								<td class="tg-yw4l">{{ecCtrl.result.ziPingPoints[8].point}}</td>
 								<td class="tg-yw4l">{{ecCtrl.result.huPingPoints[8].point}}</td>
