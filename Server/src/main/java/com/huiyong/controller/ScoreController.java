@@ -62,6 +62,22 @@ public class ScoreController {
     	return new ResponseEntity<List<Score>>(scores, HttpStatus.OK);
     }
     
+    @RequestMapping(value = "/partyHistory", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
+    public ResponseEntity<?> getPartyHistoryScore(@RequestParam(required=false) String scorer, @RequestParam(required=false) Boolean isRecent) {
+		List<Score> scores = null;
+		Message m = new Message();
+		if(null == isRecent){
+			isRecent = false;
+		}
+
+		scores = scoreService.getScoreByScorer("partyHistory", scorer, isRecent);
+    	if(null == scores || scores.size() == 0){
+    		m.setError("目前没有分数");
+    		return new ResponseEntity<Message>(m, HttpStatus.NOT_FOUND);
+    	}
+    	return new ResponseEntity<List<Score>>(scores, HttpStatus.OK);
+    }
+    
     @RequestMapping(value = "/{username}", method = RequestMethod.POST)
     public ResponseEntity<String> addScore(@PathVariable String username, @RequestBody Score score) {
     	if(null == score){
