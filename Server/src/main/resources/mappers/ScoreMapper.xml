@@ -85,4 +85,10 @@
         FROM PaperScore join User on PaperScore.scoree=User.name
     	where User.branch=#{branch};
   </delete>
+  
+  <delete id="deletePartyHistoryPointByBranch" parameterType="String">
+        DELETE PaperScore
+        FROM PaperScore join User on PaperScore.scorer=User.name
+    	where User.branch=#{branch} and PaperScore.scoree='partyHistory';
+  </delete>
  </mapper>

@@ -29,4 +29,5 @@ public interface ScoreMapper {
 	 * @return
 	 */
 	public void deleteScorePointByBranch(@Param(value = "branch") String branch);
+	public void deletePartyHistoryPointByBranch(@Param(value = "branch") String branch);
 }

@@ -170,6 +170,7 @@ public class ScoreServiceImpl implements ScoreService {
 	@Override
 	public void deleteScorePointByBranch(String branch) {
 		scoreDao.deleteScorePointByBranch(branch);
+		scoreDao.deletePartyHistoryPointByBranch(branch);
 		
 	}
 
